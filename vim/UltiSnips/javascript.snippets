@@ -1,0 +1,53 @@
+priority -50
+
+###########################################################################
+#                            TextMate Snippets                            #
+###########################################################################
+
+######## UI Automation ########
+
+snippet uiTest "tuneup test func"
+test(${1:TestName}, function(target, app) {
+	${2://code}
+})
+endsnippet
+
+snippet uiDelay
+target.delay(${1:seconds});
+endsnippet
+
+snippet uiTapNaviBarBtn
+naviBarButton(app, ${1:index}).tap();
+endsnippet
+
+snippet uiAlert "alert function define"
+UIATarget.onAlert = function onAlert(alert) {
+	var title = alert.name();
+	UIALogger.logWarning("Alert with title '" + title + "' encountered.");
+	if (title == "${1:title}") {
+		alert.buttons()["${2:确定}"].tap();
+		return true;  //alert handled, so bypass the default handler
+	}
+	// return false to use the default handler
+	return false;
+}
+endsnippet
+
+snippet uiRect "rect structure" b
+{
+	origin: {
+		x:${1:xposition},
+		y:${2:yposition}
+		}, 
+	size:{
+		width:${3:widthvalue}, 
+		height:${4:heightvalue}
+		}
+}
+endsnippet
+
+snippet uiByPass "by pass code block" b
+helper.byPass(function(){
+	${2://code}
+});// end of helper.byPass()
+endsnippet

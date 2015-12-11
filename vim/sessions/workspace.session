@@ -1,0 +1,66 @@
+let SessionLoad = 1
+if &cp | set nocp | endif
+let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
+let v:this_session=expand("<sfile>:p")
+silent only
+cd ~/1_Project/react-native/AwesomeProject
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+set shortmess=aoO
+badd +1 node_modules/react-native/packager/react-packager/src/Resolver/polyfills/require.js
+badd +1 Components/flexExamples.ios.js
+badd +1 ~/1_Project/react-native/AwesomeProject
+badd +22 Components/index.ios.js
+badd +33 Components/helloWorld.ios.js
+badd +710 ~/.vimrc
+badd +117 fast_syntax.txt
+badd +37 Components/shapes.ios.js
+badd +1 ios/template.js
+badd +111 ~/.vimrc.before
+badd +309 ~/.vimrc.bundles
+badd +259 ~/.vimrc.local
+badd +6 ~/.vimrc.before.local
+badd +16 ~/.vimrc.bundles.local
+badd +57 Components/PAOverseaCustomerAddingInfo.js
+badd +25 ~/Library/Application\ Support/RTXC/accounts/dengjinlong/sessionPhoto/PAColorDef.js
+badd +19 Components/PAColorDef.js
+badd +87 keyword_styles.txt
+badd +1 ~/\[Vundle]\ Installer
+badd +1 workspace.session
+argglobal
+silent! argdel *
+edit workspace.session
+set splitbelow splitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+setlocal fdm=indent
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=3
+setlocal nofen
+let s:l = 33 - ((18 * winheight(0) + 30) / 60)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+33
+normal! 026|
+lcd ~/1_Project/react-native/AwesomeProject
+tabnext 1
+if exists('s:wipebuf')
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=20 shortmess=filmnrxoOtT
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if file_readable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &so = s:so_save | let &siso = s:siso_save
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :
