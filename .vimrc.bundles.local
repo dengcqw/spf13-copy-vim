@@ -1,0 +1,16 @@
+" local user bundle configuration
+
+    " HTML {
+        if count(g:spf13_bundle_groups, 'html')
+            Bundle 'emmet.vim'
+        endif
+    " }
+    " js {
+        if count(g:spf13_bundle_groups, 'javascript')
+            Bundle 'maksimr/vim-jsbeautify'
+            Bundle 'einars/js-beautify'
+        endif
+    " }
+    " workspace manager {
+        Bundle 'vim-scripts/Session-Viminfo-Management'
+    " }

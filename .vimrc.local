@@ -1,0 +1,262 @@
+" local user configuration
+
+" misc {
+    " Set to auto read when a file is changed from the outside
+    set autoread
+
+    " Height of the command bar
+    set cmdheight=1
+
+    " Don't redraw while executing macros (good performance config)
+    " ?
+    set lazyredraw
+
+    " No annoying sound on errors
+    set noerrorbells
+    set novisualbell
+
+    " Add a bit extra margin to the left
+    set foldcolumn=1
+
+    " Use Unix as the standard file type
+    set ffs=unix,dos,mac
+
+    " Turn backup off, since most stuff is in SVN, git et.c anyway...
+    set nobackup
+    set nowb
+    set noswapfile
+
+    " Remember info about open buffers on close
+    " set viminfo^=%
+    " Remap VIM 0 to first non-blank character
+    map 0 ^
+    "{
+        " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac in visual mode
+        nmap <M-j> mz:m+<cr>`z
+        nmap <M-k> mz:m-2<cr>`z
+        vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+        vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+        if has("mac") || has("macunix")
+            nmap <D-j> <M-j>
+            nmap <D-k> <M-k>
+            vmap <D-j> <M-j>
+            vmap <D-k> <M-k>
+        endif
+    "}
+
+    " Remove the Windows ^M - when the encodings gets messed up
+    "noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+    " Toggle paste mode on and off
+    noremap <leader>pp :setlocal paste!<cr>
+
+    colorscheme desert
+"}
+
+" relative number {
+    set relativenumber
+    " switch relative number and normal number
+    function! NumberToggle()
+      if(&relativenumber == 1)
+        set number
+      else
+        set relativenumber
+      endif
+    endfunc
+"}
+
+
+" tab {
+    " Useful mappings for managing tabs
+    nnoremap <leader>tn :tabnew<cr>
+    " nnoremap <leader>to :tabonly<cr>
+    nnoremap <leader>tc :tabclose<cr>
+    nnoremap <leader>tm :tabmove
+    " shift tab pages; i is ahead of o  likt <C-I><C-O>
+    nnoremap <leader>ti :tabp<CR>
+    nnoremap <leader>to :tabn<CR>
+    " Opens a new tab with the current buffer's path
+    " Super useful when editing files in the same directory
+    nnoremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>
+" }
+
+
+"vimgrep searching and cope displaying {
+    " Visual mode pressing * or # searches for the current selection
+    " Super useful! From an idea by Michael Naumann
+    vnoremap <silent> * :call VisualSelection('f', '')<CR>
+    vnoremap <silent> # :call VisualSelection('b', '')<CR>
+    " When you press gv you vimgrep after the selected text
+    vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
+
+    " When you press <leader>r you can search and replace the selected text
+    vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
+
+    " Do :help cope if you are unsure what cope is. It's super useful!
+    "
+    " When you search with vimgrep, display your results in cope by doing:
+    "   <leader>cc
+    "
+    " To go to the next search result do:
+    "   <leader>n
+    "
+    " To go to the previous search results do:
+    "   <leader>p
+    "
+    " map <leader>cc :botright cope<cr>
+    " map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
+    " map <leader>n :cn<cr>
+    " map <leader>p :cp<cr>
+
+    function! CmdLine(str)
+        exe "menu Foo.Bar :" . a:str
+        emenu Foo.Bar
+        unmenu Foo
+    endfunction 
+    function! VisualSelection(direction, extra_filter) range
+        let l:saved_reg = @"
+        execute "normal! vgvy"
+
+        let l:pattern = escape(@", '\\/.*$^~[]')
+        let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+        if a:direction == 'b'
+            execute "normal ?" . l:pattern . "^M"
+        elseif a:direction == 'gv'
+            call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.' . a:extra_filter)
+        elseif a:direction == 'replace'
+            call CmdLine("%s" . '/'. l:pattern . '/')
+        elseif a:direction == 'f'
+            execute "normal /" . l:pattern . "^M"
+        endif
+
+        let @/ = l:pattern
+        let @" = l:saved_reg
+    endfunction
+" }
+
+" buffer {
+    " Close the current buffer
+    map <leader>bd :Bclose<cr>
+    " Close all the buffers
+    map <leader>ba :1,100 bd!<cr>
+
+    " Don't close window, when deleting a buffer
+    command! Bclose call <SID>BufcloseCloseIt()
+    function! <SID>BufcloseCloseIt()
+       let l:currentBufNum = bufnr("%")
+       let l:alternateBufNum = bufnr("#")
+
+       if buflisted(l:alternateBufNum)
+         buffer #
+       else
+         bnext
+     endif
+
+       if bufnr("%") == l:currentBufNum
+         new
+       endif
+
+       if buflisted(l:currentBufNum)
+         execute("bdelete! ".l:currentBufNum)
+       endif
+    endfunction 
+" }
+
+" deng custom {
+    set textwidth=120  " max length of a line 
+
+    "=====Folds=====
+    set foldmethod=indent   " fold based on indent
+    set foldnestmax=3       " deepest fold is 3 levels
+    set nofoldenable        " don't fold by default
+    nnoremap <Space> za     " use space to do fold
+
+    noremap <leader>vd :vertical diffsplit
+
+    " Only needed for a short time so...
+    noremap <leader>fd :setlocal diff foldmethod=diff scrollbind nowrap foldlevel=1<CR>
+
+    " set ; to : in normal mode, more fast to cmd mode.
+    nnoremap ; :
+    nnoremap : ;
+    " switch buffer with <- / ->
+    "noremap <silent> <Left> :bp<CR>
+    "noremap <silent> <Right> :bn<CR>
+    "noremap <silent> <Left><Left> :tabp<CR>
+    "noremap <silent> <Right><Right> :tabn<CR>
+
+    " not replace paste content
+    xnoremap p pgvy
+
+    noremap <leader>s i <Esc>
+
+    noremap <leader>m :marks<CR>
+
+    "===============================
+    "   project
+    "=============================== 
+    noremap <leader>dt :cd ~/Desktop<CR>
+    noremap <leader>pj :cd /Users/pinganhaofang/1_Project/statistics_server<CR>
+    noremap <leader>pa :cd /Users/pinganhaofang/1_Project/newVersion<CR>
+    command! -nargs=0 Evimrc e ~/.vimrc
+
+
+    " vim脰脨碌脛脛脷脰脙卤盲脕驴拢潞 
+    " enc(encoding):vim碌脛脛脷虏驴卤脿脗毛 
+    " fenc(fileencoding):vim陆芒脦枚鲁枚脌麓碌脛碌卤脟掳脦脛录镁卤脿脗毛拢篓脫脨驴脡脛脺陆芒脦枚鲁脡麓铆碌脛脜露拢漏 
+    " fencs(fileencodings):vim陆芒脦枚脦脛录镁脢卤虏脗虏芒碌脛卤脿脗毛赂帽脢陆脣鲁脨貌脕脨卤铆
+    "
+    set encoding=utf-8
+    set fenc=utf-8
+    set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+" }
+
+" custom Plugins {
+    """"""""""""""""""""""""""""""""""""""""
+    " ConqueTerm plugin
+    """""""""""""""""""""""""""""""""""""""" 
+    let g:ConqueTerm_FastMode = 0 " 1 enable fast mode, 0 disable
+    let g:ConqueTerm_Color = 1  " Color support
+    let g:ConqueTerm_SessionSupport = 0 " save to session
+
+    """"""""""""""""""""""""""""""""""""""""
+    " powerline plugin
+    """""""""""""""""""""""""""""""""""""""" 
+    let g:Powerline_symbols = 'fancy'
+
+    """""""""" NERDtree settings"""""""""""""""
+    let g:NERDTreeWinPos='left'
+
+    """"""""""FuzzyFinder settings""""""""""
+    "nnoremap <leader>f :FufFile<CR>
+    "nnoremap <leader>b :FufBuffer<CR>
+    "nnoremap <leader>d :FufDir<CR>
+
+    " EasyMotion
+    ""let g:EasyMotion_leader_key = '\'
+        " ff[ch]
+        " fs[ch]    Search
+        " fw    word
+        " fj    line downward
+        " fk    line upward
+        " fn/fN    like original n/N
+
+" }
+"
+
+" Removing (disabling) an included plugin
+"UnBundle 'AutoClose'
+
+let g:user_emmet_leader_key = '<c-s>'
+autocmd FileType css imap <Tab> <plug>(EmmetExpandAbbr)
+
+" js beautify
+autocmd FileType javascript vnoremap <buffer> <C-S> :call RangeJsBeautify()<cr>
+autocmd FileType json vnoremap <buffer> <C-S> :call RangeJsonBeautify()<cr>
+autocmd FileType jsx vnoremap <buffer>  <C-S> :call RangeJsxBeautify()<cr>
+autocmd FileType html vnoremap <buffer> <C-S> :call RangeHtmlBeautify()<cr>
+autocmd FileType css vnoremap <buffer>  <C-S> :call RangeCSSBeautify()<cr>
+
+set lines=80

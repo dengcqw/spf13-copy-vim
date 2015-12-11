@@ -1,0 +1,6 @@
+"  define any customizations that get loaded before the spf13-vim .vimrc.
+"
+" control bundles
+"let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', "'php', "'ruby', "'python', 'twig', 'javascript', 'html', 'misc', ]
+let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', 'twig', 'javascript', 'html', 'misc', ]
+
