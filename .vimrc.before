@@ -80,7 +80,7 @@
     "   let g:spf13_no_big_font = 1
 
     " Disable  omni complete
-    "   let g:spf13_no_omni_complete = 1
+    let g:spf13_no_omni_complete = 1
 
     " Don't create default mappings for multicursors
     " See :help multiple-cursors-mappings

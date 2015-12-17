@@ -2,5 +2,7 @@
 "
 " control bundles
 "let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', "'php', "'ruby', "'python', 'twig', 'javascript', 'html', 'misc', ]
-let g:spf13_bundle_groups=['general', 'writing', 'neocomplcache', 'programming', 'twig', 'javascript', 'html', 'misc', ]
+let g:spf13_bundle_groups=['general', 'writing', 'youcompleteme', 'programming', 'twig', 'javascript', 'html', 'misc', ]
 
+
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "my-snippets/RN-snips", "my-snippets/JS-snips", "my-snippets/OC-snips", ]

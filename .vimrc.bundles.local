@@ -11,6 +11,10 @@
             Bundle 'einars/js-beautify'
         endif
     " }
-    " workspace manager {
-        Bundle 'vim-scripts/Session-Viminfo-Management'
+    " js complete {
+        Bundle 'ternjs/tern_for_vim'
     " }
+    " code snippet {
+        Bundle 'drmingdrmer/xptemplate'
+    " }
+

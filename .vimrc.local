@@ -181,11 +181,6 @@
     " set ; to : in normal mode, more fast to cmd mode.
     nnoremap ; :
     nnoremap : ;
-    " switch buffer with <- / ->
-    "noremap <silent> <Left> :bp<CR>
-    "noremap <silent> <Right> :bn<CR>
-    "noremap <silent> <Left><Left> :tabp<CR>
-    "noremap <silent> <Right><Right> :tabn<CR>
 
     " not replace paste content
     xnoremap p pgvy
@@ -196,45 +191,58 @@
 
     "===============================
     "   project
-    "=============================== 
+    "===============================
     noremap <leader>dt :cd ~/Desktop<CR>
-    noremap <leader>pj :cd /Users/pinganhaofang/1_Project/statistics_server<CR>
-    noremap <leader>pa :cd /Users/pinganhaofang/1_Project/newVersion<CR>
+    noremap <leader>pj :cd /Users/pinganhaofang/1_Project/<CR>
     command! -nargs=0 Evimrc e ~/.vimrc
 
-
-    " vim脰脨碌脛脛脷脰脙卤盲脕驴拢潞 
-    " enc(encoding):vim碌脛脛脷虏驴卤脿脗毛 
-    " fenc(fileencoding):vim陆芒脦枚鲁枚脌麓碌脛碌卤脟掳脦脛录镁卤脿脗毛拢篓脫脨驴脡脛脺陆芒脦枚鲁脡麓铆碌脛脜露拢漏 
-    " fencs(fileencodings):vim陆芒脦枚脦脛录镁脢卤虏脗虏芒碌脛卤脿脗毛赂帽脢陆脣鲁脨貌脕脨卤铆
-    "
     set encoding=utf-8
     set fenc=utf-8
     set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+
+    noremap <leader>w :w<CR>
+    " replace a word
+    nmap vp viwp
+
 " }
 
 " custom Plugins {
     """"""""""""""""""""""""""""""""""""""""
     " ConqueTerm plugin
-    """""""""""""""""""""""""""""""""""""""" 
     let g:ConqueTerm_FastMode = 0 " 1 enable fast mode, 0 disable
     let g:ConqueTerm_Color = 1  " Color support
     let g:ConqueTerm_SessionSupport = 0 " save to session
 
+    "{
+        "Type :ConqueTerm <command> to run your command in vim, for example: 
+        ":ConqueTerm bash 
+
+        "To open ConqueTerm in a new horizontal or vertical buffer use: 
+        ":ConqueTermSplit <command> 
+        ":ConqueTermVSplit <command> 
+        ":ConqueTermTab <command> 
+    "}
+
     """"""""""""""""""""""""""""""""""""""""
     " powerline plugin
-    """""""""""""""""""""""""""""""""""""""" 
     let g:Powerline_symbols = 'fancy'
 
     """""""""" NERDtree settings"""""""""""""""
     let g:NERDTreeWinPos='left'
 
-    """"""""""FuzzyFinder settings""""""""""
-    "nnoremap <leader>f :FufFile<CR>
-    "nnoremap <leader>b :FufBuffer<CR>
-    "nnoremap <leader>d :FufDir<CR>
+    """"""""""ctrlp file search settings""""""""""
+    " use ,fu search fun tag -> CtrlPFunky
+    " current dir
+    let g:ctrlp_map = '<D-p>'
+    let g:ctrlp_cmd = 'CtrlP'
+    let g:ctrlp_max_depth = 10
+    " recent files
+    nnoremap <silent> <D-r> :CtrlPMRU<CR> 
+    " buffers
+    nnoremap <silent> <D-b> :CtrlPBuffer<CR>
 
-    " EasyMotion
+
+    """"""""""EasyMotion settings""""""""""
     ""let g:EasyMotion_leader_key = '\'
         " ff[ch]
         " fs[ch]    Search
@@ -246,17 +254,58 @@
 " }
 "
 
-" Removing (disabling) an included plugin
-"UnBundle 'AutoClose'
-
 let g:user_emmet_leader_key = '<c-s>'
 autocmd FileType css imap <Tab> <plug>(EmmetExpandAbbr)
 
 " js beautify
 autocmd FileType javascript vnoremap <buffer> <C-S> :call RangeJsBeautify()<cr>
+autocmd FileType javascript vnoremap <buffer> <C-H> :call RangeHtmlBeautify()<cr>
 autocmd FileType json vnoremap <buffer> <C-S> :call RangeJsonBeautify()<cr>
 autocmd FileType jsx vnoremap <buffer>  <C-S> :call RangeJsxBeautify()<cr>
 autocmd FileType html vnoremap <buffer> <C-S> :call RangeHtmlBeautify()<cr>
 autocmd FileType css vnoremap <buffer>  <C-S> :call RangeCSSBeautify()<cr>
 
 set lines=80
+
+" ----------------------------------------------------------------------------
+" tern_for_vim
+" ----------------------------------------------------------------------------
+let tern_show_signature_in_pum = 1
+let tern_show_argument_hints = 'on_hold'
+autocmd FileType javascript nnoremap <leader>d :TernDef<CR>
+autocmd FileType javascript setlocal omnifunc=tern#Complete
+
+set cpt=.,b,u,U,t,i
+
+"surrounding command list {
+    "Normal mode
+    "-----------
+    "ds  - delete a surrounding
+    "cs  - change a surrounding
+    "ys  - add a surrounding
+    "yS  - add a surrounding and place the surrounded text on a new line + indent it
+    "yss - add a surrounding to the whole line
+    "ySs - add a surrounding to the whole line, place it on a new line + indent it
+    "ySS - same as ySs
+
+    "Visual mode
+    "-----------
+    "S   - in visual mode, add a surrounding but place text on new line + indent it
+
+    "Insert mode
+    "-----------
+    "<CTRL-s> - in insert mode, add a surrounding
+    "<CTRL-s><CTRL-s> - in insert mode, add a new line + surrounding + indent
+    "<CTRL-g>s - same as <CTRL-s>
+    "<CTRL-g>S - same as <CTRL-s><CTRL-s> 
+"}
+"
+
+" fix NERDTreeToggle error strangely. {
+    map <C-e> :call g:WorkaroundNERDTreeToggle()<CR>
+
+    function! g:WorkaroundNERDTreeToggle()
+      try | NERDTreeToggle | catch | silent! NERDTree | endtry
+    endfunction
+"}
+
