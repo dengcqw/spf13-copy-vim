@@ -26,6 +26,11 @@
     set nowb
     set noswapfile
 
+    " this may not working ,try set it by hand
+    set iskeyword-=.                    " '.' is an end of word designator
+    set iskeyword-=#                    " '#' is an end of word designator
+    set iskeyword-=-                    " '-' is an end of word designator
+
     " Remember info about open buffers on close
     " set viminfo^=%
     " Remap VIM 0 to first non-blank character
@@ -273,9 +278,7 @@ set lines=80
 let tern_show_signature_in_pum = 1
 let tern_show_argument_hints = 'on_hold'
 autocmd FileType javascript nnoremap <leader>d :TernDef<CR>
-autocmd FileType javascript setlocal omnifunc=tern#Complete
-
-set cpt=.,b,u,U,t,i
+autocmd FileType javascript set omnifunc=tern#Complete
 
 "surrounding command list {
     "Normal mode
@@ -302,10 +305,47 @@ set cpt=.,b,u,U,t,i
 "
 
 " fix NERDTreeToggle error strangely. {
-    map <C-e> :call g:WorkaroundNERDTreeToggle()<CR>
+    noremap <C-e> :call g:WorkaroundNERDTreeToggle()<CR>
 
     function! g:WorkaroundNERDTreeToggle()
       try | NERDTreeToggle | catch | silent! NERDTree | endtry
     endfunction
 "}
 
+set cpt=.,b,u,U,t,i
+inoremap <D-p> <c-x><c-p>
+
+" buffer switch {
+    function! BufSel(pattern)
+      let bufcount = bufnr("$")
+      let currbufnr = 1
+      let nummatches = 0
+      let firstmatchingbufnr = 0
+      while currbufnr <= bufcount
+        if(bufexists(currbufnr))
+          let currbufname = bufname(currbufnr)
+          if(match(currbufname, a:pattern) > -1)
+            echo currbufnr . ": ". bufname(currbufnr)
+            let nummatches += 1
+            let firstmatchingbufnr = currbufnr
+          endif
+        endif
+        let currbufnr = currbufnr + 1
+      endwhile
+      if(nummatches == 1)
+        execute ":buffer ". firstmatchingbufnr
+      elseif(nummatches > 1)
+        let desiredbufnr = input("Enter buffer number: ")
+        if(strlen(desiredbufnr) != 0)
+          execute ":buffer ". desiredbufnr
+        endif
+      else
+        echo "No matching buffers"
+      endif
+    endfunction
+
+    "Bind the BufSel() function to a user-command
+    command! -nargs=1 Bs :call BufSel("<args>") 
+"}
+
+set foldlevelstart=1

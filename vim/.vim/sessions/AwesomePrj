@@ -1,0 +1,282 @@
+let SessionLoad = 1
+if &cp | set nocp | endif
+let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
+let v:this_session=expand("<sfile>:p")
+silent only
+cd ~/
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+set shortmess=aoO
+badd +11 1_Project/react-native/AwesomeProject/Components/index.ios.js
+badd +40 1_Project/react-native/AwesomeProject/Components/PAOverseaCustomerAddingInfo.js
+badd +1 \'/Users/pinganhaofang/1_Project/react-native/AwesomeProject/LayoutSample.ios.js\'
+badd +41 1_Project/react-native/AwesomeProject/Components/NavigatorExample.js
+badd +1 \'/Users/pinganhaofang/1_Project/react-native/AwesomeProject/Components/LayoutSample.ios.js\'
+badd +34 .vimrc.local
+badd +1 ControlP
+badd +1 1_Project/react-native/AwesomeProject/keyword_styles.txt
+badd +77 1_Project/react-native/AwesomeProject/keyword_ui.txt
+badd +1 /private/var/folders/d1/jngwrvh95ng05kp_26gwrg540000gn/T/vMfcMNh/1852
+badd +13 1_Project/react-native/AwesomeProject/Components/TabBarIOSExample.js
+badd +4 1_Project/react-native/AwesomeProject/Components/TabController.ios.js
+badd +3 1_Project/react-native/AwesomeProject/Components/shapes.ios.js
+badd +3 1_Project/react-native/AwesomeProject/Components/flexExamples.ios.js
+badd +84 1_Project/react-native/AwesomeProject/UIExplorer/ScrollViewExample.js
+badd +23 1_Project/react-native/AwesomeProject/Components/ArbitraryGridLayoutView.js
+badd +55 1_Project/react-native/AwesomeProject/ios/template.js
+badd +377 1_Project/react-native/AwesomeProject/UIExplorer/ImageExample.js
+badd +21 1_Project/react-native/AwesomeProject/UIExplorer/SetPropertiesExampleApp.js
+badd +1 .vimrc
+badd +82 .vimrc.before
+badd +268 .vimrc.bundles
+badd +8 .vimrc.before.local
+badd +18 .vimrc.bundles.local
+badd +127 1_Project/react-native/AwesomeProject/UIExplorer/UIExplorerApp.ios.js
+badd +1 1_Project/react-native/AwesomeProject/NERD_tree_2
+badd +1 NERD_tree_2
+badd +23 1_Project/react-native/AwesomeProject/UIExplorer/ViewExample.js
+badd +2 1_Project/react-native/AwesomeProject/GridComponent/index.ios.js
+badd +18 1_Project/react-native/AwesomeProject/GridComponent/GridLayoutSample.js
+badd +1 \'/Users/pinganhaofang/1_Project/react-native/AwesomeProject/NativeModule/NativeModuleExample.txt\'
+badd +3 1_Project/react-native/AwesomeProject/NativeModule/NativeModuleExample.txt
+badd +57 1_Project/react-native/AwesomeProject/NativeModule/NativeUICompoment.txt
+badd +1 1_Project/react-native/AwesomeProject/NativeModule/button.js
+badd +13 1_Project/react-native/AwesomeProject/GridComponent/GridLayoutView.ios.js
+badd +1 1_Project/react-native/AwesomeProject/GridComponent/ArbitraryGridLayoutView.js
+badd +24 1_Project/react-native/AwesomeProject/node_modules/react-native-button/Button.js
+badd +122 1_Project/react-native/AwesomeProject/UIExplorer/PickerIOSExample.js
+badd +1 1_Project/react-native/AwesomeProject/node_modules/react-native/cli.js
+badd +61 1_Project/react-native/AwesomeProject/node_modules/react-native/Libraries/Picker/PickerIOS.ios.js
+badd +179 1_Project/react-native/AwesomeProject/node_modules/react-native/Libraries/Components/View/View.js
+badd +212 1_Project/react-native/AwesomeProject/node_modules/react-native/Libraries/Components/Touchable/TouchableHighlight.js
+badd +21 1_Project/react-native/AwesomeProject/node_modules/react-native/package.json
+badd +69 1_Project/react-native/AwesomeProject/node_modules/react-native/Libraries/Components/Switch/Switch.js
+badd +5 1_Project/react-native/AwesomeProject/UIExplorer/UIExplorerButton.js
+badd +2 1_Project/react-native/AwesomeProject/index.android.js
+badd +5 1_Project/react-native/AwesomeProject/.git/index
+badd +61 1_Project/react-native/AwesomeProject/UIExplorer/SwitchIOSExample.js
+badd +1 1_Project/react-native/AwesomeProject/GridComponent/button.js
+badd +200 1_Project/react-native/AwesomeProject/UIExplorer/NavigatorIOSExample.js
+badd +34 1_Project/react-native/AwesomeProject/UIExplorer/TabBarIOSExample.js
+argglobal
+silent! argdel *
+set stal=2
+edit 1_Project/react-native/AwesomeProject/keyword_styles.txt
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
+wincmd w
+wincmd t
+set winheight=1 winwidth=1
+exe '1resize ' . ((&lines * 8 + 22) / 45)
+exe 'vert 1resize ' . ((&columns * 53 + 78) / 157)
+exe '2resize ' . ((&lines * 36 + 22) / 45)
+exe 'vert 2resize ' . ((&columns * 53 + 78) / 157)
+exe 'vert 3resize ' . ((&columns * 103 + 78) / 157)
+argglobal
+setlocal fdm=indent
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=3
+setlocal fen
+48
+normal! zo
+65
+normal! zo
+let s:l = 72 - ((2 * winheight(0) + 4) / 8)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+72
+normal! 037|
+lcd ~/1_Project/react-native/AwesomeProject
+wincmd w
+argglobal
+edit ~/1_Project/react-native/AwesomeProject/NativeModule/NativeUICompoment.txt
+setlocal fdm=indent
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=3
+setlocal fen
+16
+normal! zo
+30
+normal! zo
+48
+normal! zo
+63
+normal! zo
+let s:l = 70 - ((10 * winheight(0) + 18) / 36)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+70
+normal! 043|
+lcd ~/1_Project/react-native/AwesomeProject/NativeModule
+wincmd w
+argglobal
+edit ~/1_Project/react-native/AwesomeProject/keyword_ui.txt
+setlocal fdm=indent
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=3
+setlocal fen
+2
+normal! zo
+11
+normal! zo
+124
+normal! zo
+162
+normal! zo
+173
+normal! zo
+259
+normal! zo
+259
+normal! zc
+283
+normal! zo
+331
+normal! zo
+354
+normal! zo
+366
+normal! zo
+381
+normal! zo
+473
+normal! zo
+473
+normal! zc
+let s:l = 391 - ((19 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+391
+normal! 028|
+lcd ~/1_Project/react-native/AwesomeProject
+wincmd w
+exe '1resize ' . ((&lines * 8 + 22) / 45)
+exe 'vert 1resize ' . ((&columns * 53 + 78) / 157)
+exe '2resize ' . ((&lines * 36 + 22) / 45)
+exe 'vert 2resize ' . ((&columns * 53 + 78) / 157)
+exe 'vert 3resize ' . ((&columns * 103 + 78) / 157)
+tabedit ~/1_Project/react-native/AwesomeProject/Components/TabBarIOSExample.js
+set splitbelow splitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+setlocal fdm=indent
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=3
+setlocal fen
+16
+normal! zo
+24
+normal! zo
+32
+normal! zo
+33
+normal! zo
+41
+normal! zo
+42
+normal! zo
+121
+normal! zo
+125
+normal! zo
+let s:l = 110 - ((26 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+110
+normal! 022|
+lcd ~/1_Project/react-native/AwesomeProject/GridComponent
+tabedit ~/1_Project/react-native/AwesomeProject/GridComponent/button.js
+set splitbelow splitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+setlocal fdm=indent
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=3
+setlocal nofen
+let s:l = 33 - ((16 * winheight(0) + 21) / 43)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+33
+normal! 07|
+lcd ~/1_Project/react-native/AwesomeProject/GridComponent
+tabedit ~/1_Project/react-native/AwesomeProject/GridComponent/index.ios.js
+set splitbelow splitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+setlocal fdm=indent
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=3
+setlocal nofen
+17
+normal! zo
+25
+normal! zo
+26
+normal! zo
+27
+normal! zo
+35
+normal! zo
+36
+normal! zo
+let s:l = 13 - ((8 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+13
+normal! 041|
+lcd ~/1_Project/react-native/AwesomeProject/GridComponent
+tabnext 3
+set stal=1
+if exists('s:wipebuf')
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=20 shortmess=filmnrxoOtT
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if file_readable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &so = s:so_save | let &siso = s:siso_save
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :
