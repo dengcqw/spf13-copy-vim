@@ -17,4 +17,8 @@
     " code snippet {
         Bundle 'drmingdrmer/xptemplate'
     " }
+    " fasten ctrlp search {
+        Bundle 'FelikZ/ctrlp-py-matcher'
+    " }
+
 

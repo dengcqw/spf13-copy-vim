@@ -235,18 +235,6 @@
     """""""""" NERDtree settings"""""""""""""""
     let g:NERDTreeWinPos='left'
 
-    """"""""""ctrlp file search settings""""""""""
-    " use ,fu search fun tag -> CtrlPFunky
-    " current dir
-    let g:ctrlp_map = '<D-p>'
-    let g:ctrlp_cmd = 'CtrlP'
-    let g:ctrlp_max_depth = 10
-    " recent files
-    nnoremap <silent> <D-r> :CtrlPMRU<CR> 
-    " buffers
-    nnoremap <silent> <D-b> :CtrlPBuffer<CR>
-
-
     """"""""""EasyMotion settings""""""""""
     ""let g:EasyMotion_leader_key = '\'
         " ff[ch]
@@ -349,3 +337,50 @@ inoremap <D-p> <c-x><c-p>
 "}
 
 set foldlevelstart=1
+
+" ctrlp {
+    "使用:CtrlP或:CtrlP [starting-directory]调用CtrlP进入查找文件模式
+    "使用:CtrlPBuffer或:CtrlPMRU进入查找buffer或者查找MRU文件模式
+    "使用:CtrlPMixed同时搜索普通文件、Buffers或者MRU文件
+    "可以使用:help ctrlp-commands和:help ctrlp-extensions查看其他命令帮助
+
+    "一旦CtrlP被打开了，就可以使用以下的命令
+        "<F5> 清除当前目录下的缓存，获取新的结构
+        "<c-f>和<c-b> 在各个模式下转换
+        "<c-d> 使用文件名搜索代替全路径搜索
+        "<c-r> 使用正则模式
+        "<c-j>和<c-k> 上下选择文件
+        "<c-t> <c-v>和<c-x> 在新的tab或者新的分割窗口打开选择的文件
+        "<c-n>和<c-p> 找到之前或者之后查找的字符串
+        "<c-y> 创建一个新的文件
+        "<c-z> 标记或者取消标记多个文件然后使用<c-o>打开它们
+        "
+    " use ,fu search fun tag -> CtrlPFunky
+    let g:ctrlp_max_depth = 40
+    let g:ctrlp_max_files = 0
+    let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:200'
+    " search by file name
+    let g:ctrlp_by_filename = 1
+
+    " NOTE:
+        " if install ag with brew, below setting will be invalid
+        " let g:ctrlp_custom_ignore
+        " edit ~/.agignore to add folders to be ignore.
+        " Ag will ignore anything that you have in your .gitignore. 
+        " You can also create an .agignore for anything that doesn’t belong in your .gitignore.
+        " http://erickel.ly/ignoring-filesdirectories-with-ctrlp
+
+    " current dir
+    let g:ctrlp_map = '<D-p>'
+    let g:ctrlp_cmd = 'CtrlP'
+    " recent files
+    nnoremap <silent> <D-r> :CtrlPMRU<CR>
+    " buffers
+    nnoremap <silent> <D-b> :CtrlPBuffer<CR>
+
+    if has('python') || has('python3')
+        let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+    endif
+" }
+
+
