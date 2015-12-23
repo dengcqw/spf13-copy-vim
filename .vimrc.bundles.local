@@ -15,10 +15,15 @@
         Bundle 'ternjs/tern_for_vim'
     " }
     " code snippet {
-        Bundle 'drmingdrmer/xptemplate'
+        "Bundle 'drmingdrmer/xptemplate'
     " }
     " fasten ctrlp search {
         Bundle 'FelikZ/ctrlp-py-matcher'
+    " }
+    " iOS dev {
+        Bundle 'msanders/cocoa.vim'
+        Bundle 'qqshfox/objc_matchbracket'
+        Bundle 'vim-scripts/a.vim'
     " }
 
 
