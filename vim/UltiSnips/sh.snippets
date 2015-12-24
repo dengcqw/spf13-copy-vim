@@ -1,0 +1,34 @@
+
+# bash shell script
+
+snippet readLine "read file by line"
+filename="$1"
+while read -r line
+do
+    name=$line
+    echo "Name read from file - $name"
+done < "$filename"
+endsnippet
+
+snippet commonCheckSample "common check operations"
+{
+	-d FILE
+	FILE exists and is a directory
+	-e FILE
+	FILE exists
+	-f FILE
+	FILE exists and is a regular file
+	-h FILE
+	FILE exists and is a symbolic link (same as -L)
+	-r FILE
+	FILE exists and is readable
+	-s FILE
+	FILE exists and has a size greater than zero
+	-w FILE
+	FILE exists and is writable
+	-x FILE
+	FILE exists and is executable
+	-z STRING
+	the length of STRING is zero
+}
+endsnippet

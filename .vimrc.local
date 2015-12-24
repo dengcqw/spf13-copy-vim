@@ -354,11 +354,12 @@ set foldlevelstart=1
         "<c-n>和<c-p> 找到之前或者之后查找的字符串
         "<c-y> 创建一个新的文件
         "<c-z> 标记或者取消标记多个文件然后使用<c-o>打开它们
+        "<c-o> 选择打开方式
         "
     " use ,fu search fun tag -> CtrlPFunky
     let g:ctrlp_max_depth = 40
     let g:ctrlp_max_files = 0
-    let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:200'
+    let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:100'
     " search by file name
     let g:ctrlp_by_filename = 1
 
