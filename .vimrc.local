@@ -379,9 +379,55 @@ set foldlevelstart=1
     " buffers
     nnoremap <silent> <D-b> :CtrlPBuffer<CR>
 
-    if has('python') || has('python3')
-        let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-    endif
+    "if has('python') || has('python3')
+        "let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+    "endif
 " }
 
+"{
+    "Cocoa.vim
+    ":help cocoa
+    "cocoa.vim uses snipMate to code completion
+    "<c-x><c-o>
+    "<tab>
+    "useful plugin: objc_matchbracket.vim
+    ":ListMethods
+    ":BuildMethods .h -> .m
+    "look document
+    ":CocoaDoc
+    "K
+    "Xcode-like mappings
+    "<Leader>A Alternate between header (.h) and implementation (.m) file
+    "K Look up documentation for word under cursor
+    "<d-m-up> equal <Leader>A
+    "<d-r> Build & Run (Go)
+    "<d-cr> CMD-R
+    "<d-b> Build
+    "<shift-k> Clean
+    "<d-0> Go to Project
+    "<d-2> :ListMethods
+    "<F5> (in insert mode) Show omnicompletion menu
+    "<d-/> Comment out line
+    "<d-[> Decrease indent
+    "<d-]> Increase indent
+    "a.vim
+    ":A switches to the header file corresponding to the current file being edited (or vise versa)
+    ":AS splits and switches
+    ":AV vertical splits and switches
+    ":AT new tab and switches
+    ":AN cycles through matches
+    ":IH switches to file under cursor
+    ":IHS splits and switches
+    ":IHV vertical splits and switches
+    ":IHT new tab and switches
+    ":IHN cycles through matches
+    "<Leader>ih switches to file under cursor
+    "<Leader>is switches to the alternate file of file under cursor (e.g. on switches to foo.cpp)
+    "<Leader>ihn cycles through matches
+"}
 
+let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
+
+let g:alternateExtensions_m = "h"
+let g:alternateExtensions_mm = "h"
+let g:alternateExtensions_h = "m,mm"
