@@ -53,7 +53,7 @@ plugins=(git brew chucknorris common-alias dirhistory encode64 github history js
 
 # User configuration
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -82,13 +82,49 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+AUTOJUMP_PATH="/usr/local/Cellar/autojump/22.2.4/etc"
+[[ -s /usr/local/Cellar/autojump/22.2.4/etc/profile.d/autojump.sh ]] && . /usr/local/Cellar/autojump/22.2.4/etc/profile.d/autojump.sh
 
+alias cls='clear'
+alias ll='ls -l'
+alias la='ls -a'
+alias vi='vim'
+alias javac="javac -J-Dfile.encoding=utf8"
+alias grep="grep --color=auto"
+alias -s html=mvim   # 在命令行直接输入后缀为 html 的文件名，会在 mvim 中打开
+alias -s rb=mvim     
+alias -s py=mvim     
+alias -s js=mvim
+alias -s c=mvim
+alias -s java=mvim
+alias -s txt=mvim
+alias -s gz='tar -xzvf'
+alias -s tgz='tar -xzvf'
+alias -s zip='unzip'
+alias -s bz2='tar -xjvf'
 
+alias -s m=mvim
+alias -s h=mvim
+alias -s plist=mvim
+
+alias djgrep='grep --color=auto -r -n ./* -e '
+alias rm="trash"
+
+export EDITOR=mvim
+alias pushToGithub='git push -u origin master'
 source /usr/local/Cellar/autojump/22.2.4/etc/autojump.sh
 
+#alias for cnpm
 alias cnpm="npm --registry=https://registry.npm.taobao.org \
---cache=$HOME/.npm/.cache/cnpm \
---disturl=https://npm.taobao.org/dist \
---userconfig=$HOME/.cnpmrc"
+  --cache=$HOME/.npm/.cache/cnpm \
+  --disturl=https://npm.taobao.org/dist \
+  --userconfig=$HOME/.cnpmrc"
 
-alias rnstart="react-native start -root "
+alias rnstartAtroot="react-native start --root "
+alias npmi="npm install --save "
+
+# brew install coreutils
+# use gnu tools
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
