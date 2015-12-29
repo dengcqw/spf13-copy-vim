@@ -84,7 +84,7 @@ map ,n :xccmd jumpToNextCounterpart<CR>
     "map ,pp :xccmd selectPreviousPlaceholder<CR>
 
 " reveal file or symbol
-map ,pr :xccmd reveojectNavigator<CR>
+map ,pr :xccmd revealInProjectNavigator<CR>
 "map ,sr :xccmd revealInSymbolNavigator<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -96,9 +96,9 @@ map ,pr :xccmd reveojectNavigator<CR>
     "map ,ea :xccmd toggleTokenizedEditing<CR>
 
 " Fold
-nmap ,zf :xccmd fold<CR>
-" <S-SPACE> not work
-nmap ,zu :xccmd unfold<CR> 
+nnoremap <SPACE> :xccmd fold<CR>
+nnoremap zz :xccmd unfold<CR>
+nnoremap <C-z> :xccmd unfoldAll<CR>
         map ,fa :xccmd foldAllMethods<CR>
         map ,ua :xccmd unfoldAllMethods<CR>
         map ,fc :xccmd foldAllComments<CR>
@@ -156,3 +156,14 @@ nmap vab V$%j
 
 " save when esc
 ino <Esc> <Esc>:xcmenucmd Save<CR>
+
+nnoremap <CR> <c-m>
+vnoremap <CR> s
+
+" quick add ; at end of statement
+inoremap <c-;> <ESC>A;<ESC>o
+
+" Move by line in normal mode
+" <c-e>  move up
+" <c-y>  move down
+

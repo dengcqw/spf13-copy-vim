@@ -24,6 +24,10 @@
         Bundle 'msanders/cocoa.vim'
         Bundle 'qqshfox/objc_matchbracket'
         Bundle 'vim-scripts/a.vim'
+        "witching Header Files
+        Bundle 'eraserhd/vim-ios.git'
+        "Indentation
+        Bundle "b4winckler/vim-objc"
     " }
-
-
+    "
+    Bundle 'dkprice/vim-easygrep'

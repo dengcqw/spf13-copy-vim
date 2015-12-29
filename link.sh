@@ -9,3 +9,4 @@ ln -s ~/spf13-copy-vim/.vimrc.before.local ~/.vimrc.before.local
 ln -s ~/spf13-copy-vim/.gvimrc ~/.gvimrc
 ln -s ~/spf13-copy-vim/vim ~/.vim
 ln -s ~/spf13-copy-vim/.xvimrc ~/.xvimrc
+ln -s ~/spf13-copy-vim/.zshrc ~/.zshrc

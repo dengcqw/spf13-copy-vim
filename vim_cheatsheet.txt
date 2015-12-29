@@ -1,0 +1,56 @@
+Undo tree                         Omni Complete
+    ,u:  undo tree                    <C-X><C-F>   补全文件名
+                                      <C-X><C-L>   补全行
+NERD Tree   文档管理                  <C-X><C-N/P> 补全cpt指定的内容
+    <C-E> NERDTreeToggle              <D-p>        <C-x><C-p>
+    ,nt   NERDTreeFind 定位文件   
+    i/s/t edit file               session manager
+    P     go to parent                ,sl  session list
+    <C-j/k>  to to sibling            ,ss  session save
+    C    enter dir                    ,sc  session close
+    u/U  leave dir                
+    r/R   refresh                 杂项
+    CD  change root to CWD            ,=      窗口调整
+    q   close                         zh / zl    水平调整
+    ?   help                          <C-A>    数字递增
+                                      zh,zl 水平滚动
+Ctrlp                                 Y     复制到行尾
+    <D-P>  文件查找                   ,f[0-9] 设置折行层级0-9
+    <D-R>  recent files               cwd/cd.  切换到当前文件目录
+    <D-B>  buffers                    e/sp/vsp/tabe 编辑文件
+    <C-X>  open file verticaly        ,tn/,tc/,ti/,to/.te  tab manage
+    <C-j/k>  move up/down             ,ff    search current word
+    ,fu    function search            <D-j/k>  visual model move lines
+                                      ,w   write file
+Surround                              vp   replace a word
+    ds/cs delete/change               gf   同目录下文件跳转
+    yss  the whole line               K    大写，搜索光标下单词
+    S   visual mode                   zR  open all folding
+                                      zM  close all folding
+NERDCommenter   注释代码          
+    ,c<space>                     Windows switch
+    ,cc                               <C-J> <C-K> <C-L> <C-H> 
+    \\\                           
+                                  Tab switch
+Fugitive  git功能                     <S-H> <S-L>
+    ,gs :Gstatus                  
+    :Git add 提交文件             emmet
+    ,gc :Gcommit                      <C-S>,  在insertmodel展开标签
+    ,gp :Git push                 
+                                  js-bueaty
+Tabularize  按,a后符号对齐            <C-S> js格式化 visual model
+    ,a=                               <C-H> html 格式化 visual model
+    ,a:                           
+    ,a|                           YouCompleteMe
+                                      <C-j>   open snips
+Tagbar                            
+    ,tt     toggle pannel         Buffer
+    <C-]>   打开tag                   ,bd  :Bclose close current buffer
+    <C-T>                             ,ba  close all buffer
+                                      :Bs  buffer search
+Easy Motion                       
+    ,,w/,,b  word and back       ,ev:  edit vimrc  
+    ,,s      搜索的字母          ,sv:  source vimrc
+    ,,j/,,k  行级跳转(jk)                   
+    ,,h/,,l  行内跳转(hl)                    
+    ,,.      重复上一次动作(.)                  

@@ -92,6 +92,7 @@
     " Super useful! From an idea by Michael Naumann
     vnoremap <silent> * :call VisualSelection('f', '')<CR>
     vnoremap <silent> # :call VisualSelection('b', '')<CR>
+
     " When you press gv you vimgrep after the selected text
     vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
 
@@ -119,6 +120,7 @@
         emenu Foo.Bar
         unmenu Foo
     endfunction 
+
     function! VisualSelection(direction, extra_filter) range
         let l:saved_reg = @"
         execute "normal! vgvy"
@@ -362,7 +364,11 @@ set foldlevelstart=1
     let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:100'
     " search by file name
     let g:ctrlp_by_filename = 1
-
+    " home path display ~
+    let g:ctrlp_tilde_homedir = 1
+    " only show current working dir recent files.
+    " open new buffer to open other recent files
+    let g:ctrlp_mruf_relative = 1
     " NOTE:
         " if install ag with brew, below setting will be invalid
         " let g:ctrlp_custom_ignore
@@ -379,9 +385,16 @@ set foldlevelstart=1
     " buffers
     nnoremap <silent> <D-b> :CtrlPBuffer<CR>
 
-    "if has('python') || has('python3')
-        "let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-    "endif
+    if has('python') || has('python3')
+        let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+    endif
+
+
+    " search word under cursor
+    nnoremap <Leader>lw :CtrlP<CR><c-\>
+    " search selected words
+    vnoremap <Leader>lw y:CtrlP<CR><c-\>c
+    nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
 " }
 
 "{
@@ -426,8 +439,92 @@ set foldlevelstart=1
     "<Leader>ihn cycles through matches
 "}
 
-let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
+" a.vim {
+    let g:alternateExtensions_m = "h"
+    let g:alternateExtensions_mm = "h"
+    let g:alternateExtensions_h = "m,mm"
+"}
 
-let g:alternateExtensions_m = "h"
-let g:alternateExtensions_mm = "h"
-let g:alternateExtensions_h = "m,mm"
+" Easy motion {
+    let g:EasyMotion_smartcase = 1
+    " 行级跳转(jk)
+    map <Leader><Leader>j <Plug>(easymotion-j)
+    map <Leader><Leader>k <Plug>(easymotion-k)
+    " 行内跳转(hl)
+    map <Leader><leader>h <Plug>(easymotion-linebackward)
+    map <Leader><leader>l <Plug>(easymotion-lineforward)
+    " 重复上一次动作(.)
+    map <Leader><leader>. <Plug>(easymotion-repeat)
+"}
+
+" ag search {
+    if executable('ag')
+      " Use ag over grep
+      set grepprg=ag\ --nogroup\ --nocolor
+    endif
+    " bind K to grep word under cursor
+    nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+"}
+
+" Easygrep {
+    "<Leader>vv  - Grep for the word under the cursor, match all occurences,
+                  "like |gstar|
+    "<Leader>vV  - Grep for the word under the cursor, match whole word, like
+                  "|star|
+    "<Leader>va  - Like vv, but add to existing list
+    "<Leader>vA  - Like vV, but add to existing list
+    "<Leader>vr  - Perform a global search search on the word under the cursor
+                  "and prompt for a pattern with which to replace it.
+    "<Leader>vo  - Select the files to search in and set grep options
+    "<Leader>vy* - Invoke any option from the options explorer, where * is the
+                  "shortcut for that option.
+                  "e.g. <Leader>vyr - toggles recursion
+                       "<Leader>vyb - sets buffer grepping mode
+                       "etc.
+    let g:EasyGrepMode = 2     " All:0, Open Buffers:1, TrackExt:2, 
+    let g:EasyGrepCommand = 1  " Use vimgrep:0, grepprg:1
+    let g:EasyGrepRecursive  = 1 " Recursive searching
+    let g:EasyGrepIgnoreCase = 1 " not ignorecase:0
+    let g:EasyGrepFilesToExclude = "*.bak, cscope.*, *.a, *.o, *.pyc, *.bak, *.zip"
+"}
+
+" ycm {
+    let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'qf' : 1,
+      \ 'notes' : 1,
+      \ 'markdown' : 1,
+      \ 'unite' : 1,
+      \ 'text' : 1,
+      \ 'vimwiki' : 1,
+      \ 'gitcommit' : 1,
+      \}
+    " 获取编译数据
+    "https://github.com/rizsotto/Bear
+    let g:ycm_extra_conf_vim_data = ['&filetype']
+"}
+
+"vim-ios {
+    ":A	Switch to alternate file
+    ":XBuild	Compile Project
+    ":Xinstall	Install on device
+"}
+
+" copy file path {
+    " copy current file name (relative/absolute) to system clipboard
+    if has("mac") || has("gui_macvim") || has("gui_mac")
+      " relative path  (src/foo.txt)
+      nnoremap <leader>cf :let @*=expand("%")<CR>
+
+      " absolute path  (/something/src/foo.txt)
+      nnoremap <leader>cF :let @*=expand("%:p")<CR>
+
+      " filename       (foo.txt)
+      nnoremap <leader>ct :let @*=expand("%:t")<CR>
+
+      " directory name (/something/src)
+      nnoremap <leader>ch :let @*=expand("%:p:h")<CR>
+    endif
+"}
+
+set clipboard=unnamed,autoselect

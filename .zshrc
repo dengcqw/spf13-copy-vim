@@ -49,7 +49,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew chucknorris common-alias dirhistory encode64 github history jsontools npm osx sudo urltools vi-mode web-search)
+plugins=(git brew common-alias dirhistory encode64 github history jsontools npm osx sudo urltools vi-mode web-search)
 
 # User configuration
 
@@ -128,3 +128,10 @@ alias npmi="npm install --save "
 # use gnu tools
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
+
+# Github
+# push a exist git project to github
+# 1. git remote add origin [github repo]
+# 2. git pull origin master
+# 3. git push origin master
