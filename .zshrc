@@ -135,3 +135,18 @@ MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 # 1. git remote add origin [github repo]
 # 2. git pull origin master
 # 3. git push origin master
+
+# diff
+# diff -u oldfile1 newfile2 > diff.txt
+
+# Xcode plugin UUID
+alias updateXcodeUUID="XCODEUUID=`defaults read /Applications/Xcode.app/Contents/Info DVTPlugInCompatibilityUUID` \
+                  for f in ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/*;   \
+                  do \
+                      defaults write "$f/Contents/Info" DVTPlugInCompatibilityUUIDs -array-add $XCODEUUID;  \
+                  done \
+                  unset XCODEUUID;"
+
+# Remove some line in a file. e.g. clear history file
+# http://stackoverflow.com/a/5413132
+# see scripts/clearHistory.sh
