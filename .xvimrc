@@ -97,7 +97,7 @@ map ,pr :xccmd revealInProjectNavigator<CR>
 
 " Fold
 nnoremap <SPACE> :xccmd fold<CR>
-nnoremap zz :xccmd unfold<CR>
+nnoremap zz $:xccmd unfold<CR>
 nnoremap <C-z> :xccmd unfoldAll<CR>
         map ,fa :xccmd foldAllMethods<CR>
         map ,ua :xccmd unfoldAllMethods<CR>
@@ -151,8 +151,8 @@ nmap 0 ^
 " yank/select block like
 " method {
 " }
-nmap yab V$%jy
-nmap vab V$%j
+nmap yab V$%y
+nmap vab V$%
 
 " save when esc
 ino <Esc> <Esc>:xcmenucmd Save<CR>

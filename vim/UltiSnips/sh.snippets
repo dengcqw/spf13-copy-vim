@@ -32,3 +32,25 @@ snippet commonCheckSample "common check operations"
 	the length of STRING is zero
 }
 endsnippet
+
+snippet array_string "manuplate array"
+## declare an array variable
+declare -a arr=("element1" "element2" "element3")
+
+## now loop through the above array
+for i in "${arr[@]}"
+do
+   echo "$i"
+   # or do whatever with individual element of the array
+done
+
+# You can access them using echo "${arr[0]}", "${arr[1]}" also
+
+# loop arr with i
+local i
+for (( i = 0 ; i < ${#array[@]} ; i++ ))
+do
+#${array[$i]}
+done
+
+endsnippet

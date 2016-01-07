@@ -57,6 +57,8 @@
     noremap <leader>pp :setlocal paste!<cr>
 
     colorscheme desert
+
+    set nospell
 "}
 
 " relative number {
