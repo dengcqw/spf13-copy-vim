@@ -1,0 +1,87 @@
+
+
+# 中文教程
+# http://backlogtool.com/git-guide/cn/intro/intro1_4.html
+
+不同类别的修改 (如：Bug修复和功能添加) 要尽量分开提交
+commit format:
+第1行：提交修改内容的摘要
+第2行：空行
+第3行以后：修改的理由
+
+working copy
+index
+database
+
+stash是临时保存文件修改内容的区域。stash可以暂时保存工作树和索引里还没提交的修改内容，您可以事后再取出暂存的修改，应用到原先的分支或其他的分支上。
+rebase bugfix分支到master分支, bugfix分支的历史记录会添加在master分支的后面。历史记录成一条线，相当整洁。
+
+
+复原到之前一个提交
+
+http://nvie.com/posts/a-successful-git-branching-model/
+    主分支
+    特性分支
+    release分支
+    hotFix分支
+# 合并
+    Merge和rebase都是合并历史记录，但是各自的特征不同。
+    merge
+    保持修改内容的历史记录，但是历史记录会很复杂。
+    rebase
+    历史记录简单，是在原有提交的基础上将差异内容反映进去。
+    因此，可能导致原本的提交内容无法正常运行。
+    您可以根据开发团队的需要分别使用merge和rebase。
+    例如，想简化历史记录，
+
+    在topic分支中更新merge分支的最新代码，请使用rebase。
+    向merge分支导入topic分支的话，先使用rebase，再使用merge。
+    取消的合并
+        git reset --hard HEAD~
+
+    用rebase合并步骤
+        git checkout issue3    切换到分支
+        git rebase master      rebase master to issue3
+        git add myfile.txt     fix confict, and add changes
+        git rebase --continue  
+        git checkout master    switch to master
+        git merge issue3       merge issue3 to master
+
+# 改写提交 amend
+    添加最近提交时漏掉的档案
+    修改最近提交的注解
+    git commit --amend
+
+# 改写提交 revert
+    安全地取消过去发布的提交
+    git revert HEAD
+
+# 删除提交 reset
+    显示当前head
+    git reset --hard HEAD
+    删除前几个commit,波浪线表示个数
+    git reset --hard HEAD~~~
+    reset错误的时候还原到reset前的状态
+    git reset --hard ORIG_HEAD
+# 同步提交 cherry-pick
+    git checkout master
+    git cherry-pick 99daed2    非master上的提交
+# 用rebase -i 合并提交
+    git rebase -i HEAD~~
+# 用rebase -i 修改提交
+    http://backlogtool.com/git-guide/cn/stepup/stepup7_6.html
+# 把issue1分支的所有提交合并成一个提交，并导入到master分支
+    git merge --squash issue1
+
+# 取消rebase 
+    git rebase -i --abort
+
+# 格式代输出log
+# https://ruby-china.org/topics/939
+    ``` commit hash
+    (name=maokaiqian && git log --pretty=format:"%H"  --author="$name" --after="2015-12-23" --no-merges) | \
+    while read -r line
+    do
+        echo "Name read from file - $line"
+    done
+    ```

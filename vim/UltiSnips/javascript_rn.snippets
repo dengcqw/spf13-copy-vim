@@ -1,0 +1,291 @@
+########## { Reactive Native Template file } ##########
+
+# 1
+snippet copyright "js file header description"
+/**
+ * ${1:fileName}
+ * haofangtuo
+
+ * Created by DengJinlong on `date +%d/%m/%y`.
+ * Copyright (c) 2015 平安好房. All rights reserved.
+ */
+
+'use strict';
+
+endsnippet
+
+# 2
+snippet rnRequire ""
+var React = require('react-native');
+var ${1:Component} = require('./${2:ComponentFileName}');
+
+endsnippet
+
+# 3 
+snippet rnVar "RN Component var"
+var {
+    AppRegistry,
+    StyleSheet,
+    View,
+    Text,
+	${1:Component},
+} = React;
+
+endsnippet
+
+# 4
+snippet rnCreateComponent "React.createClass()"
+var ${1:ComponentName} = React.createClass({
+
+    getInitialState: function() {
+        return {
+			${2:Variables here used by 'this.state'}
+        };
+    },
+
+    render: function() {
+		${3:process state here} 
+
+        return (
+            < View style = { styles.container }>
+				${4:View hierarchy}
+            </View>
+        );
+    },
+
+	// Private Process
+	_onPress: function() {
+	},
+
+});
+
+endsnippet
+
+# 4.1
+snippet rnCreateComponentWithMount "React.createClass()"
+var ${1:ComponentName} = React.createClass({
+
+    getInitialState: function() {
+        return {
+			${2:Variables here used by 'this.state'}
+        };
+    },
+
+componentWillMount: function() {
+},
+componentDidMount: function() {
+},
+componentWillunmount: function() {
+},
+
+    render: function() {
+		${3:process state here} 
+
+        return (
+            < View style = { styles.container }>
+				${4:View hierarchy}
+            </View>
+        );
+    },
+
+	// Private Process
+	_onPress: function() {
+	},
+
+});
+
+endsnippet
+# 5
+snippet rnCreateStyleSheet "StyleSheet.create()"
+var styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+    },
+
+	${1:other view element style here}
+});
+
+endsnippet
+
+# 6
+snippet rnExport "module.exports"
+/**
+ * Exports
+ */
+exports.title = '${1:title}'
+exports.description = '${2:This is template file for iOS Reactive Native develop! Enjoy it.}'
+
+/**
+ * Private Component
+ */
+module.exports = ${3:ComponentName};
+endsnippet
+
+# 7
+snippet rnRegComponent "AppRegistry.registerComponent"
+/**
+ * Public Component
+ */
+AppRegistry.registerComponent('${1:ComponentName}', () => ${2:ComponentName});
+endsnippet
+
+########## { helper snippet } ##########
+
+# 1
+snippet rnfunvar "var: function() {}"
+${1:varName}: function() {
+},
+
+endsnippet
+
+# 2
+snippet rnsetstate "this.setState()"
+this.setState({${1:var}: ${2:value}});
+endsnippet
+
+#3
+snippet rnWinW "Description"
+Dimensions.get('window').width
+endsnippet
+
+snippet rnWinH "Description"
+Dimensions.get('window').heigth
+endsnippet
+
+# 4
+snippet rnAlert "AlertIOS.alert"
+AlertIOS.alert(
+	'${1:Title}',
+	'${2:msg}',
+	[// buttons
+		{text: 'OK', onPress: () => :this._alertOkClick},
+		{text: 'Cancel', onPress: () => this._alertCancelClick, style: 'cancel'},
+	]
+)
+endsnippet
+
+snippet rnAlertFun "alert function"
+var alert = function(msg) {
+    AlertIOS.alert(
+        'Title',
+        String(msg),
+        [
+            {text: 'OK', onPress: () => console.log('OK Pressed!')},
+            {text: 'Cancel', onPress: () => console.log('Cancel Pressed!'), style: 'cancel'},
+        ]
+    )
+}
+
+snippet rnAlertMsg "alert msg only"
+AlertIOS.alert( 'Test', '${2:msg}');
+endsnippet
+
+endsnippet
+
+# 5
+snippet rnShowLoading "ActivityIndicator loading"
+{
+	this.state.isLoadingShow ? (
+		< View style = {{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+			< ActivityIndicatorIOS size = "${1:small}" color = "${2:#268DFF}" / >
+		< /View >
+	) : {
+		${1:render otherView}
+	}
+}
+
+endsnippet
+
+snippet rnTabBar "<TabBarIOS..."
+<TabBarIOS
+	tintColor="white"
+	barTintColor="darkslateblue">
+	${1:rnTabBarItem}
+</TabBarIOS>
+endsnippet
+
+snippet rnTabBarItem "<TabBarIOS.Item..."
+<TabBarIOS.Item
+	title    = '${1:title}'
+	badge	 = ''
+	icon     = {require('image!${2:assetsImgName}')}
+	selectedIcon = {require('image!$2')}
+	selected = {this.state.selectedTab === '${3:TabName}'}
+	onPress = {
+		() => { this.setState({
+			selectedTab: '$3',
+		});
+	}} >
+	{this._renderNavigator(${4:navigator}, '$1')}
+</TabBarIOS.Item>
+endsnippet
+
+snippet rnNavigatorFn "renderNavigator function"
+_renderNavigator: function(component, title) {
+	return (
+		<NavigatorIOS style = {{ flex: 1 }}
+			barTintColor = '#007AFF'
+			titleTextColor = "#fff"
+			tintColor = "#fff"
+			translucent = { false }
+			initialRoute = {{
+				component: component,
+				title: title,
+			}} />
+	);
+},
+
+endsnippet
+
+snippet rnTouchable "TouchableHighlight..."
+<TouchableHighlight
+	underlayColor = "#fff"
+	style = {styles.btn}
+	onPress = {this.${1:_onPress}.bind(this, ${2:param})} >
+	<Text style = {{ color:'#fff' }} >${3:button title}</Text>
+</TouchableHighlight >
+endsnippet
+
+snippet rnButtonStyle "btn:{}"
+btn: {
+	marginTop: 10,
+	width: 80,
+	height: 35,
+	backgroundColor: '#3BC1FF',
+	justifyContent: 'center',
+	alignItems: 'center',
+	borderRadius: 4,
+}
+endsnippet
+
+snippet rnAsyncSgetItem "AsyncStorage.getItem()"
+AsyncStorage.getItem('${1:itemKey}', function(err, $1) {
+	if (!err && $1) {
+		${2:do something with item} 
+	} else {
+		${3:process err}
+	}
+});
+
+endsnippet
+
+snippet rnAsyncSmultiSet "AsyncStorage.multiSet()" b
+AsyncStorage.multiSet([
+	['${1:itemKey_1}', user.$1],
+	['${2:itemKey_2}', user.$2],
+], function(err) {
+	if (!err) {
+	}
+});
+endsnippet
+
+snippet rnTextInput "<TextInput..."
+<TextInput
+	style={styles.${1:input}}
+	password={${2:true}}
+	placeholder="请输入${3:...}"
+	onChangeText={this.${4:_userInput}}/>
+endsnippet
