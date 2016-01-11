@@ -15,7 +15,7 @@
 [push]
 	default = simple
 [commit]
-	template = ~/spf13-copy-vim/gitconfig/.gitmessage
+	template = ~/.gitmessage
 [diff]
 	tool = vimdiff
 [difftool]
