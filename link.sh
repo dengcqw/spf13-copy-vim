@@ -17,8 +17,8 @@ declare -a arr=(".vimrc"
 ## now loop through the above array
 for i in "${arr[@]}"
 do
-    if [ -e ~/$i ];then
-        echo "file: $i exist"
+    if [ -e ~/$i -a ! -L ~/$i ];then
+        echo "file exists: $i"
         echo "Please backup below files and rm them:"
         echo ${arr[@]}
         exit 0
@@ -42,4 +42,8 @@ else
     echo "fail link .gitmessage; file exists"
 fi
 
+ZSHRC_LOCAL=~/spf13-copy-vim/.zshrc.local
 
+if [ ! -e $ZSHRC_LOCAL ];then
+    touch $ZSHRC_LOCAL
+fi

@@ -1,0 +1,6 @@
+# 本文收集shell 知识点
+
+1. -a 逻辑与  -o 逻辑或
+
+    find -type b -o -type c
+    if [ -e filea -o -e fileb ];
