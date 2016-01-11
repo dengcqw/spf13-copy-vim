@@ -1,4 +1,4 @@
 bundle
 sessions
 *pyc
-zshrc.local
+.zshrc.local
