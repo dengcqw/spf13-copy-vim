@@ -154,7 +154,4 @@ alias updateXcodeUUID="XCODEUUID=`defaults read /Applications/Xcode.app/Contents
 # Find file
 alias djFindWithKeyword="tree -f -L 5 | grep "
 
-export RNNodeModulesPATH="~/ReactNative/node_modules"
-alias lnNodeModule="ln -s $RNNodeModulesPATH `pwd`/node_modules"
-
 source ~/spf13-copy-vim/.zshrc.local
