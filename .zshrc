@@ -93,8 +93,8 @@ alias vi='vim'
 alias javac="javac -J-Dfile.encoding=utf8"
 alias grep="grep --color=auto"
 alias -s html=mvim   # 在命令行直接输入后缀为 html 的文件名，会在 mvim 中打开
-alias -s rb=mvim     
-alias -s py=mvim     
+alias -s rb=mvim
+alias -s py=mvim
 alias -s js=mvim
 alias -s c=mvim
 alias -s java=mvim
@@ -153,4 +153,6 @@ alias updateXcodeUUID="XCODEUUID=`defaults read /Applications/Xcode.app/Contents
 
 # Find file
 alias djFindWithKeyword="tree -f -L 5 | grep "
-alias 
+
+export RNNodeModulesPATH="~/ReactNative/node_modules"
+alias lnNodeModule="ln -s $RNNodeModulesPATH `pwd`/node_modules"
