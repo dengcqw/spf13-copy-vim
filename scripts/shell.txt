@@ -4,3 +4,31 @@
 
     find -type b -o -type c
     if [ -e filea -o -e fileb ];
+
+2. 路径操作
+    $ pfName=/home/sgs/test.txt
+
+    # 获取全路径文件名
+    $ echo $pfName
+    /home/sgs/test.txt
+
+    # 获取文件名
+    $ echo ${pfName##*/}
+    test.txt
+
+    # 获取该文件的位置
+    $ echo ${pfName%/*}
+    /home/sgs
+
+    # 获取文件的后缀名
+    $ echo ${pfName##*.}
+    txt
+
+    # 仅仅获取文件的前缀
+    $ echo ${pfName##*/} | sed -r 's/^(.*)\..*$/\1/g'
+    test
+
+3. find结果如何传递给shell数组
+
+    array=($(find . -name "*.txt"))
+    for i in "${array[@]}"; do echo $i; done

@@ -156,11 +156,13 @@ alias djFindWithKeyword="tree -f -L 5 | grep "
 
 alias lnNodeModule='sh ~/spf13-copy-vim/scripts/link-node-module.sh'
 
+alias toggleDockIcon='sh ~/spf13-copy-vim/scripts/toggleDockIcon.sh'
+
 # Git short key {
     alias tgst='git status'
     alias tgpull='git pull'
     alias tgpush='git push'
-    alias tgdiff='git diff | mate'
+    alias tgdiff='git diff'
     alias tgadd='git add'
     alias tgcmt='git commit -v'
     alias tgcmt-a='git commit -v -a'
@@ -174,4 +176,10 @@ alias lnNodeModule='sh ~/spf13-copy-vim/scripts/link-node-module.sh'
     alias tglog-p='git log --pretty=format:"%h %s" --graph'
 #}
 
+
+# use local setting
+ZSHRC_LOCAL=~/spf13-copy-vim/.zshrc.local
+if [ ! -e $ZSHRC_LOCAL ];then
+    touch $ZSHRC_LOCAL
+fi
 source ~/spf13-copy-vim/.zshrc.local
