@@ -154,4 +154,6 @@ alias updateXcodeUUID="XCODEUUID=`defaults read /Applications/Xcode.app/Contents
 # Find file
 alias djFindWithKeyword="tree -f -L 5 | grep "
 
+alias lnNodeModule='sh ~/spf13-copy-vim/scripts/link-node-module.sh'
+
 source ~/spf13-copy-vim/.zshrc.local

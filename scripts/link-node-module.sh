@@ -6,4 +6,4 @@ then
     exit 0
 fi
 
-ln -s $RNNodeModulesPATH `pwd`/node_modules"
+ln -s $RNNodeModulesPATH `pwd`/node_modules
