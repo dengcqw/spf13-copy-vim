@@ -1,0 +1,40 @@
+
+1. linux下shell批量修改文件后缀名
+
+    继续工作所需啊，一开始google了一下，Y的，网上的都是瞎转的，没几个能用的，只能自己结合google和动手实验了，以下均可以达到要求。方法有很多种，自己适合熟练运用到日常工作就行~~~~~
+
+    Below three method try to change file name from *.log to *.txt.
+
+    1.用rename命令修改后缀名，这个是最简单最省事的办法
+        # rename log txt *.log              #把*.log改为*.txt
+
+    2.用for、sed和mv修改后缀名
+        # for i in $(ls .)
+        > do
+        > mv $i $(echo $i | sed 's/\.log/\.txt/')
+        > done
+
+    3.用find和xargs添加后缀名
+        # find . -type f |xargs -i mv {} {}.txt
+
+    e.g.
+
+    1. modify file name
+       like ___FILEBASENAME___.h  --->  ___FILEBASENAME___ViewController.h
+
+        for i in $(ls .); do
+            cp $i $(echo $i | sed 's/\___FILEBASENAME___/\___FILEBASENAME___ViewController/')
+        done
+
+2. 查找文件
+
+    1. 完整路径，5级目录
+        $ tree -f -L 5 | grep [keyword]
+
+    2. Find http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html
+        -print 输出到终端
+        $ find ./ -maxdepth 5 -print -name "*.txt"
+
+        将查到的文件执行command操作,{} 和 \;之间有空格
+        $ find ./ -name "*.txt" -exec/-ok command {} \;
+

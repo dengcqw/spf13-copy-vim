@@ -59,6 +59,9 @@
     colorscheme desert
 
     set nospell
+
+    " % match pairs
+    set matchpairs+=<:>
 "}
 
 " relative number {
@@ -302,6 +305,8 @@ autocmd FileType javascript set omnifunc=tern#Complete
     function! g:WorkaroundNERDTreeToggle()
       try | NERDTreeToggle | catch | silent! NERDTree | endtry
     endfunction
+
+    noremap ,pr :NERDTreeFind<CR>
 "}
 
 set cpt=.,b,u,U,t,i
@@ -530,3 +535,101 @@ set foldlevelstart=1
 "}
 
 set clipboard=unnamed,autoselect
+
+" http://www.vimer.cn/2009/10/%E5%9C%A8vim%E4%B8%AD%E4%BD%BF%E7%94%A8ctags.html
+" brew install ctags --HEAD
+" find . -name "*.h" -o -name "*.c" -o -name "*.cpp" -o -name "*.m" -o -name "*.mm" -o -name "*.js"> src.files
+" ctags --exclude='.git' -R --c++-kinds=+px --fields=+iaS --extra=+q --langmap=ObjectiveC:.m.h -L src.files
+" set tags+=tags的文件路径
+" tagbar 替代了 taglist
+" 解析非常严格需要格式代 brew install clang-format
+" objc tags {
+    "http://bastibe.de/2011-12-04-how-to-make-tagbar-work-with-objective-c.html
+    " add a definition for Objective-C to tagbar
+    set tags+=~/1_Project/XVim_x/XVim/tags
+    set tags+=/Users/pinganhaofang/1_Project/guanjia/tags
+    let g:tagbar_type_objc = {
+        \ 'ctagsbin' : '~/ctags',
+        \ 'ctagstype' : 'Objc',
+        \ 'kinds'     : [
+            \ 'i:interface',
+            \ 'I:implementation',
+            \ 'P:Protocol',
+            \ 'M:Object_method',
+            \ 'C:Class_method',
+            \ 'Z:Protocol_method'
+        \ ],
+        \ 'sro'        : ' ',
+        \ 'kind2scope' : {
+            \ 'i' : 'interface',
+            \ 'I' : 'implementation',
+            \ 'P' : 'Protocol',
+        \ },
+        \ 'scope2kind' : {
+            \ 'interface'      : 'i',
+            \ 'implementation' : 'I',
+            \ 'Protocol'       : 'P',
+        \ }
+    \ }
+    "let g:tagbar_type_objc = {
+        "\ 'ctagstype' : 'ObjectiveC',
+        "\ 'kinds'     : [
+            "\ 'i:interface',
+            "\ 'I:implementation',
+            "\ 'P:Protocol',
+            "\ 'm:Object_method',
+            "\ 'c:Class_method',
+            "\ 'v:Global_variable',
+            "\ 'F:Object field',
+            "\ 'f:function',
+            "\ 'p:property',
+            "\ 't:type_alias',
+            "\ 's:type_structure',
+            "\ 'e:enumeration',
+            "\ 'M:preprocessor_macro',
+        "\ ],
+        "\ 'sro'        : ' ',
+        "\ 'kind2scope' : {
+            "\ 'i' : 'interface',
+            "\ 'I' : 'implementation',
+            "\ 'P' : 'Protocol',
+            "\ 's' : 'type_structure',
+            "\ 'e' : 'enumeration'
+        "\ },
+        "\ 'scope2kind' : {
+            "\ 'interface'      : 'i',
+            "\ 'implementation' : 'I',
+            "\ 'Protocol'       : 'P',
+            "\ 'type_structure' : 's',
+            "\ 'enumeration'    : 'e'
+        "\ }
+    "\ }
+
+    "install https://github.com/mozilla/doctorjs
+    let g:tagbar_type_javascript = {
+    \ 'ctagsbin' : '~/spf13-copy-vim/vim/bundle/doctorjs/bin/jsctags'
+    \ }
+
+    " ctags --list-kinds=all
+    " ctags --list-kinds=ObjectiveC
+    "ObjectiveC
+        "i  class interface
+        "I  class implementation
+        "p  Protocol
+        "m  Object's method
+        "c  Class' method
+        "v  Global variable
+        "F  Object field
+        "f  A function
+        "p  A property
+        "t  A type alias
+        "s  A type structure
+        "e  An enumeration
+        "M  A preprocessor macro
+    "JavaScript
+        "f  functions
+        "c  classes
+        "m  methods
+        "p  properties
+        "v  global variables
+"}

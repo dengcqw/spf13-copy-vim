@@ -150,3 +150,7 @@ alias updateXcodeUUID="XCODEUUID=`defaults read /Applications/Xcode.app/Contents
 # Remove some line in a file. e.g. clear history file
 # http://stackoverflow.com/a/5413132
 # see scripts/clearHistory.sh
+
+# Find file
+alias djFindWithKeyword="tree -f -L 5 | grep "
+alias 

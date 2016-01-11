@@ -1,0 +1,99 @@
+fix syntax color http://superuser.com/a/724896
+
+/cocoa.vim/lib/extras
+fix all the keyword generation py files for iOS like below:
+
+    # cocoa_frameworks = ('Foundation', 'AppKit', 'AddressBook', 'CoreData',
+                        # 'PreferencePanes', 'QTKit', 'ScreenSaver',
+                        # 'SyncServices', 'WebKit')
+    iphone_frameworks = ('UIKit', 'Foundation', 'QuartzCore', 'CoreGraphics')
+    iphone_sdk_path = '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk'
+    # headers_and_frameworks = find_headers('', cocoa_frameworks).items() + \
+                             # find_headers(iphone_sdk_path, iphone_frameworks).items()
+    headers_and_frameworks = find_headers(iphone_sdk_path, iphone_frameworks).items()
+
+
+iPhoneOS 9.2 framework list {
+    AVFoundation.framework
+    AVKit.framework
+    Accelerate.framework
+    Accounts.framework
+    AdSupport.framework
+    AddressBook.framework
+    AddressBookUI.framework
+    AssetsLibrary.framework
+    AudioToolbox.framework
+    AudioUnit.framework
+    CFNetwork.framework
+    CloudKit.framework
+    Contacts.framework
+    ContactsUI.framework
+    CoreAudio.framework
+    CoreAudioKit.framework
+    CoreBluetooth.framework
+    CoreData.framework
+    CoreFoundation.framework
+    CoreGraphics.framework
+    CoreImage.framework
+    CoreLocation.framework
+    CoreMIDI.framework
+    CoreMedia.framework
+    CoreMotion.framework
+    CoreSpotlight.framework
+    CoreTelephony.framework
+    CoreText.framework
+    CoreVideo.framework
+    EventKit.framework
+    EventKitUI.framework
+    ExternalAccessory.framework
+    Foundation.framework
+    GLKit.framework
+    GSS.framework
+    GameController.framework
+    GameKit.framework
+    GameplayKit.framework
+    HealthKit.framework
+    HomeKit.framework
+    IOKit.framework
+    ImageIO.framework
+    JavaScriptCore.framework
+    LocalAuthentication.framework
+    MapKit.framework
+    MediaAccessibility.framework
+    MediaPlayer.framework
+    MediaToolbox.framework
+    MessageUI.framework
+    Metal.framework
+    MetalKit.framework
+    MetalPerformanceShaders.framework
+    MobileCoreServices.framework
+    ModelIO.framework
+    MultipeerConnectivity.framework
+    NetworkExtension.framework
+    NewsstandKit.framework
+    NotificationCenter.framework
+    OpenAL.framework
+    OpenGLES.framework
+    PassKit.framework
+    Photos.framework
+    PhotosUI.framework
+    PushKit.framework
+    QuartzCore.framework
+    QuickLook.framework
+    ReplayKit.framework
+    SafariServices.framework
+    SceneKit.framework
+    Security.framework
+    Social.framework
+    SpriteKit.framework
+    StoreKit.framework
+    SystemConfiguration.framework
+    Twitter.framework
+    UIKit.framework
+    VideoToolbox.framework
+    WatchConnectivity.framework
+    WatchKit.framework
+    WebKit.framework
+    iAd.framework
+    module.map
+}

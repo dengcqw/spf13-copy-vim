@@ -21,13 +21,16 @@
         Bundle 'FelikZ/ctrlp-py-matcher'
     " }
     " iOS dev {
-        Bundle 'msanders/cocoa.vim'
+        Bundle 'kentaroi/cocoa.vim'
         Bundle 'qqshfox/objc_matchbracket'
-        Bundle 'vim-scripts/a.vim'
+        "Bundle 'vim-scripts/a.vim'
         "witching Header Files
         Bundle 'eraserhd/vim-ios.git'
         "Indentation
-        Bundle "b4winckler/vim-objc"
+        "Bundle "b4winckler/vim-objc"
     " }
     "
     Bundle 'dkprice/vim-easygrep'
+
+    "Bundle 'xolox/vim-easytags'
+    "Bundle 'xolox/vim-misc'
