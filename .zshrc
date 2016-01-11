@@ -156,4 +156,22 @@ alias djFindWithKeyword="tree -f -L 5 | grep "
 
 alias lnNodeModule='sh ~/spf13-copy-vim/scripts/link-node-module.sh'
 
+# Git short key {
+    alias tgst='git status'
+    alias tgpull='git pull'
+    alias tgpush='git push'
+    alias tgdiff='git diff | mate'
+    alias tgadd='git add --update'
+    alias tgcmt='git commit -v'
+    alias tgcmt-a='git commit -v -a'
+    alias tgbr='git branch'
+    alias tgbr-a='git branch -a'
+    alias tgco='git checkout'
+    alias tgco-b='git checkout -b'
+    alias tgco-t='git checkout -t'
+    alias tgco-tb='git checkout --track -b'
+    alias tglog='git log'
+    alias tglog-p='git log --pretty=format:"%h %s" --graph'
+#}
+
 source ~/spf13-copy-vim/.zshrc.local

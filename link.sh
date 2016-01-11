@@ -10,3 +10,5 @@ ln -s ~/spf13-copy-vim/.gvimrc ~/.gvimrc
 ln -s ~/spf13-copy-vim/vim ~/.vim
 ln -s ~/spf13-copy-vim/.xvimrc ~/.xvimrc
 ln -s ~/spf13-copy-vim/.zshrc ~/.zshrc
+ln -s ~/spf13-copy-vim/gitconfig/.gitconfig ~/.gitconfig
+ln -s ~/spf13-copy-vim/gitconfig/.gitmessage ~/.gitmessage
