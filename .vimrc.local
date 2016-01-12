@@ -32,7 +32,8 @@
     set iskeyword-=-                    " '-' is an end of word designator
 
     " Remember info about open buffers on close
-    " set viminfo^=%
+    " My session manager has saved session viminfo, but other buffer needs viminfo too.
+    set viminfo^=%
     " Remap VIM 0 to first non-blank character
     map 0 ^
     "{
@@ -124,7 +125,7 @@
         exe "menu Foo.Bar :" . a:str
         emenu Foo.Bar
         unmenu Foo
-    endfunction 
+    endfunction
 
     function! VisualSelection(direction, extra_filter) range
         let l:saved_reg = @"
@@ -173,11 +174,11 @@
        if buflisted(l:currentBufNum)
          execute("bdelete! ".l:currentBufNum)
        endif
-    endfunction 
+    endfunction
 " }
 
 " deng custom {
-    set textwidth=120  " max length of a line 
+    set textwidth=120  " max length of a line
 
     "=====Folds=====
     set foldmethod=indent   " fold based on indent
@@ -185,7 +186,7 @@
     set nofoldenable        " don't fold by default
     nnoremap <Space> za     " use space to do fold
 
-    noremap <leader>vd :vertical diffsplit 
+    noremap <leader>vd :vertical diffsplit
 
     " Only needed for a short time so...
     noremap <leader>fd :setlocal diff foldmethod=diff scrollbind nowrap foldlevel=1<CR>
@@ -206,7 +207,6 @@
     "===============================
     noremap <leader>dt :cd ~/Desktop<CR>
     noremap <leader>pj :cd /Users/pinganhaofang/1_Project/<CR>
-    command! -nargs=0 Evimrc e ~/.vimrc
 
     set encoding=utf-8
     set fenc=utf-8
@@ -232,13 +232,13 @@
     let g:ConqueTerm_SessionSupport = 0 " save to session
 
     "{
-        "Type :ConqueTerm <command> to run your command in vim, for example: 
-        ":ConqueTerm bash 
+        "Type :ConqueTerm <command> to run your command in vim, for example:
+        ":ConqueTerm bash
 
-        "To open ConqueTerm in a new horizontal or vertical buffer use: 
-        ":ConqueTermSplit <command> 
-        ":ConqueTermVSplit <command> 
-        ":ConqueTermTab <command> 
+        "To open ConqueTerm in a new horizontal or vertical buffer use:
+        ":ConqueTermSplit <command>
+        ":ConqueTermVSplit <command>
+        ":ConqueTermTab <command>
     "}
 
     """"""""""""""""""""""""""""""""""""""""
@@ -301,7 +301,7 @@ autocmd FileType javascript set omnifunc=tern#Complete
     "<CTRL-s> - in insert mode, add a surrounding
     "<CTRL-s><CTRL-s> - in insert mode, add a new line + surrounding + indent
     "<CTRL-g>s - same as <CTRL-s>
-    "<CTRL-g>S - same as <CTRL-s><CTRL-s> 
+    "<CTRL-g>S - same as <CTRL-s><CTRL-s>
 "}
 "
 
@@ -348,12 +348,13 @@ inoremap <D-p> <c-x><c-p>
     endfunction
 
     "Bind the BufSel() function to a user-command
-    command! -nargs=1 Bs :call BufSel("<args>") 
+    command! -nargs=1 Bs :call BufSel("<args>")
 "}
 
 set foldlevelstart=1
 
 " ctrlp {
+    "https://kien.github.io/ctrlp.vim/
     "使用:CtrlP或:CtrlP [starting-directory]调用CtrlP进入查找文件模式
     "使用:CtrlPBuffer或:CtrlPMRU进入查找buffer或者查找MRU文件模式
     "使用:CtrlPMixed同时搜索普通文件、Buffers或者MRU文件
@@ -386,7 +387,7 @@ set foldlevelstart=1
         " if install ag with brew, below setting will be invalid
         " let g:ctrlp_custom_ignore
         " edit ~/.agignore to add folders to be ignore.
-        " Ag will ignore anything that you have in your .gitignore. 
+        " Ag will ignore anything that you have in your .gitignore.
         " You can also create an .agignore for anything that doesn’t belong in your .gitignore.
         " http://erickel.ly/ignoring-filesdirectories-with-ctrlp
 
@@ -402,13 +403,28 @@ set foldlevelstart=1
         let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
     endif
 
+    " Use <c-n/p> to select item and <c-j/k> browse history
+    let g:ctrlp_prompt_mappings = {
+    \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
+    \ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
+    \ 'PrtHistory(-1)':       ['<c-j>'],
+    \ 'PrtHistory(1)':        ['<c-k>'],
+    \ }
 
-    " search word under cursor
-    nnoremap <Leader>lw :CtrlP<CR><c-\>
-    " search selected words
-    vnoremap <Leader>lw y:CtrlP<CR><c-\>c
+    " use word under cursor as CtrlP input
     nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
-" }
+    nnoremap <silent> ,fw :let g:ctrlp_default_input = expand('<cword>')<cr>:CtrlP<cr>
+
+    " 可以参考
+    " https://github.com/fisadev/fisa-vim-config
+    "{  这种方法有点玄幻
+        "function! CtrlPWithSearchText(search_text, ctrlp_command_end)
+            "execute ':CtrlP' . a:ctrlp_command_end
+            "call feedkeys(a:search_text)
+        "endfunction
+        "nnoremap ,we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
+    "}
+    " }
 
 "{
     "Cocoa.vim
@@ -494,7 +510,7 @@ set foldlevelstart=1
                   "e.g. <Leader>vyr - toggles recursion
                        "<Leader>vyb - sets buffer grepping mode
                        "etc.
-    let g:EasyGrepMode = 2     " All:0, Open Buffers:1, TrackExt:2, 
+    let g:EasyGrepMode = 2     " All:0, Open Buffers:1, TrackExt:2,
     let g:EasyGrepCommand = 1  " Use vimgrep:0, grepprg:1
     let g:EasyGrepRecursive  = 1 " Recursive searching
     let g:EasyGrepIgnoreCase = 1 " not ignorecase:0
@@ -518,9 +534,9 @@ set foldlevelstart=1
 "}
 
 "vim-ios {
-    ":A	Switch to alternate file
-    ":XBuild	Compile Project
-    ":Xinstall	Install on device
+    ":A Switch to alternate file
+    ":XBuild    Compile Project
+    ":Xinstall  Install on device
 "}
 
 " copy file path {
@@ -639,3 +655,53 @@ set clipboard=unnamed,autoselect
         "p  properties
         "v  global variables
 "}
+
+" Useful Substitute {
+    " Del line tail blank space 行尾空格
+    ":%s/\s\+$//
+
+    "Doe, John > John Doe
+    ":%s/\([^,]*\), \(.*\)/\2 \1/
+"}:%s/\s\+$//
+
+
+" gf search path and sub path {
+    function! SearchGit()
+    endfunction
+    " ** means sub dir
+    ":set path = [dir path]/**
+"}
+
+" expand tab {
+    function! ChangeTabToSpace()
+        set expandtab
+        %retab!
+    endfunction
+
+    function! ChangeSpace2Tab()
+        set noexpandtab
+        %retab!
+    endfunction
+
+    command -nargs=0 ChangeSpace2Tab :call ChangeSpace2Tab()
+    command -nargs=0 ChangeTab2Space :call ChangeTab2Space()
+"}
+
+" command {
+    " 命令需要大写开头
+    "command -nargs=+ Say :echo "<args>"
+        "-nargs=0   zero
+        "-nargs=1   one
+        "-nargs=*   any
+        "-nargs=?    one or zero
+        "-nargs=+    one or more
+        " <args>
+        " <q-args>  包含特殊字符
+        " <f-args>  适合函数调用
+
+    "autocmd [group] {events} {file_pattern} [nested] {command}
+    "autocmd BufNewFile     *.[ch]  0read ~/skeletons/skel.c     打开一个新文件
+    "autocmd Filetype       text    source ~/.vim/abbrevs.vim    设置filetype
+    "autocmd BufReadPost    *.gsm   set filetype=asm             开始编辑一个文件
+"}
+
