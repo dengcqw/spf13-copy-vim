@@ -15,22 +15,29 @@ declare -a arr=(".vimrc"
                 ".zshrc")
 
 ## now loop through the above array
+
 for i in "${arr[@]}"
 do
-    if [ -e ~/$i -a ! -L ~/$i ];then
-        echo "file exists: $i"
-        echo "Please backup below files and rm them:"
-        echo ${arr[@]}
-        exit 0
+    distPath=~/$i
+
+    # link exist then continue
+    if [ -L $distPath ]; then
+        echo "Link exists to $distPath"
+        continue
     fi
+
+    # file exist, back up it
+    if [ -e $distPath ];then
+        echo "File exists: $i"
+        echo "Backup to $i.bk"
+        mv $distPath "$distPath.bk"
+    fi
+
+    # create link
+    ln -s ~/spf13-copy-vim/$i $distPath
 done
 
-for i in "${arr[@]}"
-do
-    ln -s ~/spf13-copy-vim/$i ~/$i
-done
-
-if [ ! -e ~/.gitmessage ];then
+if [ ! -e ~/.gitconfig ];then
     ln -s ~/spf13-copy-vim/gitconfig/.gitconfig ~/.gitconfig
 else
     echo "fail link .gitconfig; file exists"
@@ -38,7 +45,7 @@ fi
 
 if [ ! -e ~/.gitmessage ];then
     ln -s ~/spf13-copy-vim/gitconfig/.gitmessage ~/.gitmessage
-else 
+else
     echo "fail link .gitmessage; file exists"
 fi
 

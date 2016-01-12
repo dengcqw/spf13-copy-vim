@@ -185,7 +185,7 @@
     set nofoldenable        " don't fold by default
     nnoremap <Space> za     " use space to do fold
 
-    noremap <leader>vd :vertical diffsplit
+    noremap <leader>vd :vertical diffsplit 
 
     " Only needed for a short time so...
     noremap <leader>fd :setlocal diff foldmethod=diff scrollbind nowrap foldlevel=1<CR>
@@ -216,6 +216,12 @@
     " replace a word
     nmap vp viwp
 
+    " when switch vertical windows, make the other window visiable
+    set winheight=5
+    set winminheight=5
+
+    " display bottom scroller
+    set guioptions+=b
 " }
 
 " custom Plugins {

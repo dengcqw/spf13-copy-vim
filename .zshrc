@@ -108,21 +108,25 @@ alias -s m=mvim
 alias -s h=mvim
 alias -s plist=mvim
 
-alias djgrep='grep --color=auto -r -n ./* -e '
-alias rm="trash"
+# Custom alias {
+    alias djgrep='grep --color=auto -r -n ./* -e '
+    alias rm="trash"
 
-export EDITOR=mvim
-alias pushToGithub='git push -u origin master'
-source /usr/local/Cellar/autojump/22.2.4/etc/autojump.sh
+    export EDITOR=mvim
+    alias pushToGithub='git push -u origin master'
+    source /usr/local/Cellar/autojump/22.2.4/etc/autojump.sh
 
-#alias for cnpm
-alias cnpm="npm --registry=https://registry.npm.taobao.org \
-  --cache=$HOME/.npm/.cache/cnpm \
-  --disturl=https://npm.taobao.org/dist \
-  --userconfig=$HOME/.cnpmrc"
+    #alias for cnpm
+    alias cnpm="npm --registry=https://registry.npm.taobao.org \
+      --cache=$HOME/.npm/.cache/cnpm \
+      --disturl=https://npm.taobao.org/dist \
+      --userconfig=$HOME/.cnpmrc"
 
-alias rnstartAtroot="react-native start --root "
-alias npmi="npm install --save "
+    alias rnstartAtroot="react-native start --root "
+    alias npmi="npm install --save "
+
+    alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+#}
 
 # brew install coreutils
 # use gnu tools
