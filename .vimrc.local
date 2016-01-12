@@ -413,6 +413,7 @@ set foldlevelstart=1
 
     " use word under cursor as CtrlP input
     nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
+    " https://github.com/kien/ctrlp.vim/issues/218
     nnoremap <silent> ,fw :let g:ctrlp_default_input = expand('<cword>')<cr>:CtrlP<cr>
 
     " 可以参考
