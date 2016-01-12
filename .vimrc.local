@@ -487,13 +487,17 @@ set foldlevelstart=1
     map <Leader><leader>. <Plug>(easymotion-repeat)
 "}
 
-" ag search {
+"K and ,k search current folder and sub folder
+" K redefine search word under cursor {
     if executable('ag')
       " Use ag over grep
       set grepprg=ag\ --nogroup\ --nocolor
     endif
-    " bind K to grep word under cursor
-    nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+    autocmd FileType shell setlocal keyworkprg=man\ -s
+    set keywordprg=grep\ --color=auto\ -r\ -n\ ./*\ -e
+
+    nnoremap ,k :grep! "<C-R><C-W>"<CR>:cw<CR>
 "}
 
 " Easygrep {
@@ -702,7 +706,7 @@ set clipboard=unnamed,autoselect
 
     "autocmd [group] {events} {file_pattern} [nested] {command}
     "autocmd BufNewFile     *.[ch]  0read ~/skeletons/skel.c     打开一个新文件
-    "autocmd Filetype       text    source ~/.vim/abbrevs.vim    设置filetype
+    "autocmd FileType       text    source ~/.vim/abbrevs.vim    设置filetype
     "autocmd BufReadPost    *.gsm   set filetype=asm             开始编辑一个文件
 "}
 
