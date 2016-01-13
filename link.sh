@@ -38,15 +38,15 @@ do
 done
 
 if [ ! -e ~/.gitconfig ];then
-    ln -s ~/spf13-copy-vim/gitconfig/.gitconfig ~/.gitconfig
+    cp ~/spf13-copy-vim/gitconfig/.gitconfig ~/.gitconfig
 else
-    echo "fail link .gitconfig; file exists"
+    echo "cp link .gitconfig; file exists"
 fi
 
 if [ ! -e ~/.gitmessage ];then
-    ln -s ~/spf13-copy-vim/gitconfig/.gitmessage ~/.gitmessage
+    cp ~/spf13-copy-vim/gitconfig/.gitmessage ~/.gitmessage
 else
-    echo "fail link .gitmessage; file exists"
+    echo "cp link .gitmessage; file exists"
 fi
 
 ZSHRC_LOCAL=~/spf13-copy-vim/.zshrc.local
