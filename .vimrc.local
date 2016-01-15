@@ -710,3 +710,10 @@ set clipboard=unnamed,autoselect
     "autocmd BufReadPost    *.gsm   set filetype=asm             开始编辑一个文件
 "}
 
+" {
+    " normal mode
+    "g/xxx/d，删除包含xxx的行
+    "v/xxx/d，删除不含xxx的行
+    ":%s/xxx//gn，统计xxx个数，n表示只报告匹配的个数而不进行实际的替换。
+"}
+

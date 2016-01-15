@@ -1,0 +1,44 @@
+
+#  Basic snippet {
+
+snippet xGetter   "Create a getter method"
+- (${1:Class} *)${2:variable} {
+    if (nil == _$2) {
+		$1 *$2 = [[$1 alloc] init];
+
+        self.$2 = $2;
+    }
+    return _$2;
+}
+endsnippet
+
+snippet sss "Property strong"
+@property (nonatomic, strong) ${1:Class} *${2:variable};
+endsnippet
+
+snippet www "Property weak"
+@property (nonatomic, weak) ${1:Class} * ${2:name};
+endsnippet
+
+snippet ccc "Property copy"
+@property (nonatomic, copy) NSString *${1:name};
+endsnippet
+
+snippet sssGetter "Property strong and Getter"
+@property (nonatomic, strong) ${1:Class} *${2:variable};
+
+- ($1 *)$2 {
+    if (nil == _$2) {
+		$1 *$2 = [[$1 alloc] init];
+
+        self.$2 = $2;
+    }
+    return _$2;
+}
+endsnippet
+
+#}
+
+# 替换
+# %s/<#/${1:/g
+# %s/}/}/g

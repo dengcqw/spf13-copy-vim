@@ -167,3 +167,5 @@ inoremap <c-;> <ESC>A;<ESC>o
 " <c-e>  move up
 " <c-y>  move down
 
+" reveal .m/.h file in Finder, open File Info panel, change open with to MacVim and Change All...
+nnoremap ,e :xccmd openWithExternalEditor<CR>

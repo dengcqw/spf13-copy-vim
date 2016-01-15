@@ -53,7 +53,7 @@ plugins=(git brew common-alias dirhistory encode64 github history jsontools npm 
 
 # User configuration
 
-export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH
+export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -126,6 +126,8 @@ alias -s plist=mvim
     alias npmi="npm install --save "
 
     alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+
+    alias pwd='pwd; pwd | pbcopy'
 #}
 
 # brew install coreutils
