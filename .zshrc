@@ -166,9 +166,9 @@ alias toggleDockIcon='sh ~/spf13-copy-vim/scripts/toggleDockIcon.sh'
 
 # Git short key {
     alias tgst='git status'
-    alias tgpull='git pull'
-    alias tgpush='git push'
-    alias tgdiff='git diff'
+    alias tgpl='git pull'
+    alias tgps='git push'
+    alias tgdf='git diff'
     alias tgadd='git add'
     alias tgcmt='git commit -v'
     alias tgcmt-a='git commit -v -a'

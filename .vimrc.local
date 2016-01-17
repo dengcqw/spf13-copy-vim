@@ -487,8 +487,9 @@ set foldlevelstart=1
     map <Leader><leader>. <Plug>(easymotion-repeat)
 "}
 
-"K and ,k search current folder and sub folder
-" K redefine search word under cursor {
+" K search current folder
+" ,k search custom folder by g:grep_root_dir
+" {
     if executable('ag')
       " Use ag over grep
       set grepprg=ag\ --nogroup\ --nocolor
@@ -497,10 +498,20 @@ set foldlevelstart=1
     autocmd FileType shell setlocal keyworkprg=man\ -s
     set keywordprg=grep\ --color=auto\ -r\ -n\ ./*\ -e
 
-    nnoremap ,k :grep! "<C-R><C-W>"<CR>:cw<CR>
+    " set grep search root dir, save with session
+    " file path can't contain white space
+    " iOS SDK root: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk
+    let g:grep_root_dir='~/Documents'
+    function! GrepCustomDir(word)
+        execute 'grep! ' . a:word . ' ' . g:grep_root_dir
+        cw
+    endfunction
+
+    nnoremap ,k :call GrepCustomDir("<C-R><C-W>")<CR>
 "}
 
-" Easygrep {
+" Easygrep search current folder only
+" {
     "<Leader>vv  - Grep for the word under the cursor, match all occurences,
                   "like |gstar|
     "<Leader>vV  - Grep for the word under the cursor, match whole word, like
@@ -671,10 +682,9 @@ set clipboard=unnamed,autoselect
 
 
 " gf search path and sub path {
-    function! SearchGit()
-    endfunction
-    " ** means sub dir
-    ":set path = [dir path]/**
+    if g:gitroot != ''
+        execute 'set path=./**,' . g:gitroot . '/**'
+    endif
 "}
 
 " expand tab {
@@ -717,3 +727,8 @@ set clipboard=unnamed,autoselect
     ":%s/xxx//gn，统计xxx个数，n表示只报告匹配的个数而不进行实际的替换。
 "}
 
+" zsh {
+    if executable('zsh')
+        set shell=/bin/zsh
+    endif
+"}
