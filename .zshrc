@@ -189,4 +189,17 @@ ZSHRC_LOCAL=~/spf13-copy-vim/.zshrc.local
 if [ ! -e $ZSHRC_LOCAL ];then
     touch $ZSHRC_LOCAL
 fi
+
+
+# gem source switch
+function gem_offical_source() {
+    gem sources --remove https://ruby.taobao.org/
+    gem sources -a https://rubygems.org/
+}
+
+function gem_taobao_source() {
+    gem sources --remove https://rubygems.org/
+    gem sources -a https://ruby.taobao.org/
+}
+
 source ~/spf13-copy-vim/.zshrc.local

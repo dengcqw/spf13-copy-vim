@@ -1,0 +1,2 @@
+display @import UIKit
+target stop-hook add -o "target stop-hook disable"
