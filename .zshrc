@@ -180,6 +180,7 @@ alias toggleDockIcon='sh ~/spf13-copy-vim/scripts/toggleDockIcon.sh'
     alias tgco-tb='git checkout --track -b'
     alias tglog='git log'
     alias tglog-p='git log --pretty=format:"%h %s" --graph'
+    alias tgcl='git clone '
 #}
 
 
