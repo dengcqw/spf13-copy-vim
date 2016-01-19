@@ -148,12 +148,15 @@ MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 # diff -u oldfile1 newfile2 > diff.txt
 
 # Xcode plugin UUID
-alias updateXcodeUUID="XCODEUUID=`defaults read /Applications/Xcode.app/Contents/Info DVTPlugInCompatibilityUUID` \
-                  for f in ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/*;   \
-                  do \
-                      defaults write "$f/Contents/Info" DVTPlugInCompatibilityUUIDs -array-add $XCODEUUID;  \
-                  done \
-                  unset XCODEUUID;"
+function updateXcodeUUID() {
+    XCODEUUID=`defaults read /Applications/Xcode.app/Contents/Info DVTPlugInCompatibilityUUID`;
+
+    for f in ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/*;
+    do
+        defaults write "$f/Contents/Info" DVTPlugInCompatibilityUUIDs -array-add $XCODEUUID;
+    done
+    unset XCODEUUID;
+}
 
 # Remove some line in a file. e.g. clear history file
 # http://stackoverflow.com/a/5413132
@@ -192,3 +195,16 @@ if [ ! -e $ZSHRC_LOCAL ];then
     touch $ZSHRC_LOCAL
 fi
 source ~/spf13-copy-vim/.zshrc.local
+
+
+# gem source switch
+function gem_offical_source() {
+    gem sources --remove https://ruby.taobao.org/
+    gem sources -a https://rubygems.org/
+}
+
+function gem_taobao_source() {
+    gem sources --remove https://rubygems.org/
+    gem sources -a https://ruby.taobao.org/
+}
+
