@@ -732,3 +732,33 @@ set clipboard=unnamed,autoselect
         set shell=/bin/zsh
     endif
 "}
+
+" REST 
+" require Vim 7.4 & cURL {
+    " file suffix is .rest
+    " set ft=rest
+
+    " show response in new buffer
+    let b:vrc_output_buffer_name = '__REST_1_OUTPUT__'
+    let g:vrc_ssl_secure = 1
+    " more usage
+    " https://raw.githubusercontent.com/diepm/vim-rest-console/master/sample.rest
+    " https://github.com/diepm/vim-rest-console
+
+    autocmd FileType  rest let g:vrc_trigger = '<C-j>'
+
+    "Tips: use echo to show unicode word. :echo "\u8bf7"
+
+    " Get python install location
+    " >>> import site; site.getsitepackages()
+
+    " Another tool: https://github.com/jkbrzt/httpie
+
+    " Simple usage
+    " :r ! curl http://api.app.qa.anhouse.com.cn/hft/1.0/home_city_list | python ~/spf13-copy-vim/bin/json.tool.py  
+
+    let g:vrc_auto_format_response_patterns = {
+    \   'json': 'python ~/spf13-copy-vim/bin/json.tool.py',
+    \   'xml': 'xmllint --format -',
+    \}
+"}

@@ -34,3 +34,6 @@
 
     "Bundle 'xolox/vim-easytags'
     "Bundle 'xolox/vim-misc'
+
+    " API REST
+    Bundle 'diepm/vim-rest-console'
