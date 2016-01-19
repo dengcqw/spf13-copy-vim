@@ -128,6 +128,7 @@ alias -s plist=mvim
     alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 
     alias pwd='pwd; pwd | pbcopy'
+    alias djCopyPath='sh ~/spf13-copy-vim/bin/copy-file-path '
 #}
 
 # brew install coreutils
