@@ -49,6 +49,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+# https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins
 plugins=(git brew common-alias dirhistory encode64 github history jsontools npm osx sudo urltools vi-mode web-search)
 
 # User configuration
@@ -128,6 +129,7 @@ alias -s plist=mvim
     alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 
     alias pwd='pwd; pwd | pbcopy'
+    alias carthage-ios='carthage update --platform iOS'
 #}
 
 # brew install coreutils
