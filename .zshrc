@@ -123,7 +123,6 @@ alias -s plist=mvim
       --disturl=https://npm.taobao.org/dist \
       --userconfig=$HOME/.cnpmrc"
 
-    alias rnstartAtroot="react-native start --root "
     alias npmi="npm install --save "
 
     alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
@@ -132,6 +131,7 @@ alias -s plist=mvim
     alias djCopyPath='sh ~/spf13-copy-vim/bin/copy-file-path '
 
     alias carthage-ios='carthage update --platform iOS'
+    alias srczshrc='source ~/.zshrc'
 #}
 
 # brew install coreutils
@@ -167,9 +167,7 @@ function updateXcodeUUID() {
 # Find file
 alias djFindWithKeyword="tree -f -L 5 | grep "
 
-alias lnNodeModule='sh ~/spf13-copy-vim/scripts/link-node-module.sh'
-
-alias toggleDockIcon='sh ~/spf13-copy-vim/scripts/toggleDockIcon.sh'
+alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
 
 # Git short key {
     alias tgst='git status'
@@ -191,22 +189,45 @@ alias toggleDockIcon='sh ~/spf13-copy-vim/scripts/toggleDockIcon.sh'
 #}
 
 
-# use local setting
-ZSHRC_LOCAL=~/spf13-copy-vim/.zshrc.local
-if [ ! -e $ZSHRC_LOCAL ];then
-    touch $ZSHRC_LOCAL
-fi
-source ~/spf13-copy-vim/.zshrc.local
+# Use local setting {
+    ZSHRC_LOCAL="$HOME/spf13-copy-vim/.zshrc.local"
+    if [ ! -e $ZSHRC_LOCAL ];then
+        touch $ZSHRC_LOCAL
+    fi
+    source  $ZSHRC_LOCAL
+#}
 
 
-# gem source switch
-function gem_offical_source() {
-    gem sources --remove https://ruby.taobao.org/
-    gem sources -a https://rubygems.org/
-}
+# gem source switch {
+    function gem_offical_source() {
+        gem sources --remove https://ruby.taobao.org/
+        gem sources -a https://rubygems.org/
+    }
 
-function gem_taobao_source() {
-    gem sources --remove https://rubygems.org/
-    gem sources -a https://ruby.taobao.org/
-}
+    function gem_taobao_source() {
+        gem sources --remove https://rubygems.org/
+        gem sources -a https://ruby.taobao.org/
+    }
+#}
 
+
+# react-native must run with the same path to node_modules/react-native {
+# RN_PATH must define in $ZSHRC_LOCAL
+    function linkReactNativeHere() {
+        fromPath=$RN_PATH
+        toPath=`pwd`/react-native
+        ln -s $fromPath $toPath
+    }
+
+    function rnstartAtPrjRoot() {
+        # if no arg, then use current path
+        CurPath=`pwd`
+        FullPath=`pwd`
+        if [ "$1" != "." -a "$1" != "./" ];then
+            FullPath=`pwd`/$1
+        fi
+
+        # change to root path
+        react-native start --projectRoots $FullPath --root $RN_PATH
+    }
+# }
