@@ -127,7 +127,6 @@ alias -s plist=mvim
 
     alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 
-    alias pwd='pwd; pwd | pbcopy'
     alias djCopyPath='sh ~/spf13-copy-vim/bin/copy-file-path '
 
     alias carthage-ios='carthage update --platform iOS'
@@ -213,6 +212,7 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
 
 # react-native must run with the same path to node_modules/react-native {
 # RN_PATH must define in $ZSHRC_LOCAL
+export RN_PATH=
     function linkReactNativeHere() {
         fromPath=$RN_PATH
         toPath=`pwd`/react-native
