@@ -37,6 +37,59 @@ snippet sssGetter "Property strong and Getter"
 }
 endsnippet
 
+snippet sampleCreateThread "create a thread"
+static NSThread *${1:theName}Thread;
+
++ (void)start$1ThreadIfNeeded {
+	static dispatch_once_t predicate;
+	dispatch_once(&predicate, ^{
+		
+		NSLog(@"%s: Starting $2 thread...", __FILE__);
+		
+		$2Thread = [[NSThread alloc] initWithTarget:self
+		                                        selector:@selector($3Thread)
+		                                          object:nil];
+		[$4Thread start];
+	});
+}
+
++ (void$5Thread {
+	@autoreleasepool {
+	
+		NSLog(@"%s: $6 Thread: Started", __FILE__);
+		
+		// We can't run the run loop unless it has an associated input source or a timer.
+		// So we'll just create a timer that will never fire - unless the server runs for 10,000 years.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+		[NSTimer scheduledTimerWithTimeInterval:[[NSDate distantFuture] timeIntervalSinceNow]
+		                                 target:self
+		                               selector:@selector(donothingatall:)
+		                               userInfo:nil
+		                                repeats:YES];
+#pragma clang diagnostic pop
+
+		[[NSRunLoop currentRunLoop] run];
+		
+		NSLog(@"%@: $7 Thread: Aborted", __FILE__);
+	}
+}
+
++ (void)executeBlock:(dispatch_block_t)block {
+    NSAssert([NSThread currentThread] == $8Thread, @"Executed on incorrect thread");
+	
+	block();
+}
+
++ (void)performBlock:(dispatch_block_t)block {
+	[self performSelector:@selector(executeBlock:)
+                 onThread:$9Thread
+	           withObject:block
+	        waitUntilDone:YES];
+}
+endsnippet
+
+
 #}
 
 # 替换
