@@ -262,6 +262,7 @@
 
 let g:user_emmet_leader_key = '<c-s>'
 autocmd FileType css imap <Tab> <plug>(EmmetExpandAbbr)
+autocmd FileType html imap <Tab> <plug>(EmmetExpandAbbr)
 
 " js beautify
 autocmd FileType javascript vnoremap <buffer> <C-S> :call RangeJsBeautify()<cr>
