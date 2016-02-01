@@ -210,9 +210,9 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
 #}
 
 
-# react-native must run with the same path to node_modules/react-native {
-# RN_PATH must define in $ZSHRC_LOCAL
-export RN_PATH=
+# react-native must run with the same path to node_modules/react-native
+# RN_PATH must define in $ZSHRC_LOCAL {
+    export RN_PATH=
     function linkReactNativeHere() {
         fromPath=$RN_PATH
         toPath=`pwd`/react-native
@@ -231,3 +231,10 @@ export RN_PATH=
         react-native start --projectRoots $FullPath --root $RN_PATH
     }
 # }
+
+export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+function djSymbolicatecrash() {
+    #djSymbolicatecrash [*.crash] [app]"
+    /Applications/Xcode.app/Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash $1 $2
+}
+
