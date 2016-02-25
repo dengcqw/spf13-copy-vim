@@ -37,3 +37,5 @@
 
     " API REST
     Bundle 'diepm/vim-rest-console'
+
+    Bundle 'rizzatti/dash.vim'
