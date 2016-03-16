@@ -10,7 +10,6 @@ declare -a arr=(".vimrc"
                 ".vimrc.before"
                 ".vimrc.before.local"
                 ".gvimrc"
-                ".vim"
                 ".xvimrc"
                 ".zshrc")
 
@@ -36,6 +35,10 @@ do
     # create link
     ln -s ~/spf13-copy-vim/$i $distPath
 done
+
+if [ ! -e ~/.vim ];then
+    ln -s ~/spf13-copy-vim/vim ~/.vim
+fi
 
 if [ ! -e ~/.gitconfig ];then
     cp ~/spf13-copy-vim/gitconfig/.gitconfig ~/.gitconfig

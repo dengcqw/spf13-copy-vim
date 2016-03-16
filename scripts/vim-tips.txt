@@ -1,0 +1,5 @@
+
+1. 刪除包含某字串的整行
+    :[range]g/pattern/[cmd]
+    [range]表示範圍，或用直接用 g 表示 globe
+    [cmd] 使用 "d" 就可以刪除整行
