@@ -39,3 +39,5 @@
     Bundle 'diepm/vim-rest-console'
 
     Bundle 'rizzatti/dash.vim'
+
+    Bundle 'vim-airline/vim-airline-themes'
