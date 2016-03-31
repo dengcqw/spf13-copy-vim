@@ -84,8 +84,12 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-AUTOJUMP_PATH="/usr/local/Cellar/autojump/22.2.4/etc"
-[[ -s /usr/local/Cellar/autojump/22.2.4/etc/profile.d/autojump.sh ]] && . /usr/local/Cellar/autojump/22.2.4/etc/profile.d/autojump.sh
+
+# autojump setting
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+# brew install keith/formulae/zsh-xcode-completions
+fpath=(/usr/local/share/zsh/site-functions $fpath)
 
 alias cls='clear'
 alias ll='ls -l'
@@ -115,7 +119,6 @@ alias -s plist=mvim
 
     export EDITOR=mvim
     alias pushToGithub='git push -u origin master'
-    source /usr/local/Cellar/autojump/22.2.4/etc/autojump.sh
 
     #alias for cnpm
     alias cnpm="npm --registry=https://registry.npm.taobao.org \
