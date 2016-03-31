@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title></title>
+        <style type="text/css" media="screen">
+            div#container {
+                background:blue;
+                border:1px solid black;
+                width:200px;
+                height:200px;
+            }
+            div#child {
+                background:yellow;
+                border:1px solid black;
+                width:100px;
+                height:100px;
+            }
+
+            #base {
+                background:whith;
+                border:1px solid black;
+                width:200px;
+                height:200px;
+            }
+            .red-region {
+                background:red;
+                border:1px solid blue;
+                width:200px;
+                height:200px;
+            }
+            .yellow-region {
+                background:yellow;
+                border:1px solid black;
+                width:200px;
+                height:200px;
+            }
+
+            div#event {
+                background:whith;
+                border:1px solid black;
+                width:200px;
+                height:200px;
+            }
+        </style>
+
+        <script src="./jquery-2.2.2.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                // DOM
+                var container = $("div#container");
+                $("<div id='child'></div>").appendTo(container);
+
+                $("input#clean").click(function () {
+                    container.find("#child").remove();
+                });
+
+                // CSS
+                $("input#red").click(function() {
+                    var base = $("div#base");
+                    if (base.hasClass("yellow-region")) {
+                        base.removeClass("yellow-region");
+                    }
+                    base.addClass("red-region");
+                });
+                $("input#yellow").click(function() {
+                    var base = $("div#base");
+                    if (base.hasClass("red-region")) {
+                        base.removeClass("red-region");
+                    }
+                    base.addClass("yellow-region");
+                });
+                $("input#changeCSS").click(function() {
+                    $("div#base").css({
+                        'background': 'green',
+                        'border':'3px solid blue',
+                    });
+                });
+
+                // Event
+                var base = $("div#event");
+                $("input#bind").click(function() {
+                    base.bind('click', function(event) {
+                        alert($(this).width()+", "+$(this).height());
+                    });
+                });
+                $("input#unbind").click(function() {
+                    base.unbind('click');
+                });
+                $("input#toggle").click(function() {
+                    base.toggle(
+                        function() {
+                            $(this).css('background', 'yellow');
+                        },
+                        function() {
+                            $(this).css('background', 'red');
+                        }
+                    );
+                });
+                base.hover(
+                    function(event) {
+                        $(this).css('background', 'gray');
+                    },
+                    function(event) {
+                        $(this).css('background', 'purple');
+                    }
+                );
+
+                // each map grep extend
+                var obj = {
+                    a : 'apple',
+                    b: 'borland',
+                    c: 'cisco',
+                    d: 'dell'
+                };
+                var obj2 = {
+                    addr: 'unknown',
+                    title: 'unknown'
+                };
+                var result = $.extend(obj, obj2);
+                $.each(result, function(name, value) {
+                    var li = $("<li></li>");
+                    li.html("["+name+"]=["+value+"]");
+                    li.appendTo($("div#each"));
+                });
+
+                // ajax
+                $("input#ajax").click(function() {
+                    var ajaxContent = $("div#ajax");
+                    $.ajax({
+                        url: 'http://www.cnblogs.com/rss',
+                        type: 'GET',
+                        error : function(xhr){ alert(xhr); },
+                        success : function(obj) {
+                            ajaxContent.text(obj);
+                        }
+                    });
+                });
+            });
+
+        </script>
+    </head>
+    <body>
+        <h4>DOM</h4>
+        <div id="container"></div>
+        <input id="clean" type="button" value="clean" />
+        <h4>CSS</h4>
+        <div id="base"></div>
+        <input id="yellow" type="button" value="yellow" />
+        <input id="red" type="button" value="red" />
+        <input id="changeCSS" type="button" value="css" />
+        <h4>Event</h4>
+        <div id="event"></div>
+        <input id="bind" type="button" value="bind" />
+        <input id="unbind" type="button" value="unbind" />
+        <input id="toggle" type="button" value="toggle" />
+        <h4>each</h4>
+        <div id="each"></div>
+        <h4>ajax</h4>
+        <div id="ajax"></div>
+        <input id="ajax" type="button" value="ajax" />
+    </body>
+</html>
