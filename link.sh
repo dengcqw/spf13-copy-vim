@@ -57,3 +57,10 @@ ZSHRC_LOCAL=~/spf13-copy-vim/.zshrc.local
 if [ ! -e $ZSHRC_LOCAL ];then
     touch $ZSHRC_LOCAL
 fi
+
+nvim_path=`which nvim`
+if [ ! -z "$nvim_path" ];then
+    ln -s ~/spf13-copy-vim/vim ~/.config/nvim
+    ln -s ~/.vimrc ~/.config/nvim/init.vim
+fi
+
