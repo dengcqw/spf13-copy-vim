@@ -80,11 +80,11 @@ flags = [
 
 # -F <value>    Add directory to framework include search path
 # -iframework <value>   Add directory to SYSTEM framework search path
-'-F/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks'
+'-iframework', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks',
 
 # -include-pch <file> Include precompiled header file
 # -include <file>  Include file before parsing
-'-include', '/Users/admin/Dropbox/dev/objc/memories/LearningApp/SupportingFiles/LearningApp-Prefix.pch',
+'-include-pch', '/Users/admin/path/to/app/SupportingFiles/app-Prefix.pch',
 ]
 
 
