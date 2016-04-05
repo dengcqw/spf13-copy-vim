@@ -546,6 +546,22 @@ set foldlevelstart=1
     " 获取编译数据
     "https://github.com/rizsotto/Bear
     let g:ycm_extra_conf_vim_data = ['&filetype']
+
+    let g:ycm_semantic_triggers = {
+                \ 'objc' : ['re!\@"\.*"\s',
+                \ 're!\@\w+\.*\w*\s',
+                \ 're!\@\(\w+\.*\w*\)\s',
+                \ 're!\@\(\s*',
+                \ 're!\@\[.*\]\s',
+                \ 're!\@\[\s*',
+                \ 're!\@\{.*\}\s',
+                \ 're!\@\{\s*',
+                \ "re!\@\’.*\’\s",
+                \ '#ifdef ',
+                \ 're!:\s*',
+                \ 're!=\s*',
+                \ 're!,\s*', ],
+                \ }
 "}
 
 "vim-ios {
@@ -570,8 +586,6 @@ set foldlevelstart=1
       nnoremap <leader>ch :let @*=expand("%:p:h")<CR>
     endif
 "}
-
-set clipboard=unnamed,autoselect
 
 " http://www.vimer.cn/2009/10/%E5%9C%A8vim%E4%B8%AD%E4%BD%BF%E7%94%A8ctags.html
 " brew install ctags --HEAD
