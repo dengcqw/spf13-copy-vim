@@ -2,3 +2,4 @@ bundle
 sessions
 *pyc
 .zshrc.local
+.DS_Store

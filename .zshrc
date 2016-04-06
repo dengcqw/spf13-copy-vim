@@ -100,7 +100,7 @@ alias grep="grep --color=auto"
 alias -s html=mvim   # 在命令行直接输入后缀为 html 的文件名，会在 mvim 中打开
 alias -s rb=mvim
 alias -s py=mvim
-alias -s js=mvim
+#alias -s js=mvim
 alias -s c=mvim
 alias -s java=mvim
 alias -s txt=mvim
@@ -134,6 +134,8 @@ alias -s plist=mvim
 
     alias carthage-ios='carthage update --platform iOS'
     alias srczshrc='source ~/.zshrc'
+
+    alias djSwitchNetork='node ~/spf13-copy-vim/scripts/network_switch.js'
 #}
 
 # brew install coreutils
