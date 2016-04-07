@@ -41,3 +41,7 @@
     Bundle 'rizzatti/dash.vim'
 
     Bundle 'vim-airline/vim-airline-themes'
+
+    "Bundle "gilligan/vim-lldb"
+    " Highlight the term under the cursor
+    Bundle 'qstrahl/vim-matchmaker'

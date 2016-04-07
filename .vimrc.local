@@ -755,9 +755,25 @@ set foldlevelstart=1
     let s:ios_dic_path=s:ios_dic_root . '/classes.txt,' . s:ios_dic_root . '/constants.txt,' . s:ios_dic_root . '/functions.txt,' . s:ios_dic_root . '/notifications.txt,' . s:ios_dic_root . '/types.txt'
     autocmd FileType objc execute 'setlocal dictionary=' . s:ios_dic_path
     autocmd FileType objc set complete+=k
-    let s:TVG_PATH=$HOME/Documents/Develop/QiyiDev/TVGuoiOSApp
-    if g:gitroot == s:TVG_PATH
-        set makeprg=xcodebuild\ -workspace\ $HOME/Documents/Develop/QiyiDev/TVGuoiOSApp/TVGuor.xcworkspace\ -scheme\ TVGuor\ -configuration\ Debug\ -destination\ \"id\=ba490377a9fc6df3243a343ae52aa76f8d0d6b71\"
-    endif
+    "let s:TVG_PATH=$HOME/Documents/Develop/QiyiDev/TVGuoiOSApp
+    "if g:gitroot == s:TVG_PATH
+        "set makeprg=xcodebuild\ -workspace\ $HOME/Documents/Develop/QiyiDev/TVGuoiOSApp/TVGuor.xcworkspace\ -scheme\ TVGuor\ -configuration\ Debug\ -destination\ \"id\=ba490377a9fc6df3243a343ae52aa76f8d0d6b71\"
+    "endif
 " }
+
+" Underline words matched by Matchmaker
+function! ToggleMatchmaker()
+    " Don’t show matches in non-code files
+    if &ft =~ 'objc\|objcpp\|javascript'
+        execute "Matchmaker"
+    else
+        " Specifically, I want it disabled on help, mkd
+        execute "Matchmaker!"
+    endif
+endfun
+autocmd BufEnter * call ToggleMatchmaker()
+highlight Matchmaker guibg=NONE
+highlight Matchmaker gui=underline
+highlight Matchmaker ctermbg=NONE
+highlight Matchmaker cterm=underline
 
