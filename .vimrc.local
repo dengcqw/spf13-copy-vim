@@ -199,8 +199,6 @@
     " not replace paste content
     xnoremap p pgvy
 
-    noremap <leader>s i <Esc>
-
     noremap <leader>m :marks<CR>
 
     "===============================
@@ -534,7 +532,10 @@ set foldlevelstart=1
     let g:EasyGrepFilesToExclude = "*.bak, cscope.*, *.a, *.o, *.pyc, *.bak, *.zip"
 "}
 
-" ycm {
+" ycm youcompleteme {
+    nnoremap <leader>d :YcmCompleter GoToDefinition <cr>
+    nnoremap <leader>s :YcmCompleter GoToDeclaration <cr>
+
     let g:ycm_filetype_blacklist = {
       \ 'tagbar' : 1,
       \ 'qf' : 1,
@@ -731,7 +732,7 @@ set foldlevelstart=1
     " https://raw.githubusercontent.com/diepm/vim-rest-console/master/sample.rest
     " https://github.com/diepm/vim-rest-console
 
-    autocmd FileType  rest let g:vrc_trigger = '<C-j>'
+    autocmd FileType rest let g:vrc_trigger = '<C-j>'
 
     "Tips: use echo to show unicode word. :echo "\u8bf7"
 
@@ -753,6 +754,10 @@ set foldlevelstart=1
     let s:ios_dic_root= '$HOME/spf13-copy-vim/vim/dictionary.d'
     let s:ios_dic_path=s:ios_dic_root . '/classes.txt,' . s:ios_dic_root . '/constants.txt,' . s:ios_dic_root . '/functions.txt,' . s:ios_dic_root . '/notifications.txt,' . s:ios_dic_root . '/types.txt'
     autocmd FileType objc execute 'setlocal dictionary=' . s:ios_dic_path
-    autocmd FileType objc setlocal complete+=k
+    autocmd FileType objc set complete+=k
+    let s:TVG_PATH=$HOME/Documents/Develop/QiyiDev/TVGuoiOSApp
+    if g:gitroot == s:TVG_PATH
+        set makeprg=xcodebuild\ -workspace\ $HOME/Documents/Develop/QiyiDev/TVGuoiOSApp/TVGuor.xcworkspace\ -scheme\ TVGuor\ -configuration\ Debug\ -destination\ \"id\=ba490377a9fc6df3243a343ae52aa76f8d0d6b71\"
+    endif
 " }
 

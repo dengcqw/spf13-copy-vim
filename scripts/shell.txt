@@ -33,3 +33,20 @@
     array=($(find . -name "*.txt"))
     for i in "${array[@]}"; do echo $i; done
 
+4. 传接命令的状态判断
+    ls -al file.ext
+    rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
+
+    ${PIPESTATUS[0]} pipe line 第0个命令的exit code
+    ${PIPESTATUS[*]} pipe line all exit code
+5. root 权限执行
+    chown userName:groupName your-script
+    chmod u+s  your-script
+
+    cat  /etc/group | grep root
+
+    慎用
+    http://blog.y3xz.com/blog/2012/01/06/resolving-a-corrupt-sudoers-in-mac-os-x
+    /etc/sudoers
+    排除 reboot \ halt \ shutdown 这 3 个关机命令执行时不用密码
+    dengjinlong ALL = NOPASSWD: /sbin/reboot,/sbin/halt,/sbin/shutdown
