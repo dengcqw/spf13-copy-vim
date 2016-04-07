@@ -2,3 +2,4 @@ bundle
 sessions
 *pyc
 .zshrc.local
+YouCompleteMe

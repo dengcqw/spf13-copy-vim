@@ -241,3 +241,14 @@ function djSymbolicatecrash() {
     /Applications/Xcode.app/Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash $1 $2
 }
 
+# cp file then jump to dest dir
+function djcp() {
+    cp $@
+    mvim "${@:$#}"
+}
+
+# mv file then jump to dest dir
+function djmv() {
+    mv $@
+    mvim "${@:$#}"
+}

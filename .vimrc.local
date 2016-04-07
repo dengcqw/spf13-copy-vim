@@ -50,6 +50,9 @@
             vmap <D-k> <M-k>
         endif
     "}
+   
+    " select block
+    noremap vab Vf{%
 
     " Remove the Windows ^M - when the encodings gets messed up
     "noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
@@ -204,7 +207,6 @@
     "   project
     "===============================
     noremap <leader>dt :cd ~/Desktop<CR>
-    noremap <leader>pj :cd /Users/pinganhaofang/1_Project/<CR>
 
     set encoding=utf-8
     set fenc=utf-8
@@ -314,7 +316,7 @@ autocmd FileType javascript set omnifunc=tern#Complete
     noremap ,pr :NERDTreeFind<CR>
 "}
 
-set cpt=.,b,u,U,t,i
+set complete=.,b,u,U,t,i
 inoremap <D-p> <c-x><c-p>
 
 " buffer switch {
@@ -413,7 +415,7 @@ set foldlevelstart=1
     " use word under cursor as CtrlP input
     nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
     " https://github.com/kien/ctrlp.vim/issues/218
-    nnoremap <silent> ,fw :let g:ctrlp_default_input = expand('<cword>')<cr>:CtrlP<cr>
+    nnoremap <silent> <Leader>fw :let g:ctrlp_default_input = expand('<cword>')<cr>:CtrlP<cr>
 
     " 可以参考
     " https://github.com/fisadev/fisa-vim-config
@@ -543,10 +545,6 @@ set foldlevelstart=1
       \ 'vimwiki' : 1,
       \ 'gitcommit' : 1,
       \}
-    " 获取编译数据
-    "https://github.com/rizsotto/Bear
-    let g:ycm_extra_conf_vim_data = ['&filetype']
-
     let g:ycm_semantic_triggers = {
                 \ 'objc' : ['re!\@"\.*"\s',
                 \ 're!\@\w+\.*\w*\s',
@@ -597,31 +595,6 @@ set foldlevelstart=1
 " objc tags {
     "http://bastibe.de/2011-12-04-how-to-make-tagbar-work-with-objective-c.html
     " add a definition for Objective-C to tagbar
-    set tags+=~/1_Project/XVim_x/XVim/tags
-    set tags+=/Users/pinganhaofang/1_Project/guanjia/tags
-    let g:tagbar_type_objc = {
-        \ 'ctagsbin' : '~/ctags',
-        \ 'ctagstype' : 'Objc',
-        \ 'kinds'     : [
-            \ 'i:interface',
-            \ 'I:implementation',
-            \ 'P:Protocol',
-            \ 'M:Object_method',
-            \ 'C:Class_method',
-            \ 'Z:Protocol_method'
-        \ ],
-        \ 'sro'        : ' ',
-        \ 'kind2scope' : {
-            \ 'i' : 'interface',
-            \ 'I' : 'implementation',
-            \ 'P' : 'Protocol',
-        \ },
-        \ 'scope2kind' : {
-            \ 'interface'      : 'i',
-            \ 'implementation' : 'I',
-            \ 'Protocol'       : 'P',
-        \ }
-    \ }
     "let g:tagbar_type_objc = {
         "\ 'ctagstype' : 'ObjectiveC',
         "\ 'kinds'     : [
@@ -775,3 +748,11 @@ set foldlevelstart=1
     \   'xml': 'xmllint --format -',
     \}
 "}
+
+" iOS dictionary {
+    let s:ios_dic_root= '$HOME/spf13-copy-vim/vim/dictionary.d'
+    let s:ios_dic_path=s:ios_dic_root . '/classes.txt,' . s:ios_dic_root . '/constants.txt,' . s:ios_dic_root . '/functions.txt,' . s:ios_dic_root . '/notifications.txt,' . s:ios_dic_root . '/types.txt'
+    autocmd FileType objc execute 'setlocal dictionary=' . s:ios_dic_path
+    autocmd FileType objc setlocal complete+=k
+" }
+
