@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+
+var path = require('path');
+var fs = require('fs');
+
+// http://shapeshed.com/command-line-utilities-with-nodejs/
+// [ 'node', '/path/to/script', '-f', '-g' ]
+//var args = process.argv.slice(2);
+//console.log(args);
+
+// receive piped data {
+    //process.stdin.resume();
+    //process.stdin.setEncoding('utf8');
+    //process.stdin.on('data', function(data) {
+        //process.stdout.write(data);
+    //});
+// }
+
+// wait for signal {
+    //process.stdin.resume();
+    //process.on('SIGINT', function () {
+        //console.log('Got a SIGINT. Goodbye cruel world');
+        //process.exit(0);
+    //});
+// }
+
+// error process {
+    //var err;
+    //if (err) {
+    //process.exit(1);
+    //} else {
+    //process.exit(0);
+    //}
+//}
+
+// run other command in js
+//
+var child_process = require('child_process');
+child_process.exec('networksetup -listlocations', function (err, stdout, stderr) {
+    if (err !== null) {
+        console.log('exec error: ' + error);
+    }
+    console.log(stdout)
+});
+
+// lib tools
+// commander and optimist
+// or cli, nopt, Inquirer.js, node-argp and stateful-process-command-proxy

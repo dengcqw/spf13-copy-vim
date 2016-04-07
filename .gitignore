@@ -3,3 +3,4 @@ sessions
 *pyc
 .zshrc.local
 YouCompleteMe
+.DS_Store
