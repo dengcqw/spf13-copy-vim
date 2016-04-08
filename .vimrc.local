@@ -315,6 +315,7 @@ autocmd FileType javascript set omnifunc=tern#Complete
 "}
 
 set complete=.,b,u,U,t,i
+set complete+=k
 inoremap <D-p> <c-x><c-p>
 
 " buffer switch {
@@ -753,8 +754,7 @@ set foldlevelstart=1
 " iOS dictionary {
     let s:ios_dic_root= '$HOME/spf13-copy-vim/vim/dictionary.d'
     let s:ios_dic_path=s:ios_dic_root . '/classes.txt,' . s:ios_dic_root . '/constants.txt,' . s:ios_dic_root . '/functions.txt,' . s:ios_dic_root . '/notifications.txt,' . s:ios_dic_root . '/types.txt'
-    autocmd FileType objc execute 'setlocal dictionary=' . s:ios_dic_path
-    autocmd FileType objc set complete+=k
+    autocmd FileType objc  let &dictionary = s:ios_dic_path
     "let s:TVG_PATH=$HOME/Documents/Develop/QiyiDev/TVGuoiOSApp
     "if g:gitroot == s:TVG_PATH
         "set makeprg=xcodebuild\ -workspace\ $HOME/Documents/Develop/QiyiDev/TVGuoiOSApp/TVGuor.xcworkspace\ -scheme\ TVGuor\ -configuration\ Debug\ -destination\ \"id\=ba490377a9fc6df3243a343ae52aa76f8d0d6b71\"
@@ -764,7 +764,7 @@ set foldlevelstart=1
 " Underline words matched by Matchmaker
 function! ToggleMatchmaker()
     " Don’t show matches in non-code files
-    if &ft =~ 'objc\|objcpp\|javascript'
+    if &ft =~ 'objc\|objcpp\|javascript\|swift'
         execute "Matchmaker"
     else
         " Specifically, I want it disabled on help, mkd

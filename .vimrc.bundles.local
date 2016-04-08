@@ -42,6 +42,10 @@
 
     Bundle 'vim-airline/vim-airline-themes'
 
-    "Bundle "gilligan/vim-lldb"
+    "Bundle 'gilligan/vim-lldb'
     " Highlight the term under the cursor
     Bundle 'qstrahl/vim-matchmaker'
+
+    Bundle 'vim-swift'
+
+    Bundle 'tokorom/swift-dict.vim'

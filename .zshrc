@@ -91,6 +91,11 @@ source $ZSH/oh-my-zsh.sh
 # brew install keith/formulae/zsh-xcode-completions
 fpath=(/usr/local/share/zsh/site-functions $fpath)
 
+# brew path
+export brew_path=/usr/local/Cellar
+
+
+
 alias cls='clear'
 alias ll='ls -l'
 alias la='ls -a'
@@ -132,7 +137,7 @@ alias -s plist=mvim
 
     alias djCopyPath='sh ~/spf13-copy-vim/bin/copy-file-path '
 
-    alias carthage-ios='carthage update --platform iOS'
+    alias carthage-ios='$brew_path/carthage/0.15/bin/carthage build --platform iOS'
     alias srczshrc='source ~/.zshrc'
 
     alias djSwitchNetork='node ~/spf13-copy-vim/scripts/network_switch.js'
