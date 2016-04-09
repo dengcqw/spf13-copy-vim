@@ -212,8 +212,6 @@ function linkSnippets(){
 #############################
 #############################
 
-echo "xcodesnippets manage"
-
 ## Reading command line args
 OPTIND=1 #reset for safety
 
@@ -227,6 +225,8 @@ do
       exit 0
       ;;
     h) # show help
+      echo "no help"
+      exit 0
       ;;
     i) # import snippet file or bundle
       import "$OPTARG"

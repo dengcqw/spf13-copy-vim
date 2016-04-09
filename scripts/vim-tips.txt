@@ -3,3 +3,6 @@
     :[range]g/pattern/[cmd]
     [range]表示範圍，或用直接用 g 表示 globe
     [cmd] 使用 "d" 就可以刪除整行
+
+This replaces with newline:
+sed "s/regexp/`echo -e '\n\r'`/g"

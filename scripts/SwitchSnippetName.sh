@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 function getSnipTitle(){
   file="$1"
   get_snip_title_tmp="-99"
@@ -28,9 +30,9 @@ cd $1
 for file in *
 do
   echo $file
-  getSnipID "$file" snip_guid
-  echo $snip_guid
-  mv $file  $snip_guid.codesnippet
+  getSnipID "$file" snip_title
+  echo $snip_title
+  mv $file  $snip_title.codesnippet
 done
 
 
