@@ -15,7 +15,7 @@
         Bundle 'ternjs/tern_for_vim'
     " }
     " code snippet {
-        "Bundle 'drmingdrmer/xptemplate'
+        Bundle 'drmingdrmer/xptemplate'
     " }
     " fasten ctrlp search {
         Bundle 'FelikZ/ctrlp-py-matcher'
@@ -49,3 +49,4 @@
     Bundle 'vim-swift'
 
     Bundle 'tokorom/swift-dict.vim'
+

@@ -239,21 +239,6 @@
 " }
 
 " custom Plugins {
-    """"""""""""""""""""""""""""""""""""""""
-    " ConqueTerm plugin
-    let g:ConqueTerm_FastMode = 0 " 1 enable fast mode, 0 disable
-    let g:ConqueTerm_Color = 1  " Color support
-    let g:ConqueTerm_SessionSupport = 0 " save to session
-
-    "{
-        "Type :ConqueTerm <command> to run your command in vim, for example:
-        ":ConqueTerm bash
-
-        "To open ConqueTerm in a new horizontal or vertical buffer use:
-        ":ConqueTermSplit <command>
-        ":ConqueTermVSplit <command>
-        ":ConqueTermTab <command>
-    "}
 
     """"""""""""""""""""""""""""""""""""""""
     " powerline plugin
@@ -270,7 +255,6 @@
         " fj    line downward
         " fk    line upward
         " fn/fN    like original n/N
-
 " }
 "
 
@@ -788,4 +772,13 @@ highlight Matchmaker guibg=NONE
 highlight Matchmaker gui=underline
 highlight Matchmaker ctermbg=NONE
 highlight Matchmaker cterm=underline
+
+" Insert Model use <C-r><C-r><C-\> to show all list in file
+" after input use <C-\> show complete list
+" <Tab> 和 <S-Tab> jump between placeholder
+
+" xptempate {
+
+    "let g:xptemplate_lib_filter = '/my_snippets/'
+"}
 
