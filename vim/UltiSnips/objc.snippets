@@ -1,0 +1,180 @@
+
+#  Basic snippet {
+
+snippet xGetter   "Create a getter method"
+- (${1:Class} *)${2:variable} {
+    if (nil == _$2) {
+		$1 *$2 = [[$1 alloc] init];
+
+        self.$2 = $2;
+    }
+    return _$2;
+}
+endsnippet
+
+snippet sss "Property strong"
+@property (nonatomic, strong) ${1:Class} *${2:variable};
+endsnippet
+
+snippet www "Property weak"
+@property (nonatomic, weak) ${1:Class} * ${2:name};
+endsnippet
+
+snippet ccc "Property copy"
+@property (nonatomic, copy) NSString *${1:name};
+endsnippet
+
+snippet void  "Void method declaration"
+- (void)${1:metod name} {
+    ${2:code}
+}
+endsnippet
+
+snippet xlogObj  "x log class object"
+NSLog(@"${1:discription}:%@",${2:instance});
+endsnippet
+
+snippet xPropertyFromDictionary  "x Property From dictionary"
+self.${1:property} = dictionary[@"${2:key}"];
+endsnippet
+
+snippet xValue  "x  NSValue"
+[NSValue valueWith${1:?}];
+endsnippet
+
+snippet xlogStringFrom  "x log string from"
+NSLog(@"${1:?}:%@",NSStringFrom${2:?});
+endsnippet
+
+snippet xSetter  "xSetter  -  send kvo notif"
+- (void)set${1:Value}:(BOOL)${2:anValue} {
+	// Skip KVO notifications when the property hasn't actually changed. This is
+	// especially important because self.active can have very expensive
+	// observers attached.
+    // Anything else need added here
+    if (${2:anValue} == _${1:Value}) return;
+
+    [self willChangeValueForKey:@keypath(self.${1:Value})];
+    _${1:Value} = ${2:anValue};
+    [self didChangeValueForKey:@keypath(self.${1:Value})];
+}
+endsnippet
+
+snippet xlogInfo  "x log infomation"
+NSLog(@"${1:info}");
+endsnippet
+
+snippet xForI  "x for i"
+for (NSInteger i = 0; i < ${1:?}; i++) {
+	${2:statements}
+}
+endsnippet
+
+snippet xlogBool  "x log bool "
+NSLog(@"${1:discription}:%@",${2:BOOL}?@"YES":@"NO");
+endsnippet
+
+snippet xStringFormat  "x NSString with format"
+[NSString stringWithFormat:@"${1:your string and %@'s here}", ${2:arguments}]
+endsnippet
+
+snippet xRect  "x CGRectMake"
+CGRectMake(${1:CGFloat x}, ${2:CGFloat y}, ${3:CGFloat width}, ${4:CGFloat height})
+endsnippet
+
+snippet xSize  "x CGSizeMake"
+CGSizeMake(${1:CGFloat width}, ${2:CGFloat height})
+endsnippet
+
+snippet xPoint  "x CGPointMake"
+CGPointMake(${1:CGFloat x}, ${2:CGFloat y})
+endsnippet
+
+snippet xImageNamed  "x Image named"
+UIImage *image = [UIImage imageNamed:@"${1:name}"];
+endsnippet
+
+snippet xpragma  "x pragma line and name"
+#pragma mark - ${1:Label}
+endsnippet
+
+snippet xMethod  "x Method with return value"
+- (${1:class} *)${2:metod name} {
+    return nil;
+}
+endsnippet
+
+snippet masWidthEqualto  "mas - width"
+make.width.equalTo(@${1:?});
+endsnippet
+
+snippet masLeftEqualto  "mas - left"
+make.left.equalTo(superview.mas_left).offset(${1:0});
+endsnippet
+
+snippet masRemake  "mas - Remake"
+[${1:view} mas_remakeConstraints:^(MASConstraintMaker *make){
+    ${2:code}
+}];
+endsnippet
+
+snippet masMakeTemplate  "mas - make template"
+superview = ${1:theSuperview};
+[${2:view} mas_makeConstraints:^(MASConstraintMaker *make){
+    make.top.equalTo(superview.mas_top).offset(${3:0});
+    make.left.equalTo(superview.mas_left).offset(${3:0});
+    make.right.equalTo(superview.mas_right).offset(${3:0});
+    make.width.equalTo(@${4:?});
+    make.height.equalTo(@${4:?});
+}];
+endsnippet
+
+snippet masEqualTo  "mas - equalTo"
+make.${1:?}.equalTo(${2:?}).offset(${3:0});
+endsnippet
+
+snippet masTopEqualTo  "mas - top"
+make.top.equalTo(superview.mas_top).offset(${1:0});
+endsnippet
+
+snippet masRightEqualTo  "mas - right"
+make.right.equalTo(superview.mas_right).offset(${1:0});
+endsnippet
+
+snippet masEdges  "mas - edges"
+make.edges.equalTo(superview).with.insets(${1:?});
+endsnippet
+
+snippet masUpdate  "mas - Update"
+[${1:view} mas_updateConstraints:^(MASConstraintMaker *make){
+    ${2:code}
+}];
+endsnippet
+
+snippet masInit  "mas - init method"
+- (void)initConstaints {
+    UIView *superview = self.view;
+    ${1:code}
+}
+endsnippet
+
+snippet djBlockMethod  "Block - Method"
+- (void)${1:methodName}WithCompletionBlock:(void (^)(NSString *message, NSError *error))${2:returnBlock} {
+    NSString *message = nil;
+    NSError *error = nil;
+    
+    if (${2:returnBlock}) {
+        ${2:returnBlock}(message, error);
+    }
+}
+endsnippet
+
+snippet notificationRemove  "Notification: Remove Observer"
+[[NSNotificationCenter defaultCenter]removeObserver:self name:${1:notification name} object:nil];
+endsnippet
+
+snippet notificationAddObserver  "Notification: Add Observer"
+[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(${1:selector}) name:${2:notification name}object:nil];
+endsnippet
+
+#}

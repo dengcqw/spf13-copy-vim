@@ -1,0 +1,252 @@
+
+# sample {
+snippet NoDefine  "Swift - for while sample"
+
+// For Loop
+
+let values = [1, 2, 3, 4, 5]
+for value in values {
+    print(value)
+}
+
+let values = [1, 2, 3, 4, 5]
+for (key, value) in values.enumerate() {
+    print(values[key])
+}
+
+// While Loop
+
+let values = [1, 2, 3, 4, 5]
+var i = 0
+while i < values.count {
+    print(values[i])
+    i++
+}
+
+endsnippet
+
+snippet djStringSample  "Swift - String sample"
+// 字母下标
+let greeting = "Guten Tag!"greeting[greeting.startIndex] // first char: G
+greeting[greeting.startIndex.successor()] // second char: ugreeting[greeting.endIndex.predecessor()] // last char: !let index = greeting.startIndex.advancedBy(7) // 7th chargreeting[index] // a
+
+// 遍历字母
+for index in greeting.characters.indices {    print("\(greeting[index]) ", terminator: " ")}
+for character in greeting.characters {    print(character)}
+
+// 插入
+var welcome = "hello"welcome.insert("!", atIndex: welcome.endIndex) // "hello!"
+welcome.insertContentsOf(" there".characters, at: welcome.endIndex.predecessor()) // "hello there!"
+
+// 删除
+welcome.removeAtIndex(welcome.endIndex.predecessor()) // "hello there"
+let range = welcome.endIndex.advancedBy(-6)..<welcome.endIndex
+welcome.removeRange(range) // "hello"
+endsnippet
+
+snippet NoDefine  "Swift - lazy load sample"
+// 延迟加载4种方法
+class LazySample: NSObject {
+    // 1. 直接初始化
+//    lazy var players = [String]()
+    
+    // 2. 内嵌函数
+    lazy var players: [String] = {         
+        var tmp = [String]()
+        tmp.append("John Doe")
+        return tmp
+    }()
+    
+    // 3. 通过实例方法初始化
+//    lazy var players: [String] = self.initialPlayers()
+//    
+//    func initialPlayers() -> [String] {
+//        var tmp = [String]()
+//        tmp.append("John Doe")
+//        return tmp
+//    }
+    
+    // 4. 通过类方法初始化
+//    lazy var players = LazySample.initialPlayers()
+//    class func initialPlayers() -> [String] {         
+//        var tmp = [String]()
+//        tmp.append("John Doe")
+//        return tmp
+//    }
+}
+
+endsnippet
+
+snippet NoDefine  "Swift - variables sample"
+# Variables
+
+## Constant
+let maxHealth:Int = 100
+
+## String
+var fullName:String = "Scott Doxey"
+
+## Number
+var currentHealth:Int = 100
+var currentLevel:Double = 31.5
+
+## Array
+var foods:[String] = ["French Fries", "Pizza", "Pasta"]
+
+    ### Append Value
+    foods.append("Ice Cream")
+
+    ### Prepend Value
+    foods.insert("Ice Cream", atIndex: 0)
+
+    ### Deleting by Index
+    foods.removeAtIndex(1)
+    
+    for  afood in foods {
+    }
+
+    for (index, afood) in foods.enumerate() {
+    }
+
+## Dictionary
+var programmingSkillLevels:[String: Int] = ["JavaScript": 11, "HTML": 10, "CSS": 10, "Swift": 1]
+
+    ### Return Array of Keys
+    print(Array(programmingSkillLevels).keys)
+
+    ### Deleting by Key
+    programmingSkillLevels.removeValueForKey("JavaScript")
+
+## ENUM
+enum daysOfTheWeek {
+case Monday
+case Tuesday
+case Wednesday
+case Thursday
+case Friday
+case Saturday
+case Sunday
+}
+
+print(daysOfTheWeek.Monday)
+endsnippet
+
+snippet NoDefine  "Swift - closure function sample"
+//Defining a function:
+func jediGreet(name: String, ability: String) -> (farewell: String, mayTheForceBeWithYou: String) {
+    return ("Good bye, \(name).", " May the \(ability) be with you.")
+}
+//Calling a function:
+let retValue = jediGreet("old friend", "Force")
+println(retValue)
+println(retValue.farewell)
+println(retValue.mayTheForceBeWithYou)
+
+//Function types
+func sum(x: Int, y: Int) -> (result: Int) { return x + y }
+//has a function type of:
+(Int, Int) -> (Int)
+//Function types can thus be used as parameters types or as return types for nesting functions.
+    Passing and returning functions
+
+//The following function is returning another function as its result which can be later assigned to a variable and called.
+func jediTrainer () -> ((String, Int) -> String) {
+    func train(name: String, times: Int) -> (String) {
+        return "\(name) has been trained in the Force \(times) times"
+    }
+    return train
+}
+let train = jediTrainer()
+train("Obi Wan", 3)
+
+//Variadic functions
+//Variadic functions are functions that have a variable number of arguments (indicated by ... after the argument's type) that can be accessed into their body as an array.
+func jediBladeColor (colors: String...) -> () {
+    for color in colors {
+        println("\(color)")
+    }
+}
+jediBladeColor("red","green")
+
+//Defining a closure: {()->() in}
+
+//Closures are typically enclosed in curly braces { } and are defined by a function type () -> (), where -> separates the arguments and the return type, followed by the in keyword which separates the closure header from its body.
+{ (params) -> returnType in
+    statements
+}
+//An example could be the map function applied to an Array:
+let padawans = ["Knox", "Avitla", "Mennaus"]
+padawans.map({
+    (padawan: String) -> String in
+    "\(padawan) has been trained!"
+})
+
+//Closures with known types:
+//When the type of the closure's arguments are known, you can do as follows:
+func applyMutliplication(value: Int, multFunction: Int -> Int) -> Int {
+    return multFunction(value)
+}
+
+applyMutliplication(2, {value in
+    value * 3
+})
+
+//Closures shorthand argument names:
+//Closure arguments can be references by position ($0, $1, ...) rather than by name
+applyMutliplication(2, {$0 * 3})
+
+//Furthermore, when a closure is the last argument of a function, parenthesis can be omitted as such:
+applyMutliplication(2) {$0 * 3}
+endsnippet
+
+snippet NoDefine  "Swift - NSCoding NSKeyedArchiver sample"
+// NSCoding
+
+struct PropertyKey {
+
+    static let contentkey = "content"
+    static let completedkey = "completed"
+
+}
+
+class TodoItem: NSObject, NSCoding {
+
+    var content:String = ""
+    var completed:Bool = false
+
+    init(content: String, completed: Bool) {
+
+        self.content = content
+        self.completed = completed
+
+    }
+
+    required init(coder aDecoder: NSCoder) {
+
+        self.content = aDecoder.decodeObjectForKey(PropertyKey.contentkey) as! String
+        self.completed = aDecoder.decodeObjectForKey(PropertyKey.completedkey) as! Bool
+
+    }
+
+    func encodeWithCoder(aCoder: NSCoder) {
+
+        aCoder.encodeObject(content, forKey: PropertyKey.contentkey)
+        aCoder.encodeObject(completed, forKey: PropertyKey.completedkey)
+
+    }
+
+}
+
+// Encoding and Storing Data
+
+let savedTodoItems = NSKeyedArchiver.archivedDataWithRootObject(todoItems)
+
+NSUserDefaults.standardUserDefaults().setObject(savedTodoItems, forKey: "todoItems")
+
+// Retrieving and Decoding Data
+
+let storedTodoItems = NSUserDefaults.standardUserDefaults().objectForKey("todoItems")! as AnyObject
+
+todoItems = NSKeyedUnarchiver.unarchiveObjectWithData(storedTodoItems as! NSData) as! TodoItem
+endsnippet
+#}

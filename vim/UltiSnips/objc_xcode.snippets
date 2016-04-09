@@ -2,9 +2,9 @@ snippet NoDefine  "runtime - read var or property"
 
 unsigned int outCount   = 0;
 #if Property
-objc_property_t *propertyList = class_copyPropertyList([self class], &amp;outCount);
+objc_property_t *propertyList = class_copyPropertyList([self class], &outCount);
 
-for (int i = 0; i &lt; outCount; i++) {
+for (int i = 0; i < outCount; i++) {
 	objc_property_t property = propertyList[i];
 	const char *name = property_getName(property);
 	NSString *key = [NSString stringWithCString:name encoding:(NSUTF8StringEncoding)];
@@ -13,9 +13,9 @@ for (int i = 0; i &lt; outCount; i++) {
 }
 free(propertyList);
 #else
-Ivar * ivarList         = class_copyIvarList([self class], &amp;outCount);
+Ivar * ivarList         = class_copyIvarList([self class], &outCount);
 
-for (int i = 0; i &lt; outCount; i++) {
+for (int i = 0; i < outCount; i++) {
 	Ivar ivar           = ivarList[i];
 	const char * name   = ivar_getName(ivar);
 	NSString *key = [NSString stringWithCString:name encoding:(NSUTF8StringEncoding)];
@@ -40,30 +40,6 @@ self.view.layer.borderWidth = 1.0; // no animation
 
 endsnippet
 
-snippet NoDefine  "sample - contentOffset "
-    
-// 最上面cell背景透明，就可以看到图片随着tableview 滑动的效果。
-UIImageView *userBgView = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, APPLICATIONWIDTH, PAUserHeaderClearBgHeight)];
-userBgView.contentMode = UIViewContentModeScaleAspectFill;
-userBgView.image = [UIImage imageNamed:@"user_center_bg.png"];
-[self.tableView.backgroundView addSubview:userBgView];
-[self.tableView.backgroundView bringSubviewToFront:userBgView];
-@weakify(userBgView);
-[RACObserve(self.tableView, contentOffset) subscribeNext:^(NSValue *value) {
-	CGPoint point;
-	[value getValue:&amp;point];
-	CGFloat offset = point.y;
-	//NSLog(@"offset:%@",@(offset));
-	@strongify(userBgView);
-	userBgView.frame = CGRectMake(0, 0, APPLICATIONWIDTH, PAUserHeaderClearBgHeight-offset);
-	if (offset &gt; 0.0001) { //向上滑动
-		userBgView.alpha = 1.0 - offset/(PAUserHeaderClearBgHeight+200);
-	} else {
-		userBgView.alpha = 1.0;
-	}
-}];
-
-endsnippet
 
 snippet djNotifScreenRotation  "Notification - screen rotate orientation"
 
@@ -87,63 +63,22 @@ snippet djNotifScreenRotation  "Notification - screen rotate orientation"
 
 endsnippet
 
-snippet masInit  "mas - init method"
 
-- (void)initConstaints {
-    UIView *superview = self.view;
-    ${1:code}
-}
-
-endsnippet
-
-snippet djBlockMethod  "Block - Method"
-
-- (void)${1:methodName}WithCompletionBlock:(void (^)(NSString *message, NSError *error))${1:returnBlock} {
-    NSString *message = nil;
-    NSError *error = nil;
-    
-    if (${1:returnBlock}) {
-        ${1:returnBlock}(message, error);
-    }
-}
-
-endsnippet
-
-snippet djSampleVariableList  "Sample - variable list  (va_list)  "
-
-// 多参数据示例
-- (void)addLayers:(CALayer *)layer, ... {
-    va_list args;
-    va_start(args, layer);
-    
-    for (CALayer *arg = layer; arg != nil; arg = va_arg(args, CALayer *)) {
-    }
-    
-    va_end(args);
-}
-
-endsnippet
-
-snippet xlogObj  "x log class object"
-
-NSLog(@"${1:discription}:%@",${1:instance});
-
-endsnippet
 
 snippet NoDefine  "Swift - TextField delegate notification"
 
-// MARK:- ---&gt; Textfield Delegates
-func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -&gt; Bool {
+// MARK:- ---> Textfield Delegates
+func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
     print("While entering the characters this method gets called")
     return true;
 }
 
-func textFieldShouldReturn(textField: UITextField) -&gt; Bool {
+func textFieldShouldReturn(textField: UITextField) -> Bool {
     print("TextField should return method called")
     textField.resignFirstResponder();
     return true;
 }
-// MARK: Textfield Delegates &lt;---
+// MARK: Textfield Delegates <---
 
 // MARK: Textfield Notif
 let notificationCenter = NSNotificationCenter.defaultCenter()
@@ -159,9 +94,7 @@ func textFieldTextChanged(sender : AnyObject) {
 endsnippet
 
 snippet notificationRemove  "Notification: Remove Observer"
-
 [[NSNotificationCenter defaultCenter]removeObserver:self name:${1:notification name} object:nil];
-
 endsnippet
 
 snippet swift-uiremotenotification  "Swift UIRemoteNotification"
@@ -187,7 +120,7 @@ func application(application: UIApplication, didReceiveRemoteNotification userIn
     
 }
 
-func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -&gt; Void) {
+func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
     
 }
 
@@ -320,26 +253,6 @@ dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAUL
 
 endsnippet
 
-snippet NoDefine  "JS - Export protocol sample"
-
-@protocol UIButtonExport &lt;JSExport&gt;  
-- (void)setTitle:(NSString *)title forState:(UIControlState)state;  
-@end  
-
-- (void)test  { 
-    // add protocol to UIButton runtime
-    class_addProtocol([UIButton class],@protocol(UIButtonExport));  
-    
-    UIButton *button = [UIButtonbuttonWithType:UIButtonTypeSystem];  
-    [button setTitle:@"Hello Objective-C"forState:UIControlStateNormal];  
-    button.frame = CGRectMake(20,40,280,40);  
-    
-    JSContext *context = [[JSContext alloc] init];  
-    context[@"button"] = button; 
-    [context evaluateScript:@"button.setTitleForState('Hello JavaScript', 0)"];  
-}
-
-endsnippet
 
 snippet djFdMethodForwarding  "Fd - method forwarding"
 
@@ -387,88 +300,10 @@ snippet weakify  "weakify"
 	
 endsnippet
 
-snippet NoDefine  "Swift - for while sample"
-
-// For Loop
-
-let values = [1, 2, 3, 4, 5]
-for value in values {
-    print(value)
-}
-
-let values = [1, 2, 3, 4, 5]
-for (key, value) in values.enumerate() {
-    print(values[key])
-}
-
-// While Loop
-
-let values = [1, 2, 3, 4, 5]
-var i = 0
-while i &lt; values.count {
-    print(values[i])
-    i++
-}
-
-endsnippet
 
 snippet GCDGetQueueLabel  "GCD - Get Queue Label"
 
 NSString *queueLabel = [NSString stringWithCString: dispatch_queue_get_label(dispatch_get_current_queue())encoding:NSUTF8StringEncoding];
-
-endsnippet
-
-snippet NoDefine  "Sample - create NSThread"
-
-static NSThread *${1:name}Thread;
-
-+ (void)start${1:name}ThreadIfNeeded {
-	static dispatch_once_t predicate;
-	dispatch_once(&amp;predicate, ^{
-		
-		NSLog(@"%s: Starting ${1:name} thread...", __FILE__);
-		
-		${1:name}Thread = [[NSThread alloc] initWithTarget:self
-		                                        selector:@selector(${1:name}Thread)
-		                                          object:nil];
-		[${1:name}Thread start];
-	});
-}
-
-+ (void${1:name}Thread {
-	@autoreleasepool {
-	
-		NSLog(@"%s: ${1:name} Thread: Started", __FILE__);
-		
-		// We can't run the run loop unless it has an associated input source or a timer.
-		// So we'll just create a timer that will never fire - unless the server runs for 10,000 years.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
-		[NSTimer scheduledTimerWithTimeInterval:[[NSDate distantFuture] timeIntervalSinceNow]
-		                                 target:self
-		                               selector:@selector(donothingatall:)
-		                               userInfo:nil
-		                                repeats:YES];
-#pragma clang diagnostic pop
-
-		[[NSRunLoop currentRunLoop] run];
-		
-		NSLog(@"%@: ${1:name} Thread: Aborted", __FILE__);
-	}
-}
-
-+ (void)executeBlock:(dispatch_block_t)block {
-    NSAssert([NSThread currentThread] == ${1:name}Thread, @"Executed on incorrect thread");
-	
-	block();
-}
-
-+ (void)performBlock:(dispatch_block_t)block {
-	[self performSelector:@selector(executeBlock:)
-                 onThread:${1:name}Thread
-	           withObject:block
-	        waitUntilDone:YES];
-}
 
 endsnippet
 
@@ -514,7 +349,7 @@ endsnippet
 
 snippet method1_1  "Swift - method one input one output"
 
-private func ${1:method1_1}(input input:String) -&gt; String? {
+private func ${1:method1_1}(input input:String) -> String? {
     ${1:code}
     return ""
 }
@@ -523,7 +358,7 @@ endsnippet
 
 snippet djTypealiasOptionalClosure  "Swift - optional closure typealias"
 
-typealias ${1:ClosureName} = ((${1:arguments}) -&gt; ${1:return value})?
+typealias ${1:ClosureName} = ((${1:arguments}) -> ${1:return value})?
 
 endsnippet
 
@@ -582,7 +417,7 @@ endsnippet
 snippet dispatch_once_swift "GCD: Dispatch Once"
         
 struct Static { static var onceToken: dispatch_once_t = 0 }
-dispatch_once(&amp;Static.onceToken) {
+dispatch_once(&Static.onceToken) {
     ${1:closure_logic}
 }
     
@@ -606,23 +441,23 @@ snippet swift-uitableviewdelegate  "Swift UITableViewDelegate"
         
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -&gt; CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -&gt; CGFloat {
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -&gt; CGFloat {
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -&gt; UIView? {
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
     }
     
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -&gt; UIView? {
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
     }
 
@@ -671,10 +506,10 @@ endsnippet
 
 snippet NoDefine  "Swift - DispatchAsyncMain"
 
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -&gt; Void in
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
     ${1:code}
     
-    dispatch_async(dispatch_get_main_queue(), { () -&gt; Void in
+    dispatch_async(dispatch_get_main_queue(), { () -> Void in
         ${1:code}
     })
 })
@@ -720,12 +555,6 @@ override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     ${1:code}
 }
-
-endsnippet
-
-snippet xPropertyFromDictionary  "x Property From dictionary"
-
-self.${1:property} = dictionary[@"${1:key}"];
 
 endsnippet
 
@@ -796,7 +625,7 @@ snippet djUIScrollVewLayoutSubView  "UI - scroll view layout subview method"
 	CGFloat curXLoc = 0;
 	for (view in subviews)
 	{
-		if ([view isKindOfClass:[UIImageView class]] &amp;&amp; view.tag &gt; 0)
+		if ([view isKindOfClass:[UIImageView class]] && view.tag > 0)
 		{
 			CGRect frame = view.frame;
 			frame.origin = CGPointMake(curXLoc, 0);
@@ -818,7 +647,7 @@ snippet djIsOpaque  "trick - view is opaque method"
 {
     // If the background color is opaque, return YES
     // otherwise, return NO
-    return [[self backgroundColor] alphaComponent] &gt;= 1.0 ? YES : NO;
+    return [[self backgroundColor] alphaComponent] >= 1.0 ? YES : NO;
 }
 
 endsnippet
@@ -973,7 +802,7 @@ snippet djCGDrawImageMethod  "CG - Draw Image Method"
 - (UIImage *)${1:method name} {
     static UIImage *image = nil;
     static dispatch_once_t onceToken;
-    dispatch_once(&amp;onceToken, ^{
+    dispatch_once(&onceToken, ^{
         CGSize oldSize = CGSizeMake(${1:CGFloat width}, ${1:CGFloat height});
         CGFloat scale = [[UIScreen mainScreen] scale];
         CGSize newSize = CGSizeMake(oldSize.width*scale, oldSize.height*scale);
@@ -1042,7 +871,7 @@ endsnippet
 snippet NoDefine  "Swift - alert controller"
 
 		let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -&gt; Void in
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             alert.dismissViewControllerAnimated(true, completion: nil)
         }))
         presentingViewController?.presentViewController(alert, animated: true, completion: nil)
@@ -1080,18 +909,6 @@ snippet swift-message  "Swift MFMessageComposeViewController"
 
 endsnippet
 
-snippet masLeftEqualto  "mas - left"
-
-		make.left.equalTo(superview.mas_left).offset(${1:0});
-	
-endsnippet
-
-snippet xValue  "x  NSValue"
-
-		[NSValue valueWith${1:?}];
-	
-endsnippet
-
 snippet djUIImageView  "UI - image view"
 
 UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(${1:CGFloat x}, ${1:CGFloat y}, ${1:CGFloat width}, ${1:CGFloat height})];
@@ -1127,8 +944,8 @@ endsnippet
 
 snippet NoDefine  "Comment variable"
 
-/**&lt; ${1:?} */
-///&lt;${1:?}
+/**< ${1:?} */
+///<${1:?}
 
 endsnippet
 
@@ -1159,15 +976,15 @@ snippet swift-uitableviewdatasource  "Swift UITableViewDataSource"
     
 	//MARK: UITableViewDataSource
 
-    func numberOfSectionsInTableView(tableView: UITableView) -&gt; Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return ${1:numberOfSections}
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ${1:numberOfRows}
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -&gt; UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(${1:identifier}, forIndexPath: indexPath) as UITableViewCell
         configureCell(cell, forRowAtIndexPath: indexPath)
         return cell
@@ -1198,7 +1015,7 @@ endsnippet
 
 snippet djMacroIs_ios7_or_later  "Macro - Is Running iOS 7 or Later"
 
-		#define RUNNING_IOS_7_OR_LATER  (floor(NSFoundationVersionNumber) &gt; NSFoundationVersionNumber_iOS_6_1)
+		#define RUNNING_IOS_7_OR_LATER  (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
 	
 endsnippet
 
@@ -1246,10 +1063,10 @@ fetchRequest.predicate = [NSPredicate predicateWithFormat:${1:(NSString *), ...}
 fetchRequest.sortDescriptors = @[${1:(NSSortDescriptor *), ...}];
 
 NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:${1:(NSFetchRequest *)} managedObjectContext:${1:(NSManagedObjectContext *)} sectionNameKeyPath:${1:(NSString *)} cacheName:${1:(NSString *)}];
-fetchedResultsController.delegate = ${1:(id &lt;NSFetchedResultsControllerDelegate&gt;)};
+fetchedResultsController.delegate = ${1:(id <NSFetchedResultsControllerDelegate>)};
 
 NSError *error = nil;
-if (![fetchedResultsController performFetch:&amp;error]) {
+if (![fetchedResultsController performFetch:&error]) {
     NSLog(@"Error: %@", error);
 }
 
@@ -1262,44 +1079,6 @@ snippet djReadLineFromFile  "Fd - read line from file"
 
 endsnippet
 
-snippet GCDBlockGroupSample  "GCD - block group sample"
-    
-    dispatch_queue_t newQueue = dispatch_queue_create("new_test_queue", DISPATCH_QUEUE_CONCURRENT);
-    
-    dispatch_async(newQueue, ^{
-        dispatch_group_t group = dispatch_group_create();
-        for (NSInteger i = 0; i &lt; 10; i++) {
-            /* sample
-             *
-             dispatch_group_enter(group);
-             Photo *photo = [[Photo alloc] initwithURL:url withCompletionBlock:^(UIImage *image, NSError *_error) {
-                 if (_error) {
-                     error = _error;
-                 }
-                 dispatch_group_leave(downloadGroup);
-             }];
-             
-             [[PhotoManager sharedManager] addPhoto:photo];
-             */
-            
-            dispatch_group_enter(group); // start a task
-            // process here
-            dispatch_group_leave(group); // end a task
-        }
-        
-        long ret = dispatch_group_wait(group, DISPATCH_TIME_FOREVER); // block current queue
-        if (ret == 0) { // return non-zero for timeout
-            dispatch_async(dispatch_get_main_queue(), ^{ // completion
-                //if (completionBlock) {
-                //    completionBlock(error);
-                //}
-            });
-        } else {
-            // time out
-        }
-    });
-    
-endsnippet
 
 snippet djCollectionViewDataSource  "UI - UICollectionViewDataSource"
 
@@ -1340,7 +1119,7 @@ snippet djFDFirstResponder  "FD - firstResponder"
 
 //UIResponder+FirstResponder.h
 
-#import &lt;Cocoa/Cocoa.h&gt;
+#import <Cocoa/Cocoa.h>
 @interface UIResponder (FirstResponder)
 +(id)currentFirstResponder;
 @end
@@ -1401,7 +1180,7 @@ let ${1:cachesURL} = fileManager.URLsForDirectory(NSSearchPathDirectory.${1:Cach
 endsnippet
 
 snippet djClosure  "Swift - Closure"
-{ [unownd self] (${1:parameters}) -&gt; ${1:returnType} in    ${1:statements}}
+{ [unownd self] (${1:parameters}) -> ${1:returnType} in    ${1:statements}}
 
 endsnippet
 
@@ -1410,7 +1189,7 @@ snippet notificationPost  "Notification: Post"
 endsnippet
 
 snippet djTypealiasClosure  "Swift - closure typealias"
-typealias ${1:ClosureName} = (${1:arguments}) -&gt; ${1:return value}
+typealias ${1:ClosureName} = (${1:arguments}) -> ${1:return value}
 endsnippet
 
 snippet weakself  "Block - Weakself"
@@ -1488,27 +1267,9 @@ NSDictionary *userInfo = @{${1:key}: ${1:object, ...}}
 [[NSNotificationCenter defaultCenter] postNotificationName:${1:name} object:nil userInfo:userInfo];
 endsnippet
 
-snippet djStringSample  "Swift - String sample"
-// 字母下标
-let greeting = "Guten Tag!"greeting[greeting.startIndex] // first char: G
-greeting[greeting.startIndex.successor()] // second char: ugreeting[greeting.endIndex.predecessor()] // last char: !let index = greeting.startIndex.advancedBy(7) // 7th chargreeting[index] // a
-
-// 遍历字母
-for index in greeting.characters.indices {    print("\(greeting[index]) ", terminator: " ")}
-for character in greeting.characters {    print(character)}
-
-// 插入
-var welcome = "hello"welcome.insert("!", atIndex: welcome.endIndex) // "hello!"
-welcome.insertContentsOf(" there".characters, at: welcome.endIndex.predecessor()) // "hello there!"
-
-// 删除
-welcome.removeAtIndex(welcome.endIndex.predecessor()) // "hello there"
-let range = welcome.endIndex.advancedBy(-6)..&lt;welcome.endIndex
-welcome.removeRange(range) // "hello"
-endsnippet
 
 snippet djDispatchmain  "Swift-DispatchMain"
-dispatch_async(dispatch_get_main_queue(), { () -&gt; Void in
+dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
         })
 endsnippet
@@ -1540,27 +1301,6 @@ snippet djDeprecated  "deprecated  attribute"
 __attribute__((deprecated("${1:desc}")))
 endsnippet
 
-snippet djRACMulticastConnection  "RAC - connection multicast sample"
-    RACSubject *signal = [RACSubject subject];
-    RACMulticastConnection *connection = [signal multicast:[RACReplaySubject subject]];
-    [connection connect];
-    [connection.signal subscribeNext:^(id x) {
-        NSLog(@"first sub :%@",x);
-    }];
-    [connection.signal subscribeNext:^(id x) {
-        NSLog(@"second sub :%@",x);
-    }];
-    
-    for (NSUInteger i = 0; i&lt; 3; i++) {
-        [signal sendNext:@(i)];
-    }
-    
-    // 会获得所有3个值
-    [connection.signal subscribeNext:^(id x) {
-        NSLog(@"discription:%@",x);
-    }];
-
-endsnippet
 
 snippet djUIToolBar  "UI - tool bar"
         UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 0.0, 100.0, 44.0)];
@@ -1576,7 +1316,7 @@ snippet djFdRegisterFont  "Fd - register Font"
     NSURL *fontURL = [[NSBundle mainBundle] URLForResource:@"iconfont" withExtension:@"ttf"];
     assert(fontURL);
     CFErrorRef error = NULL;
-    if (!CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, &amp;error))
+    if (!CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, &error))
     {
       if (CFErrorGetCode(error) != kCTFontManagerErrorAlreadyRegistered) {
         CFShow(error);
@@ -1588,7 +1328,7 @@ endsnippet
 
 snippet djFdExistDocument  "Fd- Directory or file Exist"
     BOOL isDirectory = TRUE;
-    BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:url.path isDirectory:&amp;isDirectory];
+    BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:url.path isDirectory:&isDirectory];
 endsnippet
 
 snippet djUIRegisterNibCell  "UI - register nib cell"
@@ -1597,89 +1337,6 @@ snippet djUIRegisterNibCell  "UI - register nib cell"
     [_tableView registerNib:nib forCellReuseIdentifier:ReuseIdentifier];
 endsnippet
 
-snippet masRemake  "mas - Remake"
-[${1:view} mas_remakeConstraints:^(MASConstraintMaker *make){
-    ${1:code}
-}];
-endsnippet
-
-snippet djSmpaleMotion  "Sample - Motion sample"
-- (void)motionSample {
-    if (!_motionManager) {
-        _motionManager = [[CMMotionManager alloc] init];
-    }
-    
-    // 加速度器的检测
-    if ([self.motionManager isAccelerometerAvailable]){
-        NSLog(@"Accelerometer is available.");
-    } else{
-        NSLog(@"Accelerometer is not available.");
-    }
-    if ([self.motionManager isAccelerometerActive]){
-        NSLog(@"Accelerometer is active.");
-    } else {
-        NSLog(@"Accelerometer is not active.");
-    }
-    
-    // 陀螺仪的检测
-    if([self.motionManager isGyroAvailable]){
-        NSLog(@"Gryro is available.");
-    } else {
-        NSLog(@"Gyro is not available.");
-    }
-    if ([self.motionManager isGyroActive]){
-        NSLog(@"Gryo is active.");
-    } else {
-        NSLog(@"Gryo is not active.");
-    }
-    
-    // 1.push方式是实时获取到Accelerometer的数据，并且用相应的队列来显示
-    if ([self.motionManager isAccelerometerAvailable]){
-        
-        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-        [self.motionManager startAccelerometerUpdatesToQueue: queue
-                                                 withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
-                                                     
-                                                     NSLog(@"X = %.04f, Y = %.04f, Z = %.04f",accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z);
-                                                 }];
-    }
-    
-    // 2.pull方式 就是获取数据，如果要显示，就要向Accelerometer来索要数据
-    self.motionManager.accelerometerUpdateInterval = 0.01; // 告诉manager，更新频率是100Hz
-    [self.motionManager startAccelerometerUpdates]; // 开始更新，后台线程开始运行。
-    
-    // 陀螺仪的检测
-    if([self.motionManager isGyroAvailable]){
-        if ([self.motionManager  isGyroActive] == NO){
-            [self.motionManager  setGyroUpdateInterval:1.0f / 1.0f];
-            NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-            [self.motionManager startGyroUpdatesToQueue:queue
-                                            withHandler:^(CMGyroData *gyroData, NSError *error) {
-                                                NSLog(@"Gyro Rotation x = %.04f", gyroData.rotationRate.x);
-                                                NSLog(@"Gyro Rotation y = %.04f", gyroData.rotationRate.y);
-                                                NSLog(@"Gyro Rotation z = %.04f", gyroData.rotationRate.z);
-                                            }];
-            
-        }
-    }else {
-        NSLog(@"Gyro is not available.");
-    }
-    // 电子罗盘
-    if ([self.motionManager isMagnetometerAvailable]) {
-        [self.motionManager startMagnetometerUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMMagnetometerData *magnetometerData, NSError *error) {
-        }];
-    }
-    
-    // 获取陀螺仪 加速度器 电子罗盘的数据
-    if ([self.motionManager isDeviceMotionAvailable]) {
-        [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) {
-        }];
-    }
-    
-}
-
-
-endsnippet
 
 snippet djFdUdidCreate  "Fd - UDID Generator"
 CFUUIDRef uuid = CFUUIDCreate(NULL);
@@ -1687,55 +1344,20 @@ CFStringRef uuidStr = CFUUIDCreateString(NULL, uuid);
 NSString *uniqueIdentifier = [NSString stringWithFormat:@"%@", uuidStr];
 endsnippet
 
-snippet djSampleTouchEventHandler  "Sample - touch event"
-// get one object from NSSet use |anyObject|
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesBegan:touches withEvent:event];
-    // 获取单点触摸的单个坐标
-    CGPoint pt = [[touches anyObject] locationInView:self];
-}
 
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesCancelled:touches withEvent:event];
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesEnded:touches withEvent:event];
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesMoved:touches withEvent:event];
-}
-
-endsnippet
-
-snippet NoDefine  "JS - Load script sample"
-NSString *path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"js"];  
-NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];  
-
-// load script
-JSContext *context = [[JSContext alloc]init];  
-[context evaluateScript:script];  
-
-// call js
-JSValue *function = context[@"factorial"];  
-JSValue *result = [function callWithArguments:@[@10]];  
-NSLog(@"factorial(10) = %@", result);  
-
-endsnippet
 
 snippet swift-uicollectionviewdatasource  "Swift UICollectionViewDataSource"
     //MARK: UICollectionViewDataSource
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -&gt; Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return ${1:numberOfSections}
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -&gt; Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return ${1:numberOfItems}
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -&gt; UICollectionViewCell {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(${1:identifier}, forIndexPath: indexPath) as! UICollectionViewCell
         configureCell(cell, forItemAtIndexPath: indexPath)
         return cell
@@ -1745,7 +1367,7 @@ snippet swift-uicollectionviewdatasource  "Swift UICollectionViewDataSource"
         
     }
     
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -&gt; UICollectionReusableView {
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let view =  collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: ${1:identifier}, forIndexPath: indexPath) as UIView
         return view
     }
@@ -1793,43 +1415,20 @@ dispatch_sync(${1:queue}, ^{}); // wait for async block to finish
 
 endsnippet
 
-snippet djRACChainOperationAsyncSample  "RAC - scheduler async chain operations sample"
-// synchronous chain of operations sample
-RACScheduler *serializedScheduler = [RACScheduler schedulerWithPriority:RACSchedulerPriorityDefault];
-    [serializedScheduler schedule:^{
-        BOOL success;
-        NSError *error;
-        id finalValue = [[[[service connect] flattenMap:^RACStream *(id value) {
-            return [service doSomething1];
-        }] flattenMap:^RACStream *(id something1Value) {
-            // [service doSomething1], if successful passes along 'somethingValue'
-            return [service disconnect];
-        }] firstOrDefault:defaultValue success:&amp;amp;success error:&amp;amp;error];
-        if (success) {
-            // Operation succeeded!  The last value that was returned via sendNext is stored in finalValue,
-            // success is YES, and error will be nil.
-        }
-        else {
-            // Operation failed!   finalValue will be set to defaultValue, success is NO, and error will be non-nil
-            // if an NSError was propagated up by the chain of operations.
-        }
-    }];
-
-endsnippet
 
 snippet djTableviewdatasource  "Swift-UITableviewDataSource"
 
 //MARK: UITableviewDataSource
 extension ${1:Class} : UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -&gt; Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return ${1:numberOfSections}
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ${1:numberOfRows}
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -&gt; UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(${1:identifier}, forIndexPath: indexPath) as? ${1:CustomCell}
         ${1:configCell}
         return cell!
@@ -1840,10 +1439,10 @@ endsnippet
 snippet djUILoadViewFromXib  "UI - load view from xib  OS X"
     NSArray *cellObject = [NSArray array];
     // 10.8
-    //[[NSBundle mainBundle] loadNibNamed:MovieTvCellViewNibName owner:nil topLevelObjects:&amp;cellObject];
+    //[[NSBundle mainBundle] loadNibNamed:MovieTvCellViewNibName owner:nil topLevelObjects:&cellObject];
     // 10.7
     NSNib *nib = [[NSNib alloc] initWithNibNamed:MovieTvCellViewNibName bundle:nil];
-    [nib instantiateNibWithOwner:nil topLevelObjects:&amp;cellObject];
+    [nib instantiateNibWithOwner:nil topLevelObjects:&cellObject];
     __block MovieTvCellView *cellView;
     [cellObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if ([obj isKindOfClass:[MovieTvCellView class]]) {
@@ -1852,57 +1451,6 @@ snippet djUILoadViewFromXib  "UI - load view from xib  OS X"
         }
     }];
 
-endsnippet
-
-snippet NoDefine  "Swift - NSCoding NSKeyedArchiver sample"
-// NSCoding
-
-struct PropertyKey {
-
-    static let contentkey = "content"
-    static let completedkey = "completed"
-
-}
-
-class TodoItem: NSObject, NSCoding {
-
-    var content:String = ""
-    var completed:Bool = false
-
-    init(content: String, completed: Bool) {
-
-        self.content = content
-        self.completed = completed
-
-    }
-
-    required init(coder aDecoder: NSCoder) {
-
-        self.content = aDecoder.decodeObjectForKey(PropertyKey.contentkey) as! String
-        self.completed = aDecoder.decodeObjectForKey(PropertyKey.completedkey) as! Bool
-
-    }
-
-    func encodeWithCoder(aCoder: NSCoder) {
-
-        aCoder.encodeObject(content, forKey: PropertyKey.contentkey)
-        aCoder.encodeObject(completed, forKey: PropertyKey.completedkey)
-
-    }
-
-}
-
-// Encoding and Storing Data
-
-let savedTodoItems = NSKeyedArchiver.archivedDataWithRootObject(todoItems)
-
-NSUserDefaults.standardUserDefaults().setObject(savedTodoItems, forKey: "todoItems")
-
-// Retrieving and Decoding Data
-
-let storedTodoItems = NSUserDefaults.standardUserDefaults().objectForKey("todoItems")! as AnyObject
-
-todoItems = NSKeyedUnarchiver.unarchiveObjectWithData(storedTodoItems as! NSData) as! TodoItem
 endsnippet
 
 snippet djFdLogFuncStack  "Fd - log function stack"
@@ -1938,81 +1486,6 @@ snippet masHeightEqualto  "mas - height"
 make.height.equalTo(@${1:?});
 endsnippet
 
-snippet djSampleAddressBook  "Sample - address book ABAddressBook"
-#pragma mark - Contacts
-@import AddressBook;
-
-- (void)fetchContacts {
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(nil, nil);
-
-    if (ABAddressBookRequestAccessWithCompletion != NULL) {
-        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-             if (granted)
-             {
-                 [self getContactsWithAddressBook:addressBook];
-                 // refresh view or other
-             }
-        });
-    }
-}
-
-- (void)getContactsWithAddressBook:(ABAddressBookRef)addressBook {
-    // 默认头像
-    NSData *facebookImageData = UIImagePNGRepresentation([UIImage imageNamed:@"bond"]);
-
-    _contacts = [NSMutableArray new];
-    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
-	CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
-
-    for (NSUInteger i=0;i &lt; nPeople;i++) {
-		NSMutableDictionary *dOfPerson = [NSMutableDictionary new];
-
-        // 一条通信记录
-		ABRecordRef person = CFArrayGetValueAtIndex(allPeople,i);
-
-        // 手机号，会有多个号码
-		ABMultiValueRef phones =(__bridge ABMultiValueRef)((__bridge NSString*)ABRecordCopyValue(person, kABPersonPhoneProperty));
-        // 名字
-        CFStringRef firstName, lastName;
-		firstName = ABRecordCopyValue(person, kABPersonFirstNameProperty);
-		lastName  = ABRecordCopyValue(person, kABPersonLastNameProperty);
-        
-        [dOfPerson setObject:[NSString stringWithFormat:@"%@",firstName] forKey:@"firstName"];
-        [dOfPerson setObject:[NSString stringWithFormat:@"%@",lastName] forKey:@"lastName"];
-		[dOfPerson setObject:[NSString stringWithFormat:@"%@ %@", firstName, lastName] forKey:@"name"];
-
-        // 手机号码类型，家庭，工作，主号等
-		NSString *mobileLabel;
-		for(CFIndex i = 0; i &lt; ABMultiValueGetCount(phones); i++) {
-			mobileLabel = (__bridge NSString*)ABMultiValueCopyLabelAtIndex(phones, i);
-			if([mobileLabel isEqualToString:(NSString *)kABPersonPhoneMobileLabel])
-			{
-				[dOfPerson setObject:[CleanPhoneNumber clean:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i)] forKey:@"phone"];
-			}
-			else if ([mobileLabel isEqualToString:(NSString*)kABPersonPhoneIPhoneLabel])
-			{
-				[dOfPerson setObject:[CleanPhoneNumber clean:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i)] forKey:@"phone"];
-				break;
-			}
-        }
-
-        // 头像
-        if (ABPersonHasImageData(person)) {
-            NSData *contactImageData = (__bridge NSData *)ABPersonCopyImageDataWithFormat(person, kABPersonImageFormatThumbnail);
-            [dOfPerson setObject:[UIImage imageWithData:contactImageData] forKey:@"image"];
-        } else {
-            [dOfPerson setObject:facebookImageData forKey:@"image"];
-        }
-        
-        if (dOfPerson[@"phone"] &amp;&amp; dOfPerson[@"image"]) {
-            [_contacts addObject:dOfPerson];
-        }
-	}
-    // 按名字排序
-    [_contacts sortUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES], nil]];
-}
-
-endsnippet
 
 snippet djVariableGet  "Swift -variable get"
 var ${1:variable}: ${1:type} {    return ${1:?}}
@@ -2072,48 +1545,6 @@ snippet singleton_default  "Swift Singleton: Default"
     }
 endsnippet
 
-snippet djRACTimeoutSample  "RAC - timeout GCD sample"
-    RACSignal *signal =
-    [RACSignal createSignal:^RACDisposable *(id &lt;RACSubscriber&gt; subscriber) {
-        
-        RACDisposable *disposable = [RACDisposable new];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSLog(@"Start iterating...");
-            for (int i = 0; i &lt; 200 &amp;&amp; !disposable.isDisposed; i++) {
-                NSLog(@"Send %i to subscriber", i);
-                [subscriber sendNext:@(i)];
-                
-                [NSThread sleepForTimeInterval:0.1];
-            }
-            
-            if (!disposable.isDisposed) {
-                NSLog(@"Send completed to subscriber");
-                [subscriber sendCompleted];
-            }
-        });
-        
-        return disposable;
-    }];
-    
-    NSLog(@"About to subscribe");
-    
-    [[[signal
-       deliverOn:[RACScheduler mainThreadScheduler]]
-      timeout:1.0 onScheduler:[RACScheduler mainThreadScheduler]]
-     subscribeNext:^(id x) {
-         NSLog(@"Got next: %@", x);
-     } error:^(NSError *error) {
-         NSLog(@"Error (timeout): %@", [error localizedDescription]);
-     } completed:^{
-         NSLog(@"Completed");
-     }];
-
-endsnippet
-
-snippet masRightEqualTo  "mas - right"
-make.right.equalTo(superview.mas_right).offset(${1:0});
-endsnippet
 
 snippet djGestureDoubleTap  "UI -  Tap Gesture Recognize"
 // 另外有个文件在filesnippt文件夹中关于gesture
@@ -2138,7 +1569,7 @@ snippet djFdDeleteDocument  "Fd - Delete Document"
         
         NSError *fileCoordinatorError = nil;
         
-        [[[NSFileCoordinator alloc] initWithFilePresenter:nil] coordinateWritingItemAtURL:document.fileURL options:NSFileCoordinatorWritingForDeleting error:&amp;fileCoordinatorError byAccessor:^(NSURL *newURL) {
+        [[[NSFileCoordinator alloc] initWithFilePresenter:nil] coordinateWritingItemAtURL:document.fileURL options:NSFileCoordinatorWritingForDeleting error:&fileCoordinatorError byAccessor:^(NSURL *newURL) {
 
             // extra check to ensure coordinator is not running on main thread
             NSAssert(![NSThread isMainThread], @"Must be not be on main thread");
@@ -2146,7 +1577,7 @@ snippet djFdDeleteDocument  "Fd - Delete Document"
             // create a fresh instance of NSFileManager since it is not thread-safe
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSError *error = nil;
-            if (![fileManager removeItemAtURL:newURL error:&amp;error]) {
+            if (![fileManager removeItemAtURL:newURL error:&error]) {
                 NSLog(@"Error: %@", error);
                 // TODO handle the error
             }
@@ -2232,53 +1663,7 @@ snippet djUIImagePickerMovie  "UI - image picker take movie"
 
 endsnippet
 
-snippet xlogStringFrom  "x log string from"
-NSLog(@"${1:?}:%@",NSStringFrom${1:?});
-endsnippet
 
-snippet djSampleCirleRing  "Sample - circle ring with bg and fg color, animation"
-/**
- *  @brief  圆环，有前景色和背景色，通过定时器修改numAdjustedSecondsCompleted产生动画
-    NSUInteger numAdjustedSecondsCompleted; // 时间相对已经完成长度
-    NSUInteger numAdjustedSecondsCompletedIncrementor; // 时间相对增长幅度
-    NSUInteger numAdjustedSecondsTotal; // 时间相对总长
-    NSUInteger numSeconds; // 动画时间
-    circleTimerWidth 圆环宽
- */
-- (void)drawRect:(CGRect)rect {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    float radius = CGRectGetWidth(rect)/2.0f - self.circleTimerWidth/2.0f;
-    float angleOffset = M_PI_2;
-
-    // 背景圆环
-    CGContextSetLineWidth(context, self.circleTimerWidth);
-    CGContextBeginPath(context);
-    CGContextAddArc(context,
-                    CGRectGetMidX(rect), CGRectGetMidY(rect),
-                    radius,
-                    0,
-                    2*M_PI,
-                    0);
-    CGContextSetStrokeColorWithColor(context, [self.circleBackgroundColor CGColor]);
-    CGContextStrokePath(context);
-
-    // 前景圆环
-    CGContextSetLineWidth(context, self.circleTimerWidth);
-    CGContextBeginPath(context);
-    CGFloat startAngle = (((CGFloat)numAdjustedSecondsCompleted + 1.0f) /
-                          ((CGFloat)numAdjustedSecondsTotal)*M_PI*2 - angleOffset);
-    CGFloat endAngle = 2*M_PI - angleOffset;
-    CGContextAddArc(context,
-                    CGRectGetMidX(rect), CGRectGetMidY(rect),
-                    radius,
-                    startAngle,
-                    endAngle,
-                    0);
-    CGContextSetStrokeColorWithColor(context, [self.circleColor CGColor]);
-    CGContextStrokePath(context);
-}
-
-endsnippet
 
 snippet djFdSyncRequest  "Fd - Network synchronous request"
     // simple but block thread
@@ -2287,7 +1672,7 @@ snippet djFdSyncRequest  "Fd - Network synchronous request"
     NSError *err = nil;
     NSData *data = [NSURLConnection sendSynchronousRequest:request
                                          returningResponse:nil
-                                                     error:&amp;err];
+                                                     error:&err];
     if (data == nil) {
         NSLog(@"Code:%ld,domain:%@,localizedDesc:%@",
               [err code], [err domain], [err localizedDescription]);
@@ -2296,31 +1681,12 @@ snippet djFdSyncRequest  "Fd - Network synchronous request"
     }
 endsnippet
 
-snippet xSetter  "xSetter  -  send kvo notif"
-- (void)set${1:Value}:(BOOL)${1:Value} {
-	// Skip KVO notifications when the property hasn't actually changed. This is
-	// especially important because self.active can have very expensive
-	// observers attached.
-    // Anything else need added here
-    if (${1:Value} == _${1:Value}) return;
-
-    [self willChangeValueForKey:@keypath(self.${1:Value})];
-    _${1:Value} = ${1:Value};
-    [self didChangeValueForKey:@keypath(self.${1:Value})];
-}
-
-
-endsnippet
-
-snippet masWidthEqualto  "mas - width"
-make.width.equalTo(@${1:?});
-endsnippet
 
 snippet NoDefine  "Swift - if switch sample"
 // If Statements
 
 let scale:Int = 8
-if scale &lt; 10 {
+if scale < 10 {
     print("Less than 10")
 }
 
@@ -2356,7 +1722,7 @@ default:
 endsnippet
 
 snippet djUICheckViewControllerVisible  "UI - Is View Controller Visible"
-    if (self.isViewLoaded &amp;&amp; self.view.window) {
+    if (self.isViewLoaded && self.view.window) {
         // viewController is visible
     }
 endsnippet
@@ -2378,9 +1744,9 @@ textField.delegate = self;
 endsnippet
 
 snippet swift-dispatchasync  "Swift dispatch_async"
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -&gt; Void in
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
     
-    dispatch_async(dispatch_get_main_queue(), { () -&gt; Void in
+    dispatch_async(dispatch_get_main_queue(), { () -> Void in
         
     })
 })
@@ -2407,9 +1773,6 @@ snippet djRACEableCommand  "RAC -  eable command"
 
 endsnippet
 
-snippet xlogInfo  "x log infomation"
-NSLog(@"${1:info}");
-endsnippet
 
 snippet debugVC  "debugVC"
     openURL(@"debugvc://${1:?}");
@@ -2426,7 +1789,7 @@ endsnippet
 
 snippet GCDDispatchOnce  "GCD - dispatch once"
     static dispatch_once_t onceToken;
-    dispatch_once(&amp;onceToken, ^{
+    dispatch_once(&onceToken, ^{
     });
 
 endsnippet
@@ -2434,21 +1797,6 @@ endsnippet
 snippet djStringHeightAttributed  "String Height Attributed"
 CGRect rect = [${1:attributed string} boundingRectWithSize:CGSizeMake(${1:max width}, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
 CGFloat height = CGRectGetHeight(rect);
-endsnippet
-
-snippet xSetFrameInBlock  "x Set Frame in block"
-// Set Frame
-// Initializes a view frame inside a code block
-// Platform: All
-// Language: Objective-C
-// Completion Scope: Function or Method
-
-${1: view }.frame = ({
-    CGRect frame = ${1: view }.frame;
-    ${1: ... }
-    frame;
-});
-
 endsnippet
 
 snippet djDateFormatter  "Fd - date formatter"
@@ -2471,10 +1819,6 @@ snippet djFDNSInvocation  "Fd - NSInvocation"
 
 endsnippet
 
-snippet masEdges  "mas - edges"
-make.edges.equalTo(superview).with.insets(${1:?});
-endsnippet
-
 snippet NoDefine  "Swift - NSUserDefaults"
 NSUserDefaults.standardUserDefaults().setObject("Fez", forKey: "hat")
 
@@ -2482,57 +1826,6 @@ let hat = NSUserDefaults.standardUserDefaults().objectForKey("hat")!
 
 endsnippet
 
-snippet djRACCommandSample  "RAC - command sample"
-- (void)commandNextValue:(id)value {
-    NSLog(@"next value:%@",value);
-}
-- (void)commandExecuting:(id)value {
-    NSLog(@"executing value :%@",value);
-}
-- (void)commandError:(id)value {
-    NSLog(@"error value:%@",value);
-}
-- (void)commandSample {
-    // Sample test signal of command
-    RACCommand *cmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        NSError *error = [NSError errorWithDomain:@"error" code:1 userInfo:@{}];
-        return [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) {
-            [subscriber sendNext:@1];
-            [subscriber sendCompleted];
-            //[subscriber sendError:error];
-            return nil;
-        }];
-    }];
-    
-    [[cmd.executionSignals flatten] subscribeNext:^(id value) {
-        // return signal next value.
-        NSLog(@"get value from exec signal :%@",value);
-    } completed:^{
-        // return signal completed, command completed too.
-        // not useful, but check return signal completion
-        NSLog(@"exec signal completed");
-    }];
-    
-    [cmd.errors subscribeNext:^(id x) {
-        // when error occour, get it here.
-        NSLog(@"get error from exec signal:%@",x);
-    }];
-    
-    [cmd.executing subscribeNext:^(id x) {
-        // first subscribe get value 0, this is invalid.
-        // when command start, get value 1, this is only value we will get.
-        NSLog(@"executing value is bool:%@",x);
-    }];
-    
-    [self rac_liftSelector:@selector(commandNextValue:) withSignals:[cmd.executionSignals flatten], nil];
-    [self rac_liftSelector:@selector(commandExecuting:) withSignals:cmd.executing, nil];
-    [self rac_liftSelector:@selector(commandError:) withSignals:cmd.errors, nil];
-    
-    [cmd execute:nil];
-}
-
-
-endsnippet
 
 snippet djBlockInline  "Block - Inline Block"
 没有__block标记的变量，其值会被复制一份到block私有内存区
@@ -2588,47 +1881,15 @@ snippet viewDidUnload  "View Did Unload"
 
 endsnippet
 
-snippet NoDefine  "Swift - lazy load sample"
-// 延迟加载4种方法
-class LazySample: NSObject {
-    // 1. 直接初始化
-//    lazy var players = [String]()
-    
-    // 2. 内嵌函数
-    lazy var players: [String] = {         
-        var tmp = [String]()
-        tmp.append("John Doe")
-        return tmp
-    }()
-    
-    // 3. 通过实例方法初始化
-//    lazy var players: [String] = self.initialPlayers()
-//    
-//    func initialPlayers() -&gt; [String] {
-//        var tmp = [String]()
-//        tmp.append("John Doe")
-//        return tmp
-//    }
-    
-    // 4. 通过类方法初始化
-//    lazy var players = LazySample.initialPlayers()
-//    class func initialPlayers() -&gt; [String] {         
-//        var tmp = [String]()
-//        tmp.append("John Doe")
-//        return tmp
-//    }
-}
-
-endsnippet
 
 snippet method2_1  "Swift - method two input one output"
-private func ${1:method2_1}(${1:input_1} ${1:input_1}:String, ${1:input_2}:String) -&gt; String? {
+private func ${1:method2_1}(${1:input_1} ${1:input_1}:String, ${1:input_2}:String) -> String? {
     ${1:code}
     return ""
 }
 endsnippet
 
-snippet djHFRequest&amp;Signal  "hf request &amp; signal "
+snippet djHFRequest&Signal  "hf request & signal "
 - (NSOperation *)${1:checkLoginPasswd:(NSString *)passwd}
                                   success:(void (^)(AFHTTPRequestOperation *, id))success
                                   failure:(void (^)(AFHTTPRequestOperation *,  NSError *))failure {
@@ -2659,7 +1920,7 @@ snippet djHFRequest&amp;Signal  "hf request &amp; signal "
                             success:(void (^)(AFHTTPRequestOperation *, id))success
                             failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
 
-    return [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) {
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         NSOperation *op = [self ${1:checkLoginPasswd:passwd} success:^(AFHTTPRequestOperation *op, id res) {
             if (success) {
                 success(op, res);
@@ -2784,7 +2045,7 @@ snippet djNSFetchedResultsControllerDelegate  "NSFetchedResultsControllerDelegat
 }
 
 - (void)controller:(NSFetchedResultsController *)controller
-  didChangeSection:(id &lt;NSFetchedResultsSectionInfo&gt;)sectionInfo
+  didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex
      forChangeType:(NSFetchedResultsChangeType)type
 {
@@ -2828,7 +2089,7 @@ endsnippet
 
 snippet djFdAssociatedObject  "Fd - AssociatedObject"
 // key as void
-static void *kAssociatedKey = &amp;kAssociatedKey;
+static void *kAssociatedKey = &kAssociatedKey;
 
 - (void)setTheObject:(id)theObject {
     objc_setAssociatedObject(self, kAssociatedKey, theObject, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -2863,23 +2124,12 @@ ${1: control }.snp_remakeConstraints { make in
 }
 endsnippet
 
-snippet djFdNotifSample  "Fd - Notification sample"
- [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(${1:methodName}) name:kLoginNotification object:nil];
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  // post notification
-  NSDictionary * userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:200] forKey:@"code"];
-[[NSNotificationCenter defaultCenter] postNotificationName:${1:notification_name} object:self userInfo:userInfo];
-
-- (void)${1:functionname}:(NSNotification*)notification
-
-endsnippet
-
 snippet djPickerviewdelegate  "Swift-UIPickerViewDelegate"
 
 //MARK: UIPickerViewDelegate
 extension ${1:Class} : UIPickerViewDelegate {
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -&gt; String? {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         ${1:code}
     }
     
@@ -2917,9 +2167,9 @@ private func ${1:methodN_0}(${1:input}:String...) {
 endsnippet
 
 snippet swift-dispatch-asymc  "Swift Dispatch Async"
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -&gt; Void in
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             
-            dispatch_async(dispatch_get_main_queue(), { () -&gt; Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
             })
         })
@@ -2929,11 +2179,11 @@ snippet djPickerviewdatasource  "Swift-UIPickerViewDataSource"
 //MARK: UIPickerViewDataSource
 extension ${1:Class} : UIPickerViewDataSource {
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -&gt; Int {
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         ${1:code}
     }
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -&gt; Int {
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         ${1:code}
     }
 }
@@ -2962,7 +2212,7 @@ snippet djCaAnimBasic  "Anim - CABasicAnimation "
     
     // CAAnimation attribute
     basicAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    basicAnim.delegate = self; // -animationDidStart: &amp;&amp; -animationDisStop:
+    basicAnim.delegate = self; // -animationDidStart: && -animationDisStop:
     basicAnim.removedOnCompletion = YES;
     
     // CAPropertyAnimation
@@ -3000,13 +2250,6 @@ if ([title respondsToSelector:@selector(sizeWithAttributes:)]) {
 
 endsnippet
 
-snippet xForI  "x for i"
-    for (NSInteger i = 0; i &lt; ${1:?}; i++) {
-        ${1:statements}
-    }
-
-endsnippet
-
 snippet djAddSubView  "Swift - addSubview"
 self.view.addSubview(${1:view})
 endsnippet
@@ -3018,36 +2261,7 @@ override func viewDidLoad() {
 }
 endsnippet
 
-snippet djUIMenuCtrlSamples  "UI - MenuController samples"
-- (void)deleteIt:(id)sender {
-    
-}
 
-- (void)showPopupMenu {
-    // For a menu controller to appear, a view that responds to at least one action message in the UIMenuController’s menu items must be the first responder of the window
-    // custom view need overwrite -|becomeFirstResponder|.
-    [self.view becomeFirstResponder];
-    UIMenuController *menu = [UIMenuController sharedMenuController];
-    // Create a new "Delete" UIMenuItem
-    UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:@"Delete" action:@selector(deleteIt:)];
-    menu.menuItems = @[deleteItem];
-    // Tell the menu where it should come from show it
-    CGRect showInRect = CGRectMake(0, 0, 2, 2);
-    [menu setTargetRect:showInRect inView:self.view];
-    [menu setMenuVisible:YES animated:YES];
-}
-
-- (void)hidePopupMenu {
-    UIMenuController *menu = [UIMenuController sharedMenuController];
-    [menu setMenuVisible:NO animated:YES];
-}
-
-endsnippet
-
-snippet xlogBool  "x log bool "
-    NSLog(@"${1:discription}:%@",${1:BOOL}?@"YES":@"NO");
-
-endsnippet
 
 snippet djMacroObjcArc  "Macro - objc_arc"
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -3062,7 +2276,7 @@ snippet djFDThumbnailFromVideoPath  "FD - thrumbnail from video path"
     AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
     NSError *err = NULL;
     CMTime requestedTime = CMTimeMake(1, 60);     // To create thumbnail image
-    CGImageRef imgRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:&amp;err];
+    CGImageRef imgRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:&err];
     NSLog(@"err = %@, imageRef = %@", err, imgRef);
     
     UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:imgRef];
@@ -3099,33 +2313,28 @@ snippet djCollectionviewdatasource  "Swift-UICollectionViewDataSource"
 //MARK: UICollectionViewDataSource
 extension ${1:Class} : UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -&gt; Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return ${1:numberOfSections}
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -&gt; Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return ${1:numberOfItems}
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -&gt; UICollectionViewCell {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(${1:identifier}, forIndexPath: indexPath) as! ${1:CustomCell}
         ${1:configureCell}
         return cell
     }
     
     
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -&gt; UICollectionReusableView {
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let view =  collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: ${1:identifier}, forIndexPath: indexPath) as! UIView
         return view
     }
 }
 endsnippet
 
-snippet xStringFormat  "x NSString with format"
-
-[NSString stringWithFormat:@"${1:your string and %@'s here}", ${1:arguments}]
-    
-endsnippet
 
 snippet NoDefine  "fix icon string"
 NSString *fixIconString(NSString *iconString) {
@@ -3135,27 +2344,12 @@ NSString *fixIconString(NSString *iconString) {
     
     unsigned int iconValue;
     NSScanner* scanner = [NSScanner scannerWithString:iconString];
-    [scanner scanHexInt:&amp;iconValue];
-    return [[NSString alloc] initWithBytes:&amp;iconValue length:4 encoding:NSUTF32LittleEndianStringEncoding];
+    [scanner scanHexInt:&iconValue];
+    return [[NSString alloc] initWithBytes:&iconValue length:4 encoding:NSUTF32LittleEndianStringEncoding];
 }
 
 endsnippet
 
-snippet djUISizeThatFits  "UIVIew - sizeThatFits sample"
-// UIView的子类，根据内部view计算合适的size，并返回
-- (CGSize)sizeThatFits:(CGSize)size {
-    // size the image
-    CGSize imageSize = [_imageView sizeThatFits:size];
-    
-    // size the text view
-    CGSize maxTextSize = CGSizeMake(size.width - imageSize.width, size.height);
-    CGSize textSize = [_textView sizeThatFits:maxTextSize];
-    
-    // make sure everything fits
-    CGFloat minHeight = MAX(imageSize.height, textSize.height);
-    return CGSizeMake(size.width, minHeight);
-}
-endsnippet
 
 snippet djMacroSingleton  "Macro - define Singleton"
 // Adapted to ARC from Matt Gallagher of CocoaWithLove
@@ -3170,7 +2364,7 @@ snippet djMacroSingleton  "Macro - define Singleton"
  \
 + (classname *)sharedInstance \
 { \
-    dispatch_once(&amp;onceToken, ^{ \
+    dispatch_once(&onceToken, ^{ \
         sharedInstance = [[classname alloc] init]; \
     }); \
 	 \
@@ -3285,7 +2479,7 @@ snippet djMacroLog  "Macro - Custom NSLog in prefix.pch"
 #define NSLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 //A better version of NSLog
 #define NSLog(format, ...) do {                                                                          \
-fprintf(stderr, "&lt;%s : %d&gt; %s
+fprintf(stderr, "<%s : %d> %s
 ",                                           \
         [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String],  \
         __LINE__, __func__);                                                        \
@@ -3314,49 +2508,6 @@ snippet djUIMoveView  "UI - move view with touch event"
 
 endsnippet
 
-snippet NoDefine  "Sample - report issue mail"
-- (void)doReportIssue{
-  if ([MFMailComposeViewController canSendMail]){
-    MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
-    [mailVC setMailComposeDelegate:self];
-    [mailVC setToRecipients:@[@"support@twocentstudios.com"]];
-    [mailVC setSubject:@"vinylogue: Support Request"];
-    
-    NSString *messageBody =
-    [NSString stringWithFormat:@"
-
-
-
--------------------
-DEBUG INFO:
-App Version: %@
-App Build: %@
-Device: %@
-OS Version: %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)@"CFBundleShortVersionString"],
-     [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey],
-     [[UIDevice currentDevice] model],
-     [[UIDevice currentDevice] systemVersion]];
-    
-    [mailVC setMessageBody:messageBody isHTML:NO];
-    [self presentViewController:mailVC animated:YES completion:NULL];
-  }else{
-    DLog(@"Mail unsupported");
-  }
-}
-
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error{
-  if (result == MFMailComposeResultSent){
-    DLog(@"Mail sent");
-  }else if(result == MFMailComposeResultSaved){
-    DLog(@"Mail saved");
-  }else if(result == MFMailComposeResultFailed){
-    DLog(@"Mail sending failed");
-  }
-  [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-
-endsnippet
 
 snippet prjNILabel  "Prj - NI attributedLabel delegate"
     [label addLink:[NSURL URLWithString:@"haofangtuo://view/hftAuthingPrompt"] range:NSMakeRange(0, 5)];
@@ -3370,7 +2521,7 @@ void dumpView(UIView* aView, NSString* indent) {
     if (aView) {
         NSLog(@"%@%@", indent, aView);      // dump this view
         
-        if (aView.subviews.count &gt; 0) {
+        if (aView.subviews.count > 0) {
             NSString* subIndent = [[NSString alloc] initWithFormat:@"%@%@",
                                    indent, ([indent length]/2)%2==0 ? @"| " : @": "];
             for (UIView* aSubview in aView.subviews) dumpView( aSubview, subIndent );
@@ -3386,9 +2537,6 @@ void dumpWindows() {
 }
 endsnippet
 
-snippet xRect  "x CGRectMake"
- CGRectMake(${1:CGFloat x}, ${1:CGFloat y}, ${1:CGFloat width}, ${1:CGFloat height})
-endsnippet
 
 snippet djTableviewdelegate  "Swift-UITableviewDelegate"
 //MARK: UITableViewDelegate
@@ -3400,32 +2548,6 @@ extension ${1:Class} : UITableViewDelegate {
 }
 endsnippet
 
-snippet GCDDispatchSourceSample  "GCD - dispatch source sample"
-#define GCD_run_block_when_app_stop(block) runBlockWhenAppStop(block)
-
-// 使用场景
-// 1. 恶意攻击者将一个调试器连接到你的应用
-// 2. 在调试器里操纵的对象
-void runBlockWhenAppStop(void(^block)(void)) {
-#if DEBUG
-    dispatch_queue_t queue = dispatch_get_main_queue(); // 需要监听的queue
-    static dispatch_source_t source = nil;
-    __typeof(self) __weak weakSelf = self;
-    static dispatch_once_t onceToken;
-    dispatch_once(&amp;onceToken, ^{
-        // 参数设置文档
-        //https://developer.apple.com/library/mac/documentation/Performance/Reference/GCD_libdispatch_Ref/Reference/reference.html#//apple_ref/doc/constant_group/Dispatch_Source_Type_Constants
-        source = dispatch_source_create(DISPATCH_SOURCE_TYPE_SIGNAL, SIGSTOP, 0, queue);
-        if (source) { // 参数错误会导致创建失败
-            dispatch_source_set_event_handler(source, block);
-            dispatch_resume(source); // 默认关闭
-        }
-    });
-#endif
-}
-
-
-endsnippet
 
 snippet djrequestWithString  "NSURLRequest "
     NSURL *url = [NSURL URLWithString:@"${1:url}"];
@@ -3480,14 +2602,6 @@ snippet djUIParagraphStyle  "UI - paragraph style"
 
 endsnippet
 
-snippet ccc  "Property  copy - ccc"
-@property (nonatomic, copy) NSString *${1:name};
-endsnippet
-
-snippet sss  "Property  strong - sss"
-@property (nonatomic, strong) ${1:type} *${1:name};
-endsnippet
-
 snippet djanimBlock  "Anim - UIView Animation Block"
 [UIView animateWithDuration:${1:duration} animations:^{
      ${1:code}
@@ -3529,7 +2643,7 @@ static void CheckError(OSStatus error, const char *operation) {
     
     char str[20];
     *(UInt32 *) (str + 1) = CFSwapInt32HostToBig(error);
-    if (isprint(str[1]) &amp;&amp; isprint(str[2]) &amp;&amp; isprint(str[3]) &amp;&amp; isprint(str[4])) {
+    if (isprint(str[1]) && isprint(str[2]) && isprint(str[3]) && isprint(str[4])) {
         str[0] = str[5] = '\'';
         str[6] = ' ';
     } else {
@@ -3548,11 +2662,7 @@ enum BarCode {    case UPCA(Int, Int, Int, Int)    case QRCode(String)}
 
 endsnippet
 
-snippet masTopEqualTo  "mas - top"
-make.top.equalTo(superview.mas_top).offset(${1:0});
-endsnippet
-
-snippet djFdColorStore  "Fd - store color in NSUserDefaults"
+nippet djFdColorStore  "Fd - store color in NSUserDefaults"
     UIColor *textDefaultColor = [UIColor blackColor];    CGColorRef textDefaultColorRef = textDefaultColor.CGColor;    NSString *textDefaultColorStr = [CIColor colorWithCGColor:textDefaultColorRef].stringRepresentation;    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];    [userDefaults setObject:textDefaultColorStr forKey:@"textColorKey"];
 endsnippet
 
@@ -3570,9 +2680,6 @@ func buttonPressedAction(sender: UIButton) {
 }
 endsnippet
 
-snippet xSize  "x CGSizeMake"
-CGSizeMake(${1:CGFloat width}, ${1:CGFloat height})
-endsnippet
 
 snippet djBlockProperty  "Block - property"
 @property (nonatomic, copy) ${1:returnType}(^${1:name})(${1:arguments});
@@ -3626,14 +2733,14 @@ snippet djUIPickerViewDelegate  "UI - UIPickerView delegate datasource"
 endsnippet
 
 snippet djUIMailComposeViewController  "UI - MFMailComposeViewController"
-// MFMailComposeViewController Initialization &amp; Delegate
+// MFMailComposeViewController Initialization & Delegate
 // Methods required to use the iOS Mail Composer
 //
 // Platform: iOS
 // Language: Objective-C
 // Completion Scope: Class Implementation
 
-#import &lt;MessageUI/MessageUI.h&gt;
+#import <MessageUI/MessageUI.h>
 
 - (void)presentModalMailComposerViewController:(BOOL)animated {
     if ([MFMailComposeViewController canSendMail]) {
@@ -3709,8 +2816,8 @@ snippet URLSessionConfig  "URLSession-config"
 endsnippet
 
 snippet swift-sortarrayofstrings  "Swift String Array locale-aware sorting"
-${1:arrayOfStrings}.sort({ (a, b) -&gt; Bool in
-    let comparisonResult = a.compare(b, options: NSStringCompareOptions.allZeros, range: Range&lt;String.Index&gt;(start: a.startIndex, end: a.endIndex), locale: NSLocale.currentLocale())
+${1:arrayOfStrings}.sort({ (a, b) -> Bool in
+    let comparisonResult = a.compare(b, options: NSStringCompareOptions.allZeros, range: Range<String.Index>(start: a.startIndex, end: a.endIndex), locale: NSLocale.currentLocale())
     return comparisonResult == NSComparisonResult.OrderedAscending
 })
 endsnippet
@@ -3718,7 +2825,7 @@ endsnippet
 snippet djMacroCollection  "Macro - Macros Collection"
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
-#define isiOS7OrLater floor(NSFoundationVersionNumber) &gt; NSFoundationVersionNumber_iOS_6_1
+#define isiOS7OrLater floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1
 
 #define LOG_FRAME(label, frame) DebugLog(@"%@: %f, %f, %f, %f", label, frame.origin.x, frame.origin.y, frame.size.width, frame.size.height)
 #define LOG_SIZE(label, size) DebugLog(@"%@, %f, %f", label, size.width, size.height)
@@ -3768,24 +2875,24 @@ snippet djUIlogViewHierarchy  "UI - log NSView hierarchy OSX"
     NSString *info = @"";
     if ([self respondsToSelector:@selector(title)]) {
         NSString *title = [self performSelector:@selector(title)];
-        if (title != nil &amp;&amp; [title length] &gt; 0) {
+        if (title != nil && [title length] > 0) {
             info = [info stringByAppendingFormat:@" title=%@", title];
         }
     }
     if ([self respondsToSelector:@selector(stringValue)]) {
 		NSString *string = [self performSelector:@selector(stringValue)];
-		if (string != nil &amp;&amp; [string length] &gt; 0) {
+		if (string != nil && [string length] > 0) {
 			info = [info stringByAppendingFormat:@" stringValue=%@", string];
         }
 	}
 	NSString *tooltip = [self toolTip];
-	if (tooltip != nil &amp;&amp; [tooltip length] &gt; 0) {
+	if (tooltip != nil && [tooltip length] > 0) {
 		info = [info stringByAppendingFormat:@" tooltip=%@", tooltip];
     }
     
 	NSLog(@"%@%@%@", indent, class, info);
     
-	if ([[self subviews] count] &gt; 0) {
+	if ([[self subviews] count] > 0) {
 		NSString *subIndent = [NSString stringWithFormat:@"%@%@", indent, ([indent length]/2)%2==0 ? @"| " : @": "];
 		for (NSView *subview in [self subviews]) {
 			[subview dumpWithIndent:subIndent];
@@ -3817,7 +2924,7 @@ snippet djFdToggleBoolinUserDefaults  "Fd - toggle a bool in user defaults"
 endsnippet
 
 snippet swift-dispatch-after  "Swift Dispatch After"
-dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(${1:delay} * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -&gt; Void in
+dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(${1:delay} * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
             
         }
 endsnippet
@@ -3846,21 +2953,6 @@ snippet djTrickGetViewControllerFromSubView  "trick - get view controller from s
 
 endsnippet
 
-snippet NoDefine  "Sample - webview load file"
-  if (self.local){
-    NSString *htmlFile = [[NSBundle mainBundle] pathForResource:self.localFileName ofType:@"html" inDirectory:nil];
-    NSString* htmlString = [NSString stringWithContentsOfFile:htmlFile encoding:NSUTF8StringEncoding error:nil];
-    if (!htmlFile || !htmlString){
-      DLog(@"Error loading html file");
-    }else{
-      [self.webView loadHTMLString:htmlString baseURL:nil];
-    }
-  }else{
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.remoteURL]];
-    [self.webView loadRequest:request];
-  }
-
-endsnippet
 
 snippet djFdVector  "Fd calc vector and point"
 #pragma mark - Maths
@@ -3933,29 +3025,6 @@ dispatch_barrier_sync(queue, ^(){
 
 endsnippet
 
-snippet djRACSearchBarDelegateSample  "RAC - search bar delegate sample"
-@interface UISearchBar()&lt;UISearchBarDelegate&gt;
-
-@end
-
-@implementation UISearchBar (RAC)
-- (RACSignal *)rac_textSignal {
-    self.delegate = self;
-    RACSignal *signal = objc_getAssociatedObject(self, _cmd);
-    if (signal != nil) return signal;
-    signal = [[self rac_signalForSelector:@selector(searchBar:textDidChange:) fromProtocol:@protocol(UISearchBarDelegate)] map:^id(RACTuple *tuple) {
-        return tuple.second;
-    }];
-    objc_setAssociatedObject(self, _cmd, signal, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    return signal;
-}
-@end
-
-endsnippet
-
-snippet xPoint  "x CGPointMake"
-CGPointMake(${1:CGFloat x}, ${1:CGFloat y})
-endsnippet
 
 snippet djCaAnimKeyframe  "Anim - CAKeyframeAnimation"
     CAKeyframeAnimation *keyAnim = [CAKeyframeAnimation animationWithKeyPath:@"${1:?}"];
@@ -3972,7 +3041,7 @@ snippet djCaAnimKeyframe  "Anim - CAKeyframeAnimation"
     
     // CAAnimation attribute
     keyAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    keyAnim.delegate = self; // -animationDidStart: &amp;&amp; -animationDisStop:
+    keyAnim.delegate = self; // -animationDidStart: && -animationDisStop:
     keyAnim.removedOnCompletion = YES;
     
     // CAPropertyAnimation
@@ -4028,34 +3097,6 @@ snippet djStringConstantsImp  "String Constant Implementation"
 NSString * const ${1:name} = @"${1:value}";
 endsnippet
 
-snippet djHFCell  "hf cell sample"
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        [self setBackgroundColor:[UIColor whiteColor]];
-        [self setSelectionStyle:UITableViewCellSelectionStyleNone];
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
-    }
-    
-    return self;
-}
-
-- (void)setObject:(NSObject *)object {
-    if (self.item != object) {
-        self.item = (${1:class} *)object;
-    }
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-}
-
-+ (NSNumber *)cellHeight {
-    return @45;
-}
-
-endsnippet
 
 snippet NoDefine  "Trick - disable movie player button"
 // MPMoviePlayerViewController禁用快进快退按键
@@ -4084,7 +3125,7 @@ snippet NoDefine  "Trick - disable movie player button"
 endsnippet
 
 snippet method0_0  "Swift - method no input no output"
-private func ${1:method0_0}() -&gt; Void {
+private func ${1:method0_0}() -> Void {
     ${1:code}
 }
 endsnippet
@@ -4093,13 +3134,13 @@ snippet djPostNotif  "notifications post"
 [[NSNotificationCenter defaultCenter] postNotificationName:${1:NotifiName} object:nil];
 endsnippet
 
-snippet djFdSingleton  "Fd - singleton sample"
+snippet djFdSingleton  "Fd - singleton "
 static ClassName *sSharedInstance = nil;
 
 + (id)sharedInstance{
 	if( sSharedInstance == nil ) {
         static dispatch_once_t onceToken;
-        dispatch_once(&amp;onceToken, ^{
+        dispatch_once(&onceToken, ^{
             sSharedInstance = [[self alloc] initPrivate];
         });
     }
@@ -4195,10 +3236,6 @@ snippet djFdDegreeToRadian  "Fd - degree to radian"
 static inline CGFloat radians (CGFloat degrees) {return degrees * M_PI / 180.0;}
 endsnippet
 
-snippet xPlaceHolder  "x place holder"
-${1:placeholder}
-endsnippet
-
 snippet djUITextFieldActionDisable  "UI - TextField 禁用文本操作 action"
 // UITextField
 //
@@ -4232,7 +3269,7 @@ snippet djUITextFieldActionDisable  "UI - TextField 禁用文本操作 action"
 
 endsnippet
 
-snippet GCDComputeBackground  "GCD - compute background sample"
+snippet GCDComputeBackground  "GCD - compute background"
     // 1) 从系统中获取一个并行队列
     dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(concurrentQueue, ^{
@@ -4297,7 +3334,7 @@ endsnippet
 
 snippet djCaLayerPropertyList  "Ca - layer with property"
     // (backgroundColor 可以用图片做背景
-    // position 中心点，cornerRadius圆角，borderColor&amp;width边框
+    // position 中心点，cornerRadius圆角，borderColor&width边框
     // shadowOffset 阴影大小
     // shouldRasterize ?
 // 当shouldRasterize设成true时，layer被渲染成一个bitmap，并缓存起来，等下次使用时不会再重新去渲染了。实现圆角本身就是在做颜色混合（blending），如果每次页面出来时都blending，消耗太大，这时shouldRasterize = yes，下次就只是简单的从渲染引擎的cache里读取那张bitmap，节约系统资源。
@@ -4343,30 +3380,6 @@ shapeLayer.lineDashPattern = [NSArray arrayWithObjects:[NSNumber numberWithInt:6
 
 endsnippet
 
-snippet GCDSemaphoreSample  "GCD - semaphore sample"
-    // 创建一个信号量, 初始0，表示使用者要等待
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    
-    //NSURL *url = [NSURL URLWithString:URLString];
-    //__unused Photo *photo = [[Photo alloc]
-    //                         initwithURL:url
-    //                         withCompletionBlock:^(UIImage *image, NSError *error) {
-    //                             if (error) {
-    //                                 XCTFail(@"%@ failed. %@", URLString, error);
-    //                             }
-                                 
-                                 // 增加信号量1
-                                 dispatch_semaphore_signal(semaphore);
-     //                        }];
-    
-    // 阻塞了当前线程直到信号量被发射 超时之前等待信号量
-    dispatch_time_t timeoutTime = dispatch_time(DISPATCH_TIME_NOW, kDefaultTimeoutLengthInNanoSeconds);
-    if (dispatch_semaphore_wait(semaphore, timeoutTime)) { // 非零返回值表示到达超时
-        //XCTFail(@"%@ timed out", URLString);
-    }
-    
-
-endsnippet
 
 snippet djVariableObserve  "Swift - variable observe"
 var ${1:variable}: Int = 0 {    willSet {
@@ -4390,10 +3403,6 @@ snippet djNSURLMethodSample  "NSURL method sample"
  
 }
 
-endsnippet
-
-snippet xZeroRect  "x CGRectZero"
-CGRectZero
 endsnippet
 
 snippet viewDidDisappear  "Swift - viewDidDisappear"
@@ -4439,28 +3448,28 @@ snippet NoDefine  "CG - draw wave border"
     
     BOOL zig = YES;
     
-    while (y &lt; height) { // zig-zag down the left edge
+    while (y < height) { // zig-zag down the left edge
         y+= ZIG_SIZE;
         [mask addLineToPoint:CGPointMake(zig? ZIG_SIZE : 0,
                                          y)];
         zig = !zig;
     }
     
-    while (x &lt; width) { // bottom edge
+    while (x < width) { // bottom edge
         x+= ZIG_SIZE;
         [mask addLineToPoint:CGPointMake(x,
                                          zig?(y-ZIG_SIZE):y)];
         zig = !zig;
     }
     
-    while (y &gt; 0) { // zig-zag back up the right edge
+    while (y > 0) { // zig-zag back up the right edge
         y-= ZIG_SIZE;
         [mask addLineToPoint:CGPointMake(width - (zig? ZIG_SIZE : 0),
                                          y)];
         zig = !zig;
     }
     
-    while (x &gt; 0 ) { // top edge
+    while (x > 0 ) { // top edge
         x-= ZIG_SIZE;
         [mask addLineToPoint:CGPointMake(x,
                                          zig?ZIG_SIZE:0)];
@@ -4475,7 +3484,7 @@ snippet NoDefine  "CG - draw wave border"
 endsnippet
 
 snippet method2_2  "Swift - method two input two output"
-private func method2_2(${1:input_1} ${1:input_1}:String, ${1:input_2}:String) -&gt; (${1:output_1}:String, ${1:output_2}:String)? {
+private func method2_2(${1:input_1} ${1:input_1}:String, ${1:input_2}:String) -> (${1:output_1}:String, ${1:output_2}:String)? {
     ${1:code}
     return ("", "")
 }
@@ -4511,13 +3520,6 @@ snippet djTrickPerspect  "Trick - 投影 perspect"
 
 endsnippet
 
-snippet masUpdate  "mas - Update"
-[${1:view} mas_updateConstraints:^(MASConstraintMaker *make){
-    ${1:code}
-}];
-
-endsnippet
-
 snippet NoDefine  "Swift - TextField config"
 let textField = UITextField(frame: CGRectZero)
 textField.placeholder = "${1:placeholder}"
@@ -4533,142 +3535,13 @@ textField.clearButtonMode = UITextFieldViewMode.WhileEditing;
 textField.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
 endsnippet
 
-snippet djSampleFilterEffect  "Sample - filter effect "
-/**
- *  @brief  滤镜使用的例子
- */
-- (void)applyFilterEffectOnImage {
-    UIImage *_inputImage = [UIImage imageNamed:@"xxxx"];
-    CIImage *image = [CIImage imageWithCGImage:_inputImage.CGImage];
-    
-    // Affine 变换
-    CIFilter *affineClampFilter = [CIFilter filterWithName:@"CIAffineClamp"];
-    [affineClampFilter setValue:image forKey:kCIInputImageKey];
-    CGAffineTransform xform = CGAffineTransformMakeScale(1.0, 1.0);
-    [affineClampFilter setValue:[NSValue valueWithBytes:&amp;xform objCType:@encode(CGAffineTransform)] forKey:@"inputTransform"];
-    
-    // Pixellate 像素化
-    CIFilter *pixellateFilter = [CIFilter filterWithName:@"CIPixellate"];
-    [pixellateFilter setDefaults];
-    // 前一个滤镜的输入做本滤镜的输入
-    [pixellateFilter setValue:affineClampFilter.outputImage forKey:kCIInputImageKey];
-    
-    CGFloat value; // 像素缩放比例
-    if (!self.isReverse) { // 从高到低，还是从低到高
-        //_startInputScale 开始值 _endInputScale 结束值 _filterProgress 当前比例(0.0-1.0)
-        value = _startInputScale + ((_endInputScale - _startInputScale) * _filterProgress);
-    } else {
-        value = _endInputScale + ((_startInputScale - _endInputScale) * _filterProgress);
-    }
-    
-    [pixellateFilter setValue:@(value) forKey:@"inputScale"];
-    CIVector *center = [CIVector vectorWithCGPoint:CGPointMake(image.extent.size.width / 2.0, image.extent.size.height / 2.0)];
-    [pixellateFilter setValue:center forKey:@"inputCenter"];
-    
-    // Crop
-    CIFilter *cropFilter = [CIFilter filterWithName: @"CICrop"];
-    [cropFilter setDefaults];
-    [cropFilter setValue:pixellateFilter.outputImage forKey:kCIInputImageKey];
-    // 以当前图片尺寸裁剪
-    [cropFilter setValue:[CIVector vectorWithX:0 Y:0 Z:_inputImage.size.width W:_inputImage.size.height] forKey:@"inputRectangle"];
-    
-    image = [cropFilter valueForKey:kCIOutputImageKey];
-    
-    CIContext *context = [CIContext contextWithOptions:nil];
-    CGImageRef imgRef = [context createCGImage:image fromRect:image.extent];
-    
-    [_imageView setImage:[UIImage imageWithCGImage:imgRef]];
-}
-
-endsnippet
-
-snippet masMakeTemplate  "mas - make template"
-superview = ${1:theSuperview};
-[${1:view} mas_makeConstraints:^(MASConstraintMaker *make){
-    make.top.equalTo(superview.mas_top).offset(${1:0});
-    make.left.equalTo(superview.mas_left).offset(${1:0});
-    make.right.equalTo(superview.mas_right).offset(${1:0});
-    make.width.equalTo(@${1:?});
-    make.height.equalTo(@${1:?});
-}];
-endsnippet
-
-snippet NoDefine  "Sample - rate app store"
-- (void)doRate{
-  NSString *urlString = @"http://appstore.com/vinylogue-for-last.fm";
-  
-  if (NSStringFromClass([SKStoreProductViewController class]) != nil) {
-    SKStoreProductViewController *storeVC = [[SKStoreProductViewController alloc] init];
-    NSNumber *appId = [NSNumber numberWithInteger:617471119];
-    [storeVC loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier:appId} completionBlock:nil];
-    [self presentViewController:storeVC animated:YES completion:NULL];
-    storeVC.delegate = self;
-  }else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:urlString]]){
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
-  }else{
-    DLog(@"Error opening url");
-  }
-}
-
-- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController{
-  [self dismissViewControllerAnimated:YES completion:NULL];
-}
 
 
-endsnippet
 
 snippet NoDefine  "clang"
 __attribute__((deprecated))
 endsnippet
 
-snippet NoDefine  "runtime - method swizzling"
-#import &lt;objc/runtime.h&gt;
-
-@implementation UIViewController (Tracking)
-
-+ (void)load {
-    static dispatch_once_t onceToken;
-    dispatch_once(&amp;onceToken, ^{
-        Class class = [self class];
-        // When swizzling a class method, use the following:
-        // Class class = object_getClass((id)self);
-        
-        SEL originalSelector = @selector(viewWillAppear:);
-        SEL swizzledSelector = @selector(xxx_viewWillAppear:);
-        
-        Method originalMethod = class_getInstanceMethod(class, originalSelector);
-        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-        
-        BOOL didAddMethod =
-        class_addMethod(class,
-                        originalSelector,
-                        method_getImplementation(swizzledMethod),
-                        method_getTypeEncoding(swizzledMethod));
-        
-        if (didAddMethod) {
-            class_replaceMethod(class,
-                                swizzledSelector,
-                                method_getImplementation(originalMethod),
-                                method_getTypeEncoding(originalMethod));
-        } else {
-            // 如果是Class Method，直接
-//        调用下面方法
-//            class_getClassMethod
-            method_exchangeImplementations(originalMethod, swizzledMethod);
-        }
-    });
-}
-
-#pragma mark - Method Swizzling
-
-- (void)xxx_viewWillAppear:(BOOL)animated {
-    [self xxx_viewWillAppear:animated];
-    NSLog(@"viewWillAppear: %@", self);
-}
-
-@end
-
-endsnippet
 
 snippet djRACSyncChainOperations  "RAC - sync chain operations sample"
     // synchronous chain of operations sample
@@ -4685,65 +3558,7 @@ snippet djRACSyncChainOperations  "RAC - sync chain operations sample"
 
 endsnippet
 
-snippet URLSessionDownloadFile  "URLSession-Download file"
-    // download file
-    // Remember you could still use the NSURLSessionDownloadDelegate to track download progress
-    NSString *imageUrl = @"";
-    
-    NSURLSessionConfiguration *sessionConfig =
-    [NSURLSessionConfiguration defaultSessionConfiguration];
-    
-    NSURLSession *session =
-    [NSURLSession sessionWithConfiguration:sessionConfig
-                                  delegate:self
-                             delegateQueue:nil];
-    
-    NSURLSessionDownloadTask *getImageTask =
-    [session downloadTaskWithURL:[NSURL URLWithString:imageUrl]
-     
-               completionHandler:^(NSURL *location,
-                                   NSURLResponse *response,
-                                   NSError *error) {
-                   UIImage *downloadedImage =
-                   [UIImage imageWithData:
-                    [NSData dataWithContentsOfURL:location]];
-                   dispatch_async(dispatch_get_main_queue(), ^{
-                       // do stuff with image
-                       _imageWithBlock.image = downloadedImage;
-                   });
-               }];
-    
-    [getImageTask resume];
 
-endsnippet
-
-snippet GCDNonBlockGroupSample  "GCD - non block group sample"
-    dispatch_group_t xxx_group = dispatch_group_create();
-    
-    for (NSInteger i = 0; i &lt; 3; i++) {
-        /* sample
-        dispatch_group_enter(xxx_group); // 2
-        Photo *photo = [[Photo alloc] initwithURL:url
-                              withCompletionBlock:^(UIImage *image, NSError *_error) {
-                                  if (_error) {
-                                      error = _error;
-                                  }
-                                  dispatch_group_leave(xxx_group); // 3
-                              }];
-        
-        [[PhotoManager sharedManager] addPhoto:photo];
-         */
-        dispatch_group_enter(xxx_group);
-        dispatch_group_leave(xxx_group);
-    }
-    dispatch_group_notify(xxx_group, dispatch_get_main_queue(), ^{
-        //if (completionBlock) {
-        //    completionBlock(error);
-        //}
-    });
-    
-
-endsnippet
 
 snippet NoDefine  "hex string to icon string"
 NSString *fixIconString(NSString *iconString) {
@@ -4753,8 +3568,8 @@ NSString *fixIconString(NSString *iconString) {
     
     unsigned int iconValue;
     NSScanner* scanner = [NSScanner scannerWithString:iconString];
-    [scanner scanHexInt:&amp;iconValue];
-    return [[NSString alloc] initWithBytes:&amp;iconValue length:4 encoding:NSUTF32LittleEndianStringEncoding];
+    [scanner scanHexInt:&iconValue];
+    return [[NSString alloc] initWithBytes:&iconValue length:4 encoding:NSUTF32LittleEndianStringEncoding];
 }
 
 endsnippet
@@ -4792,7 +3607,7 @@ snippet djSampleViewControllerPragmaMarks  "Sample - ViewController pragam marks
     [super viewDidLoad];
 }
 
-#pragma mark - Delegate &amp;&amp; datasource
+#pragma mark - Delegate && datasource
 
 #pragma mark - Event response
 
@@ -4807,17 +3622,6 @@ snippet snpm  "Snap: Make Constraints"
 ${1: control }.snp_makeConstraints { make in
     make.${1: constraint }
 }
-endsnippet
-
-snippet xGetter  "x variable getter"
-- (${1:CLASS} *)${1:variable} {
-    if (nil == _${1:variable}) {
-        
-        self.${1:variable} = ${1:variable};
-    }
-    return _${1:variable};
-}
-
 endsnippet
 
 snippet djEnum  "Fd - enum typedef"
@@ -4845,7 +3649,7 @@ endsnippet
 
 snippet djUIMessage  "UI - message SMS MFMessageComposeViewController"
 #pragma mark - SMS Messaging
-#import &lt;MessageUI/MessageUI.h&gt;
+#import <MessageUI/MessageUI.h>
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller
                  didFinishWithResult:(MessageComposeResult)result
@@ -4972,7 +3776,7 @@ snippet djUIResizeImage  "UI - Image Resize to Max"
 - (UIImage *)resizeImage:(UIImage *)image toMaximumSize:(CGSize)maxSize {
     CGFloat widthRatio = maxSize.width / image.size.width;
     CGFloat heightRatio = maxSize.height / image.size.height;
-    CGFloat scaleRatio = widthRatio &lt; heightRatio ? widthRatio : heightRatio;
+    CGFloat scaleRatio = widthRatio < heightRatio ? widthRatio : heightRatio;
     CGSize newSize = CGSizeMake(image.size.width * scaleRatio, image.size.height * scaleRatio);
     
     UIGraphicsBeginImageContextWithOptions(newSize, NO, image.scale);
@@ -5003,10 +3807,6 @@ snippet djFdLogTimeInterval  "Fd - log time interval"
 
 endsnippet
 
-snippet www  "Property -  weak"
-@property (nonatomic, weak) ${1:type} * ${1:name};
-endsnippet
-
 snippet uniondef  "Sys - Union Declaration"
 union ${1:union name} {
   ${1:union fields}
@@ -5018,14 +3818,6 @@ let path = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDir
 let documentsDirectoryURL = NSURL.fileURLWithPath(path)
 endsnippet
 
-snippet xImageNamed  "x Image named"
-UIImage *image = [UIImage imageNamed:@"${1:name}"];
-endsnippet
-
-snippet xpragma  "x pragma line and name"
-#pragma mark - ${1:Label}
-
-endsnippet
 
 snippet djSampleTimer  "Sample - timer usage"
 /**
@@ -5088,7 +3880,7 @@ snippet djUILabelTextHeight  "UI - label text height"
 - (double)getTextHeight:(UILabel *)lbText {
     double textHeight = 0.0;
     
-    if ([[[UIDevice currentDevice] systemVersion] doubleValue] &gt;= 7.0)
+    if ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 7.0)
     {
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
@@ -5117,7 +3909,7 @@ snippet djUILabelTextHeight  "UI - label text height"
 endsnippet
 
 snippet swift-dispatchafter  "Swift dispatch_after"
-dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -&gt; Void in
+dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
     
 }
 endsnippet
@@ -5125,12 +3917,12 @@ endsnippet
 snippet djAlert  "Swift-UIAlertController"
         let alert = UIAlertController(title: "Enter Name", message: nil, preferredStyle: .Alert)
 
-        alert.addTextFieldWithConfigurationHandler({ (textField) -&gt; Void in
+        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
             textField.text = ""
             textField.autocapitalizationType = .Sentences;
         })
 
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -&gt; Void in
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             let textField = alert.textFields![0] as UITextField
             print(textField.text!)
         }))
@@ -5160,7 +3952,7 @@ snippet djUIScrollView  "UI - scrollView"
 endsnippet
 
 snippet swift-dispatchmain  "Swift dispatch_async on main queue"
-dispatch_async(dispatch_get_main_queue(), { () -&gt; Void in
+dispatch_async(dispatch_get_main_queue(), { () -> Void in
     
 })
 endsnippet
@@ -5214,10 +4006,6 @@ snippet djUIPrepareforsegue  "UI - Prepare for Segue"
     DebugLog(@"segue: %@", segue.identifier);
 }
 
-endsnippet
-
-snippet masEqualTo  "mas - equalTo"
-make.${1:?}.equalTo(${1:?}).offset(${1:0});
 endsnippet
 
 snippet URLSessionSimpleTask  "URLSession-SimpleTask"
@@ -5312,9 +4100,6 @@ snippet djSampleLoadForApplaunch  "sample load for app launch"
 }
 endsnippet
 
-snippet xImport  "x header define"
-#import "${1:header}"
-endsnippet
 
 snippet djUIButton  "UI - Button"
 UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
@@ -5343,7 +4128,7 @@ snippet djUIKeyboardEvent  "UI - UIKeyboard event"
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     
-    if (SYSTEM_VERSION &gt;= 5.0) {
+    if (SYSTEM_VERSION >= 5.0) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardDidChangeFrameNotification object:nil];
     }
@@ -5369,7 +4154,7 @@ snippet djUIKeyboardEvent  "UI - UIKeyboard event"
     // Get the duration of the animation.
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&amp;animationDuration];
+    [animationDurationValue getValue:&animationDuration];
     
     // Animate the resize of the text view's frame in sync with the keyboard's appearance.
     [self moveInputBarWithKeyboardHeight:keyboardRect.size.height withDuration:animationDuration];
@@ -5386,7 +4171,7 @@ snippet djUIKeyboardEvent  "UI - UIKeyboard event"
      */
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&amp;animationDuration];
+    [animationDurationValue getValue:&animationDuration];
     
     [self moveInputBarWithKeyboardHeight:0.0 withDuration:animationDuration];
 }
@@ -5419,7 +4204,7 @@ snippet djUIPanGesture  "UI - pan gesture "
         //  We only want to register vertial pans
         UIPanGestureRecognizer *panGestureRecognizer = (UIPanGestureRecognizer *)gestureRecognizer;
         CGPoint velocity = [panGestureRecognizer velocityInView:self.container];
-        return fabsf(velocity.y) &gt; fabsf(velocity.x);
+        return fabsf(velocity.y) > fabsf(velocity.x);
     }
     return YES;
 }
@@ -5433,59 +4218,6 @@ snippet djUIPanGesture  "UI - pan gesture "
 
 endsnippet
 
-snippet NoDefine  "Swift - variables sample"
-# Variables
-
-## Constant
-let maxHealth:Int = 100
-
-## String
-var fullName:String = "Scott Doxey"
-
-## Number
-var currentHealth:Int = 100
-var currentLevel:Double = 31.5
-
-## Array
-var foods:[String] = ["French Fries", "Pizza", "Pasta"]
-
-    ### Append Value
-    foods.append("Ice Cream")
-
-    ### Prepend Value
-    foods.insert("Ice Cream", atIndex: 0)
-
-    ### Deleting by Index
-    foods.removeAtIndex(1)
-    
-    for  afood in foods {
-    }
-
-    for (index, afood) in foods.enumerate() {
-    }
-
-## Dictionary
-var programmingSkillLevels:[String: Int] = ["JavaScript": 11, "HTML": 10, "CSS": 10, "Swift": 1]
-
-    ### Return Array of Keys
-    print(Array(programmingSkillLevels).keys)
-
-    ### Deleting by Key
-    programmingSkillLevels.removeValueForKey("JavaScript")
-
-## ENUM
-enum daysOfTheWeek {
-case Monday
-case Tuesday
-case Wednesday
-case Thursday
-case Friday
-case Saturday
-case Sunday
-}
-
-print(daysOfTheWeek.Monday)
-endsnippet
 
 snippet djFdLocalizedString  "Fd - localized string"
 NSLocalizedString(@"${1:key}", @"${1:comment}");
@@ -5512,11 +4244,11 @@ endsnippet
 snippet djFdDescription  "Fd - overwrite description"
 - (NSString *)description {
     return [NSString stringWithFormat:
-            @"&lt;%@"
+            @"<%@"
             @" ${1:item1}: %@"
             @", ${1:item2}: '%@'"
             @", ${1:item3}: '%@'"
-            @"&gt;",
+            @">",
             [super description],
             self.${1:item1},
             self.${1:item2},
@@ -5526,7 +4258,7 @@ snippet djFdDescription  "Fd - overwrite description"
 endsnippet
 
 snippet djDispatch_after  "Swift-DispatchAfter"
-dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -&gt; Void in
+dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
             
         }
 endsnippet
@@ -5541,80 +4273,7 @@ snippet djBlockMethodWithNoParam  "Block - Method with no parameters"
 
 endsnippet
 
-snippet xMethod  "x Method declaration"
-- (${1:class} *)${1:metod name} {
-    return nil;
-}
 
-endsnippet
-
-snippet NoDefine  "Swift - closure function sample"
-//Defining a function:
-func jediGreet(name: String, ability: String) -&gt; (farewell: String, mayTheForceBeWithYou: String) {
-    return ("Good bye, \(name).", " May the \(ability) be with you.")
-}
-//Calling a function:
-let retValue = jediGreet("old friend", "Force")
-println(retValue)
-println(retValue.farewell)
-println(retValue.mayTheForceBeWithYou)
-
-//Function types
-func sum(x: Int, y: Int) -&gt; (result: Int) { return x + y }
-//has a function type of:
-(Int, Int) -&gt; (Int)
-//Function types can thus be used as parameters types or as return types for nesting functions.
-    Passing and returning functions
-
-//The following function is returning another function as its result which can be later assigned to a variable and called.
-func jediTrainer () -&gt; ((String, Int) -&gt; String) {
-    func train(name: String, times: Int) -&gt; (String) {
-        return "\(name) has been trained in the Force \(times) times"
-    }
-    return train
-}
-let train = jediTrainer()
-train("Obi Wan", 3)
-
-//Variadic functions
-//Variadic functions are functions that have a variable number of arguments (indicated by ... after the argument's type) that can be accessed into their body as an array.
-func jediBladeColor (colors: String...) -&gt; () {
-    for color in colors {
-        println("\(color)")
-    }
-}
-jediBladeColor("red","green")
-
-//Defining a closure: {()-&gt;() in}
-
-//Closures are typically enclosed in curly braces { } and are defined by a function type () -&gt; (), where -&gt; separates the arguments and the return type, followed by the in keyword which separates the closure header from its body.
-{ (params) -&gt; returnType in
-    statements
-}
-//An example could be the map function applied to an Array:
-let padawans = ["Knox", "Avitla", "Mennaus"]
-padawans.map({
-    (padawan: String) -&gt; String in
-    "\(padawan) has been trained!"
-})
-
-//Closures with known types:
-//When the type of the closure's arguments are known, you can do as follows:
-func applyMutliplication(value: Int, multFunction: Int -&gt; Int) -&gt; Int {
-    return multFunction(value)
-}
-
-applyMutliplication(2, {value in
-    value * 3
-})
-
-//Closures shorthand argument names:
-//Closure arguments can be references by position ($0, $1, ...) rather than by name
-applyMutliplication(2, {$0 * 3})
-
-//Furthermore, when a closure is the last argument of a function, parenthesis can be omitted as such:
-applyMutliplication(2) {$0 * 3}
-endsnippet
 
 snippet URLSessionUploadData  "URLSession-upload data"
     // upload data
@@ -5643,12 +4302,12 @@ snippet djUILineContainPoint  "UI - Line contain point"
     CGPoint end = CGPointZero;
     
     // Check a few points on the line
-    for (float t = 0.0; t &lt;= 1.0; t += 0.05) {
+    for (float t = 0.0; t <= 1.0; t += 0.05) {
         float x = start.x + t * (end.x - start.x);
         float y = start.y + t * (end.y - start.y);
         
         // If the tapped point is within 20 points, let's return this line
-        if (hypot(x - p.x, y - p.y) &lt; 20.0) {
+        if (hypot(x - p.x, y - p.y) < 20.0) {
             return YES;
         }
     }
@@ -5656,11 +4315,6 @@ snippet djUILineContainPoint  "UI - Line contain point"
 }
 endsnippet
 
-snippet void  "Void method declaration"
-- (void)${1:metod name} {
-    
-}
-endsnippet
 
 snippet djFdNibClassMethod  "Fd - class method nib"
 + (UINib *)nib

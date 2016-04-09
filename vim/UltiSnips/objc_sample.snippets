@@ -1,0 +1,913 @@
+snippet sampleCreateThread "create a thread"
+static NSThread *${1:theName}Thread;
+
++ (void)start$1ThreadIfNeeded {
+	static dispatch_once_t predicate;
+	dispatch_once(&predicate, ^{
+		
+		NSLog(@"%s: Starting $2 thread...", __FILE__);
+		
+		$2Thread = [[NSThread alloc] initWithTarget:self
+		                                        selector:@selector($3Thread)
+		                                          object:nil];
+		[$4Thread start];
+	});
+}
+
++ (void$5Thread {
+	@autoreleasepool {
+	
+		NSLog(@"%s: $6 Thread: Started", __FILE__);
+		
+		// We can't run the run loop unless it has an associated input source or a timer.
+		// So we'll just create a timer that will never fire - unless the server runs for 10,000 years.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+		[NSTimer scheduledTimerWithTimeInterval:[[NSDate distantFuture] timeIntervalSinceNow]
+		                                 target:self
+		                               selector:@selector(donothingatall:)
+		                               userInfo:nil
+		                                repeats:YES];
+#pragma clang diagnostic pop
+
+		[[NSRunLoop currentRunLoop] run];
+		
+		NSLog(@"%@: $7 Thread: Aborted", __FILE__);
+	}
+}
+
++ (void)executeBlock:(dispatch_block_t)block {
+    NSAssert([NSThread currentThread] == $8Thread, @"Executed on incorrect thread");
+	
+	block();
+}
+
++ (void)performBlock:(dispatch_block_t)block {
+	[self performSelector:@selector(executeBlock:)
+                 onThread:$9Thread
+	           withObject:block
+	        waitUntilDone:YES];
+}
+endsnippet
+
+snippet NoDefine  "sample - contentOffset "
+    
+// 最上面cell背景透明，就可以看到图片随着tableview 滑动的效果。
+UIImageView *userBgView = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, APPLICATIONWIDTH, PAUserHeaderClearBgHeight)];
+userBgView.contentMode = UIViewContentModeScaleAspectFill;
+userBgView.image = [UIImage imageNamed:@"user_center_bg.png"];
+[self.tableView.backgroundView addSubview:userBgView];
+[self.tableView.backgroundView bringSubviewToFront:userBgView];
+@weakify(userBgView);
+[RACObserve(self.tableView, contentOffset) subscribeNext:^(NSValue *value) {
+	CGPoint point;
+	[value getValue:&point];
+	CGFloat offset = point.y;
+	//NSLog(@"offset:%@",@(offset));
+	@strongify(userBgView);
+	userBgView.frame = CGRectMake(0, 0, APPLICATIONWIDTH, PAUserHeaderClearBgHeight-offset);
+	if (offset > 0.0001) { //向上滑动
+		userBgView.alpha = 1.0 - offset/(PAUserHeaderClearBgHeight+200);
+	} else {
+		userBgView.alpha = 1.0;
+	}
+}];
+
+endsnippet
+
+snippet djSampleVariableList  "Sample - variable list  (va_list)  "
+
+// 多参数据示例
+- (void)addLayers:(CALayer *)layer, ... {
+    va_list args;
+    va_start(args, layer);
+    
+    for (CALayer *arg = layer; arg != nil; arg = va_arg(args, CALayer *)) {
+    }
+    
+    va_end(args);
+}
+
+endsnippet
+
+snippet NoDefine  "JS - Export protocol sample"
+
+@protocol UIButtonExport <JSExport>  
+- (void)setTitle:(NSString *)title forState:(UIControlState)state;  
+@end  
+
+- (void)test  { 
+    // add protocol to UIButton runtime
+    class_addProtocol([UIButton class],@protocol(UIButtonExport));  
+    
+    UIButton *button = [UIButtonbuttonWithType:UIButtonTypeSystem];  
+    [button setTitle:@"Hello Objective-C"forState:UIControlStateNormal];  
+    button.frame = CGRectMake(20,40,280,40);  
+    
+    JSContext *context = [[JSContext alloc] init];  
+    context[@"button"] = button; 
+    [context evaluateScript:@"button.setTitleForState('Hello JavaScript', 0)"];  
+}
+
+endsnippet
+
+snippet GCDBlockGroupSample  "GCD - block group sample"
+    
+    dispatch_queue_t newQueue = dispatch_queue_create("new_test_queue", DISPATCH_QUEUE_CONCURRENT);
+    
+    dispatch_async(newQueue, ^{
+        dispatch_group_t group = dispatch_group_create();
+        for (NSInteger i = 0; i < 10; i++) {
+            /* sample
+             *
+             dispatch_group_enter(group);
+             Photo *photo = [[Photo alloc] initwithURL:url withCompletionBlock:^(UIImage *image, NSError *_error) {
+                 if (_error) {
+                     error = _error;
+                 }
+                 dispatch_group_leave(downloadGroup);
+             }];
+             
+             [[PhotoManager sharedManager] addPhoto:photo];
+             */
+            
+            dispatch_group_enter(group); // start a task
+            // process here
+            dispatch_group_leave(group); // end a task
+        }
+        
+        long ret = dispatch_group_wait(group, DISPATCH_TIME_FOREVER); // block current queue
+        if (ret == 0) { // return non-zero for timeout
+            dispatch_async(dispatch_get_main_queue(), ^{ // completion
+                //if (completionBlock) {
+                //    completionBlock(error);
+                //}
+            });
+        } else {
+            // time out
+        }
+    });
+    
+endsnippet
+
+snippet djSmpaleMotion  "Sample - Motion sample"
+- (void)motionSample {
+    if (!_motionManager) {
+        _motionManager = [[CMMotionManager alloc] init];
+    }
+    
+    // 加速度器的检测
+    if ([self.motionManager isAccelerometerAvailable]){
+        NSLog(@"Accelerometer is available.");
+    } else{
+        NSLog(@"Accelerometer is not available.");
+    }
+    if ([self.motionManager isAccelerometerActive]){
+        NSLog(@"Accelerometer is active.");
+    } else {
+        NSLog(@"Accelerometer is not active.");
+    }
+    
+    // 陀螺仪的检测
+    if([self.motionManager isGyroAvailable]){
+        NSLog(@"Gryro is available.");
+    } else {
+        NSLog(@"Gyro is not available.");
+    }
+    if ([self.motionManager isGyroActive]){
+        NSLog(@"Gryo is active.");
+    } else {
+        NSLog(@"Gryo is not active.");
+    }
+    
+    // 1.push方式是实时获取到Accelerometer的数据，并且用相应的队列来显示
+    if ([self.motionManager isAccelerometerAvailable]){
+        
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+        [self.motionManager startAccelerometerUpdatesToQueue: queue
+                                                 withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+                                                     
+                                                     NSLog(@"X = %.04f, Y = %.04f, Z = %.04f",accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z);
+                                                 }];
+    }
+    
+    // 2.pull方式 就是获取数据，如果要显示，就要向Accelerometer来索要数据
+    self.motionManager.accelerometerUpdateInterval = 0.01; // 告诉manager，更新频率是100Hz
+    [self.motionManager startAccelerometerUpdates]; // 开始更新，后台线程开始运行。
+    
+    // 陀螺仪的检测
+    if([self.motionManager isGyroAvailable]){
+        if ([self.motionManager  isGyroActive] == NO){
+            [self.motionManager  setGyroUpdateInterval:1.0f / 1.0f];
+            NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+            [self.motionManager startGyroUpdatesToQueue:queue
+                                            withHandler:^(CMGyroData *gyroData, NSError *error) {
+                                                NSLog(@"Gyro Rotation x = %.04f", gyroData.rotationRate.x);
+                                                NSLog(@"Gyro Rotation y = %.04f", gyroData.rotationRate.y);
+                                                NSLog(@"Gyro Rotation z = %.04f", gyroData.rotationRate.z);
+                                            }];
+            
+        }
+    }else {
+        NSLog(@"Gyro is not available.");
+    }
+    // 电子罗盘
+    if ([self.motionManager isMagnetometerAvailable]) {
+        [self.motionManager startMagnetometerUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMMagnetometerData *magnetometerData, NSError *error) {
+        }];
+    }
+    
+    // 获取陀螺仪 加速度器 电子罗盘的数据
+    if ([self.motionManager isDeviceMotionAvailable]) {
+        [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) {
+        }];
+    }
+    
+}
+
+
+endsnippet
+
+snippet djSampleTouchEventHandler  "Sample - touch event"
+// get one object from NSSet use |anyObject|
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    // 获取单点触摸的单个坐标
+    CGPoint pt = [[touches anyObject] locationInView:self];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesCancelled:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesMoved:touches withEvent:event];
+}
+
+endsnippet
+
+snippet djRACChainOperationAsyncSample  "RAC - scheduler async chain operations sample"
+// synchronous chain of operations sample
+RACScheduler *serializedScheduler = [RACScheduler schedulerWithPriority:RACSchedulerPriorityDefault];
+    [serializedScheduler schedule:^{
+        BOOL success;
+        NSError *error;
+        id finalValue = [[[[service connect] flattenMap:^RACStream *(id value) {
+            return [service doSomething1];
+        }] flattenMap:^RACStream *(id something1Value) {
+            // [service doSomething1], if successful passes along 'somethingValue'
+            return [service disconnect];
+        }] firstOrDefault:defaultValue success:&success error:&error];
+        if (success) {
+            // Operation succeeded!  The last value that was returned via sendNext is stored in finalValue,
+            // success is YES, and error will be nil.
+        }
+        else {
+            // Operation failed!   finalValue will be set to defaultValue, success is NO, and error will be non-nil
+            // if an NSError was propagated up by the chain of operations.
+        }
+    }];
+
+endsnippet
+
+snippet djRACTimeoutSample  "RAC - timeout GCD sample"
+    RACSignal *signal =
+    [RACSignal createSignal:^RACDisposable *(id <RACSubscriber> subscriber) {
+        
+        RACDisposable *disposable = [RACDisposable new];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSLog(@"Start iterating...");
+            for (int i = 0; i < 200 && !disposable.isDisposed; i++) {
+                NSLog(@"Send %i to subscriber", i);
+                [subscriber sendNext:@(i)];
+                
+                [NSThread sleepForTimeInterval:0.1];
+            }
+            
+            if (!disposable.isDisposed) {
+                NSLog(@"Send completed to subscriber");
+                [subscriber sendCompleted];
+            }
+        });
+        
+        return disposable;
+    }];
+    
+    NSLog(@"About to subscribe");
+    
+    [[[signal
+       deliverOn:[RACScheduler mainThreadScheduler]]
+      timeout:1.0 onScheduler:[RACScheduler mainThreadScheduler]]
+     subscribeNext:^(id x) {
+         NSLog(@"Got next: %@", x);
+     } error:^(NSError *error) {
+         NSLog(@"Error (timeout): %@", [error localizedDescription]);
+     } completed:^{
+         NSLog(@"Completed");
+     }];
+
+endsnippet
+
+snippet djSampleCirleRing  "Sample - circle ring with bg and fg color, animation"
+/**
+ *  @brief  圆环，有前景色和背景色，通过定时器修改numAdjustedSecondsCompleted产生动画
+    NSUInteger numAdjustedSecondsCompleted; // 时间相对已经完成长度
+    NSUInteger numAdjustedSecondsCompletedIncrementor; // 时间相对增长幅度
+    NSUInteger numAdjustedSecondsTotal; // 时间相对总长
+    NSUInteger numSeconds; // 动画时间
+    circleTimerWidth 圆环宽
+ */
+- (void)drawRect:(CGRect)rect {
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    float radius = CGRectGetWidth(rect)/2.0f - self.circleTimerWidth/2.0f;
+    float angleOffset = M_PI_2;
+
+    // 背景圆环
+    CGContextSetLineWidth(context, self.circleTimerWidth);
+    CGContextBeginPath(context);
+    CGContextAddArc(context,
+                    CGRectGetMidX(rect), CGRectGetMidY(rect),
+                    radius,
+                    0,
+                    2*M_PI,
+                    0);
+    CGContextSetStrokeColorWithColor(context, [self.circleBackgroundColor CGColor]);
+    CGContextStrokePath(context);
+
+    // 前景圆环
+    CGContextSetLineWidth(context, self.circleTimerWidth);
+    CGContextBeginPath(context);
+    CGFloat startAngle = (((CGFloat)numAdjustedSecondsCompleted + 1.0f) /
+                          ((CGFloat)numAdjustedSecondsTotal)*M_PI*2 - angleOffset);
+    CGFloat endAngle = 2*M_PI - angleOffset;
+    CGContextAddArc(context,
+                    CGRectGetMidX(rect), CGRectGetMidY(rect),
+                    radius,
+                    startAngle,
+                    endAngle,
+                    0);
+    CGContextSetStrokeColorWithColor(context, [self.circleColor CGColor]);
+    CGContextStrokePath(context);
+}
+
+endsnippet
+
+snippet djRACCommandSample  "RAC - command sample"
+- (void)commandNextValue:(id)value {
+    NSLog(@"next value:%@",value);
+}
+- (void)commandExecuting:(id)value {
+    NSLog(@"executing value :%@",value);
+}
+- (void)commandError:(id)value {
+    NSLog(@"error value:%@",value);
+}
+- (void)commandSample {
+    // Sample test signal of command
+    RACCommand *cmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        NSError *error = [NSError errorWithDomain:@"error" code:1 userInfo:@{}];
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            [subscriber sendNext:@1];
+            [subscriber sendCompleted];
+            //[subscriber sendError:error];
+            return nil;
+        }];
+    }];
+    
+    [[cmd.executionSignals flatten] subscribeNext:^(id value) {
+        // return signal next value.
+        NSLog(@"get value from exec signal :%@",value);
+    } completed:^{
+        // return signal completed, command completed too.
+        // not useful, but check return signal completion
+        NSLog(@"exec signal completed");
+    }];
+    
+    [cmd.errors subscribeNext:^(id x) {
+        // when error occour, get it here.
+        NSLog(@"get error from exec signal:%@",x);
+    }];
+    
+    [cmd.executing subscribeNext:^(id x) {
+        // first subscribe get value 0, this is invalid.
+        // when command start, get value 1, this is only value we will get.
+        NSLog(@"executing value is bool:%@",x);
+    }];
+    
+    [self rac_liftSelector:@selector(commandNextValue:) withSignals:[cmd.executionSignals flatten], nil];
+    [self rac_liftSelector:@selector(commandExecuting:) withSignals:cmd.executing, nil];
+    [self rac_liftSelector:@selector(commandError:) withSignals:cmd.errors, nil];
+    
+    [cmd execute:nil];
+}
+endsnippet
+
+snippet djFdNotifSample  "Fd - Notification sample"
+ [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(${1:methodName}) name:kLoginNotification object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  // post notification
+  NSDictionary * userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:200] forKey:@"code"];
+[[NSNotificationCenter defaultCenter] postNotificationName:${1:notification_name} object:self userInfo:userInfo];
+
+- (void)${1:functionname}:(NSNotification*)notification
+
+endsnippet
+
+snippet djUIMenuCtrlSamples  "UI - MenuController samples"
+- (void)deleteIt:(id)sender {
+    
+}
+
+- (void)showPopupMenu {
+    // For a menu controller to appear, a view that responds to at least one action message in the UIMenuController’s menu items must be the first responder of the window
+    // custom view need overwrite -|becomeFirstResponder|.
+    [self.view becomeFirstResponder];
+    UIMenuController *menu = [UIMenuController sharedMenuController];
+    // Create a new "Delete" UIMenuItem
+    UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:@"Delete" action:@selector(deleteIt:)];
+    menu.menuItems = @[deleteItem];
+    // Tell the menu where it should come from show it
+    CGRect showInRect = CGRectMake(0, 0, 2, 2);
+    [menu setTargetRect:showInRect inView:self.view];
+    [menu setMenuVisible:YES animated:YES];
+}
+
+- (void)hidePopupMenu {
+    UIMenuController *menu = [UIMenuController sharedMenuController];
+    [menu setMenuVisible:NO animated:YES];
+}
+
+endsnippet
+
+snippet djUISizeThatFits  "UIVIew - sizeThatFits sample"
+// UIView的子类，根据内部view计算合适的size，并返回
+- (CGSize)sizeThatFits:(CGSize)size {
+    // size the image
+    CGSize imageSize = [_imageView sizeThatFits:size];
+    
+    // size the text view
+    CGSize maxTextSize = CGSizeMake(size.width - imageSize.width, size.height);
+    CGSize textSize = [_textView sizeThatFits:maxTextSize];
+    
+    // make sure everything fits
+    CGFloat minHeight = MAX(imageSize.height, textSize.height);
+    return CGSizeMake(size.width, minHeight);
+}
+endsnippet
+
+snippet NoDefine  "Sample - report issue mail"
+- (void)doReportIssue{
+  if ([MFMailComposeViewController canSendMail]){
+    MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
+    [mailVC setMailComposeDelegate:self];
+    [mailVC setToRecipients:@[@"support@twocentstudios.com"]];
+    [mailVC setSubject:@"vinylogue: Support Request"];
+    
+    NSString *messageBody =
+    [NSString stringWithFormat:@"
+
+
+
+-------------------
+DEBUG INFO:
+App Version: %@
+App Build: %@
+Device: %@
+OS Version: %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)@"CFBundleShortVersionString"],
+     [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey],
+     [[UIDevice currentDevice] model],
+     [[UIDevice currentDevice] systemVersion]];
+    
+    [mailVC setMessageBody:messageBody isHTML:NO];
+    [self presentViewController:mailVC animated:YES completion:NULL];
+  }else{
+    DLog(@"Mail unsupported");
+  }
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error{
+  if (result == MFMailComposeResultSent){
+    DLog(@"Mail sent");
+  }else if(result == MFMailComposeResultSaved){
+    DLog(@"Mail saved");
+  }else if(result == MFMailComposeResultFailed){
+    DLog(@"Mail sending failed");
+  }
+  [self dismissViewControllerAnimated:YES completion:NULL];
+}
+endsnippet
+
+snippet GCDDispatchSourceSample  "GCD - dispatch source sample"
+#define GCD_run_block_when_app_stop(block) runBlockWhenAppStop(block)
+
+// 使用场景
+// 1. 恶意攻击者将一个调试器连接到你的应用
+// 2. 在调试器里操纵的对象
+void runBlockWhenAppStop(void(^block)(void)) {
+#if DEBUG
+    dispatch_queue_t queue = dispatch_get_main_queue(); // 需要监听的queue
+    static dispatch_source_t source = nil;
+    __typeof(self) __weak weakSelf = self;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        // 参数设置文档
+        //https://developer.apple.com/library/mac/documentation/Performance/Reference/GCD_libdispatch_Ref/Reference/reference.html#//apple_ref/doc/constant_group/Dispatch_Source_Type_Constants
+        source = dispatch_source_create(DISPATCH_SOURCE_TYPE_SIGNAL, SIGSTOP, 0, queue);
+        if (source) { // 参数错误会导致创建失败
+            dispatch_source_set_event_handler(source, block);
+            dispatch_resume(source); // 默认关闭
+        }
+    });
+#endif
+}
+endsnippet
+
+snippet NoDefine  "Sample - webview load file"
+  if (self.local){
+    NSString *htmlFile = [[NSBundle mainBundle] pathForResource:self.localFileName ofType:@"html" inDirectory:nil];
+    NSString* htmlString = [NSString stringWithContentsOfFile:htmlFile encoding:NSUTF8StringEncoding error:nil];
+    if (!htmlFile || !htmlString){
+      DLog(@"Error loading html file");
+    }else{
+      [self.webView loadHTMLString:htmlString baseURL:nil];
+    }
+  }else{
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.remoteURL]];
+    [self.webView loadRequest:request];
+  }
+
+endsnippet
+
+
+snippet djRACSearchBarDelegateSample  "RAC - search bar delegate sample"
+@interface UISearchBar()<UISearchBarDelegate>
+
+@end
+
+@implementation UISearchBar (RAC)
+- (RACSignal *)rac_textSignal {
+    self.delegate = self;
+    RACSignal *signal = objc_getAssociatedObject(self, _cmd);
+    if (signal != nil) return signal;
+    signal = [[self rac_signalForSelector:@selector(searchBar:textDidChange:) fromProtocol:@protocol(UISearchBarDelegate)] map:^id(RACTuple *tuple) {
+        return tuple.second;
+    }];
+    objc_setAssociatedObject(self, _cmd, signal, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    return signal;
+}
+@end
+
+endsnippet
+
+snippet djHFCell  "hf cell sample"
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        [self setBackgroundColor:[UIColor whiteColor]];
+        [self setSelectionStyle:UITableViewCellSelectionStyleNone];
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+    }
+    
+    return self;
+}
+
+- (void)setObject:(NSObject *)object {
+    if (self.item != object) {
+        self.item = (${1:class} *)object;
+    }
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+}
+
++ (NSNumber *)cellHeight {
+    return @45;
+}
+
+endsnippet
+
+snippet GCDSemaphoreSample  "GCD - semaphore sample"
+    // 创建一个信号量, 初始0，表示使用者要等待
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    
+    //NSURL *url = [NSURL URLWithString:URLString];
+    //__unused Photo *photo = [[Photo alloc]
+    //                         initwithURL:url
+    //                         withCompletionBlock:^(UIImage *image, NSError *error) {
+    //                             if (error) {
+    //                                 XCTFail(@"%@ failed. %@", URLString, error);
+    //                             }
+                                 
+                                 // 增加信号量1
+                                 dispatch_semaphore_signal(semaphore);
+     //                        }];
+    
+    // 阻塞了当前线程直到信号量被发射 超时之前等待信号量
+    dispatch_time_t timeoutTime = dispatch_time(DISPATCH_TIME_NOW, kDefaultTimeoutLengthInNanoSeconds);
+    if (dispatch_semaphore_wait(semaphore, timeoutTime)) { // 非零返回值表示到达超时
+        //XCTFail(@"%@ timed out", URLString);
+    }
+    
+
+endsnippet
+
+snippet djSampleFilterEffect  "Sample - filter effect "
+/**
+ *  @brief  滤镜使用的例子
+ */
+- (void)applyFilterEffectOnImage {
+    UIImage *_inputImage = [UIImage imageNamed:@"xxxx"];
+    CIImage *image = [CIImage imageWithCGImage:_inputImage.CGImage];
+    
+    // Affine 变换
+    CIFilter *affineClampFilter = [CIFilter filterWithName:@"CIAffineClamp"];
+    [affineClampFilter setValue:image forKey:kCIInputImageKey];
+    CGAffineTransform xform = CGAffineTransformMakeScale(1.0, 1.0);
+    [affineClampFilter setValue:[NSValue valueWithBytes:&xform objCType:@encode(CGAffineTransform)] forKey:@"inputTransform"];
+    
+    // Pixellate 像素化
+    CIFilter *pixellateFilter = [CIFilter filterWithName:@"CIPixellate"];
+    [pixellateFilter setDefaults];
+    // 前一个滤镜的输入做本滤镜的输入
+    [pixellateFilter setValue:affineClampFilter.outputImage forKey:kCIInputImageKey];
+    
+    CGFloat value; // 像素缩放比例
+    if (!self.isReverse) { // 从高到低，还是从低到高
+        //_startInputScale 开始值 _endInputScale 结束值 _filterProgress 当前比例(0.0-1.0)
+        value = _startInputScale + ((_endInputScale - _startInputScale) * _filterProgress);
+    } else {
+        value = _endInputScale + ((_startInputScale - _endInputScale) * _filterProgress);
+    }
+    
+    [pixellateFilter setValue:@(value) forKey:@"inputScale"];
+    CIVector *center = [CIVector vectorWithCGPoint:CGPointMake(image.extent.size.width / 2.0, image.extent.size.height / 2.0)];
+    [pixellateFilter setValue:center forKey:@"inputCenter"];
+    
+    // Crop
+    CIFilter *cropFilter = [CIFilter filterWithName: @"CICrop"];
+    [cropFilter setDefaults];
+    [cropFilter setValue:pixellateFilter.outputImage forKey:kCIInputImageKey];
+    // 以当前图片尺寸裁剪
+    [cropFilter setValue:[CIVector vectorWithX:0 Y:0 Z:_inputImage.size.width W:_inputImage.size.height] forKey:@"inputRectangle"];
+    
+    image = [cropFilter valueForKey:kCIOutputImageKey];
+    
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CGImageRef imgRef = [context createCGImage:image fromRect:image.extent];
+    
+    [_imageView setImage:[UIImage imageWithCGImage:imgRef]];
+}
+
+endsnippet
+
+snippet NoDefine  "Sample - rate app store"
+- (void)doRate{
+  NSString *urlString = @"http://appstore.com/vinylogue-for-last.fm";
+  
+  if (NSStringFromClass([SKStoreProductViewController class]) != nil) {
+    SKStoreProductViewController *storeVC = [[SKStoreProductViewController alloc] init];
+    NSNumber *appId = [NSNumber numberWithInteger:617471119];
+    [storeVC loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier:appId} completionBlock:nil];
+    [self presentViewController:storeVC animated:YES completion:NULL];
+    storeVC.delegate = self;
+  }else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:urlString]]){
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+  }else{
+    DLog(@"Error opening url");
+  }
+}
+
+- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController{
+  [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+endsnippet
+
+snippet NoDefine  "runtime - method swizzling"
+#import <objc/runtime.h>
+
+@implementation UIViewController (Tracking)
+
++ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Class class = [self class];
+        // When swizzling a class method, use the following:
+        // Class class = object_getClass((id)self);
+        
+        SEL originalSelector = @selector(viewWillAppear:);
+        SEL swizzledSelector = @selector(xxx_viewWillAppear:);
+        
+        Method originalMethod = class_getInstanceMethod(class, originalSelector);
+        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+        
+        BOOL didAddMethod =
+        class_addMethod(class,
+                        originalSelector,
+                        method_getImplementation(swizzledMethod),
+                        method_getTypeEncoding(swizzledMethod));
+        
+        if (didAddMethod) {
+            class_replaceMethod(class,
+                                swizzledSelector,
+                                method_getImplementation(originalMethod),
+                                method_getTypeEncoding(originalMethod));
+        } else {
+            // 如果是Class Method，直接
+//        调用下面方法
+//            class_getClassMethod
+            method_exchangeImplementations(originalMethod, swizzledMethod);
+        }
+    });
+}
+
+#pragma mark - Method Swizzling
+
+- (void)xxx_viewWillAppear:(BOOL)animated {
+    [self xxx_viewWillAppear:animated];
+    NSLog(@"viewWillAppear: %@", self);
+}
+
+@end
+
+endsnippet
+
+snippet URLSessionDownloadFile  "URLSession-Download file"
+    // download file
+    // Remember you could still use the NSURLSessionDownloadDelegate to track download progress
+    NSString *imageUrl = @"";
+    
+    NSURLSessionConfiguration *sessionConfig =
+    [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    NSURLSession *session =
+    [NSURLSession sessionWithConfiguration:sessionConfig
+                                  delegate:self
+                             delegateQueue:nil];
+    
+    NSURLSessionDownloadTask *getImageTask =
+    [session downloadTaskWithURL:[NSURL URLWithString:imageUrl]
+     
+               completionHandler:^(NSURL *location,
+                                   NSURLResponse *response,
+                                   NSError *error) {
+                   UIImage *downloadedImage =
+                   [UIImage imageWithData:
+                    [NSData dataWithContentsOfURL:location]];
+                   dispatch_async(dispatch_get_main_queue(), ^{
+                       // do stuff with image
+                       _imageWithBlock.image = downloadedImage;
+                   });
+               }];
+    
+    [getImageTask resume];
+
+endsnippet
+
+snippet GCDNonBlockGroupSample  "GCD - non block group sample"
+    dispatch_group_t xxx_group = dispatch_group_create();
+    
+    for (NSInteger i = 0; i < 3; i++) {
+        /* sample
+        dispatch_group_enter(xxx_group); // 2
+        Photo *photo = [[Photo alloc] initwithURL:url
+                              withCompletionBlock:^(UIImage *image, NSError *_error) {
+                                  if (_error) {
+                                      error = _error;
+                                  }
+                                  dispatch_group_leave(xxx_group); // 3
+                              }];
+        
+        [[PhotoManager sharedManager] addPhoto:photo];
+         */
+        dispatch_group_enter(xxx_group);
+        dispatch_group_leave(xxx_group);
+    }
+    dispatch_group_notify(xxx_group, dispatch_get_main_queue(), ^{
+        //if (completionBlock) {
+        //    completionBlock(error);
+        //}
+    });
+    
+
+endsnippet
+
+snippet djRACMulticastConnection  "RAC - connection multicast sample"
+    RACSubject *signal = [RACSubject subject];
+    RACMulticastConnection *connection = [signal multicast:[RACReplaySubject subject]];
+    [connection connect];
+    [connection.signal subscribeNext:^(id x) {
+        NSLog(@"first sub :%@",x);
+    }];
+    [connection.signal subscribeNext:^(id x) {
+        NSLog(@"second sub :%@",x);
+    }];
+    
+    for (NSUInteger i = 0; i< 3; i++) {
+        [signal sendNext:@(i)];
+    }
+    
+    // 会获得所有3个值
+    [connection.signal subscribeNext:^(id x) {
+        NSLog(@"discription:%@",x);
+    }];
+
+endsnippet
+
+snippet NoDefine  "JS - Load script sample"
+NSString *path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"js"];  
+NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];  
+
+// load script
+JSContext *context = [[JSContext alloc]init];  
+[context evaluateScript:script];  
+
+// call js
+JSValue *function = context[@"factorial"];  
+JSValue *result = [function callWithArguments:@[@10]];  
+NSLog(@"factorial(10) = %@", result);  
+
+endsnippet
+
+snippet djSampleAddressBook  "Sample - address book ABAddressBook"
+#pragma mark - Contacts
+@import AddressBook;
+
+- (void)fetchContacts {
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(nil, nil);
+
+    if (ABAddressBookRequestAccessWithCompletion != NULL) {
+        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+             if (granted)
+             {
+                 [self getContactsWithAddressBook:addressBook];
+                 // refresh view or other
+             }
+        });
+    }
+}
+
+- (void)getContactsWithAddressBook:(ABAddressBookRef)addressBook {
+    // 默认头像
+    NSData *facebookImageData = UIImagePNGRepresentation([UIImage imageNamed:@"bond"]);
+
+    _contacts = [NSMutableArray new];
+    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
+	CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
+
+    for (NSUInteger i=0;i < nPeople;i++) {
+		NSMutableDictionary *dOfPerson = [NSMutableDictionary new];
+
+        // 一条通信记录
+		ABRecordRef person = CFArrayGetValueAtIndex(allPeople,i);
+
+        // 手机号，会有多个号码
+		ABMultiValueRef phones =(__bridge ABMultiValueRef)((__bridge NSString*)ABRecordCopyValue(person, kABPersonPhoneProperty));
+        // 名字
+        CFStringRef firstName, lastName;
+		firstName = ABRecordCopyValue(person, kABPersonFirstNameProperty);
+		lastName  = ABRecordCopyValue(person, kABPersonLastNameProperty);
+        
+        [dOfPerson setObject:[NSString stringWithFormat:@"%@",firstName] forKey:@"firstName"];
+        [dOfPerson setObject:[NSString stringWithFormat:@"%@",lastName] forKey:@"lastName"];
+		[dOfPerson setObject:[NSString stringWithFormat:@"%@ %@", firstName, lastName] forKey:@"name"];
+
+        // 手机号码类型，家庭，工作，主号等
+		NSString *mobileLabel;
+		for(CFIndex i = 0; i < ABMultiValueGetCount(phones); i++) {
+			mobileLabel = (__bridge NSString*)ABMultiValueCopyLabelAtIndex(phones, i);
+			if([mobileLabel isEqualToString:(NSString *)kABPersonPhoneMobileLabel])
+			{
+				[dOfPerson setObject:[CleanPhoneNumber clean:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i)] forKey:@"phone"];
+			}
+			else if ([mobileLabel isEqualToString:(NSString*)kABPersonPhoneIPhoneLabel])
+			{
+				[dOfPerson setObject:[CleanPhoneNumber clean:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i)] forKey:@"phone"];
+				break;
+			}
+        }
+
+        // 头像
+        if (ABPersonHasImageData(person)) {
+            NSData *contactImageData = (__bridge NSData *)ABPersonCopyImageDataWithFormat(person, kABPersonImageFormatThumbnail);
+            [dOfPerson setObject:[UIImage imageWithData:contactImageData] forKey:@"image"];
+        } else {
+            [dOfPerson setObject:facebookImageData forKey:@"image"];
+        }
+        
+        if (dOfPerson[@"phone"] && dOfPerson[@"image"]) {
+            [_contacts addObject:dOfPerson];
+        }
+	}
+    // 按名字排序
+    [_contacts sortUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES], nil]];
+}
+
+endsnippet
