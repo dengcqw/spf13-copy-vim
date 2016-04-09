@@ -220,6 +220,22 @@
 
     " display bottom scroller
     set guioptions+=b
+
+    set lines=80
+
+    set complete=.,b,u,U,t,i,k
+
+    inoremap <D-p> <c-x><c-p>
+
+    "Line modifications
+    inoremap CC <Esc>C
+    inoremap SS <Esc>S
+    inoremap DD <Esc>dd
+    inoremap UU <Esc>u
+    "Quick movements
+    inoremap II <Esc>I
+    inoremap AA <Esc>A
+    inoremap OO <Esc>O
 " }
 
 " custom Plugins {
@@ -270,8 +286,6 @@ autocmd FileType jsx vnoremap <buffer>  <C-S> :call RangeJsxBeautify()<cr>
 autocmd FileType html vnoremap <buffer> <C-S> :call RangeHtmlBeautify()<cr>
 autocmd FileType css vnoremap <buffer>  <C-S> :call RangeCSSBeautify()<cr>
 
-set lines=80
-
 " ----------------------------------------------------------------------------
 " tern_for_vim
 " ----------------------------------------------------------------------------
@@ -301,6 +315,7 @@ autocmd FileType javascript set omnifunc=tern#Complete
     "<CTRL-s><CTRL-s> - in insert mode, add a new line + surrounding + indent
     "<CTRL-g>s - same as <CTRL-s>
     "<CTRL-g>S - same as <CTRL-s><CTRL-s>
+    inoremap ]] <ESC>:execute "normal yss]"<CR>A
 "}
 "
 
@@ -314,9 +329,6 @@ autocmd FileType javascript set omnifunc=tern#Complete
     noremap ,pr :NERDTreeFind<CR>
 "}
 
-set complete=.,b,u,U,t,i
-set complete+=k
-inoremap <D-p> <c-x><c-p>
 
 " buffer switch {
     function! BufSel(pattern)
