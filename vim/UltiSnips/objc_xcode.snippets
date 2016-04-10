@@ -93,10 +93,6 @@ func textFieldTextChanged(sender : AnyObject) {
 
 endsnippet
 
-snippet notificationRemove  "Notification: Remove Observer"
-[[NSNotificationCenter defaultCenter]removeObserver:self name:${1:notification name} object:nil];
-endsnippet
-
 snippet swift-uiremotenotification  "Swift UIRemoteNotification"
   
 //MARK: Remote Notifications
@@ -138,11 +134,11 @@ endsnippet
 
 snippet notification_observewithblock  "Notification: Observe by Name with Block"
 
-self.${1:name}Observer = [[NSNotificationCenter defaultCenter] addObserverForName:${1:name} 
+self.${1:name}Observer = [[NSNotificationCenter defaultCenter] addObserverForName:${2:name} 
                                                   object:nil 
                                                    queue:[NSOperationQueue mainQueue] 
                                               usingBlock:^(NSNotification *notification) {
-                                                  ${1:code}
+                                                  ${3:code}
                                               }];
 
 endsnippet
@@ -157,7 +153,7 @@ endsnippet
 snippet GCDAsyncQueue  "GCD - Create Async Queue And Run"
     
 dispatch_queue_t callerQueue = dispatch_get_current_queue();
-dispatch_queue_t ${1:queueName} = dispatch_queue_create("${1:queueLabel}", NULL);
+dispatch_queue_t ${1:queueName} = dispatch_queue_create("${2:queueLabel}", NULL);
 dispatch_async(${1:queueName}, ^{
         
         // Do async work
@@ -225,19 +221,11 @@ typedef void (^xxBlockStringResult)(NSString *string, NSError *error);
 
 endsnippet
 
-snippet viewDidDisappear  "View Did Disappear"
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    ${1:code}
-}
-
-endsnippet
 
 snippet djBlockInlineVoid  "Block - Inline completion block variable"
 
     void (^${1:variable name})(void) = ^void() {
-        ${1:insert code here}
+        ${2:insert code here}
     };
     
 endsnippet
@@ -248,7 +236,7 @@ snippet GCDTimer  "GCD - timer"
 double delayInSeconds = ${1:second};
 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-    [self performSelectorOnMainThread:@selector(${1:SEL}) withObject:${1:obj} waitUntilDone:${1:YESorNO}];
+    [self performSelectorOnMainThread:@selector(${2:SEL}) withObject:${3:obj} waitUntilDone:${4:YESorNO}];
 });
 
 endsnippet
@@ -280,16 +268,10 @@ snippet djFdMethodForwarding  "Fd - method forwarding"
 
 endsnippet
 
-snippet addSubview  "UI - add subview"
-
-[self.view addSubview:self.${1:?}];
-
-endsnippet
-
 snippet notification_remove_block_observer  "Notification: Remove Block Observer"
 
 [[NSNotificationCenter defaultCenter] removeObserver:self.${1:observer property} 
-                                                name:${1:notification name} 
+                                                name:${2:notification name} 
                                                   object:nil];
 
 endsnippet
@@ -350,7 +332,7 @@ endsnippet
 snippet method1_1  "Swift - method one input one output"
 
 private func ${1:method1_1}(input input:String) -> String? {
-    ${1:code}
+    ${2:code}
     return ""
 }
 
@@ -358,7 +340,7 @@ endsnippet
 
 snippet djTypealiasOptionalClosure  "Swift - optional closure typealias"
 
-typealias ${1:ClosureName} = ((${1:arguments}) -> ${1:return value})?
+typealias ${1:ClosureName} = ((${2:arguments}) -> ${3:return value})?
 
 endsnippet
 
@@ -374,10 +356,10 @@ endsnippet
 snippet djFdHooker  "Fd - hooker method"
 
 Class theClass = NSClassFromString(@"${1:?}");
-[Hooker hookMethod:@selector(${1:?})
+[Hooker hookMethod:@selector(${2:?})
            ofClass:theClass
-        withMethod:class_getInstanceMethod([self class], @selector(${1:?}))
-keepingOriginalWith:@selector(${1:?})];
+        withMethod:class_getInstanceMethod([self class], @selector(${3:?}))
+keepingOriginalWith:@selector(${4:?})];
 
 endsnippet
 
@@ -423,7 +405,7 @@ dispatch_once(&Static.onceToken) {
     
 endsnippet
 
-snippet singleton_shared  "Singleton: Shared"
+snippet singleton_shared  "Swift Singleton: Shared"
     
 class var sharedInstance: ${1: class } {
     struct Singleton { static let instance = ${1: class }() }
@@ -510,7 +492,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { 
     ${1:code}
     
     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-        ${1:code}
+        ${2:code}
     })
 })
 
@@ -539,13 +521,13 @@ endsnippet
 
 snippet djstring_starts_with  "String Starts With"
 
-[${1:string} hasPrefix:@"${1:match}"]
+[${1:string} hasPrefix:@"${2:match}"]
 
 endsnippet
 
 snippet assert  "NSAssert"
 
-NSAssert(${1: assertion },@"${1: error }");
+NSAssert(${1: assertion },@"${2: error }");
 
 endsnippet
 
@@ -716,7 +698,7 @@ snippet djUIMotionEffectTilt  "UI - motion effect tilt"
     horizontalInterpolation.maximumRelativeValue = @(15);
     
     [self.${1:view} addMotionEffect:verticalInterpolation];
-    [self.${1:view} addMotionEffect:horizontalInterpolation];
+    [self.${2:view} addMotionEffect:horizontalInterpolation];
 
 endsnippet
 
@@ -741,9 +723,7 @@ snippet djFdListFile  "Fd - list file - file walker"
 endsnippet
 
 snippet djBlockParam  "Block - block as param"
-
-		(${1:returnType} (^)(${1:Class *} ${1:variable}))${1:blockName}
-	
+(${1:returnType} (^)(${2:Class *} ${3:variable}))${4:blockName}
 endsnippet
 
 snippet djFdGBKtoUTF8  "Fd - GBK to UTF-8 string"
@@ -756,7 +736,7 @@ endsnippet
 snippet djFdNSErrorCreation  "Fd - NSError Creation"
 
 NSDictionary *userInfo = @{NSLocalizedDescriptionKey : @"${1:error description}"};
-NSError *error = [NSError errorWithDomain:@"${1:domain}" code:${1:errorcode} userInfo:userInfo];
+NSError *error = [NSError errorWithDomain:@"${2:domain}" code:${3:errorcode} userInfo:userInfo];
 
 endsnippet
 
@@ -793,7 +773,7 @@ endsnippet
 
 snippet notificationAddObserver  "Notification: Add Observer"
 
-[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(${1:selector}) name:${1:notification name}object:nil];
+[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(${1:selector}) name:${2:notification name}object:nil];
 
 endsnippet
 
@@ -803,14 +783,14 @@ snippet djCGDrawImageMethod  "CG - Draw Image Method"
     static UIImage *image = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        CGSize oldSize = CGSizeMake(${1:CGFloat width}, ${1:CGFloat height});
+        CGSize oldSize = CGSizeMake(${2:CGFloat width}, ${2:CGFloat height});
         CGFloat scale = [[UIScreen mainScreen] scale];
         CGSize newSize = CGSizeMake(oldSize.width*scale, oldSize.height*scale);
         UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0f);
         CGContextRef ctx = UIGraphicsGetCurrentContext();
         { // START DRAWING
             // insert code from PaintCode here
-            ${1:code}
+            ${3:code}
         } // END DRAWING
         image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
@@ -824,7 +804,7 @@ endsnippet
 snippet dispatch_after_swift "GCD: Dispatch After"
         
 		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(${1:delayInSeconds} * Float(NSEC_PER_SEC))), dispatch_get_main_queue()) {
-            ${1:closure_logic}
+            ${2:closure_logic}
         }
     
 endsnippet
@@ -894,7 +874,7 @@ snippet swift-message  "Swift MFMessageComposeViewController"
 
             messageComposeVC.messageComposeDelegate = self
             messageComposeVC.body = "${1:body}"
-            messageComposeVC.recipients = [${1:recipients}]
+            messageComposeVC.recipients = [${2:recipients}]
             
             presentViewController(messageComposeVC, animated: animated, completion: nil)
 
@@ -912,8 +892,8 @@ endsnippet
 snippet djUIImageView  "UI - image view"
 
 UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(${1:CGFloat x}, ${1:CGFloat y}, ${1:CGFloat width}, ${1:CGFloat height})];
-imageView.image = [UIImage imageNamed:@"${1:name}"];
-imageView.highlightedImage = [UIImage imageNamed:@"${1:name}"];
+imageView.image = [UIImage imageNamed:@"${2:name}"];
+imageView.highlightedImage = [UIImage imageNamed:@"${3:name}"];
 
 endsnippet
 
@@ -945,7 +925,7 @@ endsnippet
 snippet NoDefine  "Comment variable"
 
 /**< ${1:?} */
-///<${1:?}
+///<${2:?}
 
 endsnippet
 
@@ -956,7 +936,7 @@ CALayer *alayer = [CALayer layer];
 alayer.bounds = CGRectMake(0, 0, image.size.width, image.size.height);
 alayer.position = CGPointMake(160, 200); // UIscreen center
 alayer.anchorPoint = CGPointMake(0, 0);
-//alayer.contents = (id)[UIImage imageNamed:@"${1:image}"].CGImage;
+//alayer.contents = (id)[UIImage imageNamed:@"${2:image}"].CGImage;
 alayer.contents = (id)image.CGImage;
 [self.view.layer addSublayer:alayer];
 
@@ -965,8 +945,8 @@ endsnippet
 snippet djanimBlockWithOption  "Anim - UIView Animation Block with Options"
 
 UIViewAnimationOptions options = UIViewAnimationOptionAllowUserInteraction;
-[UIView animateWithDuration:${1:duration} delay:${1:delay} options:options animations:^{
-	    ${1:code}
+[UIView animateWithDuration:${1:duration} delay:${2:delay} options:options animations:^{
+	    ${3:code}
 	} completion:^(BOOL finished) {
 }];
 
@@ -981,11 +961,11 @@ snippet swift-uitableviewdatasource  "Swift UITableViewDataSource"
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ${1:numberOfRows}
+        return ${2:numberOfRows}
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(${1:identifier}, forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(${3:identifier}, forIndexPath: indexPath) as UITableViewCell
         configureCell(cell, forRowAtIndexPath: indexPath)
         return cell
     }
@@ -1029,7 +1009,7 @@ snippet djFdGetInfoPlistValue  "Fd - get info.plist value"
     
 	NSString *infoPlistPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"/Contents/Info.plist"];
     NSDictionary *plistInfoDic = [NSDictionary dictionaryWithContentsOfFile:infoPlistPath];
-    NSString *${1:keyValue} = [plistInfoDic valueForKey:@"${1:key}"];
+    NSString *${1:keyValue} = [plistInfoDic valueForKey:@"${2:key}"];
 
 endsnippet
 
@@ -1059,11 +1039,11 @@ snippet djNSFetchResultsController  "NSFetchResultsController-CoreData"
 // Completion Scope: Function or Method
 
 NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:${1:(NSString *)}];
-fetchRequest.predicate = [NSPredicate predicateWithFormat:${1:(NSString *), ...}];
-fetchRequest.sortDescriptors = @[${1:(NSSortDescriptor *), ...}];
+fetchRequest.predicate = [NSPredicate predicateWithFormat:${2:(NSString *), ...}];
+fetchRequest.sortDescriptors = @[${3:(NSSortDescriptor *), ...}];
 
-NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:${1:(NSFetchRequest *)} managedObjectContext:${1:(NSManagedObjectContext *)} sectionNameKeyPath:${1:(NSString *)} cacheName:${1:(NSString *)}];
-fetchedResultsController.delegate = ${1:(id <NSFetchedResultsControllerDelegate>)};
+NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:${4:(NSFetchRequest *)} managedObjectContext:${5:(NSManagedObjectContext *)} sectionNameKeyPath:${6:(NSString *)} cacheName:${7:(NSString *)}];
+fetchedResultsController.delegate = ${8:(id <NSFetchedResultsControllerDelegate>)};
 
 NSError *error = nil;
 if (![fetchedResultsController performFetch:&error]) {
@@ -1100,7 +1080,7 @@ snippet djCollectionViewDataSource  "UI - UICollectionViewDataSource"
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:${1:reuseIdentifier} forIndexPath:indexPath];
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:${2:reuseIdentifier} forIndexPath:indexPath];
 
     [self configureCell:cell forItemAtIndexPath:indexPath];
 
@@ -1110,7 +1090,7 @@ snippet djCollectionViewDataSource  "UI - UICollectionViewDataSource"
 - (void)configureCell:(UICollectionViewCell *)cell
    forItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ${1: statements }
+    ${3: statements }
 }
 
 endsnippet
@@ -1142,12 +1122,17 @@ static __weak id currentFirstResponder;
 endsnippet
 
 snippet djNotificationdefaultcenter  "Swift-NSNotificationCenter"
-NSNotificationCenter.defaultCenter().addObserver(self, selector: "${1:Selector}", name: ${1:T##String?}, object: ${1:T##AnyObject?})
+NSNotificationCenter.defaultCenter().addObserver(self, selector: "${1:Selector}", name: ${2:T##String?}, object: ${3:T##AnyObject?})
 endsnippet
 
 snippet djVariableGetSet  "Swift - variable get set"
-var ${1:variable}: ${1:Type} {    get {        return ${1:?}    }    set {
-        ${1:newValue}    }
+var ${1:variable}: ${2:Type} {
+    get {
+        return ${3:?}
+    }
+    set {
+        ${4:newValue}
+    }
 }
 endsnippet
 
@@ -1176,20 +1161,17 @@ endsnippet
 
 snippet file_manager_url  "NSFileManager: URLForDirectory"
 let fileManager = NSFileManager.defaultManager()
-let ${1:cachesURL} = fileManager.URLsForDirectory(NSSearchPathDirectory.${1:CachesDirectory}, inDomains: .UserDomainMask).first! as NSURL
+let ${1:cachesURL} = fileManager.URLsForDirectory(NSSearchPathDirectory.${2:CachesDirectory}, inDomains: .UserDomainMask).first! as NSURL
 endsnippet
 
 snippet djClosure  "Swift - Closure"
-{ [unownd self] (${1:parameters}) -> ${1:returnType} in    ${1:statements}}
-
-endsnippet
-
-snippet notificationPost  "Notification: Post"
-[[NSNotificationCenter defaultCenter]postNotificationName:${1:notification name} object:${1:nil or userInfo dictionary}];
+{ [unownd self] (${1:parameters}) -> ${2:returnType} in
+    ${3:statements}
+}
 endsnippet
 
 snippet djTypealiasClosure  "Swift - closure typealias"
-typealias ${1:ClosureName} = (${1:arguments}) -> ${1:return value}
+typealias ${1:ClosureName} = (${2:arguments}) -> ${3:return value}
 endsnippet
 
 snippet weakself  "Block - Weakself"
@@ -1208,7 +1190,7 @@ snippet djFdLogFontFamily  "Fd - Log Fonts Family"
 endsnippet
 
 snippet djFdStringContain  "Fd - if String Contains"
-[${1:string} rangeOfString:@"${1:match}"].location != NSNotFound
+[${1:string} rangeOfString:@"${2:match}"].location != NSNotFound
 endsnippet
 
 snippet swift-mail  "Swift MFMailComposeViewController"
@@ -1220,8 +1202,8 @@ snippet swift-mail  "Swift MFMailComposeViewController"
             mailComposeVC.delegate = self
             
             mailComposeVC.setSubject(${1:subject})
-            mailComposeVC.setMessageBody(${1:body}, isHTML: true)
-            mailComposeVC.setToRecipients([${1:recipients}])
+            mailComposeVC.setMessageBody(${2:body}, isHTML: true)
+            mailComposeVC.setToRecipients([${3:recipients}])
             
             self.presentViewController(mailComposeVC, animated: animated, completion: nil)
         } else {
@@ -1250,36 +1232,14 @@ TODO(Remember to fix this)
 endsnippet
 
 snippet swift-forin  "Swift for-in loop with casting"
-for case let ${1:object} in ${1:collection} as ${1:Type} {
+for case let ${1:object} in ${2:collection} as ${3:Type} {
     
 }
 endsnippet
 
-snippet masMake  "mas - Make"
-[${1:view} mas_makeConstraints:^(MASConstraintMaker *make){
-    ${1:code}
-}];
-
-endsnippet
-
-snippet notificationPostWithUserinfo  "Notification: Post with User Info"
-NSDictionary *userInfo = @{${1:key}: ${1:object, ...}}
-[[NSNotificationCenter defaultCenter] postNotificationName:${1:name} object:nil userInfo:userInfo];
-endsnippet
-
-
 snippet djDispatchmain  "Swift-DispatchMain"
 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            
-        })
-endsnippet
-
-snippet viewWillAppear  "view Will Appear"
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    ${1:code}
-}
-
+})
 endsnippet
 
 snippet djCollectionviewdelegate  "Swift-UICollectionViewDelegate"
@@ -1354,11 +1314,11 @@ snippet swift-uicollectionviewdatasource  "Swift UICollectionViewDataSource"
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ${1:numberOfItems}
+        return ${2:numberOfItems}
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(${1:identifier}, forIndexPath: indexPath) as! UICollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(${3:identifier}, forIndexPath: indexPath) as! UICollectionViewCell
         configureCell(cell, forItemAtIndexPath: indexPath)
         return cell
     }
@@ -1368,7 +1328,7 @@ snippet swift-uicollectionviewdatasource  "Swift UICollectionViewDataSource"
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        let view =  collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: ${1:identifier}, forIndexPath: indexPath) as UIView
+        let view =  collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: ${4:identifier}, forIndexPath: indexPath) as UIView
         return view
     }
 endsnippet
@@ -1394,17 +1354,17 @@ snippet try  "Objective-C Try-Catch-Finally Block"
     ${1:Code that can potentially throw an exception}
 }
 @catch (NSException *exception) {
-    ${1:Handle an exception thrown in the @try block}
+    ${2:Handle an exception thrown in the @try block}
 }
 @finally {
-    ${1:Code that gets executed whether or not an exception is thrown}
+    ${3:Code that gets executed whether or not an exception is thrown}
 }
 endsnippet
 
 snippet GCDWaitAsync  "GCD - Run Async and Wait"
 
 // do not use
-dispatch_queue_t ${1:queue} = dispatch_queue_create("${1:queue}", NULL);
+dispatch_queue_t ${1:queue} = dispatch_queue_create("${2:queue}", NULL);
     dispatch_async(queue, ^ {
         // do async work
     });
@@ -1421,16 +1381,16 @@ snippet djTableviewdatasource  "Swift-UITableviewDataSource"
 //MARK: UITableviewDataSource
 extension ${1:Class} : UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return ${1:numberOfSections}
+        return ${2:numberOfSections}
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ${1:numberOfRows}
+        return ${3:numberOfRows}
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(${1:identifier}, forIndexPath: indexPath) as? ${1:CustomCell}
-        ${1:configCell}
+        let cell = tableView.dequeueReusableCellWithIdentifier(${4:identifier}, forIndexPath: indexPath) as? ${5:CustomCell}
+        ${6:configCell}
         return cell!
     }
 }
@@ -1458,7 +1418,11 @@ NSLog(@"%@",[NSThread callStackSymbols]);
 endsnippet
 
 snippet djCGFillColor  "CG - fill color"
-    CGContextRef context = UIGraphicsGetCurrentContext();    UIColor * redColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];        CGContextSetFillColorWithColor(context, redColor.CGColor);    CGContextFillRect(context, self.bounds);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    UIColor * redColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];
+    
+    CGContextSetFillColorWithColor(context, redColor.CGColor);
+    CGContextFillRect(context, self.bounds);
 endsnippet
 
 snippet djFdClassHash  "Fd - class hash"
@@ -1478,32 +1442,20 @@ snippet djUIResizeImageMethod  "UI - resize image method"
 NoDefine
 endsnippet
 
-snippet synthesiz  "Property - Synthesizer with _prefix"
-@synthesize ${1:property} = _${1:property};
-endsnippet
-
-snippet masHeightEqualto  "mas - height"
-make.height.equalTo(@${1:?});
-endsnippet
-
 
 snippet djVariableGet  "Swift -variable get"
-var ${1:variable}: ${1:type} {    return ${1:?}}
-endsnippet
-
-snippet djImageView  "Swift-UIImageView"
-let ${1:imageView} = UIImageView(image: UIImage(named: ${1:T##String}))
-endsnippet
-
-snippet djEnum  "Swift - enum  single type"
-enum ${1:TypeName} : ${1:Int} {    case ${1:subType}
+var ${1:variable}: ${2:type} {
+    return ${3:?}
 }
 endsnippet
 
-snippet viewDidAppear  "View Did Appear"
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    ${1:code}
+snippet djImageView  "Swift-UIImageView"
+let ${1:imageView} = UIImageView(image: UIImage(named: ${2:T##String}))
+endsnippet
+
+snippet djEnum  "Swift - enum  single type"
+enum ${1:TypeName} : ${2:Int} {
+    case ${2:subType}
 }
 endsnippet
 
@@ -1512,18 +1464,6 @@ snippet djFdnotification_handler  "Fd - Notication: Handler"
 }
 endsnippet
 
-snippet viewWillDisappear  "Swift - viewWillDisappear"
-override func viewWillDisappear(animated: Bool) {
-    super.viewWillDisappear(animated)
-    ${1:code}
-}
-endsnippet
-
-snippet djFdPrivateCategory  "Fd - Private Category"
-@interface ${1:Class Name} ()
-
-@end
-endsnippet
 
 snippet NoDefine  "JS - callback block"
     context[@"callback"] = ^{
@@ -1758,7 +1698,7 @@ endsnippet
 
 snippet djRACEableCommand  "RAC -  eable command"
 - (RACCommand *)rac_${1:?} {
-    RACSignal *enableSignal = [[RACSignal combineLatest:@[${1:?}]] reduceEach:^id (${1:?}){
+    RACSignal *enableSignal = [[RACSignal combineLatest:@[${2:?}]] reduceEach:^id (${3:?}){
         BOOL ret = YES;
         return @(ret);
     }];
@@ -1779,19 +1719,10 @@ snippet debugVC  "debugVC"
 
 endsnippet
 
-snippet viewDidLoad  "View Did Load"
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    ${1:code}
-}
-
-endsnippet
-
 snippet GCDDispatchOnce  "GCD - dispatch once"
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-    });
-
+static dispatch_once_t onceToken;
+dispatch_once(&onceToken, ^{
+});
 endsnippet
 
 snippet djStringHeightAttributed  "String Height Attributed"
@@ -1807,9 +1738,6 @@ snippet djDateFormatter  "Fd - date formatter"
 
 endsnippet
 
-snippet aaa  "Property  assign - aaa"
-@property (nonatomic, assign) ${1:type} ${1:name};
-endsnippet
 
 snippet djFDNSInvocation  "Fd - NSInvocation"
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[[buttonTarget class] instanceMethodSignatureForSelector:selector]];
@@ -1828,14 +1756,14 @@ endsnippet
 
 
 snippet djBlockInline  "Block - Inline Block"
-没有__block标记的变量，其值会被复制一份到block私有内存区
-有__block标记的变量，其地址会被记录在block私有内存区
+//没有__block标记的变量，其值会被复制一份到block私有内存区
+//有__block标记的变量，其地址会被记录在block私有内存区
 //    return_type (^blockName)(var_type) = ^return_type (var_type varName)
-${1:returnType} (^${1:blockName})(${1:varType}) = ^${1:returnType} (${1:varType} ${1:varName}) {
-    return ${1:code};
+${1:returnType} (^${2:blockName})(${3:varType}) = ^${1:returnType} (${3:varType} ${6:varName}) {
+    return ${7:code};
     };
 
-// ${1:blockName}(${1:variable});
+// ${2:blockName}(${8:variable});
 
 endsnippet
 
@@ -1860,31 +1788,10 @@ self.displayLink.paused = YES;
 
 endsnippet
 
-snippet viewWillLayoutSubviews  "viewWillLayoutSubviews"
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    ${1:Set frame code here}
-}
-
-
-endsnippet
-
-snippet strongself  "Block - Strongself"
-__strong __typeof(${1:weakSelf})strongSelf = ${1:weakSelf};
-endsnippet
-
-snippet viewDidUnload  "View Did Unload"
-- (void)viewDidUnload {
-    [super viewDidUnload];
-    ${1:code}
-}
-
-endsnippet
-
 
 snippet method2_1  "Swift - method two input one output"
-private func ${1:method2_1}(${1:input_1} ${1:input_1}:String, ${1:input_2}:String) -> String? {
-    ${1:code}
+private func ${1:method2_1}(${2:input_1} ${2:input_1}:String, ${3:input_2}:String) -> String? {
+    ${4:code}
     return ""
 }
 endsnippet
@@ -1916,12 +1823,12 @@ snippet djHFRequest&Signal  "hf request & signal "
 }
 
 // success and failure can be nil if you don't need
-- (RACSignal *)rac_${1:checkLoginPasswd:(NSString *)passwd}
+- (RACSignal *)rac_${2:checkLoginPasswd:(NSString *)passwd}
                             success:(void (^)(AFHTTPRequestOperation *, id))success
                             failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
 
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        NSOperation *op = [self ${1:checkLoginPasswd:passwd} success:^(AFHTTPRequestOperation *op, id res) {
+        NSOperation *op = [self ${3:checkLoginPasswd:passwd} success:^(AFHTTPRequestOperation *op, id res) {
             if (success) {
                 success(op, res);
             }
@@ -1977,7 +1884,7 @@ endsnippet
 
 snippet djObserveNotif  "notifications observe "
 NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-[nc addObserver:self selector:@selector(${1:SEL}) name:${1:NotifiName} object:${1:object}];
+[nc addObserver:self selector:@selector(${1:SEL}) name:${2:NotifiName} object:${3:object}];
 // move below to dealloc
 [[NSNotificationCenter defaultCenter] removeObserver:self];
 endsnippet
@@ -2004,7 +1911,7 @@ UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0f);
 CGContextRef ctx = UIGraphicsGetCurrentContext();
 { // START DRAWING
     // insert code from PaintCode here
-    ${1:code}
+    ${2:code}
 } // END DRAWING
 UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 UIGraphicsEndImageContext();
@@ -2118,23 +2025,17 @@ snippet djCAGradientMask  "Ca - add Gradient layer as Mask "
 
 endsnippet
 
-snippet snpr  "Snap: Remake Constraints"
-${1: control }.snp_remakeConstraints { make in
-    make.${1: constraint }
-}
-endsnippet
-
 snippet djPickerviewdelegate  "Swift-UIPickerViewDelegate"
 
 //MARK: UIPickerViewDelegate
 extension ${1:Class} : UIPickerViewDelegate {
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        ${1:code}
+        ${2:code}
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        ${1:code}
+        ${3:code}
     }
     
 }
@@ -2160,8 +2061,8 @@ snippet block_peform_after_delay  "Perform Block After Delay"
 endsnippet
 
 snippet methodN_0  "Swift - method mutiple input"
-private func ${1:methodN_0}(${1:input}:String...) {
-    ${1:code}
+private func ${1:methodN_0}(${2:input}:String...) {
+    ${3:code}
 }
 
 endsnippet
@@ -2180,11 +2081,11 @@ snippet djPickerviewdatasource  "Swift-UIPickerViewDataSource"
 extension ${1:Class} : UIPickerViewDataSource {
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        ${1:code}
+        ${2:code}
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        ${1:code}
+        ${3:code}
     }
 }
 endsnippet
@@ -2234,7 +2135,7 @@ snippet djUIGetStringPixelSize  "UI - get string pixel size"
             UIFont *myFont = [UIFont fontWithName:@"Helvetica" size:14];
             CGSize myStringSize = [myString sizeWithFont:myFont
                                        constrainedToSize:maximumSize
-                                           lineBreakMode:${1:self.myLabel.lineBreakMode}];
+                                           lineBreakMode:${2:self.myLabel.lineBreakMode}];
 
 
 
@@ -2314,22 +2215,22 @@ snippet djCollectionviewdatasource  "Swift-UICollectionViewDataSource"
 extension ${1:Class} : UICollectionViewDataSource {
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return ${1:numberOfSections}
+        return ${2:numberOfSections}
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ${1:numberOfItems}
+        return ${3:numberOfItems}
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(${1:identifier}, forIndexPath: indexPath) as! ${1:CustomCell}
-        ${1:configureCell}
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(${4:identifier}, forIndexPath: indexPath) as! ${5:CustomCell}
+        ${6:configureCell}
         return cell
     }
     
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        let view =  collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: ${1:identifier}, forIndexPath: indexPath) as! UIView
+        let view =  collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: ${7:identifier}, forIndexPath: indexPath) as! UIView
         return view
     }
 }
@@ -2450,11 +2351,6 @@ snippet djMouseDrag  "mouse drag example OSX"
 
 endsnippet
 
-snippet notification_named_block  "Notification: Named Block"
-void (^${1:blockName})(NSNotification *notification) =  ^void (NSNotification *notification) {
-            };
-endsnippet
-
 snippet djRACCommand  "RAC - command"
 - (RACCommand *)rac_${1:?} {
     @weakify(self);
@@ -2543,7 +2439,7 @@ snippet djTableviewdelegate  "Swift-UITableviewDelegate"
 extension ${1:Class} : UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        ${1:code}
+        ${2:code}
     }
 }
 endsnippet
@@ -2604,7 +2500,7 @@ endsnippet
 
 snippet djanimBlock  "Anim - UIView Animation Block"
 [UIView animateWithDuration:${1:duration} animations:^{
-     ${1:code}
+     ${2:code}
  	} completion:^(BOOL finished) {
 }];
 endsnippet
@@ -2650,20 +2546,26 @@ static void CheckError(OSStatus error, const char *operation) {
         sprintf(str, "%d", (int)error);
     }
     
-    fprintf(stderr, "[Error] %s (%s)
-", operation, str);
+    fprintf(stderr, "[Error] %s (%s)", operation, str);
     exit(1);
 }
 
 endsnippet
 
 snippet djEnumComplexType  "Swfit - enum complex type"
-enum BarCode {    case UPCA(Int, Int, Int, Int)    case QRCode(String)}
-
+enum BarCode {
+case UPCA(Int, Int, Int, Int)
+case QRCode(String)
+} 
 endsnippet
 
-nippet djFdColorStore  "Fd - store color in NSUserDefaults"
-    UIColor *textDefaultColor = [UIColor blackColor];    CGColorRef textDefaultColorRef = textDefaultColor.CGColor;    NSString *textDefaultColorStr = [CIColor colorWithCGColor:textDefaultColorRef].stringRepresentation;    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];    [userDefaults setObject:textDefaultColorStr forKey:@"textColorKey"];
+snippet djFdColorStore  "Fd - store color in NSUserDefaults"
+    UIColor *textDefaultColor = [UIColor blackColor];
+    CGColorRef textDefaultColorRef = textDefaultColor.CGColor;
+    NSString *textDefaultColorStr = [CIColor colorWithCGColor:textDefaultColorRef].stringRepresentation;
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:textDefaultColorStr forKey:@"textColorKey"];
+
 endsnippet
 
 snippet NoDefine  "Swift - button"
@@ -2680,10 +2582,6 @@ func buttonPressedAction(sender: UIButton) {
 }
 endsnippet
 
-
-snippet djBlockProperty  "Block - property"
-@property (nonatomic, copy) ${1:returnType}(^${1:name})(${1:arguments});
-endsnippet
 
 snippet djUIPickerViewDelegate  "UI - UIPickerView delegate datasource"
 #pragma mark - picker view datasource
@@ -2748,12 +2646,12 @@ snippet djUIMailComposeViewController  "UI - MFMailComposeViewController"
         composeViewController.mailComposeDelegate = self;
 
         [composeViewController setSubject:${1:Subject}];
-        [composeViewController setMessageBody:${1:Body} isHTML:YES];
-        [composeViewController setToRecipients:@[${1:Recipients}]];
+        [composeViewController setMessageBody:${2:Body} isHTML:YES];
+        [composeViewController setToRecipients:@[${3:Recipients}]];
 
         [self presentViewController:composeViewController animated:animated completion:nil];
     } else {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"${1:Cannot Send Mail Message}", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"${4:Cannot Send Mail Message}", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
     }
 }
 
@@ -2837,14 +2735,14 @@ snippet djMacroCollection  "Macro - Macros Collection"
 endsnippet
 
 snippet djMethodOverride  "Swift - override method"
-override func ${1:method}(${1:input:String}) {
+override func ${1:method}(${2:input:String}) {
 }
 endsnippet
 
 snippet djanimspringblock  "Anim - UIView Animation Block with Springing"
 UIViewAnimationOptions options = UIViewAnimationOptionBeginFromCurrentState;
-[UIView animateWithDuration:${1:duration} delay:${1:delay} usingSpringWithDamping:${1:damping} initialSpringVelocity:${1:velocity} options:options animations:^{
-    ${1:code}
+[UIView animateWithDuration:${1:duration} delay:${2:delay} usingSpringWithDamping:${3:damping} initialSpringVelocity:${1:velocity} options:options animations:^{
+    ${5:code}
 } completion:^(BOOL finished) {
     if (finished) {
         
@@ -3089,12 +2987,12 @@ snippet djDocatch  "Swift-Basic do-catch block"
 do {
     ${1:code}
     } catch {
-    ${1:code}
+    ${2:code}
     }
 endsnippet
 
 snippet djStringConstantsImp  "String Constant Implementation"
-NSString * const ${1:name} = @"${1:value}";
+NSString * const ${1:name} = @"${2:value}";
 endsnippet
 
 
@@ -3126,7 +3024,7 @@ endsnippet
 
 snippet method0_0  "Swift - method no input no output"
 private func ${1:method0_0}() -> Void {
-    ${1:code}
+    ${2:code}
 }
 endsnippet
 
@@ -3212,12 +3110,12 @@ snippet NoDefine  "Smaple - chaining animation"
 endsnippet
 
 snippet djBlockTypedef  "Block - typedef"
-typedef ${1:returnType}(^${1:name})(${1:arguments});
+typedef ${1:returnType}(^${2:name})(${3:arguments});
 endsnippet
 
 snippet djFdTimer  "Fd - create a timer with NSTimer"
 // 创建
-self.${1:var} = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(${1:timerMethod}) userInfo:nil repeats:YES];
+self.${1:var} = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(${2:timerMethod}) userInfo:nil repeats:YES];
 // 取消
 [self.${1:var} invalidate];
 
@@ -3226,8 +3124,8 @@ endsnippet
 
 snippet djVariableLazy  "Swift - variable lazy"
 lazy
-var ${1:variable}: ${1:UILabel} = {
-    return ${1:?}
+var ${1:variable}: ${2:UILabel} = {
+    return ${3:?}
 }()
 
 endsnippet
@@ -3276,7 +3174,9 @@ snippet GCDComputeBackground  "GCD - compute background"
         // code here 2) 在后台线程,做创建和计算
         dispatch_async(dispatch_get_main_queue(), ^{
             //code here 3) 在主线程中显示内容
-        });            });
+        });
+        
+    });
 
 endsnippet
 
@@ -3327,7 +3227,7 @@ label.backgroundColor = [UIColor clearColor];
 label.textColor = [UIColor blackColor];
 label.text = @"${1:?}";
 label.font = [UIFont systemFontOfSize:24];
-//label.attributedText = ${1:?};
+//label.attributedText = ${2:?};
 label.adjustsFontSizeToFitWidth = YES;
 
 endsnippet
@@ -3345,7 +3245,7 @@ snippet djCaLayerPropertyList  "Ca - layer with property"
     CALayer *layer = [CALayer layer];
     layer.backgroundColor = [UIColor whiteColor].CGColor;  //or CGIamgeRef图片做背景
     layer.bounds = CGRectMake(0, 0, ${1:200}, ${1:200});
-    layer.position = CGPointMake(${1:160}, ${1:170});
+    layer.position = CGPointMake(${2:160}, ${3:170});
     layer.opacity = 1.0;
     layer.cornerRadius = 10; // 圆角
     layer.borderColor = [UIColor greenColor].CGColor;
@@ -3354,7 +3254,7 @@ snippet djCaLayerPropertyList  "Ca - layer with property"
     layer.shadowOpacity = 0.35;
     layer.shadowColor = [UIColor darkGrayColor].CGColor;
     layer.shouldRasterize = YES;
-    [${1:rootLayer} addSublayer:layer];
+    [${4:rootLayer} addSublayer:layer];
 
 endsnippet
 
@@ -3382,10 +3282,14 @@ endsnippet
 
 
 snippet djVariableObserve  "Swift - variable observe"
-var ${1:variable}: Int = 0 {    willSet {
-        ${1:newValue}    }    didSet {
-        ${1:oldValue}
-    }}
+var ${1:variable}: Int = 0 {
+    willSet {
+        ${2:newValue}
+    }
+    didSet {
+        ${3:oldValue}
+    }
+}
 endsnippet
 
 snippet djNSURLMethodSample  "NSURL method sample"
@@ -3403,20 +3307,6 @@ snippet djNSURLMethodSample  "NSURL method sample"
  
 }
 
-endsnippet
-
-snippet viewDidDisappear  "Swift - viewDidDisappear"
-override func viewDidDisappear(animated: Bool) {
-    super.viewDidAppear(animated)
-    ${1:code}
-}
-endsnippet
-
-snippet viewWillDisappear  "View Will Disappear"
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    ${1:code}
-}
 endsnippet
 
 snippet djUILabelSize  "UI - label size for ios 7"
@@ -3484,8 +3374,8 @@ snippet NoDefine  "CG - draw wave border"
 endsnippet
 
 snippet method2_2  "Swift - method two input two output"
-private func method2_2(${1:input_1} ${1:input_1}:String, ${1:input_2}:String) -> (${1:output_1}:String, ${1:output_2}:String)? {
-    ${1:code}
+private func method2_2(${1:input_1} ${1:input_1}:String, ${2:input_2}:String) -> (${3:output_1}:String, ${4:output_2}:String)? {
+    ${5:code}
     return ("", "")
 }
 endsnippet
@@ -3574,10 +3464,6 @@ NSString *fixIconString(NSString *iconString) {
 
 endsnippet
 
-snippet djMacroDefineSimple  "Macro - simple define"
-#define ${1:name} (${1:substitution})
-endsnippet
-
 snippet djSampleViewControllerPragmaMarks  "Sample - ViewController pragam marks"
 #pragma mark - Init
 
@@ -3618,16 +3504,12 @@ snippet djSampleViewControllerPragmaMarks  "Sample - ViewController pragam marks
 
 endsnippet
 
-snippet snpm  "Snap: Make Constraints"
-${1: control }.snp_makeConstraints { make in
-    make.${1: constraint }
-}
-endsnippet
-
 snippet djEnum  "Fd - enum typedef"
 typedef NS_ENUM(NSUInteger, ${1:DisplayType}) {
-    ${1:kAbout},
-    ${1:kClaim}
+    ${1:DisplayType},
+    ${1:DisplayType},
+    ${1:DisplayType},
+    ${1:DisplayType}
 };
 
 endsnippet
@@ -3641,7 +3523,7 @@ snippet djFdStringAttribute  "Fd attribute string"
         NSForegroundColorAttributeName : [UIColor greenColor]
     };
     
-    NSString *partString = @"${1:part of content}";
+    NSString *partString = @"${2:part of content}";
     NSRange range = [string rangeOfString:partString];
     [attributedString addAttributes:dictOfAttributs range:range];
 
@@ -3768,10 +3650,6 @@ snippet djInitWithDefault  "init with default"
 
 endsnippet
 
-snippet djHFNotice  "hf notice toast"
-[PANoticeUtil showNotice:${1:(NSString *)}];
-endsnippet
-
 snippet djUIResizeImage  "UI - Image Resize to Max"
 - (UIImage *)resizeImage:(UIImage *)image toMaximumSize:(CGSize)maxSize {
     CGFloat widthRatio = maxSize.width / image.size.width;
@@ -3807,66 +3685,12 @@ snippet djFdLogTimeInterval  "Fd - log time interval"
 
 endsnippet
 
-snippet uniondef  "Sys - Union Declaration"
-union ${1:union name} {
-  ${1:union fields}
-};
-endsnippet
-
 snippet swift-documentdirectory  "Swift document directory"
 let path = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first as String
 let documentsDirectoryURL = NSURL.fileURLWithPath(path)
 endsnippet
 
 
-snippet djSampleTimer  "Sample - timer usage"
-/**
- *  @brief  每次新建一个定时器调用同一个方法，相当于重复定时器。性能不确定。
- */
-- (void)timerAction {
-    // do something
-    ${1:code}
-    BOOL stop = NO;
-    if (stop) {
-        // clear
-        ${1:code}
-    } else {
-        NSTimeInterval interval = 1.0f;
-        [NSTimer scheduledTimerWithTimeInterval:interval
-                                         target:self
-                                       selector:@selector(timerAction)
-                                       userInfo:nil
-                                        repeats:NO];
-        
-    }
-}
-
-/**
- *  @brief  重复定时器
- *
- *  @param timer 初始传入nil，启动定时器
- */
-- (void)timerAction_1:(NSTimer *)timer {
-    if (!timer) {
-        NSTimeInterval interval = 1.0f;
-        [NSTimer scheduledTimerWithTimeInterval:interval
-                                         target:self
-                                       selector:@selector(timerAction_1:)
-                                       userInfo:nil
-                                        repeats:YES];
-    }
-    // do something
-    ${1:code}
-    BOOL stop = NO;
-    if (stop) {
-        [timer invalidate];
-        timer = nil;
-        // clear
-        ${1:code}
-    }
-}
-
-endsnippet
 
 snippet djUILabelTextHeight  "UI - label text height"
 /**
@@ -3936,7 +3760,7 @@ snippet djAlert  "Swift-UIAlertController"
 endsnippet
 
 snippet djUIScrollView  "UI - scrollView"
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, ${1:kScrollWidth}, ${1:kScrollHeight})];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, ${1:kScrollWidth}, ${2:kScrollHeight})];
 	// note: the following can be done in Interface Builder, but we show this in code for clarity
 	[scrollView setBackgroundColor:[UIColor blackColor]];
 	[scrollView setCanCancelContentTouches:NO];
@@ -4105,12 +3929,12 @@ snippet djUIButton  "UI - Button"
 UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
 [button.titleLabel setFont:[UIFont fontWithName:@"iconfont" size:24]];
 [button setTitle:@"${1:title}" forState:UIControlStateNormal];
-[button setTitleColor:[UIColor ${1:color}] forState:UIControlStateNormal];
+[button setTitleColor:[UIColor ${2:color}] forState:UIControlStateNormal];
 button.backgroundColor = [UIColor clearColor];
 button.exclusiveTouch = YES;
 
 //    UIEdgeInsets insets = UIEdgeInsetsMake(4.0f, 4.0f, 4.0f, 4.0f);
-//    UIImage *bgImg = [[UIImage imageNamed:@"${1:?}"] resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+//    UIImage *bgImg = [[UIImage imageNamed:@"${3:?}"] resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
 //    [button setBackgroundImage:bgImg forState:UIControlStateNormal];
 
 //    button.layer.cornerRadius = 5.0f;
@@ -4118,7 +3942,7 @@ button.exclusiveTouch = YES;
 //    button.layer.borderWidth = (1/[UIScreen mainScreen].scale);
 //    button.layer.masksToBounds = YES;
 
-[button addTarget:self action:@selector(${1:xxx}ButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+[button addTarget:self action:@selector(${4:xxx}ButtonAction:) forControlEvents:UIControlEventTouchUpInside];
 endsnippet
 
 snippet djUIKeyboardEvent  "UI - UIKeyboard event"
@@ -4220,11 +4044,11 @@ endsnippet
 
 
 snippet djFdLocalizedString  "Fd - localized string"
-NSLocalizedString(@"${1:key}", @"${1:comment}");
+NSLocalizedString(@"${1:key}", @"${2:comment}");
 endsnippet
 
 snippet swift-nslocalizedstring  "Swift NSLocalizedString"
-NSLocalizedString(${1:key}, value: ${1:value}, comment: ${1:comment})
+NSLocalizedString(${1:key}, value: ${2:value}, comment: ${3:comment})
 endsnippet
 
 snippet djFdObjectEqual  "Fd - is object equal"
@@ -4241,39 +4065,10 @@ NSURL *documentURL = [NSURL URLWithString:[NSSearchPathForDirectoriesInDomains(N
 
 endsnippet
 
-snippet djFdDescription  "Fd - overwrite description"
-- (NSString *)description {
-    return [NSString stringWithFormat:
-            @"<%@"
-            @" ${1:item1}: %@"
-            @", ${1:item2}: '%@'"
-            @", ${1:item3}: '%@'"
-            @">",
-            [super description],
-            self.${1:item1},
-            self.${1:item2},
-            self.${1:item3}];
-}
-
-endsnippet
-
 snippet djDispatch_after  "Swift-DispatchAfter"
 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
-            
-        }
-endsnippet
-
-snippet djBlockMethodWithNoParam  "Block - Method with no parameters"
-- (void)${1:methodName}WithCompletionBlock:(void (^)())completionBlock {
-    
-    if (completionBlock) {
-        completionBlock();
-    }
 }
-
 endsnippet
-
-
 
 snippet URLSessionUploadData  "URLSession-upload data"
     // upload data

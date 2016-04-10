@@ -911,3 +911,52 @@ snippet djSampleAddressBook  "Sample - address book ABAddressBook"
 }
 
 endsnippet
+
+snippet djSampleTimer  "Sample - timer usage"
+/**
+ *  @brief  每次新建一个定时器调用同一个方法，相当于重复定时器。性能不确定。
+ */
+- (void)timerAction {
+    // do something
+    ${1:code}
+    BOOL stop = NO;
+    if (stop) {
+        // clear
+        ${2:code}
+    } else {
+        NSTimeInterval interval = 1.0f;
+        [NSTimer scheduledTimerWithTimeInterval:interval
+                                         target:self
+                                       selector:@selector(timerAction)
+                                       userInfo:nil
+                                        repeats:NO];
+        
+    }
+}
+
+/**
+ *  @brief  重复定时器
+ *
+ *  @param timer 初始传入nil，启动定时器
+ */
+- (void)timerAction_1:(NSTimer *)timer {
+    if (!timer) {
+        NSTimeInterval interval = 1.0f;
+        [NSTimer scheduledTimerWithTimeInterval:interval
+                                         target:self
+                                       selector:@selector(timerAction_1:)
+                                       userInfo:nil
+                                        repeats:YES];
+    }
+    // do something
+    ${3:code}
+    BOOL stop = NO;
+    if (stop) {
+        [timer invalidate];
+        timer = nil;
+        // clear
+        ${4:code}
+    }
+}
+
+endsnippet

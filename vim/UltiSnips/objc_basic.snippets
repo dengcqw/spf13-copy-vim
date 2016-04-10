@@ -12,6 +12,10 @@ snippet xGetter   "Create a getter method"
 }
 endsnippet
 
+snippet aaa  "Property  assign - aaa"
+@property (nonatomic, assign) ${1:type} ${2:name};
+endsnippet
+
 snippet sss "Property strong"
 @property (nonatomic, strong) ${1:Class} *${2:variable};
 endsnippet
@@ -22,6 +26,14 @@ endsnippet
 
 snippet ccc "Property copy"
 @property (nonatomic, copy) NSString *${1:name};
+endsnippet
+
+snippet synthesiz  "Property - Synthesizer with _prefix"
+@synthesize ${1:property} = _${1:property};
+endsnippet
+
+snippet djBlockProperty  "Block - property"
+@property (nonatomic, copy) ${1:returnType}(^${2:name})(${3:arguments});
 endsnippet
 
 snippet void  "Void method declaration"
@@ -112,6 +124,13 @@ snippet masLeftEqualto  "mas - left"
 make.left.equalTo(superview.mas_left).offset(${1:0});
 endsnippet
 
+snippet masMake  "mas - Make"
+[${1:view} mas_makeConstraints:^(MASConstraintMaker *make){
+    ${2:code}
+}];
+endsnippet
+
+
 snippet masRemake  "mas - Remake"
 [${1:view} mas_remakeConstraints:^(MASConstraintMaker *make){
     ${2:code}
@@ -158,6 +177,10 @@ snippet masInit  "mas - init method"
 }
 endsnippet
 
+snippet masHeightEqualto  "mas - height"
+make.height.equalTo(@${1:?});
+endsnippet
+
 snippet djBlockMethod  "Block - Method"
 - (void)${1:methodName}WithCompletionBlock:(void (^)(NSString *message, NSError *error))${2:returnBlock} {
     NSString *message = nil;
@@ -175,6 +198,105 @@ endsnippet
 
 snippet notificationAddObserver  "Notification: Add Observer"
 [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(${1:selector}) name:${2:notification name}object:nil];
+endsnippet
+
+snippet notificationPost  "Notification: Post"
+[[NSNotificationCenter defaultCenter]postNotificationName:${1:notification name} object:${2:nil or userInfo dictionary}];
+endsnippet
+
+snippet notificationPostWithUserinfo  "Notification: Post with User Info"
+NSDictionary *userInfo = @{${1:key}: ${2:object, ...}}
+[[NSNotificationCenter defaultCenter] postNotificationName:${3:name} object:nil userInfo:userInfo];
+endsnippet
+
+snippet notificationRemove  "Notification: Remove Observer"
+[[NSNotificationCenter defaultCenter]removeObserver:self name:${1:notification name} object:nil];
+endsnippet
+
+snippet viewWillAppear  "view Will Appear"
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    ${1:code}
+}
+endsnippet
+
+snippet viewDidDisappear  "View Did Disappear"
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    ${1:code}
+}
+endsnippet
+snippet viewDidAppear  "View Did Appear"
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    ${1:code}
+}
+endsnippet
+
+snippet viewWillDisappear  "Swift - viewWillDisappear"
+override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    ${1:code}
+}
+endsnippet
+
+snippet djFdPrivateCategory  "Fd - Private Category"
+@interface ${1:Class Name} ()
+@end
+endsnippet
+
+snippet viewDidLoad  "View Did Load"
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    ${1:code}
+}
+endsnippet
+
+snippet viewWillLayoutSubviews  "viewWillLayoutSubviews"
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    ${1:Set frame code here}
+}
+endsnippet
+
+snippet viewDidDisappear  "Swift - viewDidDisappear"
+override func viewDidDisappear(animated: Bool) {
+    super.viewDidAppear(animated)
+    ${1:code}
+}
+endsnippet
+
+snippet viewWillDisappear  "View Will Disappear"
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    ${1:code}
+}
+endsnippet
+
+snippet strongself  "Block - Strongself"
+__strong __typeof(${1:weakSelf})strongSelf = ${1:weakSelf};
+endsnippet
+
+snippet djMacroDefineSimple  "Macro - simple define"
+#define ${1:name} (${2:substitution})
+endsnippet
+
+snippet uniondef  "Sys - Union Declaration"
+union ${1:union name} {
+  ${2:union fields}
+};
+endsnippet
+
+snippet djBlockMethodWithNoParam  "Block - Method with no parameters"
+- (void)${1:methodName}WithCompletionBlock:(void (^)())completionBlock {
+    if (completionBlock) {
+        completionBlock();
+    }
+}
+endsnippet
+
+snippet addSubview  "UI - add subview"
+[self.view addSubview:self.${1:?}];
 endsnippet
 
 #}
