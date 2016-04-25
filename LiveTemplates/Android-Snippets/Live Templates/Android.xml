@@ -1,0 +1,30 @@
+<templateSet group="Android">
+  <template name="prm" value="// Check for permission&#10;if (ContextCompat.checkSelfPermission($thisActivity$.this, Manifest.permission.$PERMISSION$) != PackageManager.PERMISSION_GRANTED) {&#10;    // you have to request the permission&#10;    &#10;    // Should we show an explanation?&#10;    if (ActivityCompat.shouldShowRequestPermissionRationale($thisActivity$.this, Manifest.permission.$PERMISSION$)) {&#10;        // Show an expanation to the user *asynchronously* -- don't block&#10;        // this thread waiting for the user's response! After the user&#10;        // sees the explanation, try again to request the permission.&#10;&#10;        /*&#10;        Toast.makeText(MainActivity.this, &quot;You MUST give me the $PERMISSION$ permission!&quot;, Toast.LENGTH_LONG).show();&#10;        ActivityCompat.requestPermissions($thisActivity$.this, new String[]{Manifest.permission.READ_PHONE_STATE}, $RESPONSE_COSTANT_PERMISSION$);&#10;        */&#10;&#10;        Snackbar.make(findViewById(android.R.id.content), &quot;You MUST give me the $PERMISSION$ permission!&quot;, Snackbar.LENGTH_INDEFINITE)&#10;                .setAction(&quot;Give&quot;, new View.OnClickListener() {&#10;                    @Override&#10;                    public void onClick(View view) {&#10;                        ActivityCompat.requestPermissions($thisActivity$.this, new String[]{Manifest.permission.READ_PHONE_STATE}, $RESPONSE_COSTANT_PERMISSION$);&#10;                    }&#10;                })&#10;                .show();&#10;    } &#10;    else {&#10;        // No explanation needed, we can request the permission.&#10;        ActivityCompat.requestPermissions($thisActivity$.this, new String[]{Manifest.permission.$PERMISSION$}, $RESPONSE_COSTANT_PERMISSION$);&#10;&#10;        // $RESPONSE_COSTANT_PERMISSION$ is an&#10;        // app-defined int constant. The callback method gets the&#10;        // result of the request.&#10;    }&#10;}&#10;else {&#10;    // TODO: you have the permission! Do what you want&#10;}" description="Check for permission" toReformat="true" toShortenFQNames="true">
+    <variable name="thisActivity" expression="className()" defaultValue="" alwaysStopAt="true" />
+    <variable name="PERMISSION" expression="" defaultValue="PERMISSION" alwaysStopAt="true" />
+    <variable name="RESPONSE_COSTANT_PERMISSION" expression="" defaultValue="RESPONSE_PERMISSION" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_STATEMENT" value="true" />
+      <option name="JAVA_EXPRESSION" value="false" />
+    </context>
+  </template>
+  <template name="prmh" value="@Override&#10;public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {&#10;    switch (requestCode) {&#10;        case $RESPONSE_COSTANT_PERMISSION$: {&#10;            // If request is cancelled, the result arrays are empty.&#10;            if (grantResults.length &gt; 0 &amp;&amp; grantResults[0] == PackageManager.PERMISSION_GRANTED) {&#10;                // permission was granted, yay! &#10;                // TODO: Do the permission-related task you need to do.&#10;&#10;            } else {&#10;                // permission denied, boo! &#10;                // TODO: Disable the functionality that depends on this permission.&#10;                &#10;            }&#10;            return;&#10;        }&#10;&#10;        // other 'case' lines to check for other&#10;        // permissions this app might request&#10;    }&#10;}" description="Handle Permission Request Response" toReformat="true" toShortenFQNames="true">
+    <variable name="RESPONSE_COSTANT_PERMISSION" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_CODE" value="true" />
+      <option name="JAVA_STATEMENT" value="false" />
+      <option name="JAVA_EXPRESSION" value="false" />
+      <option name="JAVA_DECLARATION" value="true" />
+      <option name="JAVA_COMMENT" value="false" />
+      <option name="JAVA_STRING" value="false" />
+      <option name="COMPLETION" value="true" />
+    </context>
+  </template>
+  <template name="Snackbar" value="Snackbar.make(findViewById(android.R.id.content), &quot;$text$&quot;, Snackbar.LENGTH_SHORT)&#10;        .setAction(&quot;$button$&quot;, new View.OnClickListener() {&#10;            @Override&#10;            public void onClick(View view) {&#10;                //TODO: the action performed on $button$ click&#10;                $END$&#10;            }&#10;        })&#10;        .show();" description="Create a new Snackbar" toReformat="true" toShortenFQNames="true">
+    <variable name="text" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="button" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_STATEMENT" value="true" />
+    </context>
+  </template>
+</templateSet>
