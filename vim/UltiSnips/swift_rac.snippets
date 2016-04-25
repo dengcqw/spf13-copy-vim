@@ -1,0 +1,275 @@
+
+snippet rac.observer "Sample" b
+${1:signal}.observe(${2:Signal.Observer} { event in
+	switch event {
+	case let .Next(next):
+	print("Next: \(next)")
+	case let .Failed(error):
+	print("Failed: \(error)")
+	case .Completed:
+	print("Completed")
+	case .Interrupted:
+	print("Interrupted")
+	}
+})
+
+signal.observeNext { next in 
+	print("Next: \(next)") 
+}
+signal.observeFailed { error in
+	print("Failed: \(error)")
+}
+signal.observeCompleted { 
+	print("Completed") 
+}
+signal.observeInterrupted { 
+	print("Interrupted")
+}
+endsnippet
+
+snippet rac.inject "Sample" b
+let producer = signalProducer
+    .on(started: {
+        print("Started")
+    }, event: { event in
+        print("Event: \(event)")
+    }, failed: { error in
+        print("Failed: \(error)")
+    }, completed: {
+        print("Completed")
+    }, interrupted: {
+        print("Interrupted")
+    }, terminated: {
+        print("Terminated")
+    }, disposed: {
+        print("Disposed")
+    }, next: { value in
+        print("Next: \(value)")
+    })
+endsnippet
+
+snippet rac.map "Sample" b
+let (signal, observer) = Signal<String, NoError>.pipe()
+
+signal
+    .map { string in string.uppercaseString }
+    .observeNext { next in print(next) }
+
+observer.sendNext("a")     // Prints A
+observer.sendNext("b")     // Prints B
+observer.sendNext("c")     // Prints C
+endsnippet
+
+snippet rac.filter "Sample" b
+let (signal, observer) = Signal<Int, NoError>.pipe()
+
+signal
+    .filter { number in number % 2 == 0 }
+    .observeNext { next in print(next) }
+
+observer.sendNext(1)     // Not printed
+observer.sendNext(2)     // Prints 2
+observer.sendNext(3)     // Not printed
+observer.sendNext(4)     // prints 4
+endsnippet
+
+snippet rac.reduce "Sample" b
+let (signal, observer) = Signal<Int, NoError>.pipe()
+
+signal
+    .reduce(1) { $0 * $1 }
+    .observeNext { next in print(next) }
+
+observer.sendNext(1)     // nothing printed
+observer.sendNext(2)     // nothing printed
+observer.sendNext(3)     // nothing printed
+observer.sendCompleted()   // prints 6
+endsnippet
+
+snippet rac.combineLatest "Sample" b
+let (numbersSignal, numbersObserver) = Signal<Int, NoError>.pipe()
+let (lettersSignal, lettersObserver) = Signal<String, NoError>.pipe()
+
+let signal = combineLatest(numbersSignal, lettersSignal)
+signal.observeNext { next in print("Next: \(next)") }
+signal.observeCompleted { print("Completed") }
+
+numbersObserver.sendNext(0)      // nothing printed
+numbersObserver.sendNext(1)      // nothing printed
+lettersObserver.sendNext("A")    // prints (1, A)
+numbersObserver.sendNext(2)      // prints (2, A)
+numbersObserver.sendCompleted()  // nothing printed
+lettersObserver.sendNext("B")    // prints (2, B)
+lettersObserver.sendNext("C")    // prints (2, C)
+lettersObserver.sendCompleted()  // prints "Completed"
+endsnippet
+
+snippet rac.zip "Sample" b
+let (numbersSignal, numbersObserver) = Signal<Int, NoError>.pipe()
+let (lettersSignal, lettersObserver) = Signal<String, NoError>.pipe()
+
+let signal = zip(numbersSignal, lettersSignal)
+signal.observeNext { next in print("Next: \(next)") }
+signal.observeCompleted { print("Completed") }
+
+numbersObserver.sendNext(0)      // nothing printed
+numbersObserver.sendNext(1)      // nothing printed
+lettersObserver.sendNext("A")    // prints (0, A)
+numbersObserver.sendNext(2)      // nothing printed
+numbersObserver.sendCompleted()  // nothing printed
+lettersObserver.sendNext("B")    // prints (1, B)
+lettersObserver.sendNext("C")    // prints (2, C) & "Completed"
+endsnippet
+
+snippet rac.merge "Sample" b
+let (producerA, lettersObserver) = SignalProducer<String, NoError>.buffer(5)
+let (producerB, numbersObserver) = SignalProducer<String, NoError>.buffer(5)
+let (signal, observer) = SignalProducer<SignalProducer<String, NoError>, NoError>.buffer(5)
+
+signal.flatten(.Merge).startWithNext { next in print(next) }
+
+observer.sendNext(producerA)
+observer.sendNext(producerB)
+observer.sendCompleted()
+
+lettersObserver.sendNext("a")    // prints "a"
+numbersObserver.sendNext("1")    // prints "1"
+lettersObserver.sendNext("b")    // prints "b"
+numbersObserver.sendNext("2")    // prints "2"
+lettersObserver.sendNext("c")    // prints "c"
+numbersObserver.sendNext("3")    // prints "3"
+endsnippet
+
+snippet rac.concat "Sample" b
+let (producerA, lettersObserver) = SignalProducer<String, NoError>.buffer(5)
+let (producerB, numbersObserver) = SignalProducer<String, NoError>.buffer(5)
+let (signal, observer) = SignalProducer<SignalProducer<String, NoError>, NoError>.buffer(5)
+
+signal.flatten(.Concat).startWithNext { next in print(next) }
+
+observer.sendNext(producerA)
+observer.sendNext(producerB)
+observer.sendCompleted()
+
+numbersObserver.sendNext("1")    // nothing printed
+lettersObserver.sendNext("a")    // prints "a"
+lettersObserver.sendNext("b")    // prints "b"
+numbersObserver.sendNext("2")    // nothing printed
+lettersObserver.sendNext("c")    // prints "c"
+lettersObserver.sendCompleted()    // prints "1", "2"
+numbersObserver.sendNext("3")    // prints "3"
+numbersObserver.sendCompleted()
+endsnippet
+
+snippet rac.switchToLatest "Sample" b
+let (producerA, observerA) = SignalProducer<String, NoError>.buffer(5)
+let (producerB, observerB) = SignalProducer<String, NoError>.buffer(5)
+let (producerC, observerC) = SignalProducer<String, NoError>.buffer(5)
+let (signal, observer) = SignalProducer<SignalProducer<String, NoError>, NoError>.buffer(5)
+
+signal.flatten(.Latest).startWithNext { next in print(next) }
+
+observer.sendNext(producerA)   // nothing printed
+observerC.sendNext("X")        // nothing printed
+observerA.sendNext("a")        // prints "a"
+observerB.sendNext("1")        // nothing printed
+observer.sendNext(producerB)   // prints "1"
+observerA.sendNext("b")        // nothing printed
+observerB.sendNext("2")        // prints "2"
+observerC.sendNext("Y")        // nothing printed
+observerA.sendNext("c")        // nothing printed
+observer.sendNext(producerC)   // prints "X", "Y"
+observerB.sendNext("3")        // nothing printed
+observerC.sendNext("Z")        // prints "Z"
+endsnippet
+
+snippet rac.catchFailure "Sample" b
+let (producer, observer) = SignalProducer<String, NSError>.buffer(5)
+let error = NSError(domain: "domain", code: 0, userInfo: nil)
+
+producer
+    .flatMapError { _ in SignalProducer<String, NoError>(value: "Default") }
+    .startWithNext { next in print(next) }
+
+
+observer.sendNext("First")     // prints "First"
+observer.sendNext("Second")    // prints "Second"
+observer.sendFailed(error)     // prints "Default"
+endsnippet
+
+snippet rac.retry "Sample" b
+var tries = 0
+let limit = 2
+let error = NSError(domain: "domain", code: 0, userInfo: nil)
+let producer = SignalProducer<String, NSError> { (observer, _) in
+    if tries++ < limit {
+        observer.sendFailed(error)
+    } else {
+        observer.sendNext("Success")
+        observer.sendCompleted()
+    }
+}
+
+producer
+    .on(failed: {e in print("Failure")})    // prints "Failure" twice
+    .retry(2)
+    .start { event in
+        switch event {
+        case let .Next(next):
+            print(next)                     // prints "Success"
+        case let .Failed(error):
+            print("Failed: \(error)")
+        case .Completed:
+            print("Completed")
+        case .Interrupted:
+            print("Interrupted")
+        }
+    }
+endsnippet
+
+snippet rac.mapError "Sample" b
+enum CustomError: String, ErrorType {
+    case Foo = "Foo"
+    case Bar = "Bar"
+    case Other = "Other"
+
+    var nsError: NSError {
+        return NSError(domain: "CustomError.\(rawValue)", code: 0, userInfo: nil)
+    }
+
+    var description: String {
+        return "\(rawValue) Error"
+    }
+}
+
+let (signal, observer) = Signal<String, NSError>.pipe()
+
+signal
+    .mapError { (error: NSError) -> CustomError in
+        switch error.domain {
+        case "com.example.foo":
+            return .Foo
+        case "com.example.bar":
+            return .Bar
+        default:
+            return .Other
+        }
+    }
+    .observeFailed { error in
+        print(error)
+    }
+
+observer.sendFailed(NSError(domain: "com.example.foo", code: 42, userInfo: nil))    // prints "Foo Error"
+endsnippet
+
+snippet Tab_trigger "Description" b
+
+endsnippet
+
+snippet Tab_trigger "Description" b
+
+endsnippet
+
+snippet Tab_trigger "Description" b
+
+endsnippet

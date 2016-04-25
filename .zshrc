@@ -57,6 +57,8 @@ plugins=(git brew common-alias dirhistory encode64 github history jsontools npm 
 export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin:/Users/dengjinlong/Library/Android/sdk/platform-tools
 # export MANPATH="/usr/local/man:$MANPATH"
 
+export ANDROID_HOME=/Users/dengjinlong/Library/Android/sdk
+
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
