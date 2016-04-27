@@ -1,0 +1,52 @@
+<application>
+  <component name="RecentProjectsManager">
+    <option name="recentPaths">
+      <list>
+        <option value="$USER_HOME$/Documents/Develop/1_FRP/Sudoku" />
+        <option value="$USER_HOME$/Documents/Develop/1_FRP/Android-SeeWeather" />
+        <option value="$USER_HOME$/Downloads/Android/Android_Programming_Practice_Source-master/WebViewJSTest" />
+        <option value="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView-as" />
+        <option value="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView" />
+      </list>
+    </option>
+    <option name="lastPath" value="$USER_HOME$/Documents/Develop/1_FRP/Sudoku" />
+    <option name="additionalInfo">
+      <map>
+        <entry key="$USER_HOME$/Documents/Develop/1_FRP/Android-SeeWeather">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="AI-143.2739321" />
+              <option name="productionCode" value="AI" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1461656572208" />
+              <option name="buildTimestamp" value="1459785600000" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Documents/Develop/1_FRP/Sudoku">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="AI-143.2739321" />
+              <option name="productionCode" value="AI" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1461745798402" />
+              <option name="buildTimestamp" value="1459785600000" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Downloads/Android/Android_Programming_Practice_Source-master/WebViewJSTest">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="AI-143.2739321" />
+              <option name="productionCode" value="AI" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1461654702635" />
+              <option name="buildTimestamp" value="1459785600000" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="lastProjectLocation" value="$USER_HOME$/Downloads/Android/Android_Programming_Practice_Source-master" />
+  </component>
+</application>

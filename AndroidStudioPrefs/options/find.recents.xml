@@ -1,0 +1,12 @@
+<application>
+  <component name="FindRecents">
+    <findStrings>
+      <find>js</find>
+      <find>support.v7</find>
+      <find>qq.com</find>
+      <find>menu</find>
+      <find>menuj</find>
+      <find>cb</find>
+    </findStrings>
+  </component>
+</application>
