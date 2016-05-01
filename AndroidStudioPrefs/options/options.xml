@@ -8,7 +8,7 @@
     <property name="AndroidInitConfigurator.V1" value="true" />
     <property name="AndroidInitConfigurator.V2" value="true" />
     <property name="installation.uid" value="315170d8-07a3-49e1-bc3b-d93773b755df" />
-    <property name="android-component-compatibility-check" value="1461385672069" />
+    <property name="android-component-compatibility-check" value="1462068051864" />
     <property name="PLUGIN_FILTER" value="vim&#10;ko&#10;k&#10;adb" />
     <property name="default.storage.format" value=".idea (directory based)" />
     <property name="lastTip" value="8" />

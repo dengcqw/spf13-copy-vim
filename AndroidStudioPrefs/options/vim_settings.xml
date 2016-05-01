@@ -3,102 +3,41 @@
     <state version="4" enabled="true" />
     <globalmarks />
     <filemarks>
-      <file name="/Dummy.txt" timestamp="1461570938073">
-        <mark key="[" line="0" column="0" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/values/arrays.xml" timestamp="1461571840621">
-        <mark key="'" line="4" column="33" />
-        <mark key="[" line="5" column="22" />
-        <mark key="]" line="5" column="31" />
-        <mark key="^" line="5" column="31" />
-        <mark key="." line="5" column="31" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/menu/menu.xml" timestamp="1461571434794">
-        <mark key="[" line="4" column="34" />
-        <mark key="]" line="5" column="44" />
-        <mark key="." line="5" column="44" />
-        <mark key="^" line="5" column="44" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/xml/settings.xml" timestamp="1461571045562">
-        <mark key="'" line="9" column="41" />
-        <mark key="[" line="10" column="33" />
-        <mark key="]" line="10" column="45" />
-        <mark key="." line="10" column="45" />
-        <mark key="^" line="10" column="45" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView-as/app/build.gradle" timestamp="1461553745876">
-        <mark key="[" line="3" column="23" />
-        <mark key="]" line="3" column="23" />
-        <mark key="." line="3" column="23" />
-        <mark key="^" line="3" column="23" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/java/com/example/dengjinlong/sudoku/MainActivity.java" timestamp="1461746623955">
-        <mark key="'" line="35" column="31" />
-        <mark key="[" line="38" column="34" />
-        <mark key="]" line="39" column="24" />
-        <mark key="^" line="39" column="24" />
-        <mark key="." line="39" column="24" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView-as/app/src/main/assets/qq_sniffer.js" timestamp="1461580837801">
-        <mark key="'" line="21" column="8" />
-        <mark key="[" line="10" column="15" />
-        <mark key="]" line="10" column="16" />
-        <mark key="." line="10" column="16" />
-        <mark key="^" line="10" column="16" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView-as/app/src/main/res/menu/main.xml" timestamp="1461574845228">
-        <mark key="[" line="7" column="8" />
-        <mark key="]" line="7" column="10" />
-        <mark key="." line="7" column="10" />
-        <mark key="^" line="7" column="10" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/values/strings.xml" timestamp="1461571661368">
-        <mark key="'" line="29" column="27" />
-        <mark key="[" line="15" column="13" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/layout/activity_about.xml" timestamp="1461563672984">
-        <mark key="[" line="10" column="30" />
-        <mark key="]" line="10" column="39" />
-        <mark key="." line="10" column="39" />
-        <mark key="^" line="10" column="39" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView-as/app/src/main/java/com/example/webview/MainActivity.java" timestamp="1461580723972">
-        <mark key="'" line="190" column="29" />
-        <mark key="[" line="199" column="52" />
-        <mark key="]" line="199" column="52" />
-        <mark key="." line="199" column="52" />
-        <mark key="^" line="179" column="23" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/java/com/example/dengjinlong/sudoku/About.java" timestamp="1461562510377">
-        <mark key="[" line="11" column="0" />
-        <mark key="]" line="11" column="0" />
-        <mark key="^" line="5" column="34" />
-        <mark key="." line="11" column="0" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/AndroidManifest.xml" timestamp="1461572736595">
-        <mark key="[" line="7" column="40" />
-        <mark key="]" line="8" column="31" />
-        <mark key="^" line="8" column="31" />
-        <mark key="." line="8" column="31" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/layout/activity_main.xml" timestamp="1461563633867">
-        <mark key="'" line="34" column="29" />
-        <mark key="[" line="16" column="0" />
-        <mark key="]" line="23" column="43" />
-        <mark key="^" line="2" column="3" />
-        <mark key="." line="2" column="3" />
-      </file>
-      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/java/com/example/dengjinlong/sudoku/Prefs.java" timestamp="1461571379678">
-        <mark key="[" line="12" column="0" />
-        <mark key="]" line="12" column="0" />
-        <mark key="." line="12" column="0" />
-        <mark key="^" line="10" column="48" />
-      </file>
       <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/values/colors.xml" timestamp="1461561872766">
-        <mark key="[" line="5" column="7" />
         <mark key="]" line="5" column="37" />
         <mark key="^" line="5" column="37" />
         <mark key="." line="5" column="37" />
+        <mark key="[" line="5" column="7" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/xml/settings.xml" timestamp="1461571045562">
+        <mark key="'" line="9" column="41" />
+        <mark key="]" line="10" column="45" />
+        <mark key="^" line="10" column="45" />
+        <mark key="." line="10" column="45" />
+        <mark key="[" line="10" column="33" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView-as/app/src/main/java/com/example/webview/MainActivity.java" timestamp="1461580723972">
+        <mark key="'" line="190" column="29" />
+        <mark key="]" line="199" column="52" />
+        <mark key="^" line="179" column="23" />
+        <mark key="." line="199" column="52" />
+        <mark key="[" line="199" column="52" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/values/arrays.xml" timestamp="1461571840621">
+        <mark key="'" line="4" column="33" />
+        <mark key="]" line="5" column="31" />
+        <mark key="^" line="5" column="31" />
+        <mark key="." line="5" column="31" />
+        <mark key="[" line="5" column="22" />
+      </file>
+      <file name="/Dummy.txt" timestamp="1461570938073">
+        <mark key="[" line="0" column="0" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/menu/menu.xml" timestamp="1461571434794">
+        <mark key="]" line="5" column="44" />
+        <mark key="^" line="5" column="44" />
+        <mark key="." line="5" column="44" />
+        <mark key="[" line="4" column="34" />
       </file>
       <file name="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView-as/app/src/main/java/com/qiyi/qidun/webview/MainActivity.java" timestamp="1461580742932">
         <mark key="'" line="0" column="0" />
@@ -106,8 +45,69 @@
         <mark key="^" line="201" column="65" />
         <mark key="." line="201" column="65" />
       </file>
+      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/layout/activity_about.xml" timestamp="1461563672984">
+        <mark key="]" line="10" column="39" />
+        <mark key="^" line="10" column="39" />
+        <mark key="." line="10" column="39" />
+        <mark key="[" line="10" column="30" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/java/com/example/dengjinlong/sudoku/About.java" timestamp="1461562510377">
+        <mark key="]" line="11" column="0" />
+        <mark key="^" line="5" column="34" />
+        <mark key="." line="11" column="0" />
+        <mark key="[" line="11" column="0" />
+      </file>
       <file name="/fragment.java" timestamp="1461571150224">
         <mark key="[" line="0" column="0" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/layout/activity_main.xml" timestamp="1461563633867">
+        <mark key="'" line="34" column="29" />
+        <mark key="]" line="23" column="43" />
+        <mark key="^" line="2" column="3" />
+        <mark key="." line="2" column="3" />
+        <mark key="[" line="16" column="0" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/res/values/strings.xml" timestamp="1461571661368">
+        <mark key="'" line="29" column="27" />
+        <mark key="[" line="15" column="13" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView-as/app/src/main/assets/qq_sniffer.js" timestamp="1461580837801">
+        <mark key="'" line="21" column="8" />
+        <mark key="]" line="10" column="16" />
+        <mark key="^" line="10" column="16" />
+        <mark key="." line="10" column="16" />
+        <mark key="[" line="10" column="15" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView-as/app/src/main/res/menu/main.xml" timestamp="1461574845228">
+        <mark key="]" line="7" column="10" />
+        <mark key="^" line="7" column="10" />
+        <mark key="." line="7" column="10" />
+        <mark key="[" line="7" column="8" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView-as/app/build.gradle" timestamp="1461553745876">
+        <mark key="]" line="3" column="23" />
+        <mark key="^" line="3" column="23" />
+        <mark key="." line="3" column="23" />
+        <mark key="[" line="3" column="23" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/AndroidManifest.xml" timestamp="1461572736595">
+        <mark key="]" line="8" column="31" />
+        <mark key="^" line="8" column="31" />
+        <mark key="." line="8" column="31" />
+        <mark key="[" line="7" column="40" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/java/com/example/dengjinlong/sudoku/MainActivity.java" timestamp="1461746623955">
+        <mark key="'" line="35" column="31" />
+        <mark key="]" line="39" column="24" />
+        <mark key="^" line="39" column="24" />
+        <mark key="." line="39" column="24" />
+        <mark key="[" line="38" column="34" />
+      </file>
+      <file name="$USER_HOME$/Documents/Develop/1_FRP/Sudoku/app/src/main/java/com/example/dengjinlong/sudoku/Prefs.java" timestamp="1461571379678">
+        <mark key="]" line="12" column="0" />
+        <mark key="^" line="10" column="48" />
+        <mark key="." line="12" column="0" />
+        <mark key="[" line="12" column="0" />
       </file>
     </filemarks>
     <jumps>
@@ -216,44 +216,44 @@
       <register name="&quot;" type="4">
         <text>;</text>
       </register>
-      <register name="-" type="4">
-        <text>;</text>
-      </register>
       <register name="/" type="4">
         <text>qq</text>
       </register>
-      <register name="0" type="4">
-        <text>playUrls.get(currentIndex)</text>
-      </register>
-      <register name="1" type="4">
+      <register name="-" type="4">
         <text>;</text>
-      </register>
-      <register name="2" type="4">
-        <text>g</text>
       </register>
       <register name="3" type="4">
         <text>tgp</text>
       </register>
-      <register name="4" type="4">
-        <text>)</text>
+      <register name="2" type="4">
+        <text>g</text>
       </register>
-      <register name="5" type="4">
-        <text>t</text>
+      <register name="1" type="4">
+        <text>;</text>
       </register>
-      <register name="6" type="4">
-        <text>e</text>
+      <register name="0" type="4">
+        <text>playUrls.get(currentIndex)</text>
       </register>
       <register name="7" type="4">
         <text>currentIndex</text>
       </register>
-      <register name="8" type="4">
-        <text>(</text>
+      <register name="6" type="4">
+        <text>e</text>
+      </register>
+      <register name="5" type="4">
+        <text>t</text>
+      </register>
+      <register name="4" type="4">
+        <text>)</text>
+      </register>
+      <register name=":" type="4">
+        <text>map t ciw</text>
       </register>
       <register name="9" type="4">
         <text>.g</text>
       </register>
-      <register name=":" type="4">
-        <text>map t ciw</text>
+      <register name="8" type="4">
+        <text>(</text>
       </register>
     </registers>
     <search>
