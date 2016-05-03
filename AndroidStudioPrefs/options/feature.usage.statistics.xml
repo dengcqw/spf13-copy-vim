@@ -7,39 +7,39 @@
     <feature id="navigation.goto.usages" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="refactoring.inlineLocalVar" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="tag.name.completion" count="0" last-shown="0" last-used="0" shown-count="0" />
-    <feature id="codeassists.quickFix" count="4" last-shown="0" last-used="1461572743157" shown-count="0" />
-    <feature id="editing.select.word" count="46" last-shown="0" last-used="1461656550608" shown-count="0" />
+    <feature id="codeassists.quickFix" count="5" last-shown="0" last-used="1462080402586" shown-count="0" />
+    <feature id="editing.select.word" count="47" last-shown="0" last-used="1462080433414" shown-count="0" />
     <feature id="navigation.class.hierarchy" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="refactoring.localize" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="navigation.popup.class" count="3" last-shown="0" last-used="1461580719018" shown-count="0" />
-    <feature id="navigation.goto.declaration" count="26" last-shown="0" last-used="1461656526972" shown-count="0" />
+    <feature id="navigation.goto.declaration" count="30" last-shown="0" last-used="1462082949435" shown-count="0" />
     <feature id="codeassists.parameterInfo" count="0" last-shown="0" last-used="0" shown-count="0" />
-    <feature id="editing.completion.basic" count="184" last-shown="0" last-used="1461577042870" shown-count="0" />
+    <feature id="editing.completion.basic" count="436" last-shown="0" last-used="1462084084212" shown-count="0" />
     <feature id="codeassists.quickdefinition" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="refactoring.convertToLiteral" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="refactoring.extractMethod" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="navigation.popup.file.structure" count="0" last-shown="0" last-used="0" shown-count="0" />
-    <feature id="editing.completion.smarttype.general" count="0" last-shown="1461577662518" last-used="0" shown-count="80" />
+    <feature id="editing.completion.smarttype.general" count="0" last-shown="1462084082962" last-used="0" shown-count="275" />
     <feature id="codeassists.overrideimplement" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="codeassists.surroundwith.expression" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="refactoring.rename" count="0" last-shown="0" last-used="0" shown-count="0" />
-    <feature id="codeassists.quickjavadoc" count="4" last-shown="0" last-used="1461577913841" shown-count="0" />
+    <feature id="codeassists.quickjavadoc" count="5" last-shown="0" last-used="1462079008839" shown-count="0" />
     <feature id="refactoring.convertToMethod" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="navigation.select.in" count="1" last-shown="0" last-used="1461579725571" shown-count="0" />
     <feature id="codeassists.altInsert" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="codeassists.complete.statement" count="0" last-shown="0" last-used="0" shown-count="0" />
     <completionStatsTag>
-      <option name="sparedCharacters" value="1225" />
-      <option name="invocations" value="143" />
+      <option name="sparedCharacters" value="2235" />
+      <option name="invocations" value="305" />
       <option name="startDate" value="1461513600000" />
-      <option name="dayCount" value="1" />
-      <option name="lastDate" value="1461513600000" />
+      <option name="dayCount" value="2" />
+      <option name="lastDate" value="1462032000000" />
     </completionStatsTag>
     <fixesStatsTag>
-      <option name="invocations" value="4" />
+      <option name="invocations" value="5" />
       <option name="startDate" value="1461513600000" />
-      <option name="dayCount" value="1" />
-      <option name="lastDate" value="1461513600000" />
+      <option name="dayCount" value="2" />
+      <option name="lastDate" value="1462032000000" />
     </fixesStatsTag>
   </component>
 </application>

@@ -11,7 +11,7 @@
     <property name="android-component-compatibility-check" value="1462068051864" />
     <property name="PLUGIN_FILTER" value="vim&#10;ko&#10;k&#10;adb" />
     <property name="default.storage.format" value=".idea (directory based)" />
-    <property name="lastTip" value="8" />
+    <property name="lastTip" value="10" />
     <property name="file.colors.enable.non.project" value="Yellow" />
     <property name="file.colors.enable.tests" value="Green" />
     <property name="FindSplitterProportion" value="0.25" />
@@ -21,7 +21,7 @@
     <property name="RunConfigurable.dividerProportion" value="0.3" />
     <property name="SAVED_COMPANY_DOMAIN" value="dengjinlong.example.com" />
     <property name="MobileminApi" value="19" />
-    <property name="file.chooser.recent.files" value="$USER_HOME$/Downloads/Android/Android_Programming_Practice_Source-master/WebViewJSTest&#10;/Users/dengjinlong/Documents/Develop/QiyiDev/webcast/WebView" />
+    <property name="file.chooser.recent.files" value="$USER_HOME$/AndroidStudioProjects/learn-android-sukoku&#10;/Users/dengjinlong/Downloads/Android/Android_Programming_Practice_Source-master/WebViewJSTest&#10;/Users/dengjinlong/Documents/Develop/QiyiDev/webcast/WebView" />
     <property name="last.imported.location" value="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView" />
     <property name="ExpandBeforeRunStepsPanel" value="true" />
     <property name="FileTemplates.CurrentTab" value="Code" />
