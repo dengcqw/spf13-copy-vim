@@ -8,10 +8,14 @@
     <property name="AndroidInitConfigurator.V1" value="true" />
     <property name="AndroidInitConfigurator.V2" value="true" />
     <property name="installation.uid" value="315170d8-07a3-49e1-bc3b-d93773b755df" />
-    <property name="android-component-compatibility-check" value="1461385672069" />
+    <property name="android-component-compatibility-check" value="1462068051864" />
     <property name="PLUGIN_FILTER" value="vim&#10;ko&#10;k&#10;adb" />
     <property name="default.storage.format" value=".idea (directory based)" />
+<<<<<<< HEAD
     <property name="lastTip" value="9" />
+=======
+    <property name="lastTip" value="10" />
+>>>>>>> b8f1de09d5d1675b5f0e74a14bb2f5a230c94c15
     <property name="file.colors.enable.non.project" value="Yellow" />
     <property name="file.colors.enable.tests" value="Green" />
     <property name="FindSplitterProportion" value="0.25" />
@@ -21,7 +25,7 @@
     <property name="RunConfigurable.dividerProportion" value="0.3" />
     <property name="SAVED_COMPANY_DOMAIN" value="dengjinlong.example.com" />
     <property name="MobileminApi" value="19" />
-    <property name="file.chooser.recent.files" value="$USER_HOME$/Downloads/Android/Android_Programming_Practice_Source-master/WebViewJSTest&#10;/Users/dengjinlong/Documents/Develop/QiyiDev/webcast/WebView" />
+    <property name="file.chooser.recent.files" value="$USER_HOME$/AndroidStudioProjects/learn-android-sukoku&#10;/Users/dengjinlong/Downloads/Android/Android_Programming_Practice_Source-master/WebViewJSTest&#10;/Users/dengjinlong/Documents/Develop/QiyiDev/webcast/WebView" />
     <property name="last.imported.location" value="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView" />
     <property name="ExpandBeforeRunStepsPanel" value="true" />
     <property name="FileTemplates.CurrentTab" value="Code" />

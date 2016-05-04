@@ -2,6 +2,7 @@
   <component name="RecentProjectsManager">
     <option name="recentPaths">
       <list>
+        <option value="$USER_HOME$/AndroidStudioProjects/learn-android-sukoku" />
         <option value="$USER_HOME$/Documents/Develop/1_FRP/Sudoku" />
         <option value="$USER_HOME$/Documents/Develop/1_FRP/Android-SeeWeather" />
         <option value="$USER_HOME$/Downloads/Android/Android_Programming_Practice_Source-master/WebViewJSTest" />
@@ -9,14 +10,28 @@
         <option value="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView" />
       </list>
     </option>
+<<<<<<< HEAD
     <option name="openPaths">
       <list>
         <option value="$USER_HOME$/Documents/Develop/1_FRP/Sudoku" />
       </list>
     </option>
     <option name="lastPath" value="$USER_HOME$/Documents/Develop/1_FRP/Sudoku" />
+=======
+>>>>>>> b8f1de09d5d1675b5f0e74a14bb2f5a230c94c15
     <option name="additionalInfo">
       <map>
+        <entry key="$USER_HOME$/AndroidStudioProjects/learn-android-sukoku">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="AI-143.2790544" />
+              <option name="productionCode" value="AI" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1462078623835" />
+              <option name="buildTimestamp" value="1461254400000" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
         <entry key="$USER_HOME$/Documents/Develop/1_FRP/Android-SeeWeather">
           <value>
             <RecentProjectMetaInfo>
@@ -52,6 +67,6 @@
         </entry>
       </map>
     </option>
-    <option name="lastProjectLocation" value="$USER_HOME$/Downloads/Android/Android_Programming_Practice_Source-master" />
+    <option name="lastProjectLocation" value="$USER_HOME$/AndroidStudioProjects" />
   </component>
 </application>
