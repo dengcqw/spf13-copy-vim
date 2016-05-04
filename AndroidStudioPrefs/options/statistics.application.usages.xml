@@ -1,44 +1,46 @@
 <application>
   <component name="StatisticsApplicationUsages">
-    <group name="Git">
-      <project id="Android-SeeWeather" values="config.update.type.BRANCH_DEFAULT,config.warn.about.crlf.enabled,data.remotes.in.project.1,data.remote.branches.count.1,data.local.branches.count.1,config.push.autoupdate.disabled,config.cherry-pick.autocommit.disabled,config.warn.about.detached.enabled,config.force.push.enabled,config.ssh.enabled,config.repo.sync.NOT_DECIDED,config.push.update.all.roots.enabled,config.save.policy.STASH" collectionTime="1461656575105" />
-      <project id="WebViewJSTest" values="config.cherry-pick.autocommit.disabled,config.warn.about.crlf.enabled,config.repo.sync.NOT_DECIDED,config.ssh.enabled,config.force.push.enabled,config.push.update.all.roots.enabled,config.push.autoupdate.disabled,config.update.type.BRANCH_DEFAULT,config.save.policy.STASH,config.warn.about.detached.enabled" collectionTime="1461656571182" />
-    </group>
-    <group name="vcs">
-      <project id="Android-SeeWeather" values="Git" collectionTime="1461656574730" />
-    </group>
-    <group name="frameworks">
-      <project id="Android-SeeWeather" values="android-gradle,java-gradle,android" collectionTime="1461656574730" />
-      <project id="WebViewJSTest" values="android,java-gradle,android-gradle" collectionTime="1461656570965" />
-      <project id="Sudoku" values="android-gradle,java-gradle,android" collectionTime="1461573403357" />
-      <project id="WebView" values="java-gradle,android-gradle,android" collectionTime="1461649574946" />
-    </group>
-    <group name="run-configuration-type-temp">
-      <project id="WebView" values="AndroidRunConfigurationType" collectionTime="1461649574947" />
-    </group>
     <group name="run-configuration-type">
       <project id="Android-SeeWeather" values="AndroidRunConfigurationType" collectionTime="1461656574730" />
       <project id="WebViewJSTest" values="AndroidRunConfigurationType" collectionTime="1461656570970" />
-      <project id="Sudoku" values="AndroidRunConfigurationType" collectionTime="1461573403357" />
+      <project id="Sudoku" values="AndroidRunConfigurationType" collectionTime="1461749090908" />
       <project id="WebView" values="AndroidRunConfigurationType" collectionTime="1461649574947" />
-    </group>
-    <group name="language-level">
-      <project id="Android-SeeWeather" values="JDK_1_8,JDK_1_7" collectionTime="1461656574862" />
-      <project id="WebViewJSTest" values="JDK_1_7" collectionTime="1461656571181" />
-      <project id="Sudoku" values="JDK_1_7,JDK_1_8" collectionTime="1461573403493" />
-      <project id="WebView" values="JDK_1_8,JDK_1_7" collectionTime="1461649575284" />
-    </group>
-    <group name="file-type">
-      <project id="Android-SeeWeather" values="ARCHIVE,PLAIN_TEXT,Images,XML,UNKNOWN,Properties,AIDL,JAVA,Groovy,IDEA_MODULE,ProGuard File" collectionTime="1461656574860" />
-      <project id="WebViewJSTest" values="UNKNOWN,JAVA,Groovy,PLAIN_TEXT,Properties,XML,ARCHIVE,Images,IDEA_MODULE,ProGuard File,AIDL" collectionTime="1461656571092" />
-      <project id="Sudoku" values="JAVA,ProGuard File,Groovy,Images,UNKNOWN,ARCHIVE,AIDL,Properties,XML,IDEA_MODULE,PLAIN_TEXT" collectionTime="1461573403492" />
-      <project id="WebView" values="UNKNOWN,AIDL,ARCHIVE,Groovy,Images,PLAIN_TEXT,JAVA,XML,IDEA_MODULE,JavaScript,Properties" collectionTime="1461649575204" />
     </group>
     <group name="module type">
       <project id="Android-SeeWeather" values="JAVA_MODULE" collectionTime="1461656574730" />
       <project id="WebViewJSTest" values="JAVA_MODULE" collectionTime="1461656570966" />
-      <project id="Sudoku" values="JAVA_MODULE" collectionTime="1461573403357" />
+      <project id="Sudoku" values="JAVA_MODULE" collectionTime="1461749090907" />
       <project id="WebView" values="JAVA_MODULE" collectionTime="1461649574946" />
+    </group>
+    <group name="vcs">
+      <project id="Android-SeeWeather" values="Git" collectionTime="1461656574730" />
+      <project id="Sudoku" values="Git" collectionTime="1461749090907" />
+    </group>
+    <group name="run-configuration-type-temp">
+      <project id="WebView" values="AndroidRunConfigurationType" collectionTime="1461649574947" />
+    </group>
+    <group name="file-type">
+      <project id="Android-SeeWeather" values="Images,IDEA_MODULE,Groovy,ARCHIVE,XML,JAVA,ProGuard File,PLAIN_TEXT,UNKNOWN,Properties,AIDL" collectionTime="1461656574860" />
+      <project id="WebViewJSTest" values="Groovy,ProGuard File,IDEA_MODULE,Images,PLAIN_TEXT,XML,Properties,UNKNOWN,JAVA,ARCHIVE,AIDL" collectionTime="1461656571092" />
+      <project id="Sudoku" values="XML,UNKNOWN,PLAIN_TEXT,ProGuard File,Properties,Groovy,Images,JAVA,ARCHIVE,IDEA_MODULE,AIDL" collectionTime="1461749091092" />
+      <project id="WebView" values="PLAIN_TEXT,Images,JAVA,XML,AIDL,UNKNOWN,ARCHIVE,IDEA_MODULE,JavaScript,Properties,Groovy" collectionTime="1461649575204" />
+    </group>
+    <group name="Git">
+      <project id="Android-SeeWeather" values="data.local.branches.count.1,config.push.autoupdate.disabled,data.remote.branches.count.1,config.warn.about.crlf.enabled,config.push.update.all.roots.enabled,config.save.policy.STASH,config.update.type.BRANCH_DEFAULT,config.force.push.enabled,config.ssh.enabled,config.warn.about.detached.enabled,config.cherry-pick.autocommit.disabled,data.remotes.in.project.1,config.repo.sync.NOT_DECIDED" collectionTime="1461656575105" />
+      <project id="WebViewJSTest" values="config.save.policy.STASH,config.push.update.all.roots.enabled,config.ssh.enabled,config.repo.sync.NOT_DECIDED,config.warn.about.detached.enabled,config.warn.about.crlf.enabled,config.update.type.BRANCH_DEFAULT,config.force.push.enabled,config.cherry-pick.autocommit.disabled,config.push.autoupdate.disabled" collectionTime="1461656571182" />
+      <project id="Sudoku" values="config.repo.sync.NOT_DECIDED,config.save.policy.STASH,config.warn.about.crlf.enabled,config.force.push.enabled,data.remotes.in.project.1,config.cherry-pick.autocommit.disabled,data.remote.branches.count.1,config.ssh.enabled,data.local.branches.count.1,config.push.autoupdate.disabled,config.warn.about.detached.enabled,config.update.type.BRANCH_DEFAULT,config.push.update.all.roots.enabled" collectionTime="1461749091151" />
+    </group>
+    <group name="frameworks">
+      <project id="Android-SeeWeather" values="android,android-gradle,java-gradle" collectionTime="1461656574730" />
+      <project id="WebViewJSTest" values="android,android-gradle,java-gradle" collectionTime="1461656570965" />
+      <project id="Sudoku" values="android-gradle,android,java-gradle" collectionTime="1461749090907" />
+      <project id="WebView" values="android,java-gradle,android-gradle" collectionTime="1461649574946" />
+    </group>
+    <group name="language-level">
+      <project id="Android-SeeWeather" values="JDK_1_7,JDK_1_8" collectionTime="1461656574862" />
+      <project id="WebViewJSTest" values="JDK_1_7" collectionTime="1461656571181" />
+      <project id="Sudoku" values="JDK_1_7,JDK_1_8" collectionTime="1461749091101" />
+      <project id="WebView" values="JDK_1_7,JDK_1_8" collectionTime="1461649575284" />
     </group>
   </component>
   <component name="UsageTrigger">
@@ -53,7 +55,7 @@
       <entry feature="ide.settings.Font" count="1" />
       <entry feature="ide.settings.Keymap" count="11" />
       <entry feature="ide.settings.Project_Structure" count="2" />
-      <entry feature="ideaapp.started" count="12" />
+      <entry feature="ideaapp.started" count="13" />
     </counts>
   </component>
 </application>

@@ -11,7 +11,7 @@
     <property name="android-component-compatibility-check" value="1461385672069" />
     <property name="PLUGIN_FILTER" value="vim&#10;ko&#10;k&#10;adb" />
     <property name="default.storage.format" value=".idea (directory based)" />
-    <property name="lastTip" value="8" />
+    <property name="lastTip" value="9" />
     <property name="file.colors.enable.non.project" value="Yellow" />
     <property name="file.colors.enable.tests" value="Green" />
     <property name="FindSplitterProportion" value="0.25" />

@@ -9,6 +9,11 @@
         <option value="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView" />
       </list>
     </option>
+    <option name="openPaths">
+      <list>
+        <option value="$USER_HOME$/Documents/Develop/1_FRP/Sudoku" />
+      </list>
+    </option>
     <option name="lastPath" value="$USER_HOME$/Documents/Develop/1_FRP/Sudoku" />
     <option name="additionalInfo">
       <map>
@@ -29,7 +34,7 @@
               <option name="build" value="AI-143.2739321" />
               <option name="productionCode" value="AI" />
               <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
-              <option name="projectOpenTimestamp" value="1461745798402" />
+              <option name="projectOpenTimestamp" value="1461749014066" />
               <option name="buildTimestamp" value="1459785600000" />
             </RecentProjectMetaInfo>
           </value>
