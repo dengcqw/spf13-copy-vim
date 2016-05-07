@@ -11,7 +11,15 @@
     <property name="android-component-compatibility-check" value="1462068051864" />
     <property name="PLUGIN_FILTER" value="vim&#10;ko&#10;k&#10;adb" />
     <property name="default.storage.format" value=".idea (directory based)" />
+<<<<<<< HEAD
     <property name="lastTip" value="11" />
+=======
+<<<<<<< HEAD
+    <property name="lastTip" value="9" />
+=======
+    <property name="lastTip" value="10" />
+>>>>>>> b8f1de09d5d1675b5f0e74a14bb2f5a230c94c15
+>>>>>>> 80d5db089a647f682b020b8fa13aaf6c62b096f8
     <property name="file.colors.enable.non.project" value="Yellow" />
     <property name="file.colors.enable.tests" value="Green" />
     <property name="FindSplitterProportion" value="0.25" />

@@ -10,7 +10,19 @@
         <option value="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView" />
       </list>
     </option>
+<<<<<<< HEAD
     <option name="lastPath" value="$USER_HOME$/AndroidStudioProjects/learn-android-sukoku" />
+=======
+<<<<<<< HEAD
+    <option name="openPaths">
+      <list>
+        <option value="$USER_HOME$/Documents/Develop/1_FRP/Sudoku" />
+      </list>
+    </option>
+    <option name="lastPath" value="$USER_HOME$/Documents/Develop/1_FRP/Sudoku" />
+=======
+>>>>>>> b8f1de09d5d1675b5f0e74a14bb2f5a230c94c15
+>>>>>>> 80d5db089a647f682b020b8fa13aaf6c62b096f8
     <option name="additionalInfo">
       <map>
         <entry key="$USER_HOME$/AndroidStudioProjects/learn-android-sukoku">
@@ -41,7 +53,7 @@
               <option name="build" value="AI-143.2739321" />
               <option name="productionCode" value="AI" />
               <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
-              <option name="projectOpenTimestamp" value="1461745798402" />
+              <option name="projectOpenTimestamp" value="1461749014066" />
               <option name="buildTimestamp" value="1459785600000" />
             </RecentProjectMetaInfo>
           </value>
