@@ -29,7 +29,7 @@
     <location key="SettingsEditor.0.0.1080.1920" x="21" y="211" />
     <location key="FileChooserDialogImpl.0.0.1080.1920" x="328" y="255" />
     <location key="FileChooserDialogImpl.0.0.1280.800" x="430" y="119" />
-    <location key="WELCOME_SCREEN.0.0.1280.800" x="642" y="230" />
+    <location key="WELCOME_SCREEN.0.0.1280.800" x="647" y="230" />
     <location key="com.intellij.ide.util.TipDialog.0.0.1280.800" x="262" y="238" />
     <location key="#Project_Structure.0.0.1280.800" x="134" y="68" />
     <location key="SettingsEditor.0.0.1280.800" x="25" y="73" />
@@ -37,6 +37,7 @@
     <location key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog.0.0.1280.800" x="380" y="164" />
     <location key="AndroidCreateResourceFileDialog.0.0.1280.800" x="230" y="172" />
     <location key="deploy.picker.dialog.0.0.1280.800" x="330" y="172" />
+    <location key="CommitChangelistDialog2.0.0.1280.800" x="289" y="122" />
     <size key="ProcessPopupWindow.0.0.1920.1080" width="185" height="103" />
     <size key="GridCell.Tab.0.left.0.0.1920.1080" width="1878" height="285" />
     <size key="GridCell.Tab.0.center.0.0.1920.1080" width="1878" height="285" />
@@ -80,14 +81,14 @@
     <size key="GridCell.Tab.4.center.0.0.1080.1920" width="1038" height="258" />
     <size key="GridCell.Tab.4.right.0.0.1080.1920" width="1038" height="258" />
     <size key="GridCell.Tab.4.bottom.0.0.1080.1920" width="1038" height="258" />
-    <size key="GridCell.Tab.0.left.0.0.1280.800" width="1234" height="429" />
-    <size key="GridCell.Tab.0.center.0.0.1280.800" width="1234" height="429" />
-    <size key="GridCell.Tab.0.right.0.0.1280.800" width="1234" height="429" />
-    <size key="GridCell.Tab.0.bottom.0.0.1280.800" width="1234" height="429" />
+    <size key="GridCell.Tab.0.left.0.0.1280.800" width="1234" height="279" />
+    <size key="GridCell.Tab.0.center.0.0.1280.800" width="1234" height="279" />
+    <size key="GridCell.Tab.0.right.0.0.1280.800" width="1234" height="279" />
+    <size key="GridCell.Tab.0.bottom.0.0.1280.800" width="1234" height="279" />
     <size key="javadoc.popup.0.0.1280.800" width="481" height="170" />
-    <size key="GridCell.Tab.1.left.0.0.1280.800" width="1234" height="429" />
-    <size key="GridCell.Tab.1.center.0.0.1280.800" width="1234" height="429" />
-    <size key="GridCell.Tab.1.right.0.0.1280.800" width="1234" height="429" />
-    <size key="GridCell.Tab.1.bottom.0.0.1280.800" width="1234" height="429" />
+    <size key="GridCell.Tab.1.left.0.0.1280.800" width="1234" height="279" />
+    <size key="GridCell.Tab.1.center.0.0.1280.800" width="1234" height="279" />
+    <size key="GridCell.Tab.1.right.0.0.1280.800" width="1234" height="279" />
+    <size key="GridCell.Tab.1.bottom.0.0.1280.800" width="1234" height="279" />
   </component>
 </application>

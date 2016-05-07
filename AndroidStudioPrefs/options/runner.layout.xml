@@ -58,6 +58,7 @@
       </ViewImpl>
       <TabImpl />
       <TabImpl>
+        <option name="bottomProportion" value="0.0" />
         <option name="defaultIndex" value="5" />
         <option name="index" value="1" />
       </TabImpl>
@@ -132,7 +133,7 @@
         <option name="window" value="0" />
       </ViewImpl>
       <TabImpl>
-        <option name="rightProportion" value="0.19980119" />
+        <option name="rightProportion" value="0.19965577" />
       </TabImpl>
       <General />
     </runner>

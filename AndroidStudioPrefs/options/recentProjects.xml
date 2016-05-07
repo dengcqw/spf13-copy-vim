@@ -10,6 +10,7 @@
         <option value="$USER_HOME$/Documents/Develop/QiyiDev/webcast/WebView" />
       </list>
     </option>
+    <option name="lastPath" value="$USER_HOME$/AndroidStudioProjects/learn-android-sukoku" />
     <option name="additionalInfo">
       <map>
         <entry key="$USER_HOME$/AndroidStudioProjects/learn-android-sukoku">
@@ -18,7 +19,7 @@
               <option name="build" value="AI-143.2790544" />
               <option name="productionCode" value="AI" />
               <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
-              <option name="projectOpenTimestamp" value="1462078623835" />
+              <option name="projectOpenTimestamp" value="1462625421886" />
               <option name="buildTimestamp" value="1461254400000" />
             </RecentProjectMetaInfo>
           </value>

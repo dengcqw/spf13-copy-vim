@@ -11,7 +11,7 @@
     <property name="android-component-compatibility-check" value="1462068051864" />
     <property name="PLUGIN_FILTER" value="vim&#10;ko&#10;k&#10;adb" />
     <property name="default.storage.format" value=".idea (directory based)" />
-    <property name="lastTip" value="10" />
+    <property name="lastTip" value="11" />
     <property name="file.colors.enable.non.project" value="Yellow" />
     <property name="file.colors.enable.tests" value="Green" />
     <property name="FindSplitterProportion" value="0.25" />
@@ -26,7 +26,7 @@
     <property name="ExpandBeforeRunStepsPanel" value="true" />
     <property name="FileTemplates.CurrentTab" value="Code" />
     <property name="FileTemplates.SelectedTemplate" value="Google Test Fixture" />
-    <property name="LOG_FILTER_HISTORY" value="get&#10;play--&gt;&#10;get play&#10;stop&#10;play" />
+    <property name="LOG_FILTER_HISTORY" value="UpdateThread&#10;Sudoku&#10;clicked&#10;get&#10;play--&gt;" />
     <property name="KEYMAP" value="Make&#10;build&#10;make pro&#10;debug&#10;run" />
     <property name="installed.kotlin.plugin.version" value="1.0.1-release-IJ143-40" />
     <property name="com.google.gct.enable.cloud.testing" value="true" />
