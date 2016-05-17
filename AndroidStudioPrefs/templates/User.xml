@@ -1,0 +1,25 @@
+<templateSet group="User">
+  <template name="restartMainActivity" value="    public boolean onKeyUp(int keyCode, KeyEvent event) {&#10;        if (keyCode == KeyEvent.KEYCODE_BACK) {&#10;            Intent startMain = new Intent(Intent.ACTION_MAIN);&#10;            startMain.addCategory(Intent.CATEGORY_HOME);&#10;            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);&#10;            startActivity(startMain);&#10;        }&#10;        return false;&#10;    }" description="restart main activity when press back" toReformat="false" toShortenFQNames="true">
+    <context />
+  </template>
+  <template name="editText" value="        final android.widget.EditText editText = (android.widget.EditText)findViewById(R.id.$editText$);&#10;        assert null != editText;&#10;        editText.addTextChangedListener(new android.text.TextWatcher() {&#10;            @java.lang.Override&#10;            public void onTextChanged(java.lang.CharSequence s, int start, int before, int count) {&#10;            }&#10;            @java.lang.Override&#10;            public void beforeTextChanged(java.lang.CharSequence s, int start, int count, int after) {&#10;            }&#10;            @java.lang.Override&#10;            public void afterTextChanged(android.text.Editable s) {&#10;                java.lang.String result = s.toString().replaceAll(&quot; &quot;, &quot;&quot;);&#10;                if (!s.toString().equals(result)) {&#10;                    editText.setText(result);&#10;                    editText.setSelection(result.length());&#10;                }&#10;            }&#10;        });" description="edit text with text changed listener" toReformat="true" toShortenFQNames="true">
+    <variable name="editText" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_STATEMENT" value="true" />
+      <option name="JAVA_EXPRESSION" value="true" />
+    </context>
+  </template>
+  <template name="enumString" value="public enum State {&#10;    StateA, StateB, StateC, StateD, StateE&#10;}&#10;&#10;public static State getState(String str) {&#10;    for (State state : State.values()) {&#10;        if (state.name().equalsIgnoreCase(str))&#10;            return state;&#10;    }&#10;    return null;&#10;}" description="Get Enum Value from String" toReformat="true" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_STATEMENT" value="true" />
+      <option name="JAVA_EXPRESSION" value="true" />
+    </context>
+  </template>
+  <template name="showAlert" value="public void showAlertDialog(java.lang.String title, java.lang.String message, long lastTimeMillis) {&#10;        // builder dialog&#10;        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getApplicationContext());&#10;        builder.setTitle(title).setMessage(message).setCancelable(false);&#10;        // create dialog from builder&#10;        final android.support.v7.app.AlertDialog alertDialog = builder.create();&#10;&#10;        alertDialog.show();&#10;&#10;        // delay handler&#10;        new android.os.Handler().postDelayed(new java.lang.Runnable() {&#10;            @java.lang.Override&#10;            public void run() {&#10;                if (alertDialog.isShowing()) {&#10;                    alertDialog.dismiss();&#10;                }&#10;            }&#10;        }, (long)lastTimeMillis);&#10;    }" description="delay dismiss alert" toReformat="true" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_STATEMENT" value="true" />
+      <option name="JAVA_EXPRESSION" value="true" />
+      <option name="JAVA_DECLARATION" value="true" />
+    </context>
+  </template>
+</templateSet>

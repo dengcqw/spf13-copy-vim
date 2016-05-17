@@ -1,9 +1,0 @@
-Snackbar.make(findViewById(android.R.id.content), "$text$", Snackbar.LENGTH_SHORT)
-        .setAction("$button$", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: the action performed on $button$ click
-                $END$
-            }
-        })
-        .show();
