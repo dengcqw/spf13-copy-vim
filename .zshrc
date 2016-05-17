@@ -261,3 +261,7 @@ function djmv() {
     mv $@
     mvim "${@:$#}"
 }
+
+function djcd() {
+     cd $@; ls;
+}
