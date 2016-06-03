@@ -1,0 +1,24 @@
+{
+  "libs": [
+    "underscore",
+    "ecma5",
+    "ecma6"
+  ],
+   "loadEagerly": [
+    "./js/*.js",
+    "./js/*.jsx",
+    "./node_modules/bunyan/lib/*.js",
+    "./node_modules/react/**/*.js",
+    "./node_modules/change-case/change-case.js"
+  ],
+  "dontLoad": [
+    "node_modules/**"
+  ],
+  "plugins": {
+    "node": true,
+    "doc_comment":true,
+    "complete_strings":true,
+    "es_modules":true,
+    "webpack":true,
+  }
+}

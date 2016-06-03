@@ -387,16 +387,16 @@
     nnoremap Y y$
 
     " Code folding options
-    nnoremap <leader>f0 :set foldlevel=0<CR>
-    nnoremap <leader>f1 :set foldlevel=1<CR>
-    nnoremap <leader>f2 :set foldlevel=2<CR>
-    nnoremap <leader>f3 :set foldlevel=3<CR>
-    nnoremap <leader>f4 :set foldlevel=4<CR>
-    nnoremap <leader>f5 :set foldlevel=5<CR>
-    nnoremap <leader>f6 :set foldlevel=6<CR>
-    nnoremap <leader>f7 :set foldlevel=7<CR>
-    nnoremap <leader>f8 :set foldlevel=8<CR>
-    nnoremap <leader>f9 :set foldlevel=9<CR>
+    nmap <leader>f0 :set foldlevel=0<CR>
+    nmap <leader>f1 :set foldlevel=1<CR>
+    nmap <leader>f2 :set foldlevel=2<CR>
+    nmap <leader>f3 :set foldlevel=3<CR>
+    nmap <leader>f4 :set foldlevel=4<CR>
+    nmap <leader>f5 :set foldlevel=5<CR>
+    nmap <leader>f6 :set foldlevel=6<CR>
+    nmap <leader>f7 :set foldlevel=7<CR>
+    nmap <leader>f8 :set foldlevel=8<CR>
+    nmap <leader>f9 :set foldlevel=9<CR>
 
     " Most prefer to toggle search highlighting rather than clear the current
     " search results. To clear search highlighting rather than toggle it on
@@ -1050,7 +1050,7 @@
 
         " See `:echo g:airline_theme_map` for some more choices
         " Default in terminal vim is 'dark'
-        if isdirectory(expand("~/.vim/bundle/vim-airline/"))
+        if isdirectory(expand("~/.vim/bundle/vim-airline-themes/"))
             if !exists('g:airline_theme')
                 let g:airline_theme = 'solarized'
             endif

@@ -50,3 +50,43 @@
     /etc/sudoers
     排除 reboot \ halt \ shutdown 这 3 个关机命令执行时不用密码
     dengjinlong ALL = NOPASSWD: /sbin/reboot,/sbin/halt,/sbin/shutdown
+
+6. read line
+
+    filename="$1";
+    output="$2";
+    while read line
+    do
+        #do what you want to $line
+    done < $filename
+
+    for next in `cat $filename`
+    do
+        echo "$next read from $filename"
+    done
+
+7. loop and count
+    for (( i=1 ; ((i-100)) ; i=(($i+1)) ))
+    do
+      echo $i
+    done;
+
+    i=1;
+    while [[ i -le 100 ]] ;
+    do
+      echo $i;
+      i=$((i+1));
+    done;
+
+8. contain string
+    string='My long string';
+
+    if [[ $string == *"My long"* ]]
+    then
+        echo "It's there!";
+    fi
+
+9. calc
+    i=$((i+1));
+    # scale 是小数位
+    $(echo "scale=2;1.0 + 1.0" | bc)

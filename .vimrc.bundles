@@ -118,7 +118,8 @@
             elseif exists('g:spf13_use_powerline') && exists('g:spf13_use_old_powerline')
                 Bundle 'Lokaltog/vim-powerline'
             else
-                Bundle 'bling/vim-airline'
+                Bundle 'vim-airline/vim-airline'
+                Bundle 'vim-airline/vim-airline-themes'
             endif
             Bundle 'powerline/fonts'
             Bundle 'bling/vim-bufferline'
@@ -247,6 +248,7 @@
             Bundle 'hail2u/vim-css3-syntax'
             Bundle 'gorodinskiy/vim-coloresque'
             Bundle 'tpope/vim-haml'
+            Bundle 'mattn/emmet-vim'
         endif
     " }
 
@@ -282,13 +284,13 @@
 
     " Misc {
         if count(g:spf13_bundle_groups, 'misc')
-            Bundle 'rust-lang/rust.vim'
+            "Bundle 'rust-lang/rust.vim'
             Bundle 'tpope/vim-markdown'
             Bundle 'spf13/vim-preview'
-            Bundle 'tpope/vim-cucumber'
-            Bundle 'cespare/vim-toml'
-            Bundle 'quentindecock/vim-cucumber-align-pipes'
-            Bundle 'saltstack/salt-vim'
+            "Bundle 'tpope/vim-cucumber'
+            "Bundle 'cespare/vim-toml'
+            "Bundle 'quentindecock/vim-cucumber-align-pipes'
+            "Bundle 'saltstack/salt-vim'
         endif
     " }
 

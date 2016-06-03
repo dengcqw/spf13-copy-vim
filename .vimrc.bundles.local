@@ -1,10 +1,5 @@
 " local user bundle configuration
 
-    " HTML {
-        if count(g:spf13_bundle_groups, 'html')
-            Bundle 'emmet.vim'
-        endif
-    " }
     " js {
         if count(g:spf13_bundle_groups, 'javascript')
             Bundle 'maksimr/vim-jsbeautify'
@@ -15,22 +10,22 @@
         Bundle 'ternjs/tern_for_vim'
     " }
     " code snippet {
-        Bundle 'drmingdrmer/xptemplate'
+        "Bundle 'drmingdrmer/xptemplate'
     " }
     " fasten ctrlp search {
         Bundle 'FelikZ/ctrlp-py-matcher'
     " }
     " iOS dev {
         Bundle 'kentaroi/cocoa.vim'
-        Bundle 'qqshfox/objc_matchbracket'
+        "Bundle 'qqshfox/objc_matchbracket'
         "Bundle 'vim-scripts/a.vim'
         "witching Header Files
-        Bundle 'eraserhd/vim-ios.git'
+        "Bundle 'eraserhd/vim-ios.git'
         "Indentation
-        "Bundle "b4winckler/vim-objc"
+        "Bundle 'b4winckler/vim-objc'
     " }
     "
-    Bundle 'dkprice/vim-easygrep'
+    "Bundle 'dkprice/vim-easygrep'
 
     "Bundle 'xolox/vim-easytags'
     "Bundle 'xolox/vim-misc'
@@ -40,13 +35,8 @@
 
     Bundle 'rizzatti/dash.vim'
 
-    Bundle 'vim-airline/vim-airline-themes'
-
-    "Bundle 'gilligan/vim-lldb'
     " Highlight the term under the cursor
     Bundle 'qstrahl/vim-matchmaker'
 
-    Bundle 'vim-swift'
-
-    Bundle 'tokorom/swift-dict.vim'
+    " Bundle 'tokorom/swift-dict.vim'
 

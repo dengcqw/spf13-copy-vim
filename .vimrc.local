@@ -5,7 +5,7 @@
     set autoread
 
     " Height of the command bar
-    set cmdheight=1
+    set cmdheight=2
 
     " Don't redraw while executing macros (good performance config)
     " ?
@@ -26,11 +26,6 @@
     set nowb
     set noswapfile
 
-    " this may not working ,try set it by hand
-    set iskeyword-=.                    " '.' is an end of word designator
-    set iskeyword-=#                    " '#' is an end of word designator
-    set iskeyword-=-                    " '-' is an end of word designator
-
     " Remember info about open buffers on close
     " My session manager has saved session viminfo, but other buffer needs viminfo too.
     set viminfo^=%
@@ -50,7 +45,7 @@
             vmap <D-k> <M-k>
         endif
     "}
-   
+
     " select block
     noremap vab Vf{%
 
@@ -104,7 +99,7 @@
     vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
 
     " When you press <leader>r you can search and replace the selected text
-    vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
+    "vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 
     " Do :help cope if you are unsure what cope is. It's super useful!
     "
@@ -187,8 +182,8 @@
     set nofoldenable        " don't fold by default
     nnoremap <Space> za     " use space to do fold
 
+    " add filename after command
     noremap <leader>vd :vertical diffsplit
-
     " Only needed for a short time so...
     noremap <leader>fd :setlocal diff foldmethod=diff scrollbind nowrap foldlevel=1<CR>
 
@@ -200,11 +195,6 @@
     xnoremap p pgvy
 
     noremap <leader>m :marks<CR>
-
-    "===============================
-    "   project
-    "===============================
-    noremap <leader>dt :cd ~/Desktop<CR>
 
     set encoding=utf-8
     set fenc=utf-8
@@ -228,10 +218,9 @@
     inoremap <D-p> <c-x><c-p>
 
     "Line modifications
-    inoremap CC <Esc>C
+    "inoremap CC <Esc>C  " or use <C-k>
     inoremap SS <Esc>S
-    inoremap DD <Esc>dd
-    inoremap UU <Esc>u
+    "inoremap DD <Esc>dd " or <Cmd-backspace>
     "Quick movements
     inoremap II <Esc>I
     inoremap AA <Esc>A
@@ -269,6 +258,13 @@ autocmd FileType json vnoremap <buffer> <C-S> :call RangeJsonBeautify()<cr>
 autocmd FileType jsx vnoremap <buffer>  <C-S> :call RangeJsxBeautify()<cr>
 autocmd FileType html vnoremap <buffer> <C-S> :call RangeHtmlBeautify()<cr>
 autocmd FileType css vnoremap <buffer>  <C-S> :call RangeCSSBeautify()<cr>
+
+vnoremap <buffer> <C-S>h :call RangeHtmlBeautify()<cr>
+// Big J for JSON
+vnoremap <buffer> <C-S>J :call RangeJsonBeautify()<cr>
+// Small j for js
+vnoremap <buffer> <C-S>j :call RangeJsBeautify()<cr>
+
 
 " ----------------------------------------------------------------------------
 " tern_for_vim
@@ -778,7 +774,12 @@ highlight Matchmaker cterm=underline
 " <Tab> 和 <S-Tab> jump between placeholder
 
 " xptempate {
-
     "let g:xptemplate_lib_filter = '/my_snippets/'
 "}
+"
+
+let g:PreviewBrowsers='open -a Google\ Chrome'
+
+" project
+noremap <leader>dt :cd ~/Desktop<CR>
 
