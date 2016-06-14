@@ -260,19 +260,38 @@ autocmd FileType html vnoremap <buffer> <C-S> :call RangeHtmlBeautify()<cr>
 autocmd FileType css vnoremap <buffer>  <C-S> :call RangeCSSBeautify()<cr>
 
 vnoremap <buffer> <C-S>h :call RangeHtmlBeautify()<cr>
-// Big J for JSON
+" Big J for JSON
 vnoremap <buffer> <C-S>J :call RangeJsonBeautify()<cr>
-// Small j for js
+" Small j for js
 vnoremap <buffer> <C-S>j :call RangeJsBeautify()<cr>
 
 
 " ----------------------------------------------------------------------------
 " tern_for_vim
 " ----------------------------------------------------------------------------
-let tern_show_signature_in_pum = 1
-let tern_show_argument_hints = 'on_hold'
+let g:tern_show_argument_hints='on_hold'
+let g:tern_show_signature_in_pum=1
+let g:tern_map_keys=1
+let g:tern_map_prefix='/'
+let g:tern_request_timeout=3
 autocmd FileType javascript nnoremap <leader>d :TernDef<CR>
-autocmd FileType javascript set omnifunc=tern#Complete
+autocmd FileType javascript setlocal omnifunc=tern#Complete
+" vim-javascript.vim
+let g:javascript_enable_domhtmlcss = 1
+"javascript-libraries-syntax.vim
+"autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
+let g:used_javascript_libs = 'underscore,react'
+" vim-jsx.vim
+let g:jsx_ext_required = 0
+
+function! ChangeJavascriptTab()
+    set tabstop=2
+    set softtabstop=2
+    set shiftwidth=2
+    set expandtab
+endfunction
+
+autocmd FileType javascript :call ChangeJavascriptTab()
 
 "surrounding command list {
     "Normal mode
@@ -662,24 +681,24 @@ set foldlevelstart=1
 
 
 " gf search path and sub path {
-    if g:gitroot != ''
+    if isdirectory(expand(g:gitroot))
         execute 'set path=./**,' . g:gitroot . '/**'
     endif
 "}
 
 " expand tab {
-    function! ChangeTabToSpace()
-        set expandtab
-        %retab!
-    endfunction
+    "function! ChangeTabToSpace()
+        "set expandtab
+        "%retab!
+    "endfunction
 
-    function! ChangeSpace2Tab()
-        set noexpandtab
-        %retab!
-    endfunction
+    "function! ChangeSpace2Tab()
+        "set noexpandtab
+        "%retab!
+    "endfunction
 
-    command -nargs=0 ChangeSpace2Tab :call ChangeSpace2Tab()
-    command -nargs=0 ChangeTab2Space :call ChangeTab2Space()
+    "command -nargs=0 ChangeSpace2Tab :call ChangeSpace2Tab()
+    "command -nargs=0 ChangeTab2Space :call ChangeTab2Space()
 "}
 
 " command {
@@ -713,7 +732,7 @@ set foldlevelstart=1
     endif
 "}
 
-" REST 
+" REST
 " require Vim 7.4 & cURL {
     " file suffix is .rest
     " set ft=rest
@@ -735,7 +754,7 @@ set foldlevelstart=1
     " Another tool: https://github.com/jkbrzt/httpie
 
     " Simple usage
-    " :r ! curl http://api.app.qa.anhouse.com.cn/hft/1.0/home_city_list | python ~/spf13-copy-vim/bin/json.tool.py  
+    " :r ! curl http://api.app.qa.anhouse.com.cn/hft/1.0/home_city_list | python ~/spf13-copy-vim/bin/json.tool.py
 
     let g:vrc_auto_format_response_patterns = {
     \   'json': 'python ~/spf13-copy-vim/bin/json.tool.py',
@@ -783,3 +802,13 @@ let g:PreviewBrowsers='open -a Google\ Chrome'
 " project
 noremap <leader>dt :cd ~/Desktop<CR>
 
+
+" :verbose set <option>? you can see where it's being set and what it's set to
+
+""""""""""""""""""""""""""""""""""""""""""""""
+"set encoding=utf-8
+"set fileencoding=utf-8
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=ucs-bom,utf-8,gb18030,cp936,big5,euc-jp,euc-kr,latin1
+""""""""""""""""""""""""""""""""""""""""""""""

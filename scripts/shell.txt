@@ -90,3 +90,7 @@
     i=$((i+1));
     # scale 是小数位
     $(echo "scale=2;1.0 + 1.0" | bc)
+
+10. grep
+    search all js file
+    #grep -r --include \*.js "bluebird" ./*

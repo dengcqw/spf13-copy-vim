@@ -3,34 +3,30 @@
 # 1
 snippet copyright "js file header description"
 /**
- * ${1:fileName}
- * haofangtuo
-
+ * `!p snip.rv = fn`
+ * TVGuo
+ * 
  * Created by DengJinlong on `date +%d/%m/%y`.
- * Copyright (c) 2015 平安好房. All rights reserved.
  */
 
-'use strict';
+'use strict'
 
 endsnippet
 
 # 2
-snippet rnRequire ""
-var React = require('react-native');
-var ${1:Component} = require('./${2:ComponentFileName}');
-
-endsnippet
-
-# 3 
-snippet rnVar "RN Component var"
-var {
-    AppRegistry,
-    StyleSheet,
-    View,
-    Text,
-    ${1:Component},
-} = React;
-
+snippet rnImport "import react component"
+import React from 'react'
+import {
+  View,
+  Image,
+  Text,
+  TouchableHighlight,
+  StyleSheet,
+  Dimensions,
+  ListView,
+  Linking,
+  TouchableWithoutFeedback,
+} from 'react-native'
 endsnippet
 
 # 4
@@ -66,17 +62,17 @@ snippet rnCreateComponentWithMount "React.createClass()"
 var ${1:ComponentName} = React.createClass({
 
     getInitialState: function() {
-        return {
-            ${2:Variables here used by 'this.state'}
-        };
+    return {
+    ${2:Variables here used by 'this.state'}
+    };
     },
 
-componentWillMount: function() {
-},
-componentDidMount: function() {
-},
-componentWillunmount: function() {
-},
+    componentWillMount: function() {
+    },
+    componentDidMount: function() {
+    },
+    componentWillunmount: function() {
+    },
 
     render: function() {
         ${3:process state here} 
@@ -95,6 +91,7 @@ componentWillunmount: function() {
 });
 
 endsnippet
+
 # 5
 snippet rnCreateStyleSheet "StyleSheet.create()"
 var styles = StyleSheet.create({
@@ -160,8 +157,8 @@ snippet rnAlert "AlertIOS.alert"
 AlertIOS.alert(
     '${1:Title}',
     '${2:msg}',
-    [// buttons
-        {text: 'OK', onPress: () => :this._alertOkClick},
+    [
+        {text: 'OK', onPress: () => this._alertOkClick},
         {text: 'Cancel', onPress: () => this._alertCancelClick, style: 'cancel'},
     ]
 )
@@ -287,3 +284,153 @@ snippet rnTextInput "<TextInput..."
     placeholder="请输入${3:...}"
     onChangeText={this.${4:_userInput}}/>
 endsnippet
+
+
+#
+#  React ES6 snippets
+#
+
+snippet rncs "React.addons.classSet" b
+var cx = React.addons.classSet;
+cx({
+	${1}: ${2}
+});
+endsnippet
+
+snippet rncdm "component did mount" b
+componentDidMount () {
+	${1}
+}$0
+endsnippet
+
+snippet rncdup "component did update" b
+componentDidUpdate (prevProps, prevState) {
+	${1}
+}$0
+endsnippet
+
+snippet rncwm "component will mount" b
+componentWillMount () {
+	${1}
+}$0
+endsnippet
+
+snippet rncwr "component will receive props" b
+componentWillReceiveProps (nextProps) {
+	${1}
+}$0
+endsnippet
+
+snippet rncwun "component will unmount" b
+componentWillUnmount () {
+	${1}
+}$0
+endsnippet
+
+snippet rncwu "component will update" b
+componentWillUpdate (nextProps, nextState) {
+	${1}
+}$0
+endsnippet
+
+snippet rnGetDefaultProps "get default props" b
+getDefaultProps () {
+	return {
+		${1}
+	};
+}$0
+endsnippet
+
+snippet rnGetInitialState "get initial state" b
+getInitialState () {
+	return {
+		${1}: ${2}
+	};
+}$0
+endsnippet
+
+snippet rnPropTypes "propTypes" b
+propTypes: {
+	${1}: React.PropTypes.${2:string}
+},
+endsnippet
+
+snippet rnCreateClass "create class/component" b
+export default class ${1:ClassName} extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+        ${2:aState}: this.props.${3:theProps},
+    }
+    // keep a binded function
+    this._privateFunction = this.privateFunction.bind(this);
+  }
+
+  static defaultProps = {
+    theProps: false,
+  };
+
+  privateFunction () {
+  }
+
+  componentDidMount () {
+  }
+
+  componentWillReceiveProps () {
+  }
+
+  render () {
+    return (
+      <View style={{flex:1}}>
+      {/*code here*/}
+      </View>
+    );
+  }
+}
+
+$1.propTypes = {
+  optionalArray: React.PropTypes.array,
+  optionalBool: React.PropTypes.bool,
+  optionalFunc: React.PropTypes.func,
+  optionalNumber: React.PropTypes.number,
+  optionalObject: React.PropTypes.object,
+  optionalString: React.PropTypes.string.isRequired,
+  requiredAny: React.PropTypes.any.isRequired,
+}
+endsnippet
+
+snippet rnscu "should component update"
+shouldComponentUpdate (nextProps, nextState) {
+	${1}
+}$0
+endsnippet
+
+snippet rnprops "get property" i
+this.props.${1}
+endsnippet
+
+snippet rnstate "get state" i
+this.state.${1}
+endsnippet
+
+snippet rnFetch "Fetch sample"
+fetch('https://mywebsite.com/endpoint/', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    firstParam: 'yourValue',
+    secondParam: 'yourOtherValue',
+  })
+})
+.then((response) => response.text())
+.then((responseText) => {
+  console.log(responseText);
+})
+.catch((error) => {
+  console.warn(error);
+});
+endsnippet
+
