@@ -1,0 +1,13 @@
+
+alias pushToReview="cd ~/Documents/Develop/QiyiDev/TVGuoiOSApp; git push origin HEAD:refs/for/master; cd -"
+
+PATH_TVGuor=/Users/dengjinlong/Documents/Develop/QiyiDev/TVGuoiOSApp
+PATH_TVGuorApp=$PATH_TVGuor/DerivedData/TVGuor/Build/Products/Debug-iphoneos/TVGuor.app
+PATH_TVGuorToday=$PATH_TVGuor/DerivedData/TVGuor/Build/Products/Debug-iphoneos/Today.appex
+
+alias deploy_TVGuorApp="ios-deploy --bundle $PATH_TVGuorApp --justlaunch -u -m"
+alias deploy_TVGuorToday="ios-deploy --bundle $PATH_TVGuorToday --justlaunch -u -m"
+
+# archive 
+alias gym_TVGuor="cd $PATH_TVGuor; gym build --scheme TVGuor --use_legacy_build_api; cd -"
+
