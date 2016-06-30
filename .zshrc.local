@@ -1,5 +1,5 @@
 
-alias pushToReview="cd ~/Documents/Develop/QiyiDev/TVGuoiOSApp; git push origin HEAD:refs/for/master; cd -"
+alias pushToReview="cd ~/Documents/Qiyi/TVGuoiOSApp; git push origin HEAD:refs/for/master; cd -"
 
 PATH_TVGuor=/Users/dengjinlong/Documents/Develop/QiyiDev/TVGuoiOSApp
 PATH_TVGuorApp=$PATH_TVGuor/DerivedData/TVGuor/Build/Products/Debug-iphoneos/TVGuor.app

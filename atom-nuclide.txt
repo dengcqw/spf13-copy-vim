@@ -1,0 +1,2 @@
+brew install --HEAD watchman
+brew install flow

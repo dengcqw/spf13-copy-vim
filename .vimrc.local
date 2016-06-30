@@ -754,7 +754,7 @@ set foldlevelstart=1
     " Another tool: https://github.com/jkbrzt/httpie
 
     " Simple usage
-    " :r ! curl http://api.app.qa.anhouse.com.cn/hft/1.0/home_city_list | python ~/spf13-copy-vim/bin/json.tool.py
+    " :r ! curl http://api.app.qa.com.cn/hft/1.0/home_city_list | python ~/spf13-copy-vim/bin/json.tool.py
 
     let g:vrc_auto_format_response_patterns = {
     \   'json': 'python ~/spf13-copy-vim/bin/json.tool.py',
@@ -812,3 +812,10 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,gb18030,cp936,big5,euc-jp,euc-kr,latin1
 """"""""""""""""""""""""""""""""""""""""""""""
+
+"https://github.com/gorodinskiy/vim-coloresque/blob/master/after/syntax/css/vim-coloresque.vim
+"the problem is at lines 125-126
+" remove below line
+":set isk+=-
+":set isk+=#
+":set isk+=.

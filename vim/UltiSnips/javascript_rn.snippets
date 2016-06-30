@@ -13,22 +13,6 @@ snippet copyright "js file header description"
 
 endsnippet
 
-# 2
-snippet rnImport "import react component"
-import React from 'react'
-import {
-  View,
-  Image,
-  Text,
-  TouchableHighlight,
-  StyleSheet,
-  Dimensions,
-  ListView,
-  Linking,
-  TouchableWithoutFeedback,
-} from 'react-native'
-endsnippet
-
 # 4
 snippet rnCreateComponent "React.createClass()"
 var ${1:ComponentName} = React.createClass({
@@ -136,11 +120,6 @@ snippet rnfunvar "var: function() {}"
 ${1:varName}: function() {
 },
 
-endsnippet
-
-# 2
-snippet rnsetstate "this.setState()"
-this.setState({${1:var}: ${2:value}});
 endsnippet
 
 #3
@@ -286,9 +265,21 @@ snippet rnTextInput "<TextInput..."
 endsnippet
 
 
-#
-#  React ES6 snippets
-#
+########## {React ES6 snippets} ##########
+
+# 2
+snippet rnImport "import react component"
+import React { PropTypes } from 'react'
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+} from 'react-native'
+endsnippet
 
 snippet rncs "React.addons.classSet" b
 var cx = React.addons.classSet;
@@ -297,37 +288,37 @@ cx({
 });
 endsnippet
 
-snippet rncdm "component did mount" b
+snippet rncomponentDidMount "component did mount" b
 componentDidMount () {
 	${1}
 }$0
 endsnippet
 
-snippet rncdup "component did update" b
+snippet rncomponentDidUpdate "component did update" b
 componentDidUpdate (prevProps, prevState) {
 	${1}
 }$0
 endsnippet
 
-snippet rncwm "component will mount" b
+snippet rncomponentWillMount "component will mount" b
 componentWillMount () {
 	${1}
 }$0
 endsnippet
 
-snippet rncwr "component will receive props" b
+snippet rncomponentWillReceiveProps "component will receive props" b
 componentWillReceiveProps (nextProps) {
 	${1}
 }$0
 endsnippet
 
-snippet rncwun "component will unmount" b
+snippet rncomponentWillUnmount "component will unmount" b
 componentWillUnmount () {
 	${1}
 }$0
 endsnippet
 
-snippet rncwu "component will update" b
+snippet rncomponentWillUpdate "component will update" b
 componentWillUpdate (nextProps, nextState) {
 	${1}
 }$0
@@ -350,9 +341,29 @@ getInitialState () {
 endsnippet
 
 snippet rnPropTypes "propTypes" b
-propTypes: {
-	${1}: React.PropTypes.${2:string}
-},
+$1.propTypes = {
+  optionalArray: PropTypes.array,
+  optionalBool: PropTypes.bool,
+  optionalFunc: PropTypes.func.isRequired,
+  optionalNumber: PropTypes.number,
+  optionalObject: PropTypes.object,
+  optionalString: PropTypes.string.isRequired,
+  requiredAny: PropTypes.any.isRequired,
+}
+endsnippet
+
+snippet rnPropTypesArray "array props type" b
+optionalArray: PropTypes.arrayOf(propTypes.shape({
+  optionalObject: PropTypes.object,
+  optionalString: PropTypes.string.isRequired,
+}))
+endsnippet
+
+snippet rnPropTypesEnum "enum props type" b
+text: PropTypes.oneOf([
+  'Text_1',
+  'Text_2'
+])
 endsnippet
 
 snippet rnCreateClass "create class/component" b
@@ -370,13 +381,7 @@ export default class ${1:ClassName} extends React.Component {
     theProps: false,
   };
 
-  privateFunction () {
-  }
-
-  componentDidMount () {
-  }
-
-  componentWillReceiveProps () {
+  _privateFunction () {
   }
 
   render () {
@@ -389,28 +394,28 @@ export default class ${1:ClassName} extends React.Component {
 }
 
 $1.propTypes = {
-  optionalArray: React.PropTypes.array,
-  optionalBool: React.PropTypes.bool,
-  optionalFunc: React.PropTypes.func,
-  optionalNumber: React.PropTypes.number,
-  optionalObject: React.PropTypes.object,
-  optionalString: React.PropTypes.string.isRequired,
-  requiredAny: React.PropTypes.any.isRequired,
+  optionalFunc: PropTypes.func.isRequired,
+  optionalString: PropTypes.string.isRequired,
+  optionalObject: PropTypes.object.isRequired,
 }
 endsnippet
 
-snippet rnscu "should component update"
+snippet rnshouldComponentUpdate "should component update"
 shouldComponentUpdate (nextProps, nextState) {
 	${1}
 }$0
 endsnippet
 
-snippet rnprops "get property" i
+snippet rnp "get property" i
 this.props.${1}
 endsnippet
 
-snippet rnstate "get state" i
+snippet rns "get state" i
 this.state.${1}
+endsnippet
+
+snippet rnset "this.setState()" i
+this.setState({${1:var}: ${2:value}})
 endsnippet
 
 snippet rnFetch "Fetch sample"
@@ -434,3 +439,136 @@ fetch('https://mywebsite.com/endpoint/', {
 });
 endsnippet
 
+snippet timeout "Description" b
+setTimeout(()=> {
+}, ${1:550})
+endsnippet
+
+snippet log "console.log()" b
+console.log("${1:----> }"+"${2:msg}")
+endsnippet
+
+snippet rnCreateStatelessComponent "Simplified Custom Component" b
+import React { PropTypes } from 'react'
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+} from 'react-native'
+
+const styles = StyleSheet.create({
+  ${1:styleName}: {
+    height: 20,
+    padding: 20,
+    margin: 5,
+    backgroundColor: 'lightgray',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+})
+
+/**
+ * ${3:description}
+ */
+const ${2:Button} = (props) => {
+  const { children, onClick } = props
+
+  return (
+    <TouchableOpacity onPress={onClick} style={styles.$1}>
+      <Text>{children}</Text>
+    </TouchableOpacity>
+  )
+}
+
+Button.PropTypes = {
+  children: React.PropTypes.string.isRequired,
+  onClick: React.PropTypes.func.isRequired
+}
+
+export default $2
+endsnippet
+
+########## { Redux } ##########
+
+snippet reduxInit "combine reducers, create store" b
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+import * as reducers from './reducers'
+
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
+const reducer = combineReducers(reducers)
+const store = createStoreWithMiddleware(reducer)
+endsnippet
+
+snippet connect "redex connect export component" b
+import { connect } from 'react-redux'
+function mapStateToProps(state) {
+  return {
+    ${1:xxx}: state.$1
+  }
+}
+export default connect(mapStateToProps)(${2:component})
+endsnippet
+
+snippet connect-bind "redux connect and bind action" b
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import * as ${2:xxx}Actions from '../actions/$2Actions';
+export default connect((state) => ({
+    ${1:xxx}: state.$1
+}),
+(dispatch) => ({
+  actions: bindActionCreators($2Actions, dispatch)
+})
+)(${3:component})
+endsnippet
+
+snippet action "create redux action" b
+export function ${1:action}(${2:param}) {
+  return {
+    type: "com.tvguor.$1",
+    $2
+  }
+}
+endsnippet
+
+snippet action-async "create redux complex action" b
+export function ${1:action}(${2:param}) {
+  return (dispatch, getState) => {
+    const { ${3:theProps }} = getState()
+
+    /* ${4:do something here} */
+
+    dispatch(${5:anotherAction}())
+  }
+}
+endsnippet
+
+snippet reducer "create redux reducer" b
+// all types defined in one file and export seperately
+import ${1:xxxTypes} from '../actions/actionTypes'
+
+const initialState = {
+}
+
+export default function ${1:reducer}(state = initialState, action = {}) {
+  switch (action.type) {
+    case $1.type:
+      // cover one state
+      return {
+        ...state,
+        ${2:aState}: action.$2
+      }
+    case $1:type:
+      // create new state obj
+      return Object.assign({} , {
+      })
+    default:
+      return state;
+  }
+}
+endsnippet
