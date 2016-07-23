@@ -269,12 +269,13 @@ endsnippet
 
 # 2
 snippet rnImport "import react component"
-import React { PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import {
   View,
   Image,
   Text,
   StyleSheet,
+  PixelRatio,
   Dimensions,
   TouchableHighlight,
   TouchableWithoutFeedback,
@@ -401,8 +402,9 @@ $1.propTypes = {
 endsnippet
 
 snippet rnshouldComponentUpdate "should component update"
+var shallowCompare = require('react-addons-shallow-compare')
 shouldComponentUpdate (nextProps, nextState) {
-	${1}
+  return shallowCompare(this, nextProps, nextState)
 }$0
 endsnippet
 
@@ -449,11 +451,12 @@ console.log("${1:----> }"+"${2:msg}")
 endsnippet
 
 snippet rnCreateStatelessComponent "Simplified Custom Component" b
-import React { PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import {
   View,
   Image,
   Text,
+  PixelRatio,
   StyleSheet,
   TouchableHighlight,
   TouchableWithoutFeedback,
@@ -484,8 +487,8 @@ const ${2:Button} = (props) => {
 }
 
 Button.PropTypes = {
-  children: React.PropTypes.string.isRequired,
-  onClick: React.PropTypes.func.isRequired
+  children: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 }
 
 export default $2
@@ -571,4 +574,21 @@ export default function ${1:reducer}(state = initialState, action = {}) {
       return state;
   }
 }
+endsnippet
+
+snippet push "navigator push" b
+this.props.navigator.push({
+  screen: ${1:component},
+  title: "${2:xxx}",
+  passProps: {
+  },
+  backButtonTitle: " ",
+  navigatorStyle:{
+	tabBarHidden:true,
+  }
+})
+endsnippet
+
+snippet imp "import module" b
+import {${1:aModuleName}} from './${2:file}'
 endsnippet

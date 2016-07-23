@@ -197,6 +197,12 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
     alias tglog='git log'
     alias tglog-p='git log --pretty=format:"%h %s" --graph'
     alias tgcl='git clone '
+
+    # undo the last commit
+    alias tgr-soft='git reset --soft HEAD~'
+    # del the last commit
+    alias tgr-hard='git reset --hard HEAD~'
+
 #}
 
 
@@ -244,10 +250,12 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
     }
 # }
 
+# Move all the files (MyApp.app, MyApp-dSYM.dSYM and MyApp-Crash-log.crash) into a Folder
+# "djSymbolicatecrash [*.crash] [app] > output.txt"
 export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
 function djSymbolicatecrash() {
-    #djSymbolicatecrash [*.crash] [app]"
-    /Applications/Xcode.app/Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash $1 $2
+    #/Applications/Xcode.app/Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash $1 $2
+    /Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash $1 $2
 }
 
 # cp file then jump to dest dir
