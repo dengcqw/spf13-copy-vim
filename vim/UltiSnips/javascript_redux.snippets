@@ -1,0 +1,227 @@
+
+########## { Redux } ##########
+
+snippet reduxInit "combine reducers, create store" b
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+import * as reducers from './reducers'
+
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
+const reducer = combineReducers(reducers)
+const store = createStoreWithMiddleware(reducer)
+endsnippet
+
+snippet reduxConnect "redex connect export component" b
+import { connect } from 'react-redux'
+function mapStateToProps(state) {
+  return {
+    ${1:xxx}: state.$1
+  }
+}
+export default connect(mapStateToProps)(${2:component})
+endsnippet
+
+snippet reduxConnect-bind "redux connect and bind action" b
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import * as ${2:xxx}Actions from '../actions/$2Actions';
+export default connect((state) => ({
+  ${1:xxx}: state.$1
+}),
+(dispatch) => ({
+  actions: bindActionCreators($2Actions, dispatch)
+})
+)(${3:component})
+endsnippet
+
+snippet reduxAction "function return obj with type property" b
+export function ${1:action}(${2:param}) {
+  return {
+    type: "com.tvguor.$1",
+    $2
+  }
+}
+endsnippet
+
+snippet action-async "create redux complex action" b
+export function ${1:action}(${2:param}) {
+  return (dispatch, getState) => {
+    const { ${3:theProps }} = getState()
+
+    /* ${4:do something here} */
+
+    dispatch(${5:anotherAction}())
+  }
+}
+endsnippet
+
+snippet reducer "create redux reducer" b
+// all types defined in one file and export seperately
+import ${1:xxxTypes} from '../actions/actionTypes'
+
+const initialState = {
+}
+
+export default function ${1:named}Reducer(state = initialState, action = {}) {
+  switch (action.type) {
+    case $1.type:
+      // cover one state
+      return {
+        ...state,
+        ${2:aState}: action.$2
+      }
+    case $1:type:
+      // create new state obj
+      return Object.assign({} , {
+      })
+    default:
+      return state;
+  }
+}
+endsnippet
+
+snippet reduxMiddlewareDemo "how to create a middleware" b
+const $(1:named)Middleware = function ({ dispatch, getState }) {
+  // console.log('Enter ${1}Middleware');
+  return function(next) {
+    // console.log('Function "next" provided:', next);
+    return function (action) {
+      // console.log('Handling action:', action);
+      return typeof action === 'function' ?
+        action(dispatch, getState) :
+        next(action)
+    }
+  }
+}
+
+function logMiddleware ({ dispatch, getState }) {
+  return function(next) {
+    return function (action) {
+      console.log('logMiddleware action received:', action)
+      return next(action)
+    }
+  }
+}
+endsnippet
+
+snippet reduxPromissMiddleware "promiss Middleware" b
+export default function promiseMiddleware() {
+  return (next) => (action) => {
+    const { promise, types, ...rest } = action
+
+    if (!promise) {
+      return next(action)
+    }
+
+    const [REQUEST, SUCCESS, FAILURE] = types
+
+    next({...rest, type: REQUEST})
+
+    return promise().then(
+      (result) => {
+        next({...rest, result, type: SUCCESS})
+      },
+      (error) => {
+        next({...rest, error, type: FAILURE})
+      }
+    )
+  }
+}
+endsnippet
+
+snippet reduxReducer "create reducer" b
+export default function ${1:xxxReducer}(state, action) {
+  switch (action.type) {
+    case DECREMENT:
+      return state - 1
+    case INCREMENT:
+      return state + 1
+    default:
+      return state
+  }
+}
+endsnippet
+
+snippet reduxHighOrderReducerDemo "reducer demo" b
+inputReducer = function(state={}, action) {
+  if (action.type === 'ON_CHANGE') {
+    return {
+      ...state,
+      [action.field]: action.value
+    };
+  }
+  return state;
+}
+
+formReducer = function(state={}, action) {
+  const { form, ...rest } = action;
+  if (form) {
+    return {
+      ...state,
+      [form]: inputReducer(state[form], rest)
+    };
+  }
+
+  return state
+}
+
+inputOnChangeAction = function(form, field, value) {
+  return {
+    type: 'ON_CHANGE', form, field, value
+  };
+}
+endsnippet
+
+snippet reduxHighOrderReducerDemo_1 "reducer demo" b
+function list(reducer, actionTypes) {
+  return function (state = [], action) {
+    switch (action.type) {
+    case actionTypes.add:
+      return [...state, reducer(undefined, action)];
+    case actionTypes.remove:
+      return [...state.slice(0, action.index), ...state.slice(action.index + 1)];
+    default:
+      const { index, ...rest } = action;
+      if (typeof index !== 'undefined') {
+        return state.map(item => reducer(item, rest));
+      }
+      return state;
+    }
+  }
+}
+
+function counter(state = 0, action) {
+  switch (action.type) {
+  case 'INCREMENT':
+    return counter + 1;
+  case 'DECREMENT':
+    return counter - 1;
+  }
+}
+
+const listOfCounters = list(counter, {
+  add: 'ADD_COUNTER',
+  remove: 'REMOVE_COUNTER'
+});
+
+const store = createStore(listOfCounters);
+store.dispatch({
+  type: 'ADD_COUNTER'
+});
+store.dispatch({
+  type: 'INCREMENT',
+  index: 0
+});
+
+const reducer = combineReducers({
+  counterList: list(counter, {
+    add: 'ADD_COUNTER',
+    remove: 'REMOVE_COUNTER'
+  }),
+  todoList: list(counter, {
+    add: 'ADD_TODO',
+    remove: 'REMOVE_TODO'
+  }),
+});
+endsnippet

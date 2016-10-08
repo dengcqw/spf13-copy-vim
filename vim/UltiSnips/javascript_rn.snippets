@@ -494,88 +494,6 @@ Button.PropTypes = {
 export default $2
 endsnippet
 
-########## { Redux } ##########
-
-snippet reduxInit "combine reducers, create store" b
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
-import * as reducers from './reducers'
-
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
-const reducer = combineReducers(reducers)
-const store = createStoreWithMiddleware(reducer)
-endsnippet
-
-snippet connect "redex connect export component" b
-import { connect } from 'react-redux'
-function mapStateToProps(state) {
-  return {
-    ${1:xxx}: state.$1
-  }
-}
-export default connect(mapStateToProps)(${2:component})
-endsnippet
-
-snippet connect-bind "redux connect and bind action" b
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
-import * as ${2:xxx}Actions from '../actions/$2Actions';
-export default connect((state) => ({
-    ${1:xxx}: state.$1
-}),
-(dispatch) => ({
-  actions: bindActionCreators($2Actions, dispatch)
-})
-)(${3:component})
-endsnippet
-
-snippet action "create redux action" b
-export function ${1:action}(${2:param}) {
-  return {
-    type: "com.tvguor.$1",
-    $2
-  }
-}
-endsnippet
-
-snippet action-async "create redux complex action" b
-export function ${1:action}(${2:param}) {
-  return (dispatch, getState) => {
-    const { ${3:theProps }} = getState()
-
-    /* ${4:do something here} */
-
-    dispatch(${5:anotherAction}())
-  }
-}
-endsnippet
-
-snippet reducer "create redux reducer" b
-// all types defined in one file and export seperately
-import ${1:xxxTypes} from '../actions/actionTypes'
-
-const initialState = {
-}
-
-export default function ${1:reducer}(state = initialState, action = {}) {
-  switch (action.type) {
-    case $1.type:
-      // cover one state
-      return {
-        ...state,
-        ${2:aState}: action.$2
-      }
-    case $1:type:
-      // create new state obj
-      return Object.assign({} , {
-      })
-    default:
-      return state;
-  }
-}
-endsnippet
-
 snippet push "navigator push" b
 this.props.navigator.push({
   screen: ${1:component},
@@ -591,4 +509,8 @@ endsnippet
 
 snippet imp "import module" b
 import {${1:aModuleName}} from './${2:file}'
+endsnippet
+
+snippet ref "ref prop"
+ref={component => this._${1:textInput}= component}
 endsnippet

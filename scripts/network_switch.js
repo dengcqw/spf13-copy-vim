@@ -41,8 +41,9 @@ child_process.exec('networksetup -listlocations', function (err, stdout, stderr)
         var index = Number(data);
         if (index < locations.length) {
             console.log(locations[index]);
-            child_process.exec('sudo networksetup -switchtolocation '+locations[index], function (err, stdout, stderr) {});
-            process.exit(0);
+            child_process.exec('sudo networksetup -switchtolocation '+locations[index], function (err, stdout, stderr) {
+              process.exit(0);
+            });
         } else {
             console.log('Error Index\nSelect Location Index: (0 or 1)');
         }

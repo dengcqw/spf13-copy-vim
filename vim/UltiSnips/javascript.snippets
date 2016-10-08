@@ -51,3 +51,15 @@ helper.byPass(function(){
 	${2://code}
 });// end of helper.byPass()
 endsnippet
+
+snippet subscribeDemo "how to implement subscribe func" b
+var listeners = [];
+function subscribe(listener) {
+  listeners.push(listener);
+
+  return function unsubscribe() {
+    var index = listeners.indexOf(listener);
+    listeners.splice(index, 1);
+  };
+}
+endsnippet
