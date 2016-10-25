@@ -624,7 +624,8 @@
     " }
 
     " JSON {
-        nnoremap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
+        "nnoremap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
+        " vim_json
         let g:vim_json_syntax_conceal = 0
     " }
 

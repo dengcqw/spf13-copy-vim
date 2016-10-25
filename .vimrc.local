@@ -372,6 +372,7 @@ augroup END
 
     "Bind the BufSel() function to a user-command
     command! -nargs=1 Bs :call BufSel("<args>")
+    noremap <leader>bs :Bs
 "}
 
 set foldlevelstart=1
@@ -500,6 +501,8 @@ set foldlevelstart=1
 
 " Easy motion {
     let g:EasyMotion_smartcase = 1
+    let g:EasyMotion_off_screen_search = 0
+    let g:EasyMotion_disable_two_key_combo = 1
     " 行级跳转(jk)
     map <Leader>j <Plug>(easymotion-j)
     map <Leader>k <Plug>(easymotion-k)

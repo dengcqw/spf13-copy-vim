@@ -1,0 +1,29 @@
+
+snippet ramdaSampleGroup "find groups with same properties" b
+var layers = [
+  {id:1, type:'xxx', source:'a'},
+  {id:2, type:'yyy', source:'b'},
+  {id:3, type:'zzz', source:'c'},
+  {id:4, type:'zzz', source:'c'},
+  {id:5, type:'yyy', source:'b'},
+]
+
+var refProps = ['type', 'source']
+// takes a layer object, returns a stripped-down version
+var pickRequired = R.pick(refProps)
+var getRefHash = R.compose(JSON.stringify.bind(JSON), pickRequired)
+var grouped = R.groupBy(getRefHash, layers)
+var getValues = R.values(grouped)
+var filtered = getValues.filter(R.compose(R.lt(1), R.length))
+var candidates = filtered.map(R.pluck('id'))
+//find groups of more than one layer that have a specific set of properties in common from given a list
+console.log("----> "+R.toString(candidates))
+
+endsnippet
+
+snippet ramdaTransformProp "sample for transform prop" b
+const nextAge = compose(inc, prop('age'))
+const celebrateBirthday = person => assoc('age', nextAge(person), person)
+//or
+const celebrateBirthday = evolve({ age: inc })
+endsnippet

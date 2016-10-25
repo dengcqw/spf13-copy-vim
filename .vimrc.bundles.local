@@ -17,7 +17,7 @@
         Bundle 'FelikZ/ctrlp-py-matcher'
     " }
     " iOS dev {
-        Bundle 'kentaroi/cocoa.vim'
+        "Bundle 'kentaroi/cocoa.vim'
         "Bundle 'qqshfox/objc_matchbracket'
         "Bundle 'vim-scripts/a.vim'
         "witching Header Files
@@ -34,7 +34,7 @@
     " API REST
     "Bundle 'diepm/vim-rest-console'
 
-    Bundle 'rizzatti/dash.vim'
+    "Bundle 'rizzatti/dash.vim'
 
     " Highlight the term under the cursor
     Bundle 'qstrahl/vim-matchmaker'
@@ -54,7 +54,7 @@
     "                                " no indent file, fork of jelera
     " The "for" is required so the syntax registers on filetype, otherwise
     " yajs has trouble overriding the default js syntax due to runtime order
-    Bundle 'othree/yajs.vim', { 'for': 'javascript' }
+    "Bundle 'othree/yajs.vim', { 'for': 'javascript' }
     " ----------------------------------------
     " Syntax Addons
     " ----------------------------------------
@@ -65,8 +65,8 @@
     "'jiangmiao/simple-javascript-indenter'   " Alternative js indent
     "'jason0x43/vim-js-indent'                " Use HTML's indenter with
     " TypeScript support
-    Bundle 'gavocanov/vim-js-indent', { 'for': 'javascript' }
+    "Bundle 'gavocanov/vim-js-indent', { 'for': 'javascript' }
     " extends syntax for with jQuery,backbone,etc.
-    Bundle 'othree/javascript-libraries-syntax.vim'
+    "Bundle 'othree/javascript-libraries-syntax.vim'
     " After syntax, ftplugin, indent for JSX
-    Bundle 'mxw/vim-jsx'
+    "Bundle 'mxw/vim-jsx'
