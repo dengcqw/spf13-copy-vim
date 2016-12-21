@@ -50,7 +50,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins
-plugins=(git brew common-alias dirhistory encode64 github history jsontools npm osx sudo urltools vi-mode web-search)
+plugins=(git brew common-alias dirhistory encode64 github history jsontools npm osx sudo urltools vi-mode xcode)
 
 # User configuration
 
@@ -139,7 +139,7 @@ alias -s plist=mvim
 
     alias djCopyPath='sh ~/spf13-copy-vim/bin/copy-file-path '
 
-    alias carthage-ios='$brew_path/carthage/0.15/bin/carthage build --platform iOS'
+    alias carthage-ios='$brew_path/carthage/0.18.1/bin/carthage update --platform iOS'
     alias srczshrc='source ~/.zshrc'
 
     alias djSwitchNetork='node ~/spf13-copy-vim/scripts/network_switch.js'
@@ -272,4 +272,20 @@ function djmv() {
 
 function djcd() {
      cd $@; ls;
+}
+
+function djpwd() {
+     djpwdpath=`pwd`
+     echo $djpwdpath
+     echo $djpwdpath | clipcopy
+}
+
+# very useful tips
+
+function vim-linedelete() {
+     echo ":g/pattern/d  # delete lines that contain [pattern]"
+     echo ":v/pattern/d or :g!/pattern/d  # delete lines that not contain [pattern]"
+     echo ":g/^$/d      # delete empty lines"
+     echo ":%s/^.*\(pattern\).*$/\1/g   # delete other words except [pattern]"
+     echo "g/str1/,/str2/d      ## delete lines between line with [str1] and line with [str2]"
 }
