@@ -1,0 +1,2 @@
+{ Filter = { Bundles = ( "com.tencent.xin", "com.iqiyi.reliao" ); }; }
+
