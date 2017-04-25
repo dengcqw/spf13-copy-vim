@@ -1,28 +1,64 @@
 
 ########## { Redux } ##########
 
-snippet reduxInit "combine reducers, create store" b
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
-import * as reducers from './reducers'
+snippet rdCreateStore "redux create store with enhancer, saga, rxjs" b
+import 'rxjs'
+import { createStore, applyMiddleware, compose } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+import { createEpicMiddleware } from 'redux-observable'
+//import DevTools from 'redux-devtools' /* tools like chrome extension */
 
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
-const reducer = combineReducers(reducers)
-const store = createStoreWithMiddleware(reducer)
+import rootReducer from './reducers'
+import rootSaga from './sagas'
+import rootEpic from './epics'
+
+let sagaOptions =  {}
+if (process.env.NODE_ENV !== 'production')
+  sagaOptions = {sagaMonitor}
+}
+
+const sagaMiddleware = createSagaMiddleware(sagaOptions)
+const epicMiddleware = createEpicMiddleware(rootEpic);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+  rootReducer,
+  composeEnhancers( /* if only Middleware, not need compose */
+    applyMiddleware(
+      epicMiddleware,
+      sagaMiddleware,
+    ),
+    //DevTools.instrument()
+  )
+)
+sagaMiddleware.run(rootSaga)
 endsnippet
 
-snippet reduxConnect "redex connect export component" b
+snippet rdCombine "redux combine reducers" b
+import { combineReducers } from 'redux'
+import todos from './todos'
+import counter from './counter'
+
+export default combineReducers({
+  todos,
+  counter
+})
+endsnippet
+
+snippet rdConnect "redex connect export component" b
 import { connect } from 'react-redux'
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
+  ${1:xxx}: state.$1
+}
+const mapDispatchToProps = (dispatch) => {
   return {
-    ${1:xxx}: state.$1
+    todoActions: bindActionCreators(todoActionCreators, dispatch)
   }
 }
-export default connect(mapStateToProps)(${2:component})
+export default connect(mapStateToProps, mapDispatchToProps)(${2:component})
 endsnippet
 
-snippet reduxConnect-bind "redux connect and bind action" b
+snippet rcConnect-bind "map state and map dispatch" b
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import * as ${2:xxx}Actions from '../actions/$2Actions';
@@ -35,7 +71,7 @@ export default connect((state) => ({
 )(${3:component})
 endsnippet
 
-snippet reduxAction "function return obj with type property" b
+snippet rdAction "action creator" b
 export function ${1:action}(${2:param}) {
   return {
     type: "com.tvguor.$1",
@@ -44,19 +80,17 @@ export function ${1:action}(${2:param}) {
 }
 endsnippet
 
-snippet action-async "create redux complex action" b
+snippet rdActionAsync "create async redux action" b
 export function ${1:action}(${2:param}) {
   return (dispatch, getState) => {
     const { ${3:theProps }} = getState()
-
     /* ${4:do something here} */
-
     dispatch(${5:anotherAction}())
   }
 }
 endsnippet
 
-snippet reducer "create redux reducer" b
+snippet rdReducerFileTemplate "redux reducer file template" b
 // all types defined in one file and export seperately
 import ${1:xxxTypes} from '../actions/actionTypes'
 
@@ -81,7 +115,7 @@ export default function ${1:named}Reducer(state = initialState, action = {}) {
 }
 endsnippet
 
-snippet reduxMiddlewareDemo "how to create a middleware" b
+snippet rdMiddlewareDemo "redux how to create a middleware" b
 const $(1:named)Middleware = function ({ dispatch, getState }) {
   // console.log('Enter ${1}Middleware');
   return function(next) {
@@ -105,7 +139,7 @@ function logMiddleware ({ dispatch, getState }) {
 }
 endsnippet
 
-snippet reduxPromissMiddleware "promiss Middleware" b
+snippet rdPromissMiddleware "redux promiss Middleware" b
 export default function promiseMiddleware() {
   return (next) => (action) => {
     const { promise, types, ...rest } = action
@@ -130,8 +164,8 @@ export default function promiseMiddleware() {
 }
 endsnippet
 
-snippet reduxReducer "create reducer" b
-export default function ${1:xxxReducer}(state, action) {
+snippet rdReducer "redux create reducer" b
+export function ${1:xxxReducer}(state, action) {
   switch (action.type) {
     case DECREMENT:
       return state - 1
@@ -143,7 +177,7 @@ export default function ${1:xxxReducer}(state, action) {
 }
 endsnippet
 
-snippet reduxHighOrderReducerDemo "reducer demo" b
+snippet rdHighOrderReducerDemo "redux reducer demo" b
 inputReducer = function(state={}, action) {
   if (action.type === 'ON_CHANGE') {
     return {
@@ -173,7 +207,7 @@ inputOnChangeAction = function(form, field, value) {
 }
 endsnippet
 
-snippet reduxHighOrderReducerDemo_1 "reducer demo" b
+snippet rdHighOrderReducerDemo_1 "redux reducer demo" b
 function list(reducer, actionTypes) {
   return function (state = [], action) {
     switch (action.type) {
@@ -224,4 +258,10 @@ const reducer = combineReducers({
     remove: 'REMOVE_TODO'
   }),
 });
+endsnippet
+
+snippet rdProvider "react-redux Provider" b
+<Provider store={store}>
+    <App />
+</Provider>
 endsnippet

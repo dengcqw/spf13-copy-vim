@@ -134,6 +134,8 @@ alias -s plist=mvim
       --userconfig=$HOME/.cnpmrc"
 
     alias npmi="npm install --save "
+    alias ns='npm start'
+    alias ni='node-inspector --web-port 8082 &'
 
     alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 
@@ -143,6 +145,7 @@ alias -s plist=mvim
     alias srczshrc='source ~/.zshrc'
 
     alias djSwitchNetork='node ~/spf13-copy-vim/scripts/network_switch.js'
+
 #}
 
 # brew install coreutils
@@ -199,10 +202,14 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
     alias tgcl='git clone '
 
     # undo the last commit
-    alias tgr-soft='git reset --soft HEAD~'
+    alias tgr-soft='git reset --soft HEAD~' # 用于未提交到服务器上的commit
     # del the last commit
     alias tgr-hard='git reset --hard HEAD~'
+    alias tgrevert='git revert HEAD~'  # 用一次新的commit来回滚之前的commit, 用于已经提交到服务器上的commit
 
+    alias tgreview='git push origin HEAD:refs/for/master'
+    alias tgpatch='git format-patch -1 HEAD'
+    alias tgpushforce='git push --force' # dangerous
 #}
 
 

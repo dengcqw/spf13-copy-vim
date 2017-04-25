@@ -1,6 +1,6 @@
 [user]
-	name = DengJinlong
-	email = dengjinlong@pingan.com.cn
+	name = dengjinlong
+	email = dengjinlong@qiyi.com
 [filter "media"]
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f

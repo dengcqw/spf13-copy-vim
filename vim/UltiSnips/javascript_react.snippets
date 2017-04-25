@@ -1,0 +1,63 @@
+snippet rjImport "import react and react-dom" b
+import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
+import './${1:stylefile}.css'
+endsnippet
+
+snippet rjRender "ReactDOM.render" b
+ReactDOM.render(
+  <App />,
+  document.getElementById('app')
+)
+endsnippet
+
+snippet rjCreateClass "create class/component" b
+export default class ${1:ClassName} extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+        ${2:aState}: this.props.${3:theProps},
+    }
+  }
+
+  static defaultProps = {
+    theProps: false,
+  }
+  static propTypes = {
+    theProps: PropTypes.object.isRequired
+  }
+
+  privateFunction_1 = ()=>{ // auto bind
+    // state function demo
+    this.setState((prevState) => {
+      return { count: prevState.count + 1 }
+    })
+  }
+  privateFunction_2 (param, event) {
+  }
+
+  render () {
+    return (
+      <div style={{flex:1}}>
+        <h1 onClick={this.privateFunction_2.bind(this, 'first param')}>React</h1>
+        <input ref={(input) => this.input = input} />
+      </div>
+    );
+  }
+}
+
+$1.propTypes = {
+  optionalFunc: PropTypes.func.isRequired,
+  optionalString: PropTypes.string.isRequired,
+  optionalObject: PropTypes.object.isRequired,
+}
+endsnippet
+
+snippet rjStateLessComponent "stateless component" b
+const HelloWorld = (props) => {
+  const sayHi = (event) => alert('Hello World')
+  return (
+    <div onClick={sayHi}>Hello World</div>
+  )
+}
+endsnippet

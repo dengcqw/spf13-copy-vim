@@ -1,0 +1,468 @@
+# redux-saga usage and generator-yield usage
+
+snippet sgCreate "create saga middleware" b
+import { createStore, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+
+import reducer from './reducers'
+import rootSaga from './sagas'
+
+
+const sagaMiddleware = createSagaMiddleware({sagaMonitor})
+const store = createStore(
+  reducer,
+  applyMiddleware(sagaMiddleware)
+)
+sagaMiddleware.run(rootSaga)
+endsnippet
+
+snippet sgRunSaga "custom saga inout/output out of redux env" b
+import { runSaga } from 'redux-saga'
+
+function* saga() { ... }
+
+const myIO = {
+  subscribe: ..., // 用于解决 take Effects
+  dispatch: ...,  // 用于解决 put Effects
+  getState: ...,  // 用于解决 select Effects
+}
+
+runSaga(
+  saga(),
+  myIO
+)
+endsnippet
+
+snippet sgGenerator "simple saga generator template" b
+function* saga() {
+  try {
+     yield call(someApi)
+     yield put(SuccessAction())
+  } catch(err) {
+     yield put(ErrorAction())
+  } finally {
+     if(yield cancelled()) {
+       // logic proper to cancellation
+    }
+  }
+}
+endsnippet
+
+snippet sgFileTemplate "a saga file template with fetch demo" b
+import { call, put, takeEvery, takeLatest, cancelled } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
+import Api from '...'
+
+// worker Saga: will be fired on USER_FETCH_REQUESTED actions
+function* ${1:fetchUser}(action) {
+   try {
+      const user = yield call(Api.fetchUser, action.payload.userId);
+      yield put({type: "USER_FETCH_SUCCEEDED", user: user});
+   } catch (e) {
+      yield put({type: "USER_FETCH_FAILED", message: e.message});
+   } finally {
+     if(yield cancelled()) {
+       // logic proper to cancellation
+     }
+   }
+}
+
+function* watch${2:FetchUser}() {
+   yield takeEvery("USER_FETCH_REQUESTED", $1);
+  // or
+  // yield takeLatest("USER_FETCH_REQUESTED", fetchUser);
+}
+
+export default watch$2;
+endsnippet
+
+snippet sgRootFileTemplate "root saga file template" b
+import { ${1:task1} } from '../saga1'
+import { ${2:task2} } from '../saga2'
+
+export default function* rootSaga() {
+  yield [
+    fork($1),
+    fork($2),
+  ]
+}
+endsnippet
+
+snippet sgCallUsage "call effect usage" b
+const result = yield call(fn, arg1, arg2, ...)
+// as if we did obj.method(arg1, arg2 ...)
+const result = yield call([obj, obj.method], arg1, arg2, ...)
+const result = yield apply(obj, obj.method, [arg1, arg2, ...])
+// cps can be used to handle Node style functions
+// eg: fn(...args, (error, result) => ())
+const result = yield cps(readFile, '/path/to/file')
+endsnippet
+
+snippet sgCall "saga call statement" b
+const content = yield call(${1:Api.fetch}, ${2:params})
+endsnippet
+
+snippet sgPut "saga put statement" b
+yield put({ type: '${1:PRODUCTS_RECEIVED}', ${2:payload} })
+endsnippet
+
+snippet sgErrorDemo "process error without try-catch" b
+function fetchProductsApi() {
+  return Api.fetch('/products')
+    .then(response => ({ response }))
+    .catch(error => ({ error }))
+}
+function* fetchProducts() {
+  const { response, error } = yield call(fetchProductsApi)
+  if (response)
+    yield put({ type: 'PRODUCTS_RECEIVED', products: response })
+  else
+    yield put({ type: 'PRODUCTS_REQUEST_FAILED', error })
+}
+endsnippet
+
+snippet sgTake "saga take statement" b
+const action = yield take('${1:TODO_CREATED}')
+endsnippet
+
+snippet sgTakeUsage "demos: log, frequency ctrl, login flow" b
+function* watchAndLog() {
+  while (true) { // `takeEvery` uses while and take.
+    const action = yield take('*')
+    const state = yield select()
+
+    console.log('action', action)
+    console.log('state after', state)
+  }
+}
+function* watchFirstThreeTodosCreation() {
+  for (let i = 0; i < 3; i++) {
+    const action = yield take('TODO_CREATED')
+  }
+  yield put({type: 'SHOW_CONGRATULATION'})
+}
+function* loginFlow() {
+  while (true) {
+    yield take('LOGIN')
+    // ... perform the login logic
+    yield take('LOGOUT')
+    // ... perform the logout logic
+  }
+}
+endsnippet
+
+snippet sgLoginflowDemo "demo for login and fork" b
+import { take, put, call, fork, cancel } from 'redux-saga/effects'
+
+function* authorize(user, password) {
+  try {
+    const token = yield call(Api.authorize, user, password)
+    yield put({type: 'LOGIN_SUCCESS', token})
+    yield call(Api.storeItem, {token})
+    return token
+  } catch(error) {
+    yield put({type: 'LOGIN_ERROR', error})
+  } finally {
+    if (yield cancelled()) {
+      // ... put special cancellation handling code here
+    }
+  }
+}
+
+function* loginFlow() {
+  while (true) {
+    const {user, password} = yield take('LOGIN_REQUEST')
+    // fork return a Task object
+    const task = yield fork(authorize, user, password)
+    const action = yield take(['LOGOUT', 'LOGIN_ERROR'])
+    if (action.type === 'LOGOUT')
+      yield cancel(task)
+    yield call(Api.clearItem, 'token')
+  }
+}
+endsnippet
+
+snippet sgCallParallel "exec call effects in parallel" b
+// automatic cancellation with one call failure
+const [users, repos]  = yield [
+  call(fetch, '/users'),
+  call(fetch, '/repos')
+]
+endsnippet
+
+snippet sgRace "exec call effects in race like Promise.race" b
+const {posts, timeout} = yield race({
+  posts: call(fetchApi, '/posts'),
+  timeout: call(delay, 1000)
+})
+endsnippet
+
+snippet sgBgTaskDemo-race "cancelable bg task demo use race effect" b
+import { race, take, put } from 'redux-saga/effects'
+
+function* backgroundTask() {
+ try {
+    while (true) {
+      yield put(actions.requestStart())
+      const result = yield call(someApi)
+      yield put(actions.requestSuccess(result))
+      yield call(delay, 5000)
+    }
+  } finally {
+    if (yield cancelled())
+      yield put(actions.requestFailure('Sync cancelled!'))
+  }
+}
+
+function* watchStartBackgroundTask() {
+  while (true) {
+    yield take('START_BACKGROUND_TASK')
+    yield race({
+      task: call(backgroundTask),
+      cancel: take('CANCEL_TASK')
+    })
+  }
+}
+endsnippet
+
+snippet sgBgTaskDemo-fork "cancelable bg task demo use fork effect" b
+import { take, put, call, fork, cancel, cancelled } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
+import { someApi, actions } from 'somewhere'
+
+function* bgSync() {
+  try {
+    while (true) {
+      yield put(actions.requestStart())
+      const result = yield call(someApi)
+      yield put(actions.requestSuccess(result))
+      yield call(delay, 5000)
+    }
+  } finally {
+    if (yield cancelled())
+      yield put(actions.requestFailure('Sync cancelled!'))
+  }
+}
+
+function* main() {
+  while ( yield take(START_BACKGROUND_SYNC) ) {
+    // starts the task in the background
+    const bgSyncTask = yield fork(bgSync)
+
+    // wait for the user stop action
+    yield take(STOP_BACKGROUND_SYNC)
+    // user clicked stop. cancel the background task
+    // this will cause the forked bgSync task to jump into its finally block
+    yield cancel(bgSyncTask)
+  }
+}
+endsnippet
+
+snippet sgSerialAction-channel "serially process action with actionChannel" b
+import { buffers } from 'redux-saga'
+import { take, actionChannel, call, ... } from 'redux-saga/effects'
+
+function* watchRequests() {
+  // 1- Create a channel for request actions
+  const requestChan = yield actionChannel('REQUEST', buffers.sliding(5))
+  while (true) {
+    // 2- take from the channel
+    const {payload} = yield take(requestChan)
+    // 3- Note that we're using a blocking call
+    yield call(handleRequest, payload)
+  }
+}
+
+function* handleRequest(payload) { ... }
+endsnippet
+
+snippet sgCountDown-eventChannel "countdown demo with eventChannel" b
+import { take, put, call } from 'redux-saga/effects'
+import { eventChannel, END } from 'redux-saga'
+
+function countdown(secs) {
+  return eventChannel(emitter => {
+      const iv = setInterval(() => {
+        secs -= 1
+        if (secs > 0) {
+          emitter(secs)
+        } else {
+          // this causes the channel to close
+          emitter(END)
+          clearInterval(iv)
+        }
+      }, 1000);
+      // The subscriber must return an unsubscribe function
+      return () => {
+        clearInterval(iv)
+      }
+    }
+  )
+}
+
+export function* saga() {
+  const chan = yield call(countdown, value)
+  try {
+    while (true) {
+      // take(END) will cause the saga to terminate by jumping to the finally block
+      let seconds = yield take(chan)
+      console.log(`countdown: ${seconds}`)
+    }
+  } finally {
+    if (yield cancelled()) {
+      chan.close()
+      console.log('countdown cancelled') // cancel effect
+    } else {
+      console.log('countdown terminated')// emitter(END)
+    }
+  }
+}
+endsnippet
+
+snippet sgSocketDemo "ping-pong socket demo use eventChannel" b
+import { take, put, call, apply } from 'redux-saga/effects'
+import { eventChannel, delay } from 'redux-saga'
+import { createWebSocketConnection } from './socketConnection'
+
+// this function creates an event channel from a given socket
+// Setup subscription to incoming `ping` events
+function createSocketChannel(socket) {
+  // `eventChannel` takes a subscriber function
+  // the subscriber function takes an `emit` argument to put messages onto the channel
+  return eventChannel(emit => {
+
+    const pingHandler = (event) => {
+      // puts event payload into the channel
+      // this allows a Saga to take this payload from the returned channel
+      emit(event.payload)
+    }
+
+    // setup the subscription
+    socket.on('ping', pingHandler)
+
+    // the subscriber must return an unsubscribe function
+    // this will be invoked when the saga calls `channel.close` method
+    const unsubscribe = () => {
+      socket.off('ping', pingHandler)
+    }
+
+    return unsubscribe
+  })
+}
+
+// reply with a `pong` message by invoking `socket.emit('pong')`
+function* pong(socket) {
+  yield call(delay, 5000)
+  yield apply(socket, socket.emit, ['pong']) // call `emit` as a method with `socket` as context
+}
+
+export function* watchOnPings() {
+  const socket = yield call(createWebSocketConnection)
+  const socketChannel = yield call(createSocketChannel, socket)
+
+  while (true) {
+    const payload = yield take(socketChannel)
+    yield put({ type: INCOMING_PONG_PAYLOAD, payload })
+    yield fork(pong, socket)
+  }
+}
+endsnippet
+
+snippet sgChannelDemo "use channel for communication between sagas" b
+import { channel } from 'redux-saga'
+import { take, fork, ... } from 'redux-saga/effects'
+
+function* watchRequests() {
+  // create a channel to queue incoming requests
+  const chan = yield call(channel)
+
+  // create 3 worker 'threads'
+  for (var i = 0; i < 3; i++) {
+    yield fork(handleRequest, chan)
+  }
+
+  while (true) {
+    const {payload} = yield take('REQUEST')
+    yield put(chan, payload)
+  }
+}
+
+function* handleRequest(chan) {
+  while (true) {
+    const payload = yield take(chan)
+    // process the request
+  }
+}
+endsnippet
+
+snippet sgThrottleUsage "saga throttle usage" b
+import { throttle } from 'redux-saga'
+function* handleInput(input) { }
+function* watchInput() {
+  yield throttle(500/*ms*/, 'INPUT_CHANGED', handleInput)
+}
+endsnippet
+
+snippet sgDebounce-Delay "debounce a sequence with delay" b
+import { delay } from 'redux-saga'
+
+function* handleInput(input) {
+  // debounce by 500ms
+  yield call(delay, 500)
+  ...
+}
+
+function* watchInput() {
+  let task
+  while (true) {
+    const { input } = yield take('INPUT_CHANGED')
+    if (task) {
+      yield cancel(task)
+    }
+    task = yield fork(handleInput, input)
+  }
+  // or use below only
+  // yield takeLatest('INPUT_CHANGED', handleInput);
+}
+endsnippet
+
+snippet sgRetryFetchDemo "retry a fetch use a for loop with a delay" b
+import { delay } from 'redux-saga'
+
+function* updateApi(data) {
+  for(let i = 0; i < 5; i++) {
+    try {
+      const apiResponse = yield call(apiRequest, { data });
+      return apiResponse;
+    } catch(err) {
+      if(i < 5) {
+        yield call(delay, 2000);
+      }
+    }
+  }
+  // attempts failed after 5x2secs
+  throw new Error('API request failed');
+}
+
+export default function* updateResource() {
+  while (true) {
+    const { data } = yield take('UPDATE_START');
+    try {
+      const apiResponse = yield call(updateApi, data);
+      yield put({
+        type: 'UPDATE_SUCCESS',
+        payload: apiResponse.body,
+      });
+    } catch (error) {
+      yield put({
+        type: 'UPDATE_ERROR',
+        error
+      });
+    }
+  }
+}
+endsnippet
+
+snippet sgUndoDemo "one-time undo with delay and race" b
+see https://redux-saga.js.org/docs/recipes/index.htmlendsnippet
+endsnippet
