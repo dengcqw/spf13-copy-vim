@@ -126,6 +126,7 @@ alias -s plist=mvim
 
     export EDITOR=mvim
     alias pushToGithub='git push -u origin master'
+    alias ptg='git push -u origin master'
 
     #alias for cnpm
     alias cnpm="npm --registry=https://registry.npm.taobao.org \
@@ -185,19 +186,31 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
 
 # Git short key {
     alias tgst='git status'
+    alias tgs='git status'
+
     alias tgpl='git pull'
+    alias tgp='git pull'
+
     alias tgps='git push'
+
     alias tgdf='git diff'
+    alias tgd='git diff'
+
     alias tgadd='git add'
-    alias tgcmt='git commit -v'
-    alias tgcmt-a='git commit -v -a'
+    alias tga='git add'
+
+    alias tgc='git commit -v'
+    alias tgc-a='git commit -v -a'
+
     alias tgbr='git branch'
+    alias tgb='git branch'
     alias tgbr-a='git branch -a'
     alias tgco='git checkout'
     alias tgco-b='git checkout -b'
     alias tgco-t='git checkout -t'
     alias tgco-tb='git checkout --track -b'
     alias tglog='git log'
+    alias tgl='git log'
     alias tglog-p='git log --pretty=format:"%h %s" --graph'
     alias tgcl='git clone '
 
