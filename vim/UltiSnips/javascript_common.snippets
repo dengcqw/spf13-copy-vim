@@ -25,3 +25,13 @@ export default function wrapAction(action, reducerKey) {
   };
 }
 endsnippet
+
+snippet timeout "setTimeout" b
+setTimeout(()=> {
+}, ${1:550})
+endsnippet
+
+snippet log "console.log()"
+console.log("----> ${1:msg}", ${2:obj})
+endsnippet
+

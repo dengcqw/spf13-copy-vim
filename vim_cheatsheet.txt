@@ -25,6 +25,7 @@ Ctrlp                                 Y     复制到行尾
 Surround                              vp   replace a word
     ds/cs delete/change               gf   同目录下文件跳转
     yss  the whole line               K    大写，搜索光标下单词
+    ysiw] = ys iw ]
     S   visual mode                   zR  open all folding
                                       zM  close all folding
 NERDCommenter   注释代码          
@@ -54,3 +55,128 @@ Easy Motion
     ,,j/,,k  行级跳转(jk)                   
     ,,h/,,l  行内跳转(hl)                    
     ,,.      重复上一次动作(.)                  
+
+mileszs/ack.vim 搜索工具
+    Ack can be used as a replacement for 99% of the uses of grep.
+
+altercation/vim-colors-solarized
+    ```
+    syntax enable
+    set background=dark or light 对应两种配色方案
+    colorscheme solarized
+    ```
+
+rhysd/conflict-marker.vim
+   Conflict markers (<<<<<<<, ======= and >>>>>>> as default) highlighted
+   [x and ]x default Jump among Conflict Markers
+   Resolve a Conflict: or  :ConflictMarker command
+      ct for themselves
+      co for ourselves
+      cn for none
+      cb for both
+
+jiangmiao/auto-pairs
+    {}[]() 中输入一个格会变成两个
+    Quick jump to closed pair 输入对应一边符号 ag. {
+    Support ``` ''' and """
+
+ctrlpvim/ctrlp.vim
+    Fuzzy file, buffer, mru, tag, etc finder.
+tacahiroy/ctrlp-funky
+    A simple function navigator for ctrlp.vim
+terryma/vim-multiple-cursors
+    True Sublime Text style multiple selections for Vim
+    <C-n/p> 选中相同word
+    vip<C-n>i"  全选一段，编辑行首,插入"
+    " Default mapping
+    let g:multi_cursor_next_key='<C-n>'
+    let g:multi_cursor_prev_key='<C-p>'
+    let g:multi_cursor_skip_key='<C-x>'
+    let g:multi_cursor_quit_key='<Esc>'
+    let g:multi_cursor_start_key='<C-n>'
+vim-scripts/sessionman.vim
+matchit.zip
+    extended % matching for HTML, LaTeX, and many other languages
+powerline/powerline
+    vim-powerline is deprecated and alternative to vim-airline
+bling/vim-bufferline
+    show the list of buffers in the command bar
+jistr/vim-nerdtree-tabs
+    making NERDTree feel like a true panel, independent of tabs.
+    :NERDTreeTabsToggle toggles NERDTree on/off for all tabs.
+    :NERDTreeMirrorOpen  instead of :NERDTreeMirror
+    使用这个提供的命令替换NERDTree
+flazz/vim-colorschemes
+    包含多种配色方案，但是已有vim-colors-solarized
+mbbill/undotree
+    还没用到
+nathanaelkane/vim-indent-guides
+    displaying indent levels
+    :help indent-guides
+mhinz/vim-signify
+    Show a diff using Vim its sign column.
+    左侧边的标记
+tpope/vim-abolish [x]
+    高级iabbrev替换功能,用的少
+osyo-manga/vim-over [x]
+    :substitute preview
+kana/vim-textobj-user [x]
+    Create your own text objects
+kana/vim-textobj-indent [x]
+    Text objects for indented blocks of lines
+gcmt/wildfire.vim
+   Smart selection of the closest text object 
+   <Enter>选择代码块
+scrooloose/syntastic
+    展示语法问题
+    :help syntastic-checkers
+tpope/vim-fugitive
+    git wrapper
+mattn/webapi-vim
+    请求接口
+mattn/gist-vim [x]
+    creating gists
+scrooloose/nerdcommenter
+    注释工具
+    [count]<leader>c<space>  - NERDComToggleComment
+tpope/vim-commentary [x]
+    注释工具
+    gcc - normal model comment out a line
+    gc + textObj
+    gc - in visual model
+    :7,17Commentary
+godlygeek/tabular
+    Vim script for text filtering and alignment
+    `:Tab /=`光标附近等号(含等号)对齐
+    `:Tab /:\zs`冒号(不含等号)后面部分对齐
+    已定义了 <Leader>a= 这类快捷键
+luochen1990/rainbow
+    以不同的颜色展示不同层次的括号
+majutsushi/tagbar
+    displays tags in a window, ordered by scope
+    not managing tags files
+    only creates the tags it needs on-the-fly in-memory without creating any files
+    http://docs.ctags.io/en/latest/osx.html for objc
+
+Valloric/YouCompleteMe
+    Complete engine
+SirVer/ultisnips
+    Snippet engine
+honza/vim-snippets
+    snippets/*: snippets using snipMate format
+    UltiSnips/*: snippets using UltiSnips format
+
+gorodinskiy/vim-coloresque
+    css/less/sass/html color preview for vim
+hail2u/vim-css3-syntax [x]
+    supports Sass’s SCSS syntax only
+amirh/HTML-AutoCloseTag
+    没成功
+mattn/emmet-vim
+    html快速输入
+
+groenewege/vim-less
+    less  syntax highlighting, indenting and autocompletion
+
+
+

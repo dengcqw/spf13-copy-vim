@@ -4,7 +4,7 @@
 snippet rdCreateStore "redux create store with enhancer, saga, rxjs" b
 import 'rxjs'
 import { createStore, applyMiddleware, compose } from 'redux'
-import createSagaMiddleware from 'redux-saga'
+import {createSagaMiddleware, sagaMonitor} from 'redux-saga'
 import { createEpicMiddleware } from 'redux-observable'
 //import DevTools from 'redux-devtools' /* tools like chrome extension */
 
@@ -13,7 +13,7 @@ import rootSaga from './sagas'
 import rootEpic from './epics'
 
 let sagaOptions =  {}
-if (process.env.NODE_ENV !== 'production')
+if (process.env.NODE_ENV !== 'production') {
   sagaOptions = {sagaMonitor}
 }
 
@@ -47,9 +47,9 @@ endsnippet
 
 snippet rdConnect "redex connect export component" b
 import { connect } from 'react-redux'
-const mapStateToProps = (state) => {
+const mapStateToProps = (state) => ({
   ${1:xxx}: state.$1
-}
+})
 const mapDispatchToProps = (dispatch) => {
   return {
     todoActions: bindActionCreators(todoActionCreators, dispatch)
