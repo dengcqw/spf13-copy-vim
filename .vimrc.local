@@ -97,6 +97,7 @@
 
     " When you press gv you vimgrep after the selected text
     vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
+    vnoremap <silent> K :call VisualSelection('K', '')<CR>
 
     " When you press <leader>r you can search and replace the selected text
     "vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
@@ -138,6 +139,8 @@
             call CmdLine("%s" . '/'. l:pattern . '/')
         elseif a:direction == 'f'
             execute "normal /" . l:pattern . "^M"
+        elseif a:direction == 'K'
+            execute 'Ack! ' . '"' . l:pattern . '"'
         endif
 
         let @/ = l:pattern
@@ -219,19 +222,19 @@
 
     "Line modifications
     "inoremap CC <Esc>C  " or use <C-k>
-    inoremap SS <Esc>S
+    "inoremap SS <Esc>S
     "inoremap DD <Esc>dd " or <Cmd-backspace>
     "Quick movements
-    inoremap II <Esc>I
-    inoremap AA <Esc>A
-    inoremap OO <Esc>O
+    "inoremap II <Esc>I
+    "inoremap AA <Esc>A
+    "inoremap OO <Esc>O
 " }
 
 " custom Plugins {
 
     """"""""""""""""""""""""""""""""""""""""
     " powerline plugin
-    let g:Powerline_symbols = 'fancy'
+    "let g:Powerline_symbols = 'fancy'
 
     """""""""" NERDtree settings"""""""""""""""
     let g:NERDTreeWinPos='left'
@@ -263,12 +266,6 @@ augroup filetype_jsbuty
     autocmd FileType html vnoremap <buffer> <C-S> :call RangeHtmlBeautify()<cr>
     autocmd FileType css vnoremap <buffer>  <C-S> :call RangeCSSBeautify()<cr>
 augroup END
-
-vnoremap <buffer> <C-S>h :call RangeHtmlBeautify()<cr>
-" Big J for JSON
-vnoremap <buffer> <C-S>J :call RangeJsonBeautify()<cr>
-" Small j for js
-vnoremap <buffer> <C-S>j :call RangeJsBeautify()<cr>
 
 
 " ----------------------------------------------------------------------------
@@ -330,13 +327,13 @@ augroup END
 "
 
 " fix NERDTreeToggle error strangely. {
-    noremap <C-e> :call g:WorkaroundNERDTreeToggle()<CR>
+    "noremap <C-e> :call g:WorkaroundNERDTreeToggle()<CR>
 
-    function! g:WorkaroundNERDTreeToggle()
-      try | NERDTreeToggle | catch | silent! NERDTree | endtry
-    endfunction
+    "function! g:WorkaroundNERDTreeToggle()
+      "try | NERDTreeTabsToggle | catch | silent! NERDTree | endtry
+    "endfunction
 
-    noremap ,pr :NERDTreeFind<CR>
+    noremap <leader>pr :NERDTreeFind<CR>
 "}
 
 
@@ -371,7 +368,7 @@ augroup END
 
     "Bind the BufSel() function to a user-command
     command! -nargs=1 Bs :call BufSel("<args>")
-    noremap <leader>bs :Bs
+    noremap <leader>bs :Bs<Space>
 "}
 
 set foldlevelstart=1
@@ -492,12 +489,6 @@ set foldlevelstart=1
     "<Leader>ihn cycles through matches
 "}
 
-" a.vim {
-    let g:alternateExtensions_m = "h"
-    let g:alternateExtensions_mm = "h"
-    let g:alternateExtensions_h = "m,mm"
-"}
-
 " Easy motion {
     let g:EasyMotion_smartcase = 1
     let g:EasyMotion_off_screen_search = 0
@@ -512,50 +503,28 @@ set foldlevelstart=1
     map <leader>. <Plug>(easymotion-repeat)
 "}
 
-" K -- the uppercase k search current folder and no result window
-" ,,k -- search current path, check ':pwd', use ':cd' to change path or use Nerd tree 'C' command
+" K -- the uppercase k search current folder
 " {
-        if executable('ag')
-          " Use ag over grep
-          set grepprg=ag\ --nogroup\ --nocolor
-        endif
+    if executable('ag')
+      " Use ag over grep
+      set grepprg=ag\ --nogroup\ --nocolor
+    endif
 
-        "autocmd FileType shell setlocal keyworkprg=man\ -s
-        set keywordprg=grep\ --color=auto\ -r\ -n\ ./*\ -e
+    "autocmd FileType shell setlocal keyworkprg=man\ -s
+    set keywordprg=grep\ --color=auto\ -r\ -n\ ./*\ -e
 
-        " set grep search root dir, save with session
-        " file path can't contain white space
-        " iOS SDK root: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk
-        " Tips: Don't change path to the file, keep the project path, use ,pr to locate file in NERD tree
-        function! GrepCustomDir(word)
-            execute 'grep! ' . a:word . ' ' . './'
-            cw
-        endfunction
+    " set grep search root dir, save with session
+    " file path can't contain white space
+    " iOS SDK root: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk
+    " Tips: Don't change path to the file, keep the project path, use ,pr to locate file in NERD tree
+    function! GrepCustomDir(word)
+        " use ag search
+        "execute 'grep! ' . a:word . ' ' . './'
+        execute 'Ack! ' . a:word
+        cw
+    endfunction
 
-    nnoremap ,,k :call GrepCustomDir("<C-R><C-W>")<CR>
-"}
-
-" Easygrep search current folder only
-" {
-    "<Leader>vv  - Grep for the word under the cursor, match all occurences,
-                  "like |gstar|
-    "<Leader>vV  - Grep for the word under the cursor, match whole word, like
-                  "|star|
-    "<Leader>va  - Like vv, but add to existing list
-    "<Leader>vA  - Like vV, but add to existing list
-    "<Leader>vr  - Perform a global search search on the word under the cursor
-                  "and prompt for a pattern with which to replace it.
-    "<Leader>vo  - Select the files to search in and set grep options
-    "<Leader>vy* - Invoke any option from the options explorer, where * is the
-                  "shortcut for that option.
-                  "e.g. <Leader>vyr - toggles recursion
-                       "<Leader>vyb - sets buffer grepping mode
-                       "etc.
-    let g:EasyGrepMode = 2     " All:0, Open Buffers:1, TrackExt:2,
-    let g:EasyGrepCommand = 1  " Use vimgrep:0, grepprg:1
-    let g:EasyGrepRecursive  = 1 " Recursive searching
-    let g:EasyGrepIgnoreCase = 1 " not ignorecase:0
-    let g:EasyGrepFilesToExclude = "*.bak, cscope.*, *.a, *.o, *.pyc, *.bak, *.zip"
+    nnoremap K :call GrepCustomDir("<C-R><C-W>")<CR>
 "}
 
 " ycm youcompleteme {
@@ -589,12 +558,6 @@ set foldlevelstart=1
                 \ }
 "}
 
-"vim-ios {
-    ":A Switch to alternate file
-    ":XBuild    Compile Project
-    ":Xinstall  Install on device
-"}
-
 " copy file path {
     " copy current file name (relative/absolute) to system clipboard
     if has("mac") || has("gui_macvim") || has("gui_mac")
@@ -622,44 +585,39 @@ set foldlevelstart=1
 " objc tags {
     "http://bastibe.de/2011-12-04-how-to-make-tagbar-work-with-objective-c.html
     " add a definition for Objective-C to tagbar
-    "let g:tagbar_type_objc = {
-        "\ 'ctagstype' : 'ObjectiveC',
-        "\ 'kinds'     : [
-            "\ 'i:interface',
-            "\ 'I:implementation',
-            "\ 'P:Protocol',
-            "\ 'm:Object_method',
-            "\ 'c:Class_method',
-            "\ 'v:Global_variable',
-            "\ 'F:Object field',
-            "\ 'f:function',
-            "\ 'p:property',
-            "\ 't:type_alias',
-            "\ 's:type_structure',
-            "\ 'e:enumeration',
-            "\ 'M:preprocessor_macro',
-        "\ ],
-        "\ 'sro'        : ' ',
-        "\ 'kind2scope' : {
-            "\ 'i' : 'interface',
-            "\ 'I' : 'implementation',
-            "\ 'P' : 'Protocol',
-            "\ 's' : 'type_structure',
-            "\ 'e' : 'enumeration'
-        "\ },
-        "\ 'scope2kind' : {
-            "\ 'interface'      : 'i',
-            "\ 'implementation' : 'I',
-            "\ 'Protocol'       : 'P',
-            "\ 'type_structure' : 's',
-            "\ 'enumeration'    : 'e'
-        "\ }
-    "\ }
-
-    "install https://github.com/mozilla/doctorjs
-    let g:tagbar_type_javascript = {
-    \ 'ctagsbin' : '~/spf13-copy-vim/vim/bundle/doctorjs/bin/jsctags'
+ let g:tagbar_type_objc = {
+    \ 'ctagstype' : 'ObjectiveC',
+    \ 'kinds'     : [
+        \ 'i:interface',
+        \ 'I:implementation',
+        \ 'p:Protocol',
+        \ 'm:Object_method',
+        \ 'c:Class_method',
+        \ 'v:Global_variable',
+        \ 'F:Object field',
+        \ 'f:function',
+        \ 'p:property',
+        \ 't:type_alias',
+        \ 's:type_structure',
+        \ 'e:enumeration',
+        \ 'M:preprocessor_macro',
+    \ ],
+    \ 'sro'        : ' ',
+    \ 'kind2scope' : {
+        \ 'i' : 'interface',
+        \ 'I' : 'implementation',
+        \ 'p' : 'Protocol',
+        \ 's' : 'type_structure',
+        \ 'e' : 'enumeration'
+    \ },
+    \ 'scope2kind' : {
+        \ 'interface'      : 'i',
+        \ 'implementation' : 'I',
+        \ 'Protocol'       : 'p',
+        \ 'type_structure' : 's',
+        \ 'enumeration'    : 'e'
     \ }
+\ }
 
     " ctags --list-kinds=all
     " ctags --list-kinds=ObjectiveC
@@ -746,46 +704,6 @@ set foldlevelstart=1
     endif
 "}
 
-" REST
-" require Vim 7.4 & cURL {
-    " file suffix is .rest
-    " set ft=rest
-
-    " show response in new buffer
-    let b:vrc_output_buffer_name = '__REST_1_OUTPUT__'
-    let g:vrc_ssl_secure = 1
-    " more usage
-    " https://raw.githubusercontent.com/diepm/vim-rest-console/master/sample.rest
-    " https://github.com/diepm/vim-rest-console
-
-    "autocmd FileType rest let g:vrc_trigger = '<C-j>'
-
-    "Tips: use echo to show unicode word. :echo "\u8bf7"
-
-    " Get python install location
-    " >>> import site; site.getsitepackages()
-
-    " Another tool: https://github.com/jkbrzt/httpie
-
-    " Simple usage
-    " :r ! curl http://api.app.qa.com.cn/hft/1.0/home_city_list | python ~/spf13-copy-vim/bin/json.tool.py
-
-    let g:vrc_auto_format_response_patterns = {
-    \   'json': 'python ~/spf13-copy-vim/bin/json.tool.py',
-    \   'xml': 'xmllint --format -',
-    \}
-"}
-
-" iOS dictionary {
-    let s:ios_dic_root= '$HOME/spf13-copy-vim/vim/dictionary.d'
-    let s:ios_dic_path=s:ios_dic_root . '/classes.txt,' . s:ios_dic_root . '/constants.txt,' . s:ios_dic_root . '/functions.txt,' . s:ios_dic_root . '/notifications.txt,' . s:ios_dic_root . '/types.txt'
-    "autocmd FileType objc  let &dictionary = s:ios_dic_path
-    "let s:TVG_PATH=$HOME/Documents/Develop/QiyiDev/TVGuoiOSApp
-    "if g:gitroot == s:TVG_PATH
-        "set makeprg=xcodebuild\ -workspace\ $HOME/Documents/Develop/QiyiDev/TVGuoiOSApp/TVGuor.xcworkspace\ -scheme\ TVGuor\ -configuration\ Debug\ -destination\ \"id\=ba490377a9fc6df3243a343ae52aa76f8d0d6b71\"
-    "endif
-" }
-
 " Underline words matched by Matchmaker
 function! ToggleMatchmaker()
     " Don’t show matches in non-code files
@@ -806,16 +724,7 @@ highlight Matchmaker cterm=underline
 " after input use <C-\> show complete list
 " <Tab> 和 <S-Tab> jump between placeholder
 
-" xptempate {
-    "let g:xptemplate_lib_filter = '/my_snippets/'
-"}
-"
-
 let g:PreviewBrowsers='open -a Google\ Chrome'
-
-" project
-noremap <leader>dt :cd ~/Desktop<CR>
-
 
 " :verbose set <option>? you can see where it's being set and what it's set to
 
@@ -834,10 +743,22 @@ set fileencodings=ucs-bom,utf-8,gb18030,cp936,big5,euc-jp,euc-kr,latin1
 ":set isk+=#
 ":set isk+=.
 
-set nocursorline
+"set nocursorline
 set nocursorcolumn
 set synmaxcol=200
 
 " get rid of this 'Auto Commands' message
 " http://stackoverflow.com/a/26382164
 " There is an incomplete :autocmd definition
+
+let g:easytags_cmd = '/usr/local/Cellar/ctags/5.8_1/bin'
+let g:easytags_always_enabled = 0
+let g:easytags_async = 1
+let g:easytags_on_cursorhold = 0
+"let g:easytags_updatetime_min = 6000
+
+" Install jsctags first , depend on Ternjs
+" npm install -g git+https://github.com/ramitos/jsctags.git
+let g:tagbar_type_javascript = {
+            \ 'ctagsbin' : '/usr/local/bin/jsctags'
+            \}

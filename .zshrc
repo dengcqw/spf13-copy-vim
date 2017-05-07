@@ -103,7 +103,6 @@ alias ll='ls -l'
 alias la='ls -a'
 alias vi='vim'
 alias javac="javac -J-Dfile.encoding=utf8"
-alias grep="grep --color=auto"
 alias -s html=mvim   # 在命令行直接输入后缀为 html 的文件名，会在 mvim 中打开
 alias -s rb=mvim
 alias -s py=mvim
@@ -196,11 +195,11 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
     alias tgdf='git diff'
     alias tgd='git diff'
 
-    alias tgadd='git add'
-    alias tga='git add'
+    alias tgadd='git add *'
+    alias tga='git add *'
 
-    alias tgc='git commit -v'
-    alias tgc-a='git commit -v -a'
+    alias tgc='git commit -v -m'
+    alias tgc-a='git commit -v -a -m'
 
     alias tgbr='git branch'
     alias tgb='git branch'
