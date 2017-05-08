@@ -762,3 +762,6 @@ let g:easytags_on_cursorhold = 0
 let g:tagbar_type_javascript = {
             \ 'ctagsbin' : '/usr/local/bin/jsctags'
             \}
+
+" make split window equal defined in .vimrc defined again with noremap
+noremap <Leader>= <C-w>=

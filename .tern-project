@@ -1,14 +1,26 @@
+// this is a demo file, remove comments if use it
 {
     "libs":[
-        "ecma5",
-        "ecma6",
-        "underscore"
+        "underscore",
+        "ecmascript"
     ],
     "plugins":{
-        "modules":{},
-        "node_resolve":{},
-        "commonjs":{},
-        "es_modules":{},
-        "doc_comment":{}
+        "complete_strings": { // gather (short) strings in your code, and completing when inside a string will try to complete to previously seen strings 
+            maxLength : 15  // default value
+        },
+        "doc_comment":{}, // enabled by defaul; to turn this plugin off, set doc_comment: null
+        "modules":{ // act as a dependency for other module-loading and module-resolving plugins
+            dontLoad: true, // true-disable dynamic loading of required modules or regex-disable loading of files
+            load: regex, // If dontLoad isn’t given, this setting is checked
+            modules: {} // not sure
+        },
+        "node_resolve":{}, // defaulting to index.js when requiring a directory and searching node_modules directories
+        "node": {},// provides variables that are part of the node environment, such as process and __dirname, and loads the commonjs and node_resolve plugins to allow node-style module loading.
+        "commonjs":{}, // implements CommonJS-style (require("foo")) modules
+        "es_modules":{}, // support ECMAScript 6’s import and export based module inclusion
+        "webpack": { // it can understand the resolve field of webpack.config.js for file resolving. commonjs&es_modules not necessary
+            "configPath": "./lib/webpack.prod.js",
+        }
     }
 }
+
