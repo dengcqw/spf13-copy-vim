@@ -50,10 +50,10 @@
     noremap vab Vf{%
 
     " Remove the Windows ^M - when the encodings gets messed up
-    "noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+    "noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
     " Toggle paste mode on and off
-    noremap <leader>pp :setlocal paste!<cr>
+    noremap <Leader>pp :setlocal paste!<cr>
 
     set nospell
 
@@ -76,16 +76,16 @@
 
 " tab {
     " Useful mappings for managing tabs
-    nnoremap <leader>tn :tabnew<cr>
-    " nnoremap <leader>to :tabonly<cr>
-    nnoremap <leader>tc :tabclose<cr>
-    nnoremap <leader>tm :tabmove
+    nnoremap <Leader>tn :tabnew<cr>
+    " nnoremap <Leader>to :tabonly<cr>
+    nnoremap <Leader>tc :tabclose<cr>
+    nnoremap <Leader>tm :tabmove
     " shift tab pages; i is ahead of o  likt <C-I><C-O>
-    nnoremap <leader>ti :tabp<CR>
-    nnoremap <leader>to :tabn<CR>
+    nnoremap <Leader>ti :tabp<CR>
+    nnoremap <Leader>to :tabn<CR>
     " Opens a new tab with the current buffer's path
     " Super useful when editing files in the same directory
-    nnoremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>
+    nnoremap <Leader>te :tabedit <c-r>=expand("%:p:h")<cr>
 " }
 
 
@@ -99,24 +99,24 @@
     vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
     vnoremap <silent> K :call VisualSelection('K', '')<CR>
 
-    " When you press <leader>r you can search and replace the selected text
-    "vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
+    " When you press <Leader>r you can search and replace the selected text
+    "vnoremap <silent> <Leader>r :call VisualSelection('replace', '')<CR>
 
     " Do :help cope if you are unsure what cope is. It's super useful!
     "
     " When you search with vimgrep, display your results in cope by doing:
-    "   <leader>cc
+    "   <Leader>cc
     "
     " To go to the next search result do:
-    "   <leader>n
+    "   <Leader>n
     "
     " To go to the previous search results do:
-    "   <leader>p
+    "   <Leader>p
     "
-    " map <leader>cc :botright cope<cr>
-    " map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
-    " map <leader>n :cn<cr>
-    " map <leader>p :cp<cr>
+    " map <Leader>cc :botright cope<cr>
+    " map <Leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
+    " map <Leader>n :cn<cr>
+    " map <Leader>p :cp<cr>
 
     function! CmdLine(str)
         exe "menu Foo.Bar :" . a:str
@@ -150,9 +150,9 @@
 
 " buffer {
     " Close the current buffer
-    map <leader>bd :Bclose<cr>
+    map <Leader>bd :Bclose<cr>
     " Close all the buffers
-    map <leader>ba :1,100 bd!<cr>
+    map <Leader>ba :1,100 bd!<cr>
 
     " Don't close window, when deleting a buffer
     command! Bclose call <SID>BufcloseCloseIt()
@@ -186,9 +186,9 @@
     nnoremap <Space> za     " use space to do fold
 
     " add filename after command
-    noremap <leader>vd :vertical diffsplit
+    noremap <Leader>vd :vertical diffsplit
     " Only needed for a short time so...
-    noremap <leader>fd :setlocal diff foldmethod=diff scrollbind nowrap foldlevel=1<CR>
+    noremap <Leader>fd :setlocal diff foldmethod=diff scrollbind nowrap foldlevel=1<CR>
 
     " set ; to : in normal mode, more fast to cmd mode.
     nnoremap ; :
@@ -197,13 +197,13 @@
     " not replace paste content
     xnoremap p pgvy
 
-    noremap <leader>m :marks<CR>
+    noremap <Leader>m :marks<CR>
 
     set encoding=utf-8
     set fenc=utf-8
     set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
-    noremap <leader>w :w<CR>
+    noremap <Leader>w :w<CR>
     " replace a word
     nmap vp viwp
 
@@ -278,7 +278,7 @@ let g:tern_map_prefix='/'
 let g:tern_request_timeout=3
 augroup filetype_tern
     autocmd!
-    autocmd FileType javascript nnoremap <leader>d :TernDef<CR>
+    autocmd FileType javascript nnoremap <Leader>d :TernDef<CR>
     autocmd FileType javascript setlocal omnifunc=tern#Complete
 augroup END
 " vim-javascript.vim
@@ -333,7 +333,7 @@ augroup END
       "try | NERDTreeTabsToggle | catch | silent! NERDTree | endtry
     "endfunction
 
-    noremap <leader>pr :NERDTreeFind<CR>
+    noremap <Leader>pr :NERDTreeFind<CR>
 "}
 
 
@@ -368,7 +368,7 @@ augroup END
 
     "Bind the BufSel() function to a user-command
     command! -nargs=1 Bs :call BufSel("<args>")
-    noremap <leader>bs :Bs<Space>
+    noremap <Leader>bs :Bs<Space>
 "}
 
 set foldlevelstart=1
@@ -497,10 +497,10 @@ set foldlevelstart=1
     map <Leader>j <Plug>(easymotion-j)
     map <Leader>k <Plug>(easymotion-k)
     " 行内跳转(hl)
-    map <leader>h <Plug>(easymotion-linebackward)
-    map <leader>l <Plug>(easymotion-lineforward)
+    map <Leader>h <Plug>(easymotion-linebackward)
+    map <Leader>l <Plug>(easymotion-lineforward)
     " 重复上一次动作(.)
-    map <leader>. <Plug>(easymotion-repeat)
+    map <Leader>. <Plug>(easymotion-repeat)
 "}
 
 " K -- the uppercase k search current folder
@@ -528,8 +528,8 @@ set foldlevelstart=1
 "}
 
 " ycm youcompleteme {
-    nnoremap <leader>d :YcmCompleter GoToDefinition <cr>
-    nnoremap <leader>s :YcmCompleter GoToDeclaration <cr>
+    nnoremap <Leader>d :YcmCompleter GoToDefinition <cr>
+    nnoremap <Leader>s :YcmCompleter GoToDeclaration <cr>
 
     let g:ycm_filetype_blacklist = {
       \ 'tagbar' : 1,
@@ -562,16 +562,16 @@ set foldlevelstart=1
     " copy current file name (relative/absolute) to system clipboard
     if has("mac") || has("gui_macvim") || has("gui_mac")
       " relative path  (src/foo.txt)
-      nnoremap <leader>cf :let @*=expand("%")<CR>
+      nnoremap <Leader>cf :let @*=expand("%")<CR>
 
       " absolute path  (/something/src/foo.txt)
-      nnoremap <leader>cF :let @*=expand("%:p")<CR>
+      nnoremap <Leader>cF :let @*=expand("%:p")<CR>
 
       " filename       (foo.txt)
-      nnoremap <leader>ct :let @*=expand("%:t")<CR>
+      nnoremap <Leader>ct :let @*=expand("%:t")<CR>
 
       " directory name (/something/src)
-      nnoremap <leader>ch :let @*=expand("%:p:h")<CR>
+      nnoremap <Leader>ch :let @*=expand("%:p:h")<CR>
     endif
 "}
 
@@ -765,3 +765,6 @@ let g:tagbar_type_javascript = {
 
 " make split window equal defined in .vimrc defined again with noremap
 noremap <Leader>= <C-w>=
+noremap <silent> <Leader>/ :nohlsearch<CR>
+noremap <Leader>bg :call ToggleBG()<CR>
+

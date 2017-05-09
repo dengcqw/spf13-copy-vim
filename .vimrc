@@ -93,7 +93,8 @@
             set background=dark
         endif
     endfunction
-    noremap <leader>bg :call ToggleBG()<CR>
+    " leader not defined, use default value '\'
+    map <Leader>bg :call ToggleBG()<CR>
 
     " if !has('gui')
         "set term=$TERM          " Make arrow and other keys work
@@ -289,17 +290,17 @@
     endif
 
     " The default mappings for editing and applying the spf13 configuration
-    " are <leader>ev and <leader>sv respectively. Change them to your preference
+    " are <Leader>ev and <Leader>sv respectively. Change them to your preference
     " by adding the following to your .vimrc.before.local file:
-    "   let g:spf13_edit_config_mapping='<leader>ec'
-    "   let g:spf13_apply_config_mapping='<leader>sc'
+    "   let g:spf13_edit_config_mapping='<Leader>ec'
+    "   let g:spf13_apply_config_mapping='<Leader>sc'
     if !exists('g:spf13_edit_config_mapping')
-        let s:spf13_edit_config_mapping = '<leader>ev'
+        let s:spf13_edit_config_mapping = '<Leader>ev'
     else
         let s:spf13_edit_config_mapping = g:spf13_edit_config_mapping
     endif
     if !exists('g:spf13_apply_config_mapping')
-        let s:spf13_apply_config_mapping = '<leader>sv'
+        let s:spf13_apply_config_mapping = '<Leader>sv'
     else
         let s:spf13_apply_config_mapping = g:spf13_apply_config_mapping
     endif
@@ -390,30 +391,30 @@
     nnoremap Y y$
 
     " Code folding options
-    nmap <leader>f0 :set foldlevel=0<CR>
-    nmap <leader>f1 :set foldlevel=1<CR>
-    nmap <leader>f2 :set foldlevel=2<CR>
-    nmap <leader>f3 :set foldlevel=3<CR>
-    nmap <leader>f4 :set foldlevel=4<CR>
-    nmap <leader>f5 :set foldlevel=5<CR>
-    nmap <leader>f6 :set foldlevel=6<CR>
-    nmap <leader>f7 :set foldlevel=7<CR>
-    nmap <leader>f8 :set foldlevel=8<CR>
-    nmap <leader>f9 :set foldlevel=9<CR>
+    nmap <Leader>f0 :set foldlevel=0<CR>
+    nmap <Leader>f1 :set foldlevel=1<CR>
+    nmap <Leader>f2 :set foldlevel=2<CR>
+    nmap <Leader>f3 :set foldlevel=3<CR>
+    nmap <Leader>f4 :set foldlevel=4<CR>
+    nmap <Leader>f5 :set foldlevel=5<CR>
+    nmap <Leader>f6 :set foldlevel=6<CR>
+    nmap <Leader>f7 :set foldlevel=7<CR>
+    nmap <Leader>f8 :set foldlevel=8<CR>
+    nmap <Leader>f9 :set foldlevel=9<CR>
 
     " Most prefer to toggle search highlighting rather than clear the current
     " search results. To clear search highlighting rather than toggle it on
     " and off, add the following to your .vimrc.before.local file:
     "   let g:spf13_clear_search_highlight = 1
     if exists('g:spf13_clear_search_highlight')
-        nmap <silent> <leader>/ :nohlsearch<CR>
+        nmap <silent> <Leader>/ :nohlsearch<CR>
     else
-        nmap <silent> <leader>/ :set invhlsearch<CR>
+        nmap <silent> <Leader>/ :set invhlsearch<CR>
     endif
 
 
     " Find merge conflict markers
-    map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
+    map <Leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
 
     " Shortcuts
     " Change Working Directory to that of the current file
@@ -434,10 +435,10 @@
     " Some helpers to edit mode
     " http://vimcasts.org/e/14
     cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-    map <leader>ew :e %%
-    map <leader>es :sp %%
-    map <leader>ev :vsp %%
-    map <leader>et :tabe %%
+    map <Leader>ew :e %%
+    map <Leader>es :sp %%
+    map <Leader>ev :vsp %%
+    map <Leader>et :tabe %%
 
     " Adjust viewports to the same size
     map <Leader>= <C-w>=
@@ -451,7 +452,7 @@
     map zh zH
 
     " Easier formatting
-    nmap <silent> <leader>q gwip
+    nmap <silent> <Leader>q gwip
 
     " FIXME: Revert this f70be548
     " fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
@@ -474,12 +475,12 @@
             au FileType go nmap <Leader>s <Plug>(go-implements)
             au FileType go nmap <Leader>i <Plug>(go-info)
             au FileType go nmap <Leader>e <Plug>(go-rename)
-            au FileType go nmap <leader>r <Plug>(go-run)
-            au FileType go nmap <leader>b <Plug>(go-build)
-            au FileType go nmap <leader>t <Plug>(go-test)
+            au FileType go nmap <Leader>r <Plug>(go-run)
+            au FileType go nmap <Leader>b <Plug>(go-build)
+            au FileType go nmap <Leader>t <Plug>(go-test)
             au FileType go nmap <Leader>gd <Plug>(go-doc)
             au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-            au FileType go nmap <leader>co <Plug>(go-coverage)
+            au FileType go nmap <Leader>co <Plug>(go-coverage)
         endif
         " }
 
@@ -578,8 +579,8 @@
     " NerdTree {
         if isdirectory(expand("~/.vim/bundle/nerdtree"))
             map <C-e> <plug>NERDTreeTabsToggle<CR>
-            map <leader>e :NERDTreeFind<CR>
-            nnoremap <leader>nt :NERDTreeFind<CR>
+            map <Leader>e :NERDTreeFind<CR>
+            nnoremap <Leader>nt :NERDTreeFind<CR>
 
             let NERDTreeShowBookmarks=1
             let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
@@ -616,14 +617,14 @@
     " Session List {
         set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
         if isdirectory(expand("~/.vim/bundle/sessionman.vim/"))
-            nnoremap <leader>sl :SessionList<CR>
-            nnoremap <leader>ss :SessionSave<CR>
-            nnoremap <leader>sc :SessionClose<CR>
+            nnoremap <Leader>sl :SessionList<CR>
+            nnoremap <Leader>ss :SessionSave<CR>
+            nnoremap <Leader>sc :SessionClose<CR>
         endif
     " }
 
     " JSON {
-        "nnoremap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
+        "nnoremap <Leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
         " vim_json
         let g:vim_json_syntax_conceal = 0
     " }
@@ -686,7 +687,7 @@
 
     " TagBar {
         if isdirectory(expand("~/.vim/bundle/tagbar/"))
-            nnoremap <silent> <leader>tt :TagbarToggle<CR>
+            nnoremap <silent> <Leader>tt :TagbarToggle<CR>
         endif
     "}
 
@@ -698,18 +699,18 @@
 
     " Fugitive {
         if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
-            nnoremap <silent> <leader>gs :Gstatus<CR>
-            nnoremap <silent> <leader>gd :Gdiff<CR>
-            nnoremap <silent> <leader>gc :Gcommit<CR>
-            nnoremap <silent> <leader>gb :Gblame<CR>
-            nnoremap <silent> <leader>gl :Glog<CR>
-            nnoremap <silent> <leader>gp :Git push<CR>
-            nnoremap <silent> <leader>gr :Gread<CR>
-            nnoremap <silent> <leader>gw :Gwrite<CR>
-            nnoremap <silent> <leader>ge :Gedit<CR>
+            nnoremap <silent> <Leader>gs :Gstatus<CR>
+            nnoremap <silent> <Leader>gd :Gdiff<CR>
+            nnoremap <silent> <Leader>gc :Gcommit<CR>
+            nnoremap <silent> <Leader>gb :Gblame<CR>
+            nnoremap <silent> <Leader>gl :Glog<CR>
+            nnoremap <silent> <Leader>gp :Git push<CR>
+            nnoremap <silent> <Leader>gr :Gread<CR>
+            nnoremap <silent> <Leader>gw :Gwrite<CR>
+            nnoremap <silent> <Leader>ge :Gedit<CR>
             " Mnemonic _i_nteractive
-            nnoremap <silent> <leader>gi :Git add -p %<CR>
-            nnoremap <silent> <leader>gg :SignifyToggle<CR>
+            nnoremap <silent> <Leader>gi :Git add -p %<CR>
+            nnoremap <silent> <Leader>gg :SignifyToggle<CR>
         endif
     "}
 
