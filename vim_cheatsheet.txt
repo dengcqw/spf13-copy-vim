@@ -97,7 +97,7 @@ terryma/vim-multiple-cursors
 vim-scripts/sessionman.vim
 matchit.zip
     extended % matching for HTML, LaTeX, and many other languages
-powerline/powerline
+powerline/powerline [x]
     vim-powerline is deprecated and alternative to vim-airline
 bling/vim-bufferline
     show the list of buffers in the command bar

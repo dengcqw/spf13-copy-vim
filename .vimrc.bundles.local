@@ -55,8 +55,9 @@
     "
     "Bundle 'dkprice/vim-easygrep'
 
-    Bundle 'xolox/vim-easytags'
-    Bundle 'xolox/vim-misc'
+    " block vim
+    "Bundle 'xolox/vim-easytags'
+    "Bundle 'xolox/vim-misc'
 
     " Highlight the term under the cursor
     Bundle 'qstrahl/vim-matchmaker'
