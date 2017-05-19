@@ -393,8 +393,8 @@ set foldlevelstart=1
         "<c-o> 选择打开方式
         "
     " use ,fu search fun tag -> CtrlPFunky
-    let g:ctrlp_max_depth = 40
-    let g:ctrlp_max_files = 0
+    "let g:ctrlp_max_depth = 5   not working when use ctrlp_user_command ?
+    "let g:ctrlp_max_files = 100
     let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:100'
     " search by file name
     let g:ctrlp_by_filename = 1
@@ -404,8 +404,9 @@ set foldlevelstart=1
     " open new buffer to open other recent files
     let g:ctrlp_mruf_relative = 1
     " NOTE:
-        " if install ag with brew, below setting will be invalid
-        " let g:ctrlp_custom_ignore
+        " if install ag with brew, it will be use as search command in ctrlp_user_command
+        " ctrlp_user_command has option 'igonre',
+        " see help Note #3, switch to use external command ignore or ctrlp_custom_ignore
         " edit ~/.agignore to add folders to be ignore.
         " Ag will ignore anything that you have in your .gitignore.
         " You can also create an .agignore for anything that doesn’t belong in your .gitignore.
@@ -532,30 +533,22 @@ set foldlevelstart=1
     nnoremap <Leader>s :YcmCompleter GoToDeclaration <cr>
 
     let g:ycm_filetype_blacklist = {
-      \ 'tagbar' : 1,
-      \ 'qf' : 1,
-      \ 'notes' : 1,
-      \ 'markdown' : 1,
-      \ 'unite' : 1,
-      \ 'text' : 1,
-      \ 'vimwiki' : 1,
-      \ 'gitcommit' : 1,
-      \}
-    let g:ycm_semantic_triggers = {
-                \ 'objc' : ['re!\@"\.*"\s',
-                \ 're!\@\w+\.*\w*\s',
-                \ 're!\@\(\w+\.*\w*\)\s',
-                \ 're!\@\(\s*',
-                \ 're!\@\[.*\]\s',
-                \ 're!\@\[\s*',
-                \ 're!\@\{.*\}\s',
-                \ 're!\@\{\s*',
-                \ "re!\@\’.*\’\s",
-                \ '#ifdef ',
-                \ 're!:\s*',
-                \ 're!=\s*',
-                \ 're!,\s*', ],
-                \ }
+        \ 'tagbar' : 1,
+        \ 'qf' : 1,
+        \ 'notes' : 1,
+        \ 'markdown' : 1,
+        \ 'unite' : 1,
+        \ 'text' : 1,
+        \ 'vimwiki' : 1,
+        \ 'gitcommit' : 1,
+        \ 'json' : 1,
+        \}
+    " swift not auto complete for (, because not used too much
+    let g:ycm_semantic_triggers =  {
+        \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s', 're!\[.*\]\s'],
+        \   'swift' : ['.'],
+        \ }
+
 "}
 
 " copy file path {
@@ -768,3 +761,10 @@ noremap <Leader>= <C-w>=
 noremap <silent> <Leader>/ :nohlsearch<CR>
 noremap <Leader>bg :call ToggleBG()<CR>
 
+" deoplete-swift.vim
+let g:deoplete#sources#swift#source_kitten_binary = '/usr/local/Cellar/sourcekitten/0.17.3/bin/sourcekitten'
+
+autocmd FileType swift setlocal smartindent
+" brew install clang-format
+" invoke clang-format with G=gg or other = indent options
+autocmd FileType c,cpp,swift,javascript setlocal equalprg=clang-format

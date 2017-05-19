@@ -34,8 +34,8 @@
             Bundle 'mxw/vim-jsx'
         endif
     " }
-    " js complete {
-        Bundle 'ternjs/tern_for_vim'
+    " js complete { YCM already support tern
+        "Bundle 'ternjs/tern_for_vim'
     " }
     " code snippet {
         "Bundle 'drmingdrmer/xptemplate'
@@ -44,13 +44,17 @@
         Bundle 'FelikZ/ctrlp-py-matcher'
     " }
     " iOS dev {
-        "Bundle 'kentaroi/cocoa.vim'
+        Bundle 'kentaroi/cocoa.vim'
         "Bundle 'qqshfox/objc_matchbracket'
         "Bundle 'vim-scripts/a.vim'
         "witching Header Files
         "Bundle 'eraserhd/vim-ios.git'
         "Indentation
         "Bundle 'b4winckler/vim-objc'
+        Bundle 'keith/swift.vim'
+        Bundle 'dengcqw/sourcekittendaemon.vim'
+        "Bundle 'toyamarinyon/vim-swift'
+        "Bundle 'tokorom/swift-dict.vim'
     " }
     "
     "Bundle 'dkprice/vim-easygrep'
@@ -61,6 +65,4 @@
 
     " Highlight the term under the cursor
     Bundle 'qstrahl/vim-matchmaker'
-
-    " Bundle 'tokorom/swift-dict.vim'
 

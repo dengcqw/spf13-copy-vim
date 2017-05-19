@@ -141,7 +141,7 @@ alias -s plist=mvim
 
     alias djCopyPath='sh ~/spf13-copy-vim/bin/copy-file-path '
 
-    alias carthage-ios='$brew_path/carthage/0.18.1/bin/carthage update --platform iOS'
+    alias carthage-ios='$brew_path/carthage/0.22.0/bin/carthage update --platform iOS'
     alias srczshrc='source ~/.zshrc'
 
     alias djSwitchNetork='node ~/spf13-copy-vim/scripts/network_switch.js'
@@ -308,3 +308,5 @@ function vim-linedelete() {
      echo ":%s/^.*\(pattern\).*$/\1/g   # delete other words except [pattern]"
      echo "g/str1/,/str2/d      ## delete lines between line with [str1] and line with [str2]"
 }
+
+alias startSwiftCompleteServer='node $HOME/spf13-copy-vim/scripts/startSourceKittenDeamon.js'

@@ -10,3 +10,5 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "my-snippets/RN-snips", "my-snip
 let g:spf13_clear_search_highlight = 1
 let g:spf13_use_old_powerline = 1
 let g:spf13_leader=','
+
+let g:ag_search_deapth='5'

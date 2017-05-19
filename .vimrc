@@ -653,7 +653,11 @@
                 \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
 
             if executable('ag')
-                let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
+                if exists('g:ag_search_deapth')
+                    let s:ctrlp_fallback = 'ag %s --depth ' . g:ag_search_deapth . ' --nocolor -l -g ""'
+                else
+                    let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
+                endif
             elseif executable('ack-grep')
                 let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
             elseif executable('ack')
