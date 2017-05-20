@@ -761,10 +761,20 @@ noremap <Leader>= <C-w>=
 noremap <silent> <Leader>/ :nohlsearch<CR>
 noremap <Leader>bg :call ToggleBG()<CR>
 
-" deoplete-swift.vim
-let g:deoplete#sources#swift#source_kitten_binary = '/usr/local/Cellar/sourcekitten/0.17.3/bin/sourcekitten'
-
 autocmd FileType swift setlocal smartindent
 " brew install clang-format
 " invoke clang-format with G=gg or other = indent options
 autocmd FileType c,cpp,swift,javascript setlocal equalprg=clang-format
+
+" completion popup menu KeyStroke
+"<Ctrl+N/Ctrl+P> scroll selection
+"<Ctrl+Y>  "yes, accept that word."
+"<Ctrl+E>  cancel the menu
+"See :help popupmenu-keys for more.
+
+" popup menu is visible use <C-Y>
+"Fixed: <Enter> insert newline
+autocmd FileType swift inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+
+"autocmd FileType swift inoremap <C-k> <C-R>=sourcekittendaemon#JumpToPlaceHolder()<cr>
+let g:sourcekittendaemon_jump_placeholder = "<C-k>"
