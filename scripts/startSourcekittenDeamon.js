@@ -7,17 +7,37 @@ const child_process = require('child_process')
 
 let fileNames = fs.readdirSync('./').filter(fileName=>fileName.includes("xcodeproj"))
 
+//接受一个参数target，就不需要选择
+let target = process.argv[2]
+
 switch (fileNames.length) {
   case 0:
     console.log(" Not found Xcode project ")
     process.exit(1)
     break
   case 1:
-    listTarget(fileNames[0])
+    if (target) {
+      startServer(target, fileNames[0])
+    } else {
+      listTarget(fileNames[0])
+    }
     break
   default:
     chooseProject(fileNames)
 }
+
+
+function startServer(target, project) {
+    let command = `sourcekittendaemon start --target ${target} --port 8085 --project ${project}`
+    console.log("starting server: ", command)
+    let child = child_process.exec(command, function (err, stdout, stderr) {
+      console.log("----> start error: ", err)
+      process.exit(0)
+      child.exit(0)
+    })
+    child.stdout.on('data', data => console.log(data))
+}
+
 
 function chooseProject(fileNames) {
   console.log("Found Xcode project:")
@@ -48,16 +68,9 @@ function chooseTarget(project, targets) {
   rl.question(`choose target[0-${targets.length-1}]:`, (answer) => {
 
     console.log(`You select: ${targets[answer]}`)
-    rl.close();
+    rl.close()
     if (targets[answer]) {
-      let command = `sourcekittendaemon start --target ${targets[answer]} --port 8085 --project ${project}`
-      console.log("starting server: ", command)
-      let child = child_process.exec(command, function (err, stdout, stderr) {
-        console.log("----> start error: ", err)
-        process.exit(0)
-        child.exit(0)
-      })
-      child.stdout.on('data', data => console.log(data))
+      startServer(targets[answer], project)
     } else {
       console.log("Invalid Number");
       process.exit(0)

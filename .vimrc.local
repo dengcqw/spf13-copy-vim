@@ -761,11 +761,6 @@ noremap <Leader>= <C-w>=
 noremap <silent> <Leader>/ :nohlsearch<CR>
 noremap <Leader>bg :call ToggleBG()<CR>
 
-autocmd FileType swift setlocal smartindent
-" brew install clang-format
-" invoke clang-format with G=gg or other = indent options
-autocmd FileType c,cpp,swift,javascript setlocal equalprg=clang-format
-
 " completion popup menu KeyStroke
 "<Ctrl+N/Ctrl+P> scroll selection
 "<Ctrl+Y>  "yes, accept that word."
@@ -775,6 +770,41 @@ autocmd FileType c,cpp,swift,javascript setlocal equalprg=clang-format
 " popup menu is visible use <C-Y>
 "Fixed: <Enter> insert newline
 autocmd FileType swift inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+autocmd FileType swift setlocal smartindent
 
 "autocmd FileType swift inoremap <C-k> <C-R>=sourcekittendaemon#JumpToPlaceHolder()<cr>
 let g:sourcekittendaemon_jump_placeholder = "<C-k>"
+
+autocmd FileType java set makeprg=javac\ %
+" single java file compile and run
+"nmap ,p :!javac %<CR>:!java -cp %:p:h %:t:r<CR>
+autocmd FileType java nnoremap \j :call CompileRunGcc()<CR>
+
+func! CompileRunGcc()
+    exec "w"
+    exec "!javac %"
+    exec "!time java -cp %:p:h %:t:r"
+endfunction
+
+" ALE Setting
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'java': ['javac'],
+\   'md': ['proselint'],
+\   'objc': ['clang'],
+\   'swift': ['swiftlint'],
+\   'scala': ['scalac'],
+\}
+
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save=0
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_open_list = 1
