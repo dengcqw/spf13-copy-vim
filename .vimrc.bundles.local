@@ -68,3 +68,5 @@
 
     Bundle 'w0rp/ale'
 
+    Bundle 'iamcco/markdown-preview.vim'
+
