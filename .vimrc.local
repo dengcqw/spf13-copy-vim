@@ -269,18 +269,19 @@ augroup END
 
 
 " ----------------------------------------------------------------------------
-" tern_for_vim
+" tern_for_vim  (use YCM)
 " ----------------------------------------------------------------------------
-let g:tern_show_argument_hints='on_hold'
-let g:tern_show_signature_in_pum=1
-let g:tern_map_keys=1
-let g:tern_map_prefix='/'
-let g:tern_request_timeout=3
-augroup filetype_tern
-    autocmd!
-    autocmd FileType javascript nnoremap <Leader>d :TernDef<CR>
-    autocmd FileType javascript setlocal omnifunc=tern#Complete
-augroup END
+"let g:tern_show_argument_hints='on_hold'
+"let g:tern_show_signature_in_pum=1
+"let g:tern_map_keys=1
+"let g:tern_map_prefix='/'
+"let g:tern_request_timeout=3
+"augroup filetype_tern
+    "autocmd!
+    "autocmd FileType javascript nnoremap <Leader>d :TernDef<CR>
+    "autocmd FileType javascript setlocal omnifunc=tern#Complete
+"augroup END
+
 " vim-javascript.vim
 let g:javascript_enable_domhtmlcss = 1
 "javascript-libraries-syntax.vim
@@ -811,3 +812,27 @@ let g:ale_open_list = 1
 
 " markdown-preview.vim
 let g:mkdp_path_to_chrome = "open -a Google\\ Chrome"
+
+let g:airline#extensions#tagbar#enabled = 0
+
+" complete with highlight syntax words
+" http://www.vim.org/scripts/script.php?script_id=3172
+" setlocal omnifunc=syntaxcomplete#Complete
+"
+" YCM complete Javascript setting below
+" set completefunc=youcompleteme#Complete
+" so the difference between completefunc and omnifunc
+" completefunc: Insert mode completion with CTRL-X CTRL-U
+" omnifunc: Insert mode omni completion with CTRL-X CTRL-O,  (:help i_CTRL-X_CTRL-O)
+"   be used for filetype-specific completion
+
+" only complete visiable buffers
+let g:MultiWordComplete_complete = '.,w'
+
+inoremap <C-x>e <C-R>=ListMonths()<CR>
+func! ListMonths()
+    call complete(col('.'), ['January', 'February', 'March',
+                \ 'April', 'May', 'June', 'July', 'August', 'September',
+                \ 'October', 'November', 'December'])
+    return ''
+endfunc

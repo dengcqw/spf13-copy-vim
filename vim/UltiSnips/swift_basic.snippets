@@ -1,66 +1,285 @@
 
-#	basic {
-snippet ext "extension" b
-extension ${1:Class} {
+
+# String {
+snippet StringIndexChars "string chars index sample"
+let greeting = "Guten Tag!"
+greeting[greeting.startIndex] // first G
+greeting[greeting.index(before: greeting.endIndex)] // last !
+let index = greeting.index(i: greeting.startIndex, offsetBy: 7)
+greeting[index] // a
+endsnippet
+
+snippet StringIterateChars "iterate chars with for-in"
+for index in greeting.characters.indices {
+    print("\(greeting[index]", terminator:"")
 }
 endsnippet
 
-snippet addSubView  "addSubview" b
-self.view.addSubview(${1:view})
+snippet StringDeleteChars "delete chars"
 endsnippet
 
-snippet viewDidLoad  "viewDidLoad" b
-override func viewDidLoad() {
-    super.viewDidLoad()
-    ${1:code}
+snippet StringInsertChars "insert chars"
+var welcome = "hello"
+welcome.insert("!", at: welcome.endIndex) // insert single char
+welcome.insert(contentsOf: " there".characters, at: welcome.index(before: welcome.endIndex))
+endsnippet
+#}
+
+# Collection {
+snippet forin-array "for-in (index, value)"
+for (index, value) in ${arr}.enumerated() {
+    print("Item \(String(index + 1)): \(value)")
 }
 endsnippet
 
-snippet viewWillAppear  "Swift - viewWillAppear"
-override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    ${1:code}
+snippet forin-dic "for-in (key, value)"
+for (key, value) in ${1:dic} {
+    print("Item \(key): \(value)")
 }
 endsnippet
 
-snippet viewDidAppear  "Swift - viewDidAppear"
-override func viewDidAppear(animated: Bool) {
-	super.viewDidAppear(animated)
-	${1:code}
+snippet Set-operations "set operations sample"
+let oddDigits: Set = [1, 3, 5, 7, 9]
+let evenDigits: Set = [0, 2, 4, 6, 8]
+let primeNums: Set = [2, 3, 5, 7]
+oddDigits.union(evenDigits).sorted()
+oddDigits.intersection(evenDigits).sorted()
+oddDigits.subtracting(primeNums).sorted() // [1, 9]
+oddDigits.symmetricDifference(primeNums).sorted() // [1, 2, 9]
+
+oddDigits.isSubset(of: evenDigits)
+oddDigits.isSuperset(of: evenDigits)
+oddDigits.isDisjoint(with: evenDigits) // no intersection
+endsnippet
+
+snippet Dic-setValue "dictionary set value"
+if let oldValue = ${1:dic}.updateValue(${2:value}, forKey: "${3:key}") {
+    print("Update oldValue(\(oldValue)) with value(\($2)) for \"$3\"")
+} else {
+    print("Update value error: key \"$3\" not exist")
 }
 endsnippet
 
-snippet mark  "Swift-Mark"
-// MARK: - ${1:Section}
+snippet Dic-valueForKey "dictionary get value"
+if let value = ${1:dic}["${2:key}"] {
+    print("value for $2: \(value)")
+} else {
+    print("value not exist for key: $2")
+}
 endsnippet
 
-snippet do  "Swift-Basic do-catch block" b
-do {
-    ${1:code}
-    } catch {
+snippet Dic-removeValue "dictionary remove value"
+if let removedValue = ${1:dic}.removeValue(forKey: "${2:key}") {
+    print("Removed value for $2: \(removedValue)")
+} else {
+    print("value not exist for key: $2")
+}
+endsnippet
+#}
+
+# Control flow {
+snippet forin-number "for-in number"
+for index in 1...5 { // or 1..<5
+	print("Current index: \(index)")
+}
+endsnippet
+
+snippet forin "basic for-in"
+for ${1:element} in ${2:collection} {
+	print("Current element: \(element)")
+	${3:code}
+}
+endsnippet
+
+snippet forin-cast  "for-in with casting"
+for case let ${1:object} in ${2:collection} as ${3:Type} {
+}
+endsnippet
+
+snippet while ""
+while ${1:true} {
+	${2:statements}
+}
+endsnippet
+snippet while-repeat "repeat-while"
+repeat {
+	${2:statements}
+} while ${1:true}
+endsnippet
+
+snippet if "if else"
+if ${1:true} {
+} else {
+}
+endsnippet
+
+snippet switch ""
+switch ${1:target} {
+case ${2:value}:
+default:
+}
+endsnippet
+
+snippet switch-tuple "switch tuple,value-bindings,where sample"
+let somePoint = (1, 1)
+switch somePoint {
+case (0, 0):
+case (let x, 0):
+	print("on the x-axis with an x value of \(x)")
+case (0, _):
+case (-2...2, -2...2):
+case let (x, y) where x == y:
+case let (x, y):
+	print("somewhere else at (\(x), \(y))")
+}
+endsnippet
+
+snippet switch-enum "switch enum sample"
+enum Result {
+    case success
+	case failure(String)
+}
+switch result {
+	case .success
+	case let .failure(message)
+}
+endsnippet
+
+snippet guard ""
+guard let value = dic["key"] else {
+	return
+}
+endsnippet
+
+snippet guard-self ""
+guard let `self` = self else {
+	return
+}
+endsnippet
+
+snippet if-api-check "check api available"
+if #available(iOS 10, *, *) {
+} else {
+}
+endsnippet
+#}
+
+# function {
+snippet func0_0  "no input no output" b
+private func ${1:method0_0}() {
     ${2:code}
-    }
+}
 endsnippet
 
-snippet lazy  "Swift - variable lazy" b
+snippet func1_1  "one input one output"
+private func ${1:method1_1}(input input: String) -> String {
+    ${2:code}
+    return ""
+}
+endsnippet
+
+snippet func2_2  "two input two output"
+private func ${1:method2_2}($2 ${2:input_1}: String, ${3:input_2}: String) -> (String, String) {
+    ${4:code}
+    return ("", "")
+}
+endsnippet
+
+snippet func2-1  "two input one output"
+private func ${1:method2_1}($2 ${2:input_1}: String, ${3:input_2}: String) -> String {
+    ${4:code}
+    return ""
+}
+endsnippet
+
+snippet funcN_0  "mutiple input"
+private func ${1:methodN_0}($2 ${2:input}: String...) {
+    ${3:code}
+}
+endsnippet
+
+snippet func-inout "params default const, use inout to change them"
+func swapTowInts(_ a: inout Int, _ b: inout Int) {
+	let temp = a
+	a = b
+	b = temp
+}
+endsnippet
+
+snippet func-var "function var sample"
+var callback: (${1:Int}, $1) -> $1
+endsnippet
+
+snippet func-type "function type statement"
+(${1:Int}, $1) -> $1
+endsnippet
+
+snippet func-class "class method can be override"
+class func ${1:methodName}() {
+}
+endsnippet
+#}
+
+# closure {
+snippet {} "closure"
+{ (${1:parameters}) -> ${2:returnType} in
+	${3:statements}
+}
+endsnippet
+
+snippet closure  ""
+{ (${1:parameters}) -> ${2:returnType} in
+    ${3:statements}
+}
+endsnippet
+
+snippet typealiasClosure  "optional closure typealias"
+typealias ${1:ClosureName} = ((${2:arguments}) -> ${3:return value})?
+endsnippet
+
+snippet closure-escaping "closure escaping sample"
+var completionHandlers: [() -> Void] = []
+func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+	completionHandlers.append(completionHandler)
+}
+endsnippet
+
+snippet closure-autoclosure "autoclosure sample"
+func serve(customer customerProvider: @autoclosure () -> String) {
+}
+serve(customer: customers.remove(at: 0))
+endsnippet
+#}
+
+# enum {
+snippet enum  "enum single type"
+enum ${1:TypeName} : ${2:Int} {
+    case ${2:subType}
+}
+endsnippet
+#}
+
+# properties {
+snippet lazy  "variable lazy" b
 lazy
 var ${1:variable}: ${2:UILabel} = {
     return ${3:?}
 }()
 endsnippet
 
-snippet var.set  "Swift - variable willSet didSet" b
+snippet var_willSet  "variable willSet didSet" b
 var ${1:variable}: Int = 0 {
     willSet {
         ${2:newValue}
     }
     didSet {
         ${3:oldValue}
+	 // Settting this value again and will not trigger didSet.
     }
 }
 endsnippet
 
-snippet var.get.set  "variable get set"
+snippet var_get_set  "variable get set"
 var ${1:variable}: ${2:Type} {
     get {
         return ${3:?}
@@ -71,32 +290,47 @@ var ${1:variable}: ${2:Type} {
 }
 endsnippet
 
-snippet var.get  "variable get"
+snippet var_get  "variable readonly"
 var ${1:variable}: ${2:type} {
     return ${3:?}
 }
 endsnippet
+#}
 
-snippet UIImageView  "Swift-UIImageView"
-let ${1:imageView} = UIImageView(image: UIImage(named: ${2:T##String}))
+
+# others {
+snippet \ "\()"
+\(${1:value})
 endsnippet
 
-snippet enum  "enum  single type"
-enum ${1:TypeName} : ${2:Int} {
-    case ${2:subType}
+snippet subscript ""
+subscript(index: Int) -> ${1:returnType}{
+	get {
+		return ${2:value}
+	}
+	set(newValue) {
+	}
 }
 endsnippet
 
-snippet NSUserDefaults  "Swift - NSUserDefaults"
-NSUserDefaults.standardUserDefaults().setObject("Fez", forKey: "hat")
-let hat = NSUserDefaults.standardUserDefaults().objectForKey("hat")!
+snippet ext "extension" b
+extension ${1:Class} {
+}
 endsnippet
 
-snippet NSNotif.add  "Swift add DidBecomeActive notification observer" b
-NSNotificationCenter.defaultCenter().addObserver(self, selector: "${1:selectorString}", name: UIApplicationDidBecomeActiveNotification, object: nil)
+snippet mark  "Mark"
+// MARK: - ${1:Section}
 endsnippet
 
-snippet singleton  "Swift Singleton" b
+snippet do  "do-catch block" b
+do {
+	${1:code}
+} catch {
+	${2:code}
+}
+endsnippet
+
+snippet singleton  "Swift - Singleton" b
 class var sharedInstance : ${1:SingletonClass} {
     struct Static {
         static let instance : ${1:SingletonClass} = ${1:SingletonClass}()
@@ -105,141 +339,8 @@ class var sharedInstance : ${1:SingletonClass} {
 }
 endsnippet
 
-snippet typealiasClosure  "optional closure typealias"
-typealias ${1:ClosureName} = ((${2:arguments}) -> ${3:return value})?
-endsnippet
-
-snippet closure  "Swift - Closure"
-{ [unownd self] (${1:parameters}) -> ${2:returnType} in
-    ${3:statements}
-}
-endsnippet
-
-snippet method0_0  " method no input no output" b
-private func ${1:method0_0}() -> Void {
-    ${2:code}
-}
-endsnippet
-
-snippet method1_1  "method one input one output"
-private func ${1:method1_1}(input input:String) -> String? {
-    ${2:code}
-    return ""
-}
-endsnippet
-
-snippet method2_2  "method two input two output"
-private func method2_2(${1:input_1} ${1:input_1}:String, ${2:input_2}:String) -> (${3:output_1}:String, ${4:output_2}:String)? {
-    ${5:code}
-    return ("", "")
-}
-endsnippet
-
-snippet method2_1  "Swift - method two input one output"
-private func ${1:method2_1}(${2:input_1} ${2:input_1}:String, ${3:input_2}:String) -> String? {
-    ${4:code}
-    return ""
-}
-endsnippet
-
-snippet methodN_0  "Swift - method mutiple input"
-private func ${1:methodN_0}(${2:input}:String...) {
-    ${3:code}
-}
-endsnippet
-
-snippet methodClass  "class method"
-class func method(input:String) {
-}
-endsnippet
-
-snippet methodOverride  "override method"
-override func ${1:method}(${2:input:String}) {
-}
-endsnippet
-
-snippet forin  "Swift for-in loop with casting"
-for case let ${1:object} in ${2:collection} as ${3:Type} {
-}
-endsnippet
 #}
 
-#	UI {
-
-snippet UITextField  "Swift - TextField config"
-let textField = UITextField(frame: CGRectZero)
-textField.placeholder = "${1:placeholder}"
-textField.font = UIFont.systemFontOfSize(15)
-textField.borderStyle = UITextBorderStyle.RoundedRect
-textField.textAlignment = NSTextAlignment.Left
-textField.delegate = self
-
-textField.autocorrectionType = UITextAutocorrectionType.No
-textField.keyboardType = UIKeyboardType.Default
-textField.returnKeyType = UIReturnKeyType.Done
-textField.clearButtonMode = UITextFieldViewMode.WhileEditing;
-textField.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
-endsnippet
-
-snippet UILabel  "Swift - label"
-let label = UILabel(frame: CGRectZero)
-label.textAlignment = NSTextAlignment.Center
-label.numberOfLines = 1
-label.backgroundColor = UIColor.clearColor()
-label.textColor = UIColor.blackColor()
-label.font = UIFont.systemFontOfSize(16)
-label.text = "${1:text}"
-self.view.addSubview(label)
-endsnippet
-
-snippet UIbutton  "Swift - button" b
-let button = UIButton(frame: CGRectZero)
-button.setTitle("${1:title}", forState: UIControlState.Normal)
-button.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-button.backgroundColor = UIColor.whiteColor()
-button.addTarget(self, action: "buttonPressedAction:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-self.view.addSubview(button)
-        
-func buttonPressedAction(sender: UIButton) {
-    
-}
-endsnippet
-
-#}
-
-#	GCD {
-snippet gcdAfter  "Dispatch After"
-dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(${1:delay} * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
-}
-endsnippet
-
-snippet gcdMain  "dispatch_async on main queue"
-dispatch_async(dispatch_get_main_queue(), { () -> Void in
-})
-endsnippet
-
-snippet gcdOnce "Dispatch Once"
-struct Static { static var onceToken: dispatch_once_t = 0 }
-dispatch_once(&Static.onceToken) {
-    ${1:closure_logic}
-}
-endsnippet
-
-snippet gcdAsynMain  "DispatchAsyncMain"
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
-    ${1:code}
-    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-        ${2:code}
-    })
-})
-endsnippet
-#}
-
-snippet djDocuPath  "document directory"
-let path = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first as String
-let documentsDirectoryURL = NSURL.fileURLWithPath(path)
-endsnippet
 
 snippet djExtensionDescription  "Swift - extension description"
 extension ${1:TypeName}: CustomStringConvertible {
@@ -249,305 +350,11 @@ extension ${1:TypeName}: CustomStringConvertible {
 }
 endsnippet
 
-snippet djPickerviewdelegate  "Swift-UIPickerViewDelegate"
-
-//MARK: UIPickerViewDelegate
-extension ${1:Class} : UIPickerViewDelegate {
-    
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        ${2:code}
-    }
-    
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        ${3:code}
-    }
-    
-}
-endsnippet
-
-snippet djPickerviewdatasource  "Swift-UIPickerViewDataSource"
-//MARK: UIPickerViewDataSource
-extension ${1:Class} : UIPickerViewDataSource {
-    
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        ${2:code}
-    }
-    
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        ${3:code}
-    }
-}
-endsnippet
-
-snippet djCollectionviewdatasource  "Swift-UICollectionViewDataSource"
-
-//MARK: UICollectionViewDataSource
-extension ${1:Class} : UICollectionViewDataSource {
-    
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return ${2:numberOfSections}
-    }
-    
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ${3:numberOfItems}
-    }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(${4:identifier}, forIndexPath: indexPath) as! ${5:CustomCell}
-        ${6:configureCell}
-        return cell
-    }
-    
-    
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        let view =  collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: ${7:identifier}, forIndexPath: indexPath) as! UIView
-        return view
-    }
-}
-endsnippet
-
-snippet djTableviewdelegate  "Swift-UITableviewDelegate"
-//MARK: UITableViewDelegate
-extension ${1:Class} : UITableViewDelegate {
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        ${2:code}
-    }
-}
-endsnippet
-
 snippet swift-sortarrayofstrings  "Swift String Array locale-aware sorting"
 ${1:arrayOfStrings}.sort({ (a, b) -> Bool in
     let comparisonResult = a.compare(b, options: NSStringCompareOptions.allZeros, range: Range<String.Index>(start: a.startIndex, end: a.endIndex), locale: NSLocale.currentLocale())
     return comparisonResult == NSComparisonResult.OrderedAscending
 })
-endsnippet
-
-snippet djLiftcycle  "Swift-UIViewControllerLifecycle"
- //MARK: UIViewController Lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
-endsnippet
-
-snippet djAlert  "Swift-UIAlertController"
-        let alert = UIAlertController(title: "Enter Name", message: nil, preferredStyle: .Alert)
-
-        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
-            textField.text = ""
-            textField.autocapitalizationType = .Sentences;
-        })
-
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            let textField = alert.textFields![0] as UITextField
-            print(textField.text!)
-        }))
-
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: {
-            (alertAction: UIAlertAction!) in
-            alert.dismissViewControllerAnimated(true, completion: nil)
-        }))
-
-        self.presentViewController(alert, animated: true, completion: nil)
-endsnippet
-
-snippet djTextFieldDelegate  "Swift - TextField delegate notification"
-
-// MARK:- ---> Textfield Delegates
-func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-    print("While entering the characters this method gets called")
-    return true;
-}
-
-func textFieldShouldReturn(textField: UITextField) -> Bool {
-    print("TextField should return method called")
-    textField.resignFirstResponder();
-    return true;
-}
-// MARK: Textfield Delegates <---
-
-// MARK: Textfield Notif
-let notificationCenter = NSNotificationCenter.defaultCenter()
-notificationCenter.addObserver(
-    self,
-    selector: "textFieldTextChanged:",
-    name:UITextFieldTextDidChangeNotification,
-    object: nil
-)
-func textFieldTextChanged(sender : AnyObject) {
-}
-
-endsnippet
-
-snippet djUIRemotenotification  "Swift UIRemoteNotification"
-  
-//MARK: Remote Notifications
-
-// Move this line somewhere where your app starts
-//    UIApplication.sharedApplication().registerForRemoteNotifications()
-
-// Ask user for allowed notification types
-//    let settings = UIUserNotificationSettings(forTypes: .Alert | .Sound | .Badge, categories: nil)
-//    UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-
-func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData!) {
-    println("Successfully egistered for Remote Notifications with token: \(deviceToken)")
-}
-
-func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError!) {
-    println("Registration for Remote Notifications failed with error: \(error)")
-}
-
-func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-    
-}
-
-func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-    
-}
-
-endsnippet
-
-snippet djUITableViewDelegate "Swift UITableViewDelegate"
-    
-	//MARK: UITableViewDelegate
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-    }
-    
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        
-    }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-    }
-    
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        
-    }
-
-endsnippet
-
-snippet djUIAlertController  "Swift - alert controller"
-let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-	alert.dismissViewControllerAnimated(true, completion: nil)
-}))
-presentingViewController?.presentViewController(alert, animated: true, completion: nil)
-endsnippet
-
-snippet djMFMessage  "Swift MFMessageComposeViewController"
-    
-	//MARK: MFMessageComposeViewController
-    
-    func presentModalMessageComposeViewController(animated: Bool) {
-        if MFMessageComposeViewController.canSendText() {
-            let messageComposeVC = MFMessageComposeViewController()
-
-            messageComposeVC.messageComposeDelegate = self
-            messageComposeVC.body = "${1:body}"
-            messageComposeVC.recipients = [${2:recipients}]
-            
-            presentViewController(messageComposeVC, animated: animated, completion: nil)
-
-        } else {
-            UIAlertView(title: NSLocalizedString("Error", value: "Error", comment: ""), message: NSLocalizedString("Your device doesn't support messaging", value: "Your device doesn't support messaging", comment: ""), delegate: nil, cancelButtonTitle: NSLocalizedString("OK", value: "OK", comment: "")).show()
-        }
-    }
-    
-    func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-
-endsnippet
-
-snippet djUICollectionviewdelegate  "Swift-UICollectionViewDelegate"
-
-//MARK: UICollectionViewDelegate
-extension ${1:Class} : UICollectionViewDelegate {
-    
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-    }
-    
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        
-    }
-}
-endsnippet
-
-snippet djUIcollectionviewdatasource  "Swift UICollectionViewDataSource"
-    //MARK: UICollectionViewDataSource
-    
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return ${1:numberOfSections}
-    }
-    
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ${2:numberOfItems}
-    }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(${3:identifier}, forIndexPath: indexPath) as! UICollectionViewCell
-        configureCell(cell, forItemAtIndexPath: indexPath)
-        return cell
-    }
-    
-    func configureCell(cell: UICollectionViewCell, forItemAtIndexPath: NSIndexPath) {
-        
-    }
-    
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        let view =  collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: ${4:identifier}, forIndexPath: indexPath) as UIView
-        return view
-    }
-endsnippet
-
-snippet djTableviewdatasource  "Swift-UITableviewDataSource"
-
-//MARK: UITableviewDataSource
-extension ${1:Class} : UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return ${2:numberOfSections}
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ${3:numberOfRows}
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(${4:identifier}, forIndexPath: indexPath) as? ${5:CustomCell}
-        ${6:configCell}
-        return cell!
-    }
-}
 endsnippet
 
 snippet sample-if-switch  "Swift - if switch sample"
@@ -587,29 +394,5 @@ case 3:
 default:
     print("Invalid day")
 }
-endsnippet
-
-snippet djLifecycle  "Swift UIViewController lifecycle"
-    //MARK: UIViewController lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
 endsnippet
 

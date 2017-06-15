@@ -1,0 +1,41 @@
+
+snippet djDocuPath  "document directory"
+let path = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first as String
+let documentsDirectoryURL = NSURL.fileURLWithPath(path)
+endsnippet
+
+snippet NSUserDefaults  "Swift - NSUserDefaults"
+NSUserDefaults.standardUserDefaults().setObject("Fez", forKey: "hat")
+let hat = NSUserDefaults.standardUserDefaults().objectForKey("hat")!
+endsnippet
+
+snippet NSNotif.add  "Swift add DidBecomeActive notification observer" b
+NSNotificationCenter.defaultCenter().addObserver(self, selector: "${1:selectorString}", name: UIApplicationDidBecomeActiveNotification, object: nil)
+endsnippet
+
+#	GCD {
+snippet gcdAfter  "Dispatch After"
+dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(${1:delay} * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
+}
+endsnippet
+snippet gcdMain  "dispatch_async on main queue"
+dispatch_async(dispatch_get_main_queue(), { () -> Void in
+})
+endsnippet
+
+snippet gcdOnce "Dispatch Once"
+struct Static { static var onceToken: dispatch_once_t = 0 }
+dispatch_once(&Static.onceToken) {
+    ${1:closure_logic}
+}
+endsnippet
+
+snippet gcdAsynMain  "DispatchAsyncMain"
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
+    ${1:code}
+    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        ${2:code}
+    })
+})
+endsnippet
+#}

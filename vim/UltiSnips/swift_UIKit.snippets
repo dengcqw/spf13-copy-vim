@@ -1,0 +1,387 @@
+
+#	UI {
+snippet viewDidLoad  "Swift - viewDidLoad" b
+override func viewDidLoad() {
+    super.viewDidLoad()
+    ${1:code}
+}
+endsnippet
+
+snippet viewWillAppear  "Swift - viewWillAppear"
+override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    ${1:code}
+}
+endsnippet
+
+snippet viewDidAppear  "Swift - viewDidAppear"
+override func viewDidAppear(animated: Bool) {
+	super.viewDidAppear(animated)
+	${1:code}
+}
+endsnippet
+
+snippet UIImageView  "Swift-UIImageView"
+let ${1:imageView} = UIImageView(image: UIImage(named: ${2:T##String}))
+endsnippet
+
+snippet UITextField  "Swift - TextField config"
+let textField = UITextField(frame: CGRectZero)
+textField.placeholder = "${1:placeholder}"
+textField.font = UIFont.systemFontOfSize(15)
+textField.borderStyle = UITextBorderStyle.RoundedRect
+textField.textAlignment = NSTextAlignment.Left
+textField.delegate = self
+
+textField.autocorrectionType = UITextAutocorrectionType.No
+textField.keyboardType = UIKeyboardType.Default
+textField.returnKeyType = UIReturnKeyType.Done
+textField.clearButtonMode = UITextFieldViewMode.WhileEditing;
+textField.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
+endsnippet
+
+snippet UILabel  "Swift - label"
+let label = UILabel(frame: CGRectZero)
+label.textAlignment = NSTextAlignment.Center
+label.numberOfLines = 1
+label.backgroundColor = UIColor.clearColor()
+label.textColor = UIColor.blackColor()
+label.font = UIFont.systemFontOfSize(16)
+label.text = "${1:text}"
+self.view.addSubview(label)
+endsnippet
+
+snippet UIbutton  "Swift - button" b
+let button = UIButton(frame: CGRectZero)
+button.setTitle("${1:title}", forState: UIControlState.Normal)
+button.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+button.backgroundColor = UIColor.whiteColor()
+button.addTarget(self, action: "buttonPressedAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+self.view.addSubview(button)
+        
+func buttonPressedAction(sender: UIButton) {
+    
+}
+endsnippet
+
+#}
+
+snippet djPickerviewdelegate  "Swift-UIPickerViewDelegate"
+
+//MARK: UIPickerViewDelegate
+extension ${1:Class} : UIPickerViewDelegate {
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        ${2:code}
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        ${3:code}
+    }
+    
+}
+endsnippet
+
+snippet djPickerviewdatasource  "Swift-UIPickerViewDataSource"
+//MARK: UIPickerViewDataSource
+extension ${1:Class} : UIPickerViewDataSource {
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        ${2:code}
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        ${3:code}
+    }
+}
+endsnippet
+
+snippet djCollectionviewdatasource  "Swift-UICollectionViewDataSource"
+
+//MARK: UICollectionViewDataSource
+extension ${1:Class} : UICollectionViewDataSource {
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return ${2:numberOfSections}
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return ${3:numberOfItems}
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(${4:identifier}, forIndexPath: indexPath) as! ${5:CustomCell}
+        ${6:configureCell}
+        return cell
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        let view =  collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: ${7:identifier}, forIndexPath: indexPath) as! UIView
+        return view
+    }
+}
+endsnippet
+
+snippet djTableviewdelegate  "Swift-UITableviewDelegate"
+//MARK: UITableViewDelegate
+extension ${1:Class} : UITableViewDelegate {
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        ${2:code}
+    }
+}
+endsnippet
+
+snippet djLiftcycle  "Swift-UIViewControllerLifecycle"
+ //MARK: UIViewController Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+endsnippet
+
+snippet djAlert  "Swift-UIAlertController"
+        let alert = UIAlertController(title: "Enter Name", message: nil, preferredStyle: .Alert)
+
+        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+            textField.text = ""
+            textField.autocapitalizationType = .Sentences;
+        })
+
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            let textField = alert.textFields![0] as UITextField
+            print(textField.text!)
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alertAction: UIAlertAction!) in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+        }))
+
+        self.presentViewController(alert, animated: true, completion: nil)
+endsnippet
+
+snippet djTextFieldDelegate  "Swift - TextField delegate notification"
+
+// MARK:- ---> Textfield Delegates
+func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    print("While entering the characters this method gets called")
+    return true;
+}
+
+func textFieldShouldReturn(textField: UITextField) -> Bool {
+    print("TextField should return method called")
+    textField.resignFirstResponder();
+    return true;
+}
+// MARK: Textfield Delegates <---
+
+// MARK: Textfield Notif
+let notificationCenter = NSNotificationCenter.defaultCenter()
+notificationCenter.addObserver(
+    self,
+    selector: "textFieldTextChanged:",
+    name:UITextFieldTextDidChangeNotification,
+    object: nil
+)
+func textFieldTextChanged(sender : AnyObject) {
+}
+
+endsnippet
+
+snippet djUIRemotenotification  "Swift UIRemoteNotification"
+  
+//MARK: Remote Notifications
+
+// Move this line somewhere where your app starts
+//    UIApplication.sharedApplication().registerForRemoteNotifications()
+
+// Ask user for allowed notification types
+//    let settings = UIUserNotificationSettings(forTypes: .Alert | .Sound | .Badge, categories: nil)
+//    UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+
+func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData!) {
+    println("Successfully egistered for Remote Notifications with token: \(deviceToken)")
+}
+
+func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError!) {
+    println("Registration for Remote Notifications failed with error: \(error)")
+}
+
+func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    
+}
+
+func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+    
+}
+
+endsnippet
+
+snippet djUITableViewDelegate "Swift UITableViewDelegate"
+    
+	//MARK: UITableViewDelegate
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+    }
+    
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+    }
+
+endsnippet
+
+snippet djUIAlertController  "Swift - alert controller"
+let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+	alert.dismissViewControllerAnimated(true, completion: nil)
+}))
+presentingViewController?.presentViewController(alert, animated: true, completion: nil)
+endsnippet
+
+snippet djMFMessage  "Swift MFMessageComposeViewController"
+    
+	//MARK: MFMessageComposeViewController
+    
+    func presentModalMessageComposeViewController(animated: Bool) {
+        if MFMessageComposeViewController.canSendText() {
+            let messageComposeVC = MFMessageComposeViewController()
+
+            messageComposeVC.messageComposeDelegate = self
+            messageComposeVC.body = "${1:body}"
+            messageComposeVC.recipients = [${2:recipients}]
+            
+            presentViewController(messageComposeVC, animated: animated, completion: nil)
+
+        } else {
+            UIAlertView(title: NSLocalizedString("Error", value: "Error", comment: ""), message: NSLocalizedString("Your device doesn't support messaging", value: "Your device doesn't support messaging", comment: ""), delegate: nil, cancelButtonTitle: NSLocalizedString("OK", value: "OK", comment: "")).show()
+        }
+    }
+    
+    func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+
+endsnippet
+
+snippet djUICollectionviewdelegate  "Swift-UICollectionViewDelegate"
+
+//MARK: UICollectionViewDelegate
+extension ${1:Class} : UICollectionViewDelegate {
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+}
+endsnippet
+
+snippet djUIcollectionviewdatasource  "Swift UICollectionViewDataSource"
+    //MARK: UICollectionViewDataSource
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return ${1:numberOfSections}
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return ${2:numberOfItems}
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(${3:identifier}, forIndexPath: indexPath) as! UICollectionViewCell
+        configureCell(cell, forItemAtIndexPath: indexPath)
+        return cell
+    }
+    
+    func configureCell(cell: UICollectionViewCell, forItemAtIndexPath: NSIndexPath) {
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        let view =  collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: ${4:identifier}, forIndexPath: indexPath) as UIView
+        return view
+    }
+endsnippet
+
+snippet djTableviewdatasource  "Swift-UITableviewDataSource"
+
+//MARK: UITableviewDataSource
+extension ${1:Class} : UITableViewDataSource {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return ${2:numberOfSections}
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ${3:numberOfRows}
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(${4:identifier}, forIndexPath: indexPath) as? ${5:CustomCell}
+        ${6:configCell}
+        return cell!
+    }
+}
+endsnippet
+
+snippet djLifecycle  "Swift UIViewController lifecycle"
+    //MARK: UIViewController lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+endsnippet
+

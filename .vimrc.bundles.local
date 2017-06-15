@@ -53,8 +53,6 @@
         "Bundle 'b4winckler/vim-objc'
         Bundle 'keith/swift.vim'
         Bundle 'dengcqw/sourcekittendaemon.vim'
-        "Bundle 'toyamarinyon/vim-swift'
-        "Bundle 'tokorom/swift-dict.vim'
     " }
     "
     "Bundle 'dkprice/vim-easygrep'
@@ -69,4 +67,11 @@
     Bundle 'w0rp/ale'
 
     Bundle 'iamcco/markdown-preview.vim'
+
+    " CTRL-X w e.g. `imc` completes to `insert mode completion`
+    Bundle 'vim-scripts/ingo-library'
+    Bundle 'vim-scripts/CompleteHelper'
+    Bundle 'vim-scripts/MultiWordComplete'
+
+    Bundle 'vim-scripts/DeleteTrailingWhitespace'
 
