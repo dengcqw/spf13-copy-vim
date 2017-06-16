@@ -310,3 +310,8 @@ function vim-linedelete() {
 }
 
 alias startSwiftCompleteServer='node $HOME/spf13-copy-vim/scripts/startSourceKittenDeamon.js'
+
+# https://zhuanlan.zhihu.com/p/23823231
+# plugin to iphone, run below to create virtual network interface, then use wireshark
+# rvictl -s ba490377a9fc6df3243a343ae52aa76f8d0d6b71
+# rvictl -x ba490377a9fc6df3243a343ae52aa76f8d0d6b71
