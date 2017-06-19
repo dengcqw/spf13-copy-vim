@@ -44,8 +44,6 @@
         Bundle 'FelikZ/ctrlp-py-matcher'
     " }
     " iOS dev {
-        Bundle 'kentaroi/cocoa.vim'
-        "Bundle 'qqshfox/objc_matchbracket'
         "Bundle 'vim-scripts/a.vim'
         "witching Header Files
         "Bundle 'eraserhd/vim-ios.git'

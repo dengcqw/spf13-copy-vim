@@ -88,7 +88,7 @@ source $ZSH/oh-my-zsh.sh
 #
 
 # autojump setting
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 # brew install keith/formulae/zsh-xcode-completions
 fpath=(/usr/local/share/zsh/site-functions $fpath)
@@ -222,6 +222,7 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
     alias tgreview='git push origin HEAD:refs/for/master'
     alias tgpatch='git format-patch -1 HEAD'
     alias tgpushforce='git push --force' # dangerous
+    alias tgsub='git submodule update --init --recursive'
 #}
 
 
@@ -315,3 +316,5 @@ alias startSwiftCompleteServer='node $HOME/spf13-copy-vim/scripts/startSourceKit
 # plugin to iphone, run below to create virtual network interface, then use wireshark
 # rvictl -s ba490377a9fc6df3243a343ae52aa76f8d0d6b71
 # rvictl -x ba490377a9fc6df3243a343ae52aa76f8d0d6b71
+
+alias mpi='make package install'

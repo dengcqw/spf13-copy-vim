@@ -4,3 +4,4 @@ sessions
 YouCompleteMe
 .DS_Store
 options
+.zshrc.local
