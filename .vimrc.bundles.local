@@ -73,3 +73,5 @@
 
     Bundle 'vim-scripts/DeleteTrailingWhitespace'
 
+    Bundle 't9md/vim-quickhl'
+

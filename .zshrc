@@ -318,3 +318,8 @@ alias startSwiftCompleteServer='node $HOME/spf13-copy-vim/scripts/startSourceKit
 # rvictl -x ba490377a9fc6df3243a343ae52aa76f8d0d6b71
 
 alias mpi='make package install'
+
+# Android {
+    alias path-Android-support="cd /Users/dengjinlong/Library/Android/sdk/extras/android/m2repository/com/android/support"
+#}
+

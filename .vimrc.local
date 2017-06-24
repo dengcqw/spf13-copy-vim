@@ -762,6 +762,7 @@ noremap <Leader>= <C-w>=
 noremap <silent> <Leader>/ :nohlsearch<CR>
 noremap <Leader>bg :call ToggleBG()<CR>
 
+
 " completion popup menu KeyStroke
 "<Ctrl+N/Ctrl+P> scroll selection
 "<Ctrl+Y>  "yes, accept that word."
@@ -836,3 +837,8 @@ func! ListMonths()
                 \ 'October', 'November', 'December'])
     return ''
 endfunc
+
+
+" quickhl
+nmap H <Plug>(quickhl-manual-this)
+vmap H <Plug>(quickhl-manual-this)
