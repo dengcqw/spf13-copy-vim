@@ -29,7 +29,7 @@
             " TypeScript support
             Bundle 'gavocanov/vim-js-indent', { 'for': 'javascript' }
             " extends syntax for with jQuery,backbone,etc.
-            Bundle 'othree/javascript-libraries-syntax.vim'
+            "Bundle 'othree/javascript-libraries-syntax.vim'
             " After syntax, ftplugin, indent for JSX
             "Bundle 'mxw/vim-jsx'
         endif
@@ -77,4 +77,9 @@
 
     " use gradle and Android Stiduo
     "Bundle 'artur-shaik/vim-javacomplete2'
+    
+    " <leader>?
+    Bundle "lifepillar/vim-cheat40"
+
+
 

@@ -216,7 +216,7 @@
 
     set lines=80
 
-    set complete=.,b,u,U,t,i,k
+    set complete=.,b,u,U,k
 
     inoremap <D-p> <c-x><c-p>
 
