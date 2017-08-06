@@ -31,7 +31,7 @@
             " extends syntax for with jQuery,backbone,etc.
             Bundle 'othree/javascript-libraries-syntax.vim'
             " After syntax, ftplugin, indent for JSX
-            Bundle 'mxw/vim-jsx'
+            "Bundle 'mxw/vim-jsx'
         endif
     " }
     " js complete { YCM already support tern
@@ -74,4 +74,7 @@
     Bundle 'vim-scripts/DeleteTrailingWhitespace'
 
     Bundle 't9md/vim-quickhl'
+
+    " use gradle and Android Stiduo
+    "Bundle 'artur-shaik/vim-javacomplete2'
 

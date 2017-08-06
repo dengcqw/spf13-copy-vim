@@ -141,7 +141,7 @@ alias -s plist=mvim
 
     alias djCopyPath='sh ~/spf13-copy-vim/bin/copy-file-path '
 
-    alias carthage-ios='$brew_path/carthage/0.22.0/bin/carthage update --platform iOS'
+    alias carthage-ios='carthage update --platform iOS'
     alias srczshrc='source ~/.zshrc'
 
     alias djSwitchNetork='node ~/spf13-copy-vim/scripts/network_switch.js'
@@ -323,3 +323,9 @@ alias mpi='make package install'
     alias path-Android-support="cd /Users/dengjinlong/Library/Android/sdk/extras/android/m2repository/com/android/support"
 #}
 
+# find symbol in lib
+# nm -A LibQYDlna_TVGUOAPP.a  | grep QYHttpFile
+
+alias gr='./gradlew run'
+alias gb='./gradlew build'
+alias gt='./gradlew tasks'

@@ -237,7 +237,7 @@
     "let g:Powerline_symbols = 'fancy'
 
     """""""""" NERDtree settings"""""""""""""""
-    let g:NERDTreeWinPos='left'
+    "let g:NERDTreeWinPos='left'
 
     """"""""""EasyMotion settings""""""""""
     ""let g:EasyMotion_leader_key = '\'
@@ -777,16 +777,23 @@ autocmd FileType swift setlocal smartindent
 "autocmd FileType swift inoremap <C-k> <C-R>=sourcekittendaemon#JumpToPlaceHolder()<cr>
 let g:sourcekittendaemon_jump_placeholder = "<C-k>"
 
-autocmd FileType java set makeprg=javac\ %
+autocmd FileType java set makeprg=javac\ *.java
+
 " single java file compile and run
 "nmap ,p :!javac %<CR>:!java -cp %:p:h %:t:r<CR>
-autocmd FileType java nnoremap \j :call CompileRunGcc()<CR>
-
 func! CompileRunGcc()
     exec "w"
     exec "!javac %"
     exec "!time java -cp %:p:h %:t:r"
 endfunction
+
+func! MultiJavaCompileRunGcc()
+    exec "wall"
+    exec "!javac *.java"
+    exec "!time java -cp %:p:h Main"
+endfunction
+
+autocmd FileType java nnoremap \j :call MultiJavaCompileRunGcc()<CR>
 
 " ALE Setting
 
@@ -840,5 +847,7 @@ endfunc
 
 
 " quickhl
-nmap H <Plug>(quickhl-manual-this)
 vmap H <Plug>(quickhl-manual-this)
+
+" Command Start with JC like :JCimportAdd
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
