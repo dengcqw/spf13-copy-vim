@@ -81,5 +81,7 @@
     " <leader>?
     Bundle "lifepillar/vim-cheat40"
 
+    Bundle "fatih/vim-go"
+
 
 

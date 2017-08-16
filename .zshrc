@@ -329,3 +329,10 @@ alias mpi='make package install'
 alias gr='./gradlew run'
 alias gb='./gradlew build'
 alias gt='./gradlew tasks'
+
+#[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+# 安装godoc命令: go get golang.org/x/tools/cmd/godoc
+# 开启http服务器: godoc -http=:8080
+
+export GOPATH=/Users/dengjinlong/Documents/9-go
+

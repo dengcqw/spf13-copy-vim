@@ -851,3 +851,7 @@ vmap H <Plug>(quickhl-manual-this)
 
 " Command Start with JC like :JCimportAdd
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" 不会跳到后面的匹配符号处
+let g:AutoPairsMultilineClose=0
+
