@@ -122,7 +122,7 @@
         " Always switch to the current file directory
     endif
 
-    "set autowrite                       " Automatically write a file when leaving a modified buffer
+    set autowrite                       " Automatically write a file when leaving a modified buffer
     set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
     set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
     set virtualedit=onemore             " Allow for cursor beyond last character

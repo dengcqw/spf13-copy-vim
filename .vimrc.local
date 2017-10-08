@@ -545,8 +545,8 @@ set foldlevelstart=1
         \ 'json' : 1,
         \}
     " swift not auto complete for (, because not used too much
+    
     let g:ycm_semantic_triggers =  {
-        \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s', 're!\[.*\]\s'],
         \   'swift' : ['.'],
         \ }
 
@@ -855,3 +855,51 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 " 不会跳到后面的匹配符号处
 let g:AutoPairsMultilineClose=0
 
+" https://github.com/fatih/vim-go-tutorial
+" go {
+
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+
+let g:go_list_type = "quickfix"
+
+" :GoTest           run test
+" :GoTestFunc       test the function under cursor
+" :GoTestCompile    compile test files but not run test
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+
+" close auto formate
+" let g:go_fmt_autosave = 0
+
+" add missing import package when save
+let g:go_fmt_command = "goimports" " original is \"gofmt\"
+
+" too many highlight may be not good
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+
+autocmd FileType go nmap <Leader>i <Plug>(go-info)
+let g:go_auto_type_info = 1
+
+let g:go_auto_sameids = 1
+
+" }
