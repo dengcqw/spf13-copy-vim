@@ -336,3 +336,12 @@ alias gt='./gradlew tasks'
 
 export GOPATH=/Users/dengjinlong/Documents/9-go
 
+# xmlint {
+    #获取viewController storyboardIdentifier
+    #echo 'cat //*/@storyboardIdentifier' | xmllint --shell 'QiyiLogin.storyboard'
+    #echo 'cat //*/@storyboardIdentifier' | xmllint --shell 'QiyiLogin.storyboard' | awk -F\" 'NR % 2 == 0 { print $2 }'
+    #获取对应viewController下的outlet
+    #echo 'cat //*/viewController[@storyboardIdentifier="accountmanagerviewcontroller"]/*/outlet' | xmllint --shell 'QiyiLogin.storyboard'
+    #echo 'cat //*/viewController[@storyboardIdentifier="accountmanagerviewcontroller"]/*/outlet' | xmllint --shell 'QiyiLogin.storyboard' | awk -F\" 'NR % 2 == 0 { print $2 }'
+#}
+

@@ -237,7 +237,7 @@
     "let g:Powerline_symbols = 'fancy'
 
     """""""""" NERDtree settings"""""""""""""""
-    "let g:NERDTreeWinPos='left'
+    let g:NERDTreeWinPos='left'
 
     """"""""""EasyMotion settings""""""""""
     ""let g:EasyMotion_leader_key = '\'
@@ -544,8 +544,9 @@ set foldlevelstart=1
         \ 'gitcommit' : 1,
         \ 'json' : 1,
         \}
+
     " swift not auto complete for (, because not used too much
-    
+    " 有些补全没必要
     let g:ycm_semantic_triggers =  {
         \   'swift' : ['.'],
         \ }
@@ -903,3 +904,12 @@ let g:go_auto_type_info = 1
 let g:go_auto_sameids = 1
 
 " }
+
+" keep auto-open-nerdtree-in-every-tab
+" https://stackoverflow.com/a/2762067/2434742
+"autocmd BufWinEnter * NERDTreeMirror
+"autocmd VimEnter * NERDTree
+"autocmd BufEnter * NERDTreeMirror
+let NERDTreeQuitOnOpen=0
+
+"autocmd FileType swift imap <buffer> <C-j> <Plug>(deoplete_swift_jump_to_placeholder)
