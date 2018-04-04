@@ -45,14 +45,8 @@
     " }
     " iOS dev {
         Bundle 'keith/swift.vim'
-        "Bundle 'dengcqw/sourcekittendaemon.vim'
+        Bundle 'dengcqw/sourcekittendaemon.vim'
     " }
-    "
-    "Bundle 'dkprice/vim-easygrep'
-
-    " block vim
-    "Bundle 'xolox/vim-easytags'
-    "Bundle 'xolox/vim-misc'
 
     " Highlight the term under the cursor
     Bundle 'qstrahl/vim-matchmaker'
@@ -79,8 +73,4 @@
     Bundle "fatih/vim-go"
 
     Bundle 'Yggdroot/LeaderF', { 'do': './install.sh' }
-
-    Bundle 'maralla/completor.vim'
-    Bundle 'maralla/completor-swift'
-
 

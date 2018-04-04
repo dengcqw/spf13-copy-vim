@@ -50,7 +50,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins
-plugins=(git brew common-alias dirhistory encode64 github history jsontools npm osx sudo urltools vi-mode xcode)
+plugins=(git brew common-alias dirhistory encode64 github history jsontools npm osx sudo urltools vi-mode xcode extract)
 
 # User configuration
 
@@ -223,6 +223,8 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
     alias tgpatch='git format-patch -1 HEAD'
     alias tgpushforce='git push --force' # dangerous
     alias tgsub='git submodule update --init --recursive'
+    alias tgpl-rebase="git pull --rebase"
+    alias tgref="git reflog"
 #}
 
 

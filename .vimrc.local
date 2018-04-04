@@ -15,9 +15,6 @@
     set noerrorbells
     set novisualbell
 
-    " Add a bit extra margin to the left
-    set foldcolumn=1
-
     " Use Unix as the standard file type
     set ffs=unix,dos,mac
 
@@ -99,25 +96,6 @@
     vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
     vnoremap <silent> K :call VisualSelection('K', '')<CR>
 
-    " When you press <Leader>r you can search and replace the selected text
-    "vnoremap <silent> <Leader>r :call VisualSelection('replace', '')<CR>
-
-    " Do :help cope if you are unsure what cope is. It's super useful!
-    "
-    " When you search with vimgrep, display your results in cope by doing:
-    "   <Leader>cc
-    "
-    " To go to the next search result do:
-    "   <Leader>n
-    "
-    " To go to the previous search results do:
-    "   <Leader>p
-    "
-    " map <Leader>cc :botright cope<cr>
-    " map <Leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
-    " map <Leader>n :cn<cr>
-    " map <Leader>p :cp<cr>
-
     function! CmdLine(str)
         exe "menu Foo.Bar :" . a:str
         emenu Foo.Bar
@@ -184,6 +162,9 @@
     set foldnestmax=9       " deepest fold is 3 levels
     set nofoldenable        " don't fold by default
     nnoremap <Space> za     " use space to do fold
+    set foldlevelstart=1
+    " Add a bit extra margin to the left
+    set foldcolumn=1
 
     " add filename after command
     noremap <Leader>vd :vertical diffsplit
@@ -220,35 +201,34 @@
 
     inoremap <D-p> <c-x><c-p>
 
-    "Line modifications
-    "inoremap CC <Esc>C  " or use <C-k>
-    "inoremap SS <Esc>S
-    "inoremap DD <Esc>dd " or <Cmd-backspace>
-    "Quick movements
-    "inoremap II <Esc>I
-    "inoremap AA <Esc>A
-    "inoremap OO <Esc>O
+    "set nocursorline
+    set nocursorcolumn
+    set synmaxcol=200
+
 " }
 
 " custom Plugins {
 
-    """"""""""""""""""""""""""""""""""""""""
-    " powerline plugin
-    "let g:Powerline_symbols = 'fancy'
+"""""""""" NERDtree settings"""""""""""""""
+let g:NERDTreeWinPos='left'
 
-    """""""""" NERDtree settings"""""""""""""""
-    let g:NERDTreeWinPos='left'
+" fix NERDTreeToggle error strangely. {
+    "noremap <C-e> :call g:WorkaroundNERDTreeToggle()<CR>
 
-    """"""""""EasyMotion settings""""""""""
-    ""let g:EasyMotion_leader_key = '\'
-        " ff[ch]
-        " fs[ch]    Search
-        " fw    word
-        " fj    line downward
-        " fk    line upward
-        " fn/fN    like original n/N
-" }
-"
+    "function! g:WorkaroundNERDTreeToggle()
+      "try | NERDTreeTabsToggle | catch | silent! NERDTree | endtry
+    "endfunction
+
+    noremap <Leader>pr :NERDTreeFind<CR>
+"}
+
+" keep auto-open-nerdtree-in-every-tab
+" https://stackoverflow.com/a/2762067/2434742
+"autocmd BufWinEnter * NERDTreeMirror
+"autocmd VimEnter * NERDTree
+"autocmd BufEnter * NERDTreeMirror
+let NERDTreeQuitOnOpen=0
+
 
 " emmet
 let g:user_emmet_leader_key = '<C-S>'
@@ -323,18 +303,6 @@ augroup END
     "<CTRL-s><CTRL-s> - in insert mode, add a new line + surrounding + indent
     "<CTRL-g>s - same as <CTRL-s>
     "<CTRL-g>S - same as <CTRL-s><CTRL-s>
-    inoremap ]] <ESC>:execute "normal yss]"<CR>A
-"}
-"
-
-" fix NERDTreeToggle error strangely. {
-    "noremap <C-e> :call g:WorkaroundNERDTreeToggle()<CR>
-
-    "function! g:WorkaroundNERDTreeToggle()
-      "try | NERDTreeTabsToggle | catch | silent! NERDTree | endtry
-    "endfunction
-
-    noremap <Leader>pr :NERDTreeFind<CR>
 "}
 
 
@@ -369,10 +337,8 @@ augroup END
 
     "Bind the BufSel() function to a user-command
     command! -nargs=1 Bs :call BufSel("<args>")
-    noremap <Leader>bs :Bs<Space>
+    command! -nargs=0 BS :buffers<CR>
 "}
-
-set foldlevelstart=1
 
 " ctrlp {
     "https://kien.github.io/ctrlp.vim/
@@ -449,49 +415,15 @@ set foldlevelstart=1
     "}
     " }
 
-"{
-    "Cocoa.vim
-    ":help cocoa
-    "cocoa.vim uses snipMate to code completion
-    "<c-x><c-o>
-    "<tab>
-    "useful plugin: objc_matchbracket.vim
-    ":ListMethods
-    ":BuildMethods .h -> .m
-    "look document
-    ":CocoaDoc
-    "K
-    "Xcode-like mappings
-    "<Leader>A Alternate between header (.h) and implementation (.m) file
-    "K Look up documentation for word under cursor
-    "<d-m-up> equal <Leader>A
-    "<d-r> Build & Run (Go)
-    "<d-cr> CMD-R
-    "<d-b> Build
-    "<shift-k> Clean
-    "<d-0> Go to Project
-    "<d-2> :ListMethods
-    "<F5> (in insert mode) Show omnicompletion menu
-    "<d-/> Comment out line
-    "<d-[> Decrease indent
-    "<d-]> Increase indent
-    "a.vim
-    ":A switches to the header file corresponding to the current file being edited (or vise versa)
-    ":AS splits and switches
-    ":AV vertical splits and switches
-    ":AT new tab and switches
-    ":AN cycles through matches
-    ":IH switches to file under cursor
-    ":IHS splits and switches
-    ":IHV vertical splits and switches
-    ":IHT new tab and switches
-    ":IHN cycles through matches
-    "<Leader>ih switches to file under cursor
-    "<Leader>is switches to the alternate file of file under cursor (e.g. on switches to foo.cpp)
-    "<Leader>ihn cycles through matches
-"}
-
 " Easy motion {
+  "let g:EasyMotion_leader_key = '\'
+  " ff[ch]
+  " fs[ch]    Search
+  " fw    word
+  " fj    line downward
+  " fk    line upward
+  " fn/fN    like original n/N
+
     let g:EasyMotion_smartcase = 1
     let g:EasyMotion_off_screen_search = 0
     let g:EasyMotion_disable_two_key_combo = 1
@@ -546,11 +478,9 @@ set foldlevelstart=1
         \}
 
     " swift not auto complete for (, because not used too much
-    " 有些补全没必要
     let g:ycm_semantic_triggers =  {
         \   'swift' : ['.'],
         \ }
-
 "}
 
 " copy file path {
@@ -719,8 +649,6 @@ highlight Matchmaker cterm=underline
 " after input use <C-\> show complete list
 " <Tab> 和 <S-Tab> jump between placeholder
 
-let g:PreviewBrowsers='open -a Google\ Chrome'
-
 " :verbose set <option>? you can see where it's being set and what it's set to
 
 """"""""""""""""""""""""""""""""""""""""""""""
@@ -738,19 +666,9 @@ set fileencodings=ucs-bom,utf-8,gb18030,cp936,big5,euc-jp,euc-kr,latin1
 ":set isk+=#
 ":set isk+=.
 
-"set nocursorline
-set nocursorcolumn
-set synmaxcol=200
-
 " get rid of this 'Auto Commands' message
 " http://stackoverflow.com/a/26382164
 " There is an incomplete :autocmd definition
-
-let g:easytags_cmd = '/usr/local/Cellar/ctags/5.8_1/bin'
-let g:easytags_always_enabled = 0
-let g:easytags_async = 1
-let g:easytags_on_cursorhold = 0
-"let g:easytags_updatetime_min = 6000
 
 " Install jsctags first , depend on Ternjs
 " npm install -g git+https://github.com/ramitos/jsctags.git
@@ -775,54 +693,60 @@ noremap <Leader>bg :call ToggleBG()<CR>
 autocmd FileType swift inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 autocmd FileType swift setlocal smartindent
 
-"autocmd FileType swift inoremap <C-k> <C-R>=sourcekittendaemon#JumpToPlaceHolder()<cr>
 let g:sourcekittendaemon_jump_placeholder = "<C-k>"
 
-autocmd FileType java set makeprg=javac\ *.java
+" java {
+  autocmd FileType java set makeprg=javac\ *.java
+  " Command Start with JC like :JCimportAdd
+  autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
-" single java file compile and run
-"nmap ,p :!javac %<CR>:!java -cp %:p:h %:t:r<CR>
-func! CompileRunGcc()
-    exec "w"
-    exec "!javac %"
-    exec "!time java -cp %:p:h %:t:r"
-endfunction
 
-func! MultiJavaCompileRunGcc()
-    exec "wall"
-    exec "!javac *.java"
-    exec "!time java -cp %:p:h Main"
-endfunction
+  " single java file compile and run
+  "nmap ,p :!javac %<CR>:!java -cp %:p:h %:t:r<CR>
+  func! CompileRunGcc()
+      exec "w"
+      exec "!javac %"
+      exec "!time java -cp %:p:h %:t:r"
+  endfunction
 
-autocmd FileType java nnoremap \j :call MultiJavaCompileRunGcc()<CR>
+  func! MultiJavaCompileRunGcc()
+      exec "wall"
+      exec "!javac *.java"
+      exec "!time java -cp %:p:h Main"
+  endfunction
 
-" ALE Setting
+  autocmd FileType java nnoremap \j :call MultiJavaCompileRunGcc()<CR>
+"}
 
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'java': ['javac'],
-\   'md': ['proselint'],
-\   'objc': ['clang'],
-\   'swift': ['swiftlint'],
-\   'scala': ['scalac'],
-\}
+" ALE Setting {
 
-let g:ale_sign_column_always = 1
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_save=0
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-let g:ale_open_list = 1
+  let g:ale_linters = {
+  \   'javascript': ['eslint'],
+  \   'java': ['javac'],
+  \   'md': ['proselint'],
+  \   'objc': ['clang'],
+  \   'swift': ['swiftlint'],
+  \   'scala': ['scalac'],
+  \}
+
+  let g:ale_sign_column_always = 1
+  let g:ale_sign_error = '>>'
+  let g:ale_sign_warning = '--'
+  highlight clear ALEErrorSign
+  highlight clear ALEWarningSign
+  let g:ale_lint_on_text_changed = 'never'
+  let g:ale_lint_on_enter = 0
+  let g:ale_lint_on_save=0
+  let g:ale_set_loclist = 0
+  let g:ale_set_quickfix = 1
+  let g:ale_open_list = 1
+"}
 
 " markdown-preview.vim
 let g:mkdp_path_to_chrome = "open -a Google\\ Chrome"
 
-let g:airline#extensions#tagbar#enabled = 0
+" vim-preview.vim  for md or html file
+let g:PreviewBrowsers='open -a Google\ Chrome'
 
 " complete with highlight syntax words
 " http://www.vim.org/scripts/script.php?script_id=3172
@@ -850,66 +774,55 @@ endfunc
 " quickhl
 vmap H <Plug>(quickhl-manual-this)
 
-" Command Start with JC like :JCimportAdd
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
 " 不会跳到后面的匹配符号处
 let g:AutoPairsMultilineClose=0
 
 " https://github.com/fatih/vim-go-tutorial
 " go {
 
-autocmd FileType go nmap <leader>r  <Plug>(go-run)
+  autocmd FileType go nmap <leader>r  <Plug>(go-run)
 
-let g:go_list_type = "quickfix"
+  let g:go_list_type = "quickfix"
 
-" :GoTest           run test
-" :GoTestFunc       test the function under cursor
-" :GoTestCompile    compile test files but not run test
-autocmd FileType go nmap <leader>t  <Plug>(go-test)
+  " :GoTest           run test
+  " :GoTestFunc       test the function under cursor
+  " :GoTestCompile    compile test files but not run test
+  autocmd FileType go nmap <leader>t  <Plug>(go-test)
 
-" run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#test#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
-  endif
-endfunction
+  " run :GoBuild or :GoTestCompile based on the go file
+  function! s:build_go_files()
+    let l:file = expand('%')
+    if l:file =~# '^\f\+_test\.go$'
+      call go#test#Test(0, 1)
+    elseif l:file =~# '^\f\+\.go$'
+      call go#cmd#Build(0)
+    endif
+  endfunction
 
-autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+  autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 
-" close auto formate
-" let g:go_fmt_autosave = 0
+  " close auto formate
+  " let g:go_fmt_autosave = 0
 
-" add missing import package when save
-let g:go_fmt_command = "goimports" " original is \"gofmt\"
+  " add missing import package when save
+  let g:go_fmt_command = "goimports" " original is \"gofmt\"
 
-" too many highlight may be not good
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_generate_tags = 1
+  " too many highlight may be not good
+  let g:go_highlight_types = 1
+  let g:go_highlight_fields = 1
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_operators = 1
+  let g:go_highlight_extra_types = 1
+  let g:go_highlight_build_constraints = 1
+  let g:go_highlight_generate_tags = 1
 
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+  autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
-autocmd FileType go nmap <Leader>i <Plug>(go-info)
-let g:go_auto_type_info = 1
+  autocmd FileType go nmap <Leader>i <Plug>(go-info)
+  let g:go_auto_type_info = 1
 
-let g:go_auto_sameids = 1
+  let g:go_auto_sameids = 1
 
 " }
 
-" keep auto-open-nerdtree-in-every-tab
-" https://stackoverflow.com/a/2762067/2434742
-"autocmd BufWinEnter * NERDTreeMirror
-"autocmd VimEnter * NERDTree
-"autocmd BufEnter * NERDTreeMirror
-let NERDTreeQuitOnOpen=0
-
-"autocmd FileType swift imap <buffer> <C-j> <Plug>(deoplete_swift_jump_to_placeholder)
