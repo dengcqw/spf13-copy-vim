@@ -122,7 +122,7 @@
         " Always switch to the current file directory
     endif
 
-    set autowrite                       " Automatically write a file when leaving a modified buffer
+    "set autowrite                       " Automatically write a file when leaving a modified buffer
     set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
     set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
     set virtualedit=onemore             " Allow for cursor beyond last character
@@ -180,7 +180,7 @@
 
     if !exists('g:override_spf13_bundles') && filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
         let g:solarized_termcolors=256
-        let g:solarized_termtrans=1
+        let g:solarized_termtrans=0
         let g:solarized_contrast="normal"
         let g:solarized_visibility="normal"
         color solarized             " Load a colorscheme
