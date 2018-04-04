@@ -9,7 +9,7 @@
 
     " Don't redraw while executing macros (good performance config)
     " ?
-    set lazyredraw
+    "set lazyredraw
 
     " No annoying sound on errors
     set noerrorbells
@@ -56,6 +56,8 @@
 
     " % match pairs
     set matchpairs+=<:>
+
+    set mouse=""
 "}
 
 " relative number {
@@ -155,7 +157,9 @@
 " }
 
 " deng custom {
-    set textwidth=120  " max length of a line
+    "set textwidth=120  " max length of a line
+    " 影响终端显示
+    "set lines=80
 
     "=====Folds=====
     set foldmethod=indent   " fold based on indent
@@ -182,7 +186,8 @@
 
     set encoding=utf-8
     set fenc=utf-8
-    set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+    set fileencoding=utf-8
+    set fileencodings=ucs-bom,utf-8,gb18030,cp936,big5,euc-jp,euc-kr,latin1
 
     noremap <Leader>w :w<CR>
     " replace a word
@@ -195,15 +200,13 @@
     " display bottom scroller
     set guioptions+=b
 
-    set lines=80
-
     set complete=.,b,u,U,k
 
     inoremap <D-p> <c-x><c-p>
 
     "set nocursorline
     set nocursorcolumn
-    set synmaxcol=200
+    "set synmaxcol=200
 
 " }
 
@@ -336,7 +339,7 @@ augroup END
     endfunction
 
     "Bind the BufSel() function to a user-command
-    command! -nargs=1 Bs :call BufSel("<args>")
+    command! -nargs=1 BS :call BufSel("<args>")
     command! -nargs=0 BS :buffers<CR>
 "}
 
@@ -651,13 +654,6 @@ highlight Matchmaker cterm=underline
 
 " :verbose set <option>? you can see where it's being set and what it's set to
 
-""""""""""""""""""""""""""""""""""""""""""""""
-"set encoding=utf-8
-"set fileencoding=utf-8
-set encoding=utf-8
-set fileencoding=utf-8
-set fileencodings=ucs-bom,utf-8,gb18030,cp936,big5,euc-jp,euc-kr,latin1
-""""""""""""""""""""""""""""""""""""""""""""""
 
 "https://github.com/gorodinskiy/vim-coloresque/blob/master/after/syntax/css/vim-coloresque.vim
 "the problem is at lines 125-126

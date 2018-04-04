@@ -8,7 +8,5 @@ let g:spf13_bundle_groups=['general', 'youcompleteme', 'programming', 'javascrip
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "my-snippets/RN-snips", "my-snippets/JS-snips", "my-snippets/OC-snips", ]
 
 let g:spf13_clear_search_highlight = 1
-let g:spf13_use_old_powerline = 1
 let g:spf13_leader=','
-
 let g:ag_search_deapth='5'
