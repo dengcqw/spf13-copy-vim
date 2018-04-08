@@ -28,7 +28,7 @@ switch (fileNames.length) {
 
 
 function startServer(target, project) {
-    let command = `sourcekittendaemon start --target ${target} --port 8085 --project ${project}`
+    let command = `sourcekittendaemon start --target ${target} --port 8080 --project ${project}`
     console.log("starting server: ", command)
     let child = child_process.exec(command, function (err, stdout, stderr) {
       console.log("----> start error: ", err)

@@ -179,7 +179,12 @@
 " Vim UI {
 
     if !exists('g:override_spf13_bundles') && filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
-        let g:solarized_termcolors=256
+        " 终端需要设置正确的值，在nvim上发现的问题
+        if has("gui")
+            let g:solarized_termcolors=256
+        else
+            let g:solarized_termcolors=16
+        endif
         let g:solarized_termtrans=0
         let g:solarized_contrast="normal"
         let g:solarized_visibility="normal"
