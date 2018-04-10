@@ -347,3 +347,12 @@ export GOPATH=/Users/dengjinlong/Documents/9-go
     #echo 'cat //*/viewController[@storyboardIdentifier="accountmanagerviewcontroller"]/*/outlet' | xmllint --shell 'QiyiLogin.storyboard' | awk -F\" 'NR % 2 == 0 { print $2 }'
 #}
 
+# tmux {
+
+alias tm='tmux a' # 默认进入第一个会话
+alias tmNewSession='tmux new -s ' # 新建 + name
+alias tmAttachSession='tmux a -t ' # 重新进入 + name
+alias tmKillAll='tmux kill-server'
+alias tmKillSession='tmux kill-session -t '  # +name
+# }
+

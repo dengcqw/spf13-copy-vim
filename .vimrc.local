@@ -5,7 +5,7 @@
     set autoread
 
     " Height of the command bar
-    set cmdheight=2
+    set cmdheight=1
 
     " Don't redraw while executing macros (good performance config)
     " ?
@@ -689,7 +689,7 @@ noremap <Leader>bg :call ToggleBG()<CR>
 autocmd FileType swift inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 autocmd FileType swift setlocal smartindent
 
-let g:sourcekittendaemon_jump_placeholder = "<C-k>"
+let g:sourcekittendaemon_jump_placeholder = "<C-'>"
 
 " java {
   autocmd FileType java set makeprg=javac\ *.java
@@ -822,3 +822,8 @@ let g:AutoPairsMultilineClose=0
 
 " }
 
+"vimdiff current vs git head (fugitive extension)
+"nnoremap <Leader>gd :Gdiff<cr>
+"switch back to current file and closes fugitive buffer
+"quit fugitive buffer or Geidt
+"
