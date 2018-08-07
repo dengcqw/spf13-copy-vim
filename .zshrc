@@ -54,7 +54,7 @@ plugins=(git brew common-alias dirhistory encode64 github history jsontools npm 
 
 # User configuration
 
-export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin:$HOME/Library/Android/sdk/platform-tools
+export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin:$HOME/Library/Android/sdk/platform-tools:/anaconda2/bin:$HOME/flutter/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
 export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -101,23 +101,27 @@ export brew_path=/usr/local/Cellar
 alias cls='clear'
 alias ll='ls -l'
 alias la='ls -a'
-alias vi='vim'
+alias vi='nvim'
+alias e='nvim'
+alias v='nvim'
 alias javac="javac -J-Dfile.encoding=utf8"
-alias -s html=mvim   # 在命令行直接输入后缀为 html 的文件名，会在 mvim 中打开
-alias -s rb=mvim
-alias -s py=mvim
-#alias -s js=mvim
-alias -s c=mvim
-alias -s java=mvim
-alias -s txt=mvim
+alias -s html=nvim   # 在命令行直接输入后缀为 html 的文件名，会在 mvim 中打开
+alias -s rb=nvim
+alias -s py=nvim
+alias -s js=nvim
+alias -s c=nvim
+alias -s java=nvim
+alias -s txt=nvim
 alias -s gz='tar -xzvf'
 alias -s tgz='tar -xzvf'
 alias -s zip='unzip'
 alias -s bz2='tar -xjvf'
 
-alias -s m=mvim
-alias -s h=mvim
-alias -s plist=mvim
+alias -s m=nvim
+alias -s h=nvim
+alias -s plist=nvim
+alias -s swift=nvim
+alias -s md=nvim
 
 # Custom alias {
     alias djgrep='grep --color=auto -r -n ./* -e '
@@ -352,7 +356,8 @@ export GOPATH=/Users/dengjinlong/Documents/9-go
 alias tm='tmux a' # 默认进入第一个会话
 alias tmNewSession='tmux new -s ' # 新建 + name
 alias tmAttachSession='tmux a -t ' # 重新进入 + name
-alias tmKillAll='tmux kill-server'
+#alias tmKillAll='tmux kill-server'
 alias tmKillSession='tmux kill-session -t '  # +name
 # }
 
+alias iOSSDKPath='xcrun --sdk iphoneos --show-sdk-path'

@@ -299,6 +299,9 @@ augroup END
     "Visual mode
     "-----------
     "S   - in visual mode, add a surrounding but place text on new line + indent it
+    vmap <silent> " S"
+    vmap <silent> ( S(
+    vmap <silent> ) S)
 
     "Insert mode
     "-----------
@@ -689,7 +692,7 @@ noremap <Leader>bg :call ToggleBG()<CR>
 autocmd FileType swift inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 autocmd FileType swift setlocal smartindent
 
-let g:sourcekittendaemon_jump_placeholder = "<C-'>"
+let g:sourcekittendaemon_jump_placeholder = "<C-g>"
 
 " java {
   autocmd FileType java set makeprg=javac\ *.java
@@ -826,4 +829,5 @@ let g:AutoPairsMultilineClose=0
 "nnoremap <Leader>gd :Gdiff<cr>
 "switch back to current file and closes fugitive buffer
 "quit fugitive buffer or Geidt
-"
+
+nnoremap <Leader>qq :q!<CR>

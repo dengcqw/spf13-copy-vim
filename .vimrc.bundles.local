@@ -46,6 +46,7 @@
     " iOS dev {
         Bundle 'keith/swift.vim'
         Bundle 'dengcqw/sourcekittendaemon.vim'
+        Bundle 'bumaociyuan/vim-swift'
     " }
 
     " Highlight the term under the cursor
