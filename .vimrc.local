@@ -56,8 +56,6 @@
 
     " % match pairs
     set matchpairs+=<:>
-
-    set mouse=""
 "}
 
 " relative number {
@@ -130,9 +128,9 @@
 
 " buffer {
     " Close the current buffer
-    map <Leader>bd :Bclose<cr>
+    "map <Leader>bd :Bclose<cr>
     " Close all the buffers
-    map <Leader>ba :1,100 bd!<cr>
+    "map <Leader>ba :1,100 bd!<cr>
 
     " Don't close window, when deleting a buffer
     command! Bclose call <SID>BufcloseCloseIt()
@@ -157,9 +155,9 @@
 " }
 
 " deng custom {
-    "set textwidth=120  " max length of a line
+    set textwidth=120  " max length of a line
     " 影响终端显示
-    "set lines=80
+    set lines=80
 
     "=====Folds=====
     set foldmethod=indent   " fold based on indent
@@ -251,20 +249,6 @@ augroup filetype_jsbuty
 augroup END
 
 
-" ----------------------------------------------------------------------------
-" tern_for_vim  (use YCM)
-" ----------------------------------------------------------------------------
-"let g:tern_show_argument_hints='on_hold'
-"let g:tern_show_signature_in_pum=1
-"let g:tern_map_keys=1
-"let g:tern_map_prefix='/'
-"let g:tern_request_timeout=3
-"augroup filetype_tern
-    "autocmd!
-    "autocmd FileType javascript nnoremap <Leader>d :TernDef<CR>
-    "autocmd FileType javascript setlocal omnifunc=tern#Complete
-"augroup END
-
 " vim-javascript.vim
 let g:javascript_enable_domhtmlcss = 1
 "javascript-libraries-syntax.vim
@@ -311,41 +295,6 @@ augroup END
     "<CTRL-g>S - same as <CTRL-s><CTRL-s>
 "}
 
-
-" buffer switch {
-    function! BufSel(pattern)
-      let bufcount = bufnr("$")
-      let currbufnr = 1
-      let nummatches = 0
-      let firstmatchingbufnr = 0
-      while currbufnr <= bufcount
-        if(bufexists(currbufnr))
-          let currbufname = bufname(currbufnr)
-          if(match(currbufname, a:pattern) > -1)
-            echo currbufnr . ": ". bufname(currbufnr)
-            let nummatches += 1
-            let firstmatchingbufnr = currbufnr
-          endif
-        endif
-        let currbufnr = currbufnr + 1
-      endwhile
-      if(nummatches == 1)
-        execute ":buffer ". firstmatchingbufnr
-      elseif(nummatches > 1)
-        let desiredbufnr = input("Enter buffer number: ")
-        if(strlen(desiredbufnr) != 0)
-          execute ":buffer ". desiredbufnr
-        endif
-      else
-        echo "No matching buffers"
-      endif
-    endfunction
-
-    "Bind the BufSel() function to a user-command
-    command! -nargs=1 BS :call BufSel("<args>")
-    command! -nargs=0 BS :buffers<CR>
-"}
-
 " ctrlp {
     "https://kien.github.io/ctrlp.vim/
     "使用:CtrlP或:CtrlP [starting-directory]调用CtrlP进入查找文件模式
@@ -389,9 +338,9 @@ augroup END
     let g:ctrlp_map = '<D-p>'
     let g:ctrlp_cmd = 'CtrlP'
     " recent files
-    nnoremap <silent> <D-r> :CtrlPMRU<CR>
+    "nnoremap <silent> <D-r> :CtrlPMRU<CR>
     " buffers
-    nnoremap <silent> <D-b> :CtrlPBuffer<CR>
+    "nnoremap <silent> <D-b> :CtrlPBuffer<CR>
 
     if has('python') || has('python3')
         let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
@@ -406,9 +355,9 @@ augroup END
     \ }
 
     " use word under cursor as CtrlP input
-    nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
+    "nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
     " https://github.com/kien/ctrlp.vim/issues/218
-    nnoremap <silent> <Leader>fw :let g:ctrlp_default_input = expand('<cword>')<cr>:CtrlP<cr>
+    "nnoremap <silent> <Leader>fw :let g:ctrlp_default_input = expand('<cword>')<cr>:CtrlP<cr>
 
     " 可以参考
     " https://github.com/fisadev/fisa-vim-config
@@ -484,9 +433,14 @@ augroup END
         \}
 
     " swift not auto complete for (, because not used too much
-    let g:ycm_semantic_triggers =  {
-        \   'swift' : ['.'],
-        \ }
+    "let g:ycm_semantic_triggers =  {
+        "\   'swift' : ['.'],
+        "\ }
+
+    "let g:icm_semantic_triggers =  {
+        "\   'swift' : ['.'],
+        "\ }
+    let g:icm_key_invoke_completion = '<C-Space>'
 "}
 
 " copy file path {
@@ -831,3 +785,49 @@ let g:AutoPairsMultilineClose=0
 "quit fugitive buffer or Geidt
 
 nnoremap <Leader>qq :q!<CR>
+
+
+" vim-airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_symbols_ascii = 1
+set guifont=Roboto\ Mono\ Light\ for\ Powerline:h18
+
+let g:xcode_default_scheme = 'TVGuor'
+
+" Leaderf {
+let g:Lf_ShortcutF = '<D-p>'
+let g:Lf_ShortcutB = '<leader>fb'
+let g:Lf_WildIgnore = {
+            \ 'dir': ['.svn','.git','.hg'],
+            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+            \}
+let g:Lf_StlSeparator = { 'left': '', 'right': '' } " powerline font
+nnoremap <silent> <D-r> :LeaderfMru<CR>
+nnoremap <silent> <D-b> :LeaderfBuffer<CR>
+nnoremap <silent> <leader>fw :Leaderf file --cword<CR>
+nnoremap <silent> <leader>ft :Leaderf tag --cword<CR>
+nnoremap <silent> <leader>fl :Leaderf line --cword<CR>
+"}
+
+let g:dart_style_guide = 2
+let dart_format_on_save = 0
+autocmd FileType dart setlocal cinoptions=j1,J1,(2,m1
+"source ~/.zshrc  " vim use system path and /etc/path.d only, need source custom profile file
+autocmd FileType dart setlocal completefunc=youcompleteme#Complete
+let g:lsc_server_commands = {'dart': 'dart_language_server'}
+let g:lsc_auto_map = {
+    \ 'GoToDefinition': '<C-]>',
+    \ 'FindReferences': 'gr',
+    \ 'NextReference': '<C-n>',
+    \ 'PreviousReference': '<C-p>',
+    \ 'FindImplementations': 'gI',
+    \ 'FindCodeActions': 'ga',
+    \ 'DocumentSymbol': 'go',
+    \ 'WorkspaceSymbol': 'gS',
+    \ 'ShowHover': 'K',
+    \ 'Completion': 'completefunc',
+    \}
+let g:lsc_trace_level = 'messages'
+
+" iterm 刷新问题
+set ttyfast

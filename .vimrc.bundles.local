@@ -34,19 +34,11 @@
             "Bundle 'mxw/vim-jsx'
         endif
     " }
-    " js complete { YCM already support tern
-        "Bundle 'ternjs/tern_for_vim'
-    " }
-    " code snippet {
-        "Bundle 'drmingdrmer/xptemplate'
-    " }
-    " fasten ctrlp search {
-        Bundle 'FelikZ/ctrlp-py-matcher'
-    " }
     " iOS dev {
         Bundle 'keith/swift.vim'
-        Bundle 'dengcqw/sourcekittendaemon.vim'
-        Bundle 'bumaociyuan/vim-swift'
+        "Bundle 'dengcqw/sourcekittendaemon.vim'
+        Bundle 'jerrymarino/iCompleteMe'
+        Bundle 'gfontenot/vim-xcode'
     " }
 
     " Highlight the term under the cursor
@@ -63,15 +55,16 @@
 
     Bundle 'vim-scripts/DeleteTrailingWhitespace'
 
+    " highlight multi word
     Bundle 't9md/vim-quickhl'
-
-    " use gradle and Android Stiduo
-    "Bundle 'artur-shaik/vim-javacomplete2'
 
     " <leader>?
     Bundle "lifepillar/vim-cheat40"
 
-    Bundle "fatih/vim-go"
-
     Bundle 'Yggdroot/LeaderF', { 'do': './install.sh' }
+
+    Bundle 'dart-lang/dart-vim-plugin'
+
+    "  langserver.org
+    Bundle 'natebosch/vim-lsc'
 

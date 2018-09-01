@@ -96,9 +96,9 @@
     " leader not defined, use default value '\'
     map <Leader>bg :call ToggleBG()<CR>
 
-    " if !has('gui')
+     "if !has('gui')
         "set term=$TERM          " Make arrow and other keys work
-    " endif
+     "endif
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
     set mouse=a                 " Automatically enable mouse usage

@@ -3,11 +3,12 @@
 " control bundles
 let g:spf13_bundle_groups=['general', 'youcompleteme', 'programming', 'javascript', 'html', 'misc', ]
 
-"let g:spf13_bundle_groups=['general', 'programming']
-
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "my-snippets/RN-snips", "my-snippets/JS-snips", "my-snippets/OC-snips", ]
 
 let g:spf13_clear_search_highlight = 1
 let g:spf13_leader=','
 let g:ag_search_deapth='5'
-let g:spf13_use_powerline=1
+" use powerline font, need install font independently
+let g:airline_powerline_fonts = 1 
+
+"let g:icm_log_level = 'debug'

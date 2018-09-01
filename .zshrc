@@ -54,7 +54,10 @@ plugins=(git brew common-alias dirhistory encode64 github history jsontools npm 
 
 # User configuration
 
-export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin:$HOME/Library/Android/sdk/platform-tools:/anaconda2/bin:$HOME/flutter/bin
+export DART_BIN='/usr/local/dart-sdk/bin'
+
+source ~/.bash_profile
+export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin:$HOME/Library/Android/sdk/platform-tools:/anaconda2/bin:$HOME/flutter/bin:$DART_BIN:$HOME/.pub-cache/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
 export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -101,27 +104,27 @@ export brew_path=/usr/local/Cellar
 alias cls='clear'
 alias ll='ls -l'
 alias la='ls -a'
-alias vi='nvim'
-alias e='nvim'
-alias v='nvim'
+alias vi='mvim'
+alias e='mvim'
+alias v='mvim'
 alias javac="javac -J-Dfile.encoding=utf8"
-alias -s html=nvim   # 在命令行直接输入后缀为 html 的文件名，会在 mvim 中打开
-alias -s rb=nvim
-alias -s py=nvim
-alias -s js=nvim
-alias -s c=nvim
-alias -s java=nvim
-alias -s txt=nvim
+alias -s html=mvim   # 在命令行直接输入后缀为 html 的文件名，会在 mvim 中打开
+alias -s rb=mvim
+alias -s py=mvim
+alias -s js=mvim
+alias -s c=mvim
+alias -s java=mvim
+alias -s txt=mvim
 alias -s gz='tar -xzvf'
 alias -s tgz='tar -xzvf'
 alias -s zip='unzip'
 alias -s bz2='tar -xjvf'
 
-alias -s m=nvim
-alias -s h=nvim
-alias -s plist=nvim
-alias -s swift=nvim
-alias -s md=nvim
+alias -s m=mvim
+alias -s h=mvim
+alias -s plist=mvim
+alias -s swift=mvim
+alias -s md=mvim
 
 # Custom alias {
     alias djgrep='grep --color=auto -r -n ./* -e '
@@ -243,13 +246,13 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
 
 # gem source switch {
     function gem_offical_source() {
-        gem sources --remove https://ruby.taobao.org/
+        gem sources --remove https://gems.ruby-china.com/
         gem sources -a https://rubygems.org/
     }
 
     function gem_taobao_source() {
         gem sources --remove https://rubygems.org/
-        gem sources -a https://ruby.taobao.org/
+        gem sources -a https://gems.ruby-china.com/
     }
 #}
 
@@ -361,3 +364,8 @@ alias tmKillSession='tmux kill-session -t '  # +name
 # }
 
 alias iOSSDKPath='xcrun --sdk iphoneos --show-sdk-path'
+
+alias flutter-run='flutter run'
+alias flutter-emulators='flutter emulators --launch apple_ios_simulator'
+alias flutter-pg='flutter packages get'
+

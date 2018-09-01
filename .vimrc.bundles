@@ -108,8 +108,8 @@
             Bundle 'tpope/vim-repeat'
             Bundle 'rhysd/conflict-marker.vim'
             Bundle 'jiangmiao/auto-pairs'
-            Bundle 'ctrlpvim/ctrlp.vim'
-            Bundle 'tacahiroy/ctrlp-funky'
+            "Bundle 'ctrlpvim/ctrlp.vim'
+            "Bundle 'tacahiroy/ctrlp-funky'
             Bundle 'terryma/vim-multiple-cursors'
             Bundle 'vim-scripts/sessionman.vim'
             Bundle 'matchit.zip'
@@ -124,7 +124,7 @@
                 Bundle 'vim-airline/vim-airline'
                 Bundle 'vim-airline/vim-airline-themes'
             endif
-            Bundle 'powerline/fonts'
+            "Bundle 'powerline/fonts'
             Bundle 'bling/vim-bufferline'
 
             Bundle 'easymotion/vim-easymotion'
@@ -136,8 +136,8 @@
                 Bundle 'vim-scripts/restore_view.vim'
             endif
             Bundle 'mhinz/vim-signify'
-            Bundle 'tpope/vim-abolish'
-            Bundle 'osyo-manga/vim-over'
+            "Bundle 'tpope/vim-abolish'
+            "Bundle 'osyo-manga/vim-over'
             "Bundle 'kana/vim-textobj-user'
             "Bundle 'kana/vim-textobj-indent'
             Bundle 'gcmt/wildfire.vim'

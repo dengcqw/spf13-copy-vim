@@ -1,0 +1,49 @@
+snippet build "build method"
+  @override
+  Widget build(BuildContext context) {
+  }
+endsnippet
+
+snippet cls-StatefulWidget "create StatefulWidget"
+import 'package:flutter/material.dart';
+
+class ${1:WidgetName} extends StatefulWidget {
+  ${1}({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _${2:StateName} createState() => ${2}();
+}
+
+class ${2} extends State<${1}> {
+  var title: String;
+
+  void _callback() {
+    setState(() {
+	  title = "";
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(title);
+  }
+}
+endsnippet
+
+snippet cls-StatelessWidget "create StatelessWidget"
+import 'package:flutter/material.dart';
+
+class ${1:WidgetName} extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ${Text('')};
+  }
+}
+endsnippet
+
+snippet import "import material and cupertino"
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+endsnippet
