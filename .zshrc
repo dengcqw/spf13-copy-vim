@@ -50,7 +50,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins
-plugins=(git brew common-alias dirhistory encode64 github history jsontools npm osx sudo urltools vi-mode xcode extract)
+plugins=(flutter git brew common-alias dirhistory encode64 github history jsontools npm osx sudo urltools vi-mode xcode extract)
 
 # User configuration
 
@@ -186,7 +186,7 @@ function updateXcodeUUID() {
 # see scripts/clearHistory.sh
 
 # Find file
-alias djFindWithKeyword="tree -f -L 5 | grep "
+alias djFindWithKeyword="tree -f -L 10 | grep "
 
 alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
 
@@ -366,6 +366,27 @@ alias tmKillSession='tmux kill-session -t '  # +name
 alias iOSSDKPath='xcrun --sdk iphoneos --show-sdk-path'
 
 alias flutter-run='flutter run'
+alias flutter-run-quick='flutter run --use-application-binary '
 alias flutter-emulators='flutter emulators --launch apple_ios_simulator'
 alias flutter-pg='flutter packages get'
 
+# pipe stdout to vim
+# vim <(cat /etc/hosts)
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+
+source ~/spf13-copy-vim/.flutter_completion.sh
+
+
+# launchctl 控制app启动
+# sudo launchctl remove com.apple.mrt
+# sudo launchctl stop com.apple.mrt
+# /System/Library/LaunchDaemons/com.apple.MRTd.plist
+# /System/Library/LaunchAgents/com.apple.MRTa.plist
+#
+# e <(ag -G '\.(swift|m|mm)$' "\"")
+# sort -n $file | uniq

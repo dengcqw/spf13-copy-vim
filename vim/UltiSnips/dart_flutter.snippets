@@ -1,44 +1,51 @@
 snippet build "build method"
-  @override
-  Widget build(BuildContext context) {
-  }
+@override
+Widget build(BuildContext context) {
+  return new Container(
+	margin: const EdgeInsets.all(10.0),
+	color: const Color(0xFF00FF00),
+	child: ${1:child},
+  );
+}
 endsnippet
 
-snippet cls-StatefulWidget "create StatefulWidget"
-import 'package:flutter/material.dart';
-
+snippet StatefulWidget "create StatefulWidget"
 class ${1:WidgetName} extends StatefulWidget {
-  ${1}({Key key, this.title}) : super(key: key);
+  $1({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _${2:StateName} createState() => ${2}();
+  _$2 createState() => _$2();
 }
 
-class ${2} extends State<${1}> {
+class _${2:StateName} extends State<$1> {
   var title: String;
 
   void _callback() {
-    setState(() {
+    setstate(() {
 	  title = "";
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Text(title);
+	return new Container(
+	  margin: const EdgeInsets.all(10.0),
+	  child: ${3:child},
+	);
   }
 }
 endsnippet
 
-snippet cls-StatelessWidget "create StatelessWidget"
-import 'package:flutter/material.dart';
-
+snippet StatelessWidget "create StatelessWidget"
 class ${1:WidgetName} extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ${Text('')};
+	return new Container(
+	  margin: const EdgeInsets.all(10.0),
+	  child: ${2:child},
+	);
   }
 }
 endsnippet
@@ -46,4 +53,10 @@ endsnippet
 snippet import "import material and cupertino"
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+endsnippet
+
+snippet st "setState"
+  setstate(() {
+    $1
+  });
 endsnippet

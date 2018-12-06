@@ -574,6 +574,15 @@ augroup END
     "autocmd BufNewFile     *.[ch]  0read ~/skeletons/skel.c     打开一个新文件
     "autocmd FileType       text    source ~/.vim/abbrevs.vim    设置filetype
     "autocmd BufReadPost    *.gsm   set filetype=asm             开始编辑一个文件
+
+    command -nargs=* Breakline call BreakLine("<args>")
+    function! BreakLine(args)
+        if len(a:args) == 0
+            execute "s/ /\r/g"
+        else
+            execute "s/".a:args."/\r/g"
+        endif
+    endfunc
 "}
 
 " {
@@ -831,3 +840,11 @@ let g:lsc_trace_level = 'messages'
 
 " iterm 刷新问题
 set ttyfast
+
+let g:DeleteTrailingWhitespace = 1
+let g:DeleteTrailingWhitespace_Action = 'delete'
+" 使用 UltiSnipsEdit 命令时垂直分割屏幕
+let g:UltiSnipsEditSplit="vertical"
+
+autocmd FocusGained * call system('issw com.apple.keylayout.USExtended')
+
