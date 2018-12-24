@@ -672,17 +672,23 @@ function! FastSwiftCompile(flag)
     silent make!
     let qflist = getqflist()
     let newqflist = []
+    let isError = 0
     for d in getqflist()
-        if d.lnum > 0
+        if d.lnum == 0 && isError == 1
             call add(newqflist, d)
+        elseif d.lnum > 0 && d.text =~ 'error:*'
+            call add(newqflist, d)
+            let isError = 1
             "echo bufname(d.bufnr) ':' d.lnum '=' d.text
+        else
+            let isError = 0
         endif
     endfor
 
     if empty(newqflist)
         cclose
     else
-        call setqflist(qflist)
+        call setqflist(newqflist)
         copen
         "cfirst
     endif
