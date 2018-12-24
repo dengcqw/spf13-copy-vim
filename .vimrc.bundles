@@ -119,7 +119,7 @@
                 Bundle 'powerline/powerline', {'rtp':'/powerline/bindings/vim'}
             elseif exists('g:spf13_use_powerline') && exists('g:spf13_use_old_powerline')
                 " will deprecate
-                Bundle 'Lokaltog/vim-powerline' 
+                Bundle 'Lokaltog/vim-powerline'
             else " do not use too old airline
                 Bundle 'vim-airline/vim-airline'
                 Bundle 'vim-airline/vim-airline-themes'

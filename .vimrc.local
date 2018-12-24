@@ -25,7 +25,7 @@
 
     " Remember info about open buffers on close
     " My session manager has saved session viminfo, but other buffer needs viminfo too.
-    set viminfo^=%
+    "set viminfo^=%
     " Remap VIM 0 to first non-blank character
     map 0 ^
     "{
@@ -389,7 +389,7 @@ augroup END
     map <Leader>h <Plug>(easymotion-linebackward)
     map <Leader>l <Plug>(easymotion-lineforward)
     " 重复上一次动作(.)
-    map <Leader>. <Plug>(easymotion-repeat)
+    "map <Leader>. <Plug>(easymotion-repeat)
 "}
 
 " K -- the uppercase k search current folder
@@ -433,14 +433,15 @@ augroup END
         \}
 
     " swift not auto complete for (, because not used too much
-    "let g:ycm_semantic_triggers =  {
-        "\   'swift' : ['.'],
-        "\ }
+    let g:ycm_semantic_triggers =  {
+        "\   'swift' : ['.', 're![_a-zA-Z]' ],
+        \   'swift' : ['.'],
+        \ }
+    autocmd BufNewFile,BufRead *.swift set filetype=swift
 
-    "let g:icm_semantic_triggers =  {
-        "\   'swift' : ['.'],
-        "\ }
-    let g:icm_key_invoke_completion = '<C-Space>'
+    let g:ycm_log_level = 'debug'
+    let g:ycm_min_num_of_chars_for_completion = 3
+
 "}
 
 " copy file path {
@@ -654,8 +655,40 @@ noremap <Leader>bg :call ToggleBG()<CR>
 "Fixed: <Enter> insert newline
 autocmd FileType swift inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 autocmd FileType swift setlocal smartindent
+autocmd FileType swift nnoremap <leader>r :make&<CR>
 
-let g:sourcekittendaemon_jump_placeholder = "<C-g>"
+command! Ff call FastSwiftCompile('')
+command! Fs call FastSwiftCompile('-s')
+function! FastSwiftCompile(flag)
+    update
+    let savemp = &makeprg
+
+    if a:flag == '-s'
+        let &makeprg = "sh"." /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/fastCompile.sh"
+    else
+        let &makeprg = "sh"." /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/ios_fastCompile.sh"
+    endif
+
+    silent make!
+    let qflist = getqflist()
+    let newqflist = []
+    for d in getqflist()
+        if d.lnum > 0
+            call add(newqflist, d)
+            "echo bufname(d.bufnr) ':' d.lnum '=' d.text
+        endif
+    endfor
+
+    if empty(newqflist)
+        cclose
+    else
+        call setqflist(qflist)
+        copen
+        "cfirst
+    endif
+    let &makeprg = savemp
+endfunction
+
 
 " java {
   autocmd FileType java set makeprg=javac\ *.java

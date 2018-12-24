@@ -1,0 +1,109 @@
+
+snippet adaptor "TableViewAdaptor template"
+let tableView = UITableView(frame: .zero, style: .plain)
+let adaptor = TableViewAdaptor()
+tableView.register(${1:Name}Cell.self, forCellReuseIdentifier: ${1:Name}CellModel.nameOfClass)
+adaptor.tableView = tableView
+endsnippet
+
+snippet cellModel "CellModel template"
+class ${1:CellModel}: TableViewCellViewModel {
+	override func preferedCellHeight() -> CGFloat {
+		return 65
+	}
+	override var backgroundColor: UIColor {
+		get {
+			return .clear
+		}
+		set {
+		}
+	}
+}
+
+class ${2:Cell}: TableViewCell {
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	override func renderCell(with cellModel: TableViewCellViewModel, animated: Bool) {
+		super.renderCell(with: cellModel, animated: animated)
+
+		if let model = cellModel as? ${2:CellModel} {
+		}
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+	}
+}
+endsnippet
+
+snippet qimo-dev "current device"
+TVGQimoManager.currentDeviceModel
+endsnippet
+
+snippet qimo-let-dev "let current device"
+if let device = TVGQimoManager.currentDeviceModel {
+	${1://code}
+}
+endsnippet
+
+snippet qimo-guard-dev "guard current device"
+guard let device = TVGQimoManager.currentDeviceModel else {
+	return
+}
+${1://code}
+endsnippet
+
+snippet qimo-uuid "current uuid"
+TVGQimoManager.currentUUID
+endsnippet
+
+snippet qimo-mgr "qimo mgr"
+TVGQimoManager.shareInstance.
+endsnippet
+
+snippet qimo-notif "description"
+for notifName in [Notification.Name.QimoAddDevice, .QimoRemoveDevice, .QimoDeviceUpdate] {
+	NotificationCenter.default.addObserver(self, selector: #selector(qimoDeviceChanged), name: notifName, object: nil)
+}
+@objc public func qimoDeviceChanged(notification: NSNotification) {
+}
+
+endsnippet
+
+snippet logEvent "Pingback log event"
+var attr = [:]
+TVGStatisticCenter.shared().logEvent("${1:xxx}", attributes: attr)
+endsnippet
+
+snippet dd "DDLogInfo"
+DDLogInfo("<#Tag#>: <#Text#>")
+endsnippet
+
+snippet yoga-applyLayout "Yoga"
+view.yoga.applyLayout(preservingOrigin: true)
+endsnippet
+
+snippet yoga-configure "Yoga"
+view.configureLayout { (yoga) in
+	yoga.isEnabled = true
+	yoga.flexDirection = .row
+	yoga.justifyContent = .flexStart
+	yoga.alignItems = .center
+}
+endsnippet
+
+snippet sd_setImage "SDImage"
+imageView.sd_setImage(with: URL(string: imageURL), placeholderImage: nil) { [weak self] (image, _, _, url) in
+}
+endsnippet
+
+snippet attributeString "Create Attr String"
+text.attrString(align: .left).addColor(.tvgGreen).addFont(15)
+endsnippet
+

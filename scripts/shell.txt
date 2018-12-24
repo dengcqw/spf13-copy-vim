@@ -25,7 +25,7 @@
     txt
 
     # 仅仅获取文件的前缀
-    $ echo ${pfName##*/} | sed -r 's/^(.*)\..*$/\1/g'
+    $ echo ${pfName##*/} | sed -E 's/^(.*)\..*$/\1/g'
     test
 
 3. find结果如何传递给shell数组
@@ -125,7 +125,7 @@
     结果是 ：www.hao.com/123.htm
 
     echo ${var:0-7:3}
-     
+
     其中的 0-7 表示右边算起第七个字符开始，3 表示字符的个数。
     结果是：123
 
@@ -133,6 +133,38 @@
     表示从右边第七个字符开始，一直到结束。
     结果是：123.htm
 
+    获取最后一段
+     foo=1:2:3:4:5
+     echo ${foo##*:}
 
-批量改名
-i=10; while [[ i -le 83 ]] ; do mv cast_notify_000$i.png spark_$i.png; i=$((i+1)); done;
+    获取分割符最后一段
+    $ echo '1:2:3:4:5' | sed 's/.*://' # => 5
+    $ echo '' | sed 's/.*://' # => (empty)
+
+    $ echo ':' | sed 's/.*://' # => (empty)
+    $ echo ':b' | sed 's/.*://' # => b
+    $ echo '::c' | sed 's/.*://' # => c
+
+    $ echo 'a' | sed 's/.*://' # => a
+    $ echo 'a:' | sed 's/.*://' # => (empty)
+    $ echo 'a:b' | sed 's/.*://' # => b
+    $ echo 'a::c' | sed 's/.*://' # => c
+
+
+12. 批量改名
+    i=10; while [[ i -le 83 ]] ; do mv cast_notify_000$i.png spark_$i.png; i=$((i+1)); done;
+
+
+13. 加密的zip命令
+    zip -e -r 2018-06-07.zip  ~/Downloads/2018-06-07/;
+
+14. 把错误信息定向到stdout，再输出到管道pipeline
+    command 2>&1 >/dev/null | grep 'something'
+    https://stackoverflow.com/a/2342841
+
+15. 重定向
+    0标准输入 1标准输出 2标准错误输出
+    > 默认为标准输出重定向，与 1> 相同
+    2>&1 把 标准错误输出 重定向到 标准输出.
+    &>file 把 标准输出 和 标准错误输出 都重定向到文件file中
+

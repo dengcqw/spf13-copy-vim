@@ -153,6 +153,8 @@ alias -s md=mvim
 
     alias djSwitchNetork='node ~/spf13-copy-vim/scripts/network_switch.js'
 
+    alias c='djcd'
+
 #}
 
 # brew install coreutils
@@ -299,15 +301,15 @@ function djmv() {
     mvim "${@:$#}"
 }
 
-function djcd() {
-     cd $@; ls;
-}
+function djcd() { cd $@; ls; }
+function jdcd() { cd $@; ls; }
 
 function djpwd() {
      djpwdpath=`pwd`
      echo $djpwdpath
      echo $djpwdpath | clipcopy
 }
+function jdpwd() { djpwd; }
 
 # very useful tips
 
@@ -379,8 +381,6 @@ export LANG=en_US.UTF-8
 export PUB_HOSTED_URL=https://pub.flutter-io.cn
 export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 
-source ~/spf13-copy-vim/.flutter_completion.sh
-
 
 # launchctl 控制app启动
 # sudo launchctl remove com.apple.mrt
@@ -390,3 +390,5 @@ source ~/spf13-copy-vim/.flutter_completion.sh
 #
 # e <(ag -G '\.(swift|m|mm)$' "\"")
 # sort -n $file | uniq
+
+alias fcs="sh /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/fastCompile.sh"

@@ -21,8 +21,6 @@
     " }
     " iOS dev {
         Bundle 'keith/swift.vim'
-        "Bundle 'dengcqw/sourcekittendaemon.vim'
-        "Bundle 'jerrymarino/iCompleteMe'
         Bundle 'gfontenot/vim-xcode'
     " }
 
@@ -44,7 +42,7 @@
     Bundle 't9md/vim-quickhl'
 
     " <leader>?
-    Bundle "lifepillar/vim-cheat40"
+    "Bundle "lifepillar/vim-cheat40"
 
     Bundle 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
@@ -52,4 +50,6 @@
 
     "langserver.org
     "Bundle 'natebosch/vim-lsc'
+    "
+    Bundle "Konfekt/FastFold"
 

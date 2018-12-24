@@ -14,3 +14,52 @@ v/xxx/d，删除不含xxx的行
 
 使用shell sort排序数字
 :1,$!sort -n
+
+替换部分字段
+119,203s/return \(\d*\)/return QimoVideoQuality(rawValue: \1)/g
+
+行尾，行首添加符号新方法: 选中行，进入命令模式，":'<,'>normal A;" 可以在行尾添加分号
+
+
+user manual sample
+
+
+10.2 替换
+    :[range]substitute/from/to/[flags]
+
+    range
+        "%" 表示命令作用于全部行
+        "."或不指定行范围只作用在当前行
+        "1,5" 指定行号
+        "$" 最后一行
+        :?^Chapter?,/^Chapter/s=grey=gray=g 模式匹配，向前查找和向后查找
+            "?pattern?" 用于向前查找
+            "/^Chapter/" 用于向后查找
+        /Chapter/-1  要查找一个模式，并且使用它的前一行
+        /Chapter/+2  要定位匹配点下的第二行
+        ":.+3,$-5"  指定当前行下面第三行到文件末倒数第五行的范围
+        ":’t,’b"   mark t,b 之间
+        ":’<,’>"  当前选中行
+
+    flags
+        要对行中所有匹配点起作用，加g
+        c" (confirm，确认) 标记会在每次替换前向你询问是 否需要替换
+
+10.4 找到一个匹配点并且在那 里执行一个命令
+    :[range]global/{pattern}/{command}
+    :g+//+s/foobar/barfoo/g
+    由于模式中包括正斜杠，我们用加号作分隔符，后面是一个把 "foobar" 替换成 "barfoo" 的替换命令
+
+10.9 使用外部程序
+    命令 "!{motion}{program}" 用一个外部程序对一个文本块进行过滤
+    用该程序的输出替代选中的文本块
+
+    "!5Gsort<Enter>" 从当前行到第5行(5G移到第5行)执行sort命令
+    ":.,.+5!" vim确定行号会进入命令模式
+    "!!" 命令用于对当前行执行过滤命令
+    !!date  当前行替换为时间
+
+    读入一个命令的输出
+        :read !ls
+    把文本输出到一个命令
+        :write !wc

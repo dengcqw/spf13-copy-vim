@@ -1,41 +1,141 @@
 
 snippet djDocuPath  "document directory"
-let path = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first as String
-let documentsDirectoryURL = NSURL.fileURLWithPath(path)
+let documentPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first as String
+let documentURL = URL(fileURLWithPath: documentPath)
 endsnippet
 
-snippet NSUserDefaults  "Swift - NSUserDefaults"
-NSUserDefaults.standardUserDefaults().setObject("Fez", forKey: "hat")
-let hat = NSUserDefaults.standardUserDefaults().objectForKey("hat")!
+snippet userDefaults-get  ""
+//double float integer stringArray data dictionary array string
+if let value = UserDefaults.standard.bool(forKey: ${1:key}) {
+}
 endsnippet
 
-snippet NSNotif.add  "Swift add DidBecomeActive notification observer" b
-NSNotificationCenter.defaultCenter().addObserver(self, selector: "${1:selectorString}", name: UIApplicationDidBecomeActiveNotification, object: nil)
+snippet userDefaults-set  ""
+UserDefaults.standard.set(${1:value}, forKey: ${2:key})
 endsnippet
 
 #	GCD {
 snippet gcdAfter  "Dispatch After"
-dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(${1:delay} * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
+DispatchQueue.main.asyncAfter(deadline: .now() + ${1:Double}) {
+    ${2://Code}
 }
 endsnippet
-snippet gcdMain  "dispatch_async on main queue"
-dispatch_async(dispatch_get_main_queue(), { () -> Void in
-})
-endsnippet
 
-snippet gcdOnce "Dispatch Once"
-struct Static { static var onceToken: dispatch_once_t = 0 }
-dispatch_once(&Static.onceToken) {
-    ${1:closure_logic}
+snippet gcdMain  "Dispatch Main"
+DispatchQueue.main.async {
+    ${2://Code}
 }
 endsnippet
 
 snippet gcdAsynMain  "DispatchAsyncMain"
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] () -> Void in
-    ${1:code}
-    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-        ${2:code}
-    })
-})
+DispatchQueue.global().async {
+    ${1://Code}
+	DispatchQueue.main.async {
+		${2://Code}
+	}
+}
 endsnippet
 #}
+
+snippet alertWithOneBtn  "UIAlertController"
+let alertController = UIAlertController(title: <#T##String?#>, message: <#T##String?#>, preferredStyle: .alert)
+alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+present(alertController, animated: true, completion: nil)
+endsnippet
+
+snippet alertWithTwoBtn "UIAlertController"
+let alertController = UIAlertController(title: <#T##String?#>, message: <#T##String?#>, preferredStyle: .alert)
+alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+    <#code#>
+}))
+alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+present(alertController, animated: true, completion: nil)
+endsnippet
+
+snippet appdelegate "Referencing  AppDelegate"
+if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+    <#code#>
+}
+endsnippet
+
+snippet dateFormatter ""
+let dateFormatter = DateFormatter()
+dateFormatter = "yyyy-MM-dd HH:mm:ss"
+//dateFormatter.calendar = Calendar(identifier: .gregorian)
+//dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+let dateStr = dateFormatter(from: Date())
+endsnippet
+
+
+snippet error "Basic error handling"
+if let error = error {
+    print(error.localizedDescription)
+    return
+}
+endsnippet
+
+snippet singleton "Singleton initializing"
+// MARK: - Initializing a Singleton
+
+static let shared = <#class#>()
+
+override private init() {
+}
+endsnippet
+
+snippet notif-name "Notification.Name"
+public extension NSNotification.Name {
+    static let <#name#> = Notification.Name(<#String#>)
+}
+endsnippet
+
+snippet notif.add  "Swift add notification " b
+NotificationCenter.default.addObserver(self, selector: #selector(${1:xxx}Notif), name: Notification.Name(rawValue: <#name#>), object: nil)
+@objc func ${1:xxx}Notif(_ notification: Notification) {
+}
+endsnippet
+
+snippet notif.remove  "Swift remove notification " b
+NotificationCenter.default.removeObserver(self)
+NotificationCenter.default.removeObserver(self, name: Notification.Name.${1:xxx}, object: nil)
+endsnippet
+
+snippet gesture "add TapGesture"
+let tapGesuture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+view.addGestureRecognizer(tapGesuture)
+
+@objc func tapAction(sender: UITapGestureRecognizer) {
+	${1:// Code}
+}
+endsnippet
+
+snippet de "deinit"
+deinit {
+}
+endsnippet
+
+snippet rect "CGRect"
+let rect = CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
+endsnippet
+
+snippet size "CGSize"
+let size = CGSize(width: <#T##CGFloat#>, height: <#T##CGFloat#>)
+endsnippet
+
+snippet point "CGPoint"
+let point = CGPoint(x: <#T##CGFloat#>, y: <#T##CGFloat#>)
+endsnippet
+
+snippet edgeInsets "UIEdgeInsets"
+UIEdgeInsets(top: <#T##CGFloat#>, left: <#T##CGFloat#>, bottom: <#T##CGFloat#>, right: <#T##CGFloat#>)
+UIEdgeInsets.left(<#xxx#>)
+UIEdgeInsets.horizontal(<#xxx#>)
+endsnippet
+
+
+
+
+
+
+
+

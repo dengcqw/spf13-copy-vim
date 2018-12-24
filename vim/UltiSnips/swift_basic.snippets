@@ -1,30 +1,4 @@
 
-
-# String {
-snippet StringIndexChars "string chars index sample"
-let greeting = "Guten Tag!"
-greeting[greeting.startIndex] // first G
-greeting[greeting.index(before: greeting.endIndex)] // last !
-let index = greeting.index(i: greeting.startIndex, offsetBy: 7)
-greeting[index] // a
-endsnippet
-
-snippet StringIterateChars "iterate chars with for-in"
-for index in greeting.characters.indices {
-    print("\(greeting[index]", terminator:"")
-}
-endsnippet
-
-snippet StringDeleteChars "delete chars"
-endsnippet
-
-snippet StringInsertChars "insert chars"
-var welcome = "hello"
-welcome.insert("!", at: welcome.endIndex) // insert single char
-welcome.insert(contentsOf: " there".characters, at: welcome.index(before: welcome.endIndex))
-endsnippet
-#}
-
 # Collection {
 snippet forin-array "for-in (index, value)"
 for (index, value) in ${arr}.enumerated() {
@@ -52,7 +26,7 @@ oddDigits.isSuperset(of: evenDigits)
 oddDigits.isDisjoint(with: evenDigits) // no intersection
 endsnippet
 
-snippet Dic-setValue "dictionary set value"
+snippet Dict-setValue "dictionary set value"
 if let oldValue = ${1:dic}.updateValue(${2:value}, forKey: "${3:key}") {
     print("Update oldValue(\(oldValue)) with value(\($2)) for \"$3\"")
 } else {
@@ -60,7 +34,7 @@ if let oldValue = ${1:dic}.updateValue(${2:value}, forKey: "${3:key}") {
 }
 endsnippet
 
-snippet Dic-valueForKey "dictionary get value"
+snippet Dict-valueForKey "dictionary get value"
 if let value = ${1:dic}["${2:key}"] {
     print("value for $2: \(value)")
 } else {
@@ -68,7 +42,7 @@ if let value = ${1:dic}["${2:key}"] {
 }
 endsnippet
 
-snippet Dic-removeValue "dictionary remove value"
+snippet Dict-removeValue "dictionary remove value"
 if let removedValue = ${1:dic}.removeValue(forKey: "${2:key}") {
     print("Removed value for $2: \(removedValue)")
 } else {
@@ -113,6 +87,12 @@ if ${1:true} {
 }
 endsnippet
 
+snippet ifelf "if elseif"
+if ${1:true} {
+} else if ${2:true} {
+}
+endsnippet
+
 snippet switch ""
 switch ${1:target} {
 case ${2:value}:
@@ -145,7 +125,7 @@ switch result {
 }
 endsnippet
 
-snippet guard ""
+snippet guard "guard let"
 guard let value = dic["key"] else {
 	return
 }
@@ -206,10 +186,6 @@ func swapTowInts(_ a: inout Int, _ b: inout Int) {
 }
 endsnippet
 
-snippet func-var "function var sample"
-var callback: (${1:Int}, $1) -> $1
-endsnippet
-
 snippet func-type "function type statement"
 (${1:Int}, $1) -> $1
 endsnippet
@@ -251,42 +227,32 @@ serve(customer: customers.remove(at: 0))
 endsnippet
 #}
 
-# enum {
-snippet enum  "enum single type"
-enum ${1:TypeName} : ${2:Int} {
-    case ${2:subType}
-}
-endsnippet
-#}
-
 # properties {
-snippet lazy  "variable lazy" b
-lazy
-var ${1:variable}: ${2:UILabel} = {
-    return ${3:?}
+snippet var_lazy  "variable lazy" b
+lazy var ${1:variable}: ${2:UILabel} = {
+	return ${3:?}
 }()
 endsnippet
 
-snippet var_willSet  "variable willSet didSet" b
+snippet var_set  "variable willSet didSet" b
 var ${1:variable}: Int = 0 {
-    willSet {
-        ${2:newValue}
-    }
-    didSet {
-        ${3:oldValue}
-	 // Settting this value again and will not trigger didSet.
-    }
+	willSet {
+		${2:newValue}
+	}
+	didSet {
+		${3:oldValue}
+	}
 }
 endsnippet
 
 snippet var_get_set  "variable get set"
 var ${1:variable}: ${2:Type} {
-    get {
-        return ${3:?}
-    }
-    set {
-        ${4:newValue}
-    }
+	get {
+		return ${3:?}
+	}
+	set {
+		${4:newValue}
+	}
 }
 endsnippet
 
@@ -295,6 +261,28 @@ var ${1:variable}: ${2:type} {
     return ${3:?}
 }
 endsnippet
+
+snippet var_closure "var - closure"
+var callback: (${1:Int}) -> Void
+endsnippet
+
+snippet var_ext "Associated Property"
+private struct AssociatedKeys {
+    static var <#property#> = "<#property#>"
+}
+
+var <#property#> : <#class#>? {
+    get {
+        return objc_getAssociatedObject(self, &AssociatedKeys.<#property#>) as? <#class#>
+    }
+
+    set {
+        objc_setAssociatedObject(self, &AssociatedKeys.<#property#>, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
+}
+endsnippet
+
+
 #}
 
 
@@ -329,20 +317,10 @@ do {
 	${2:code}
 }
 endsnippet
-
-snippet singleton  "Swift - Singleton" b
-class var sharedInstance : ${1:SingletonClass} {
-    struct Static {
-        static let instance : ${1:SingletonClass} = ${1:SingletonClass}()
-    }
-    return Static.instance
-}
-endsnippet
-
 #}
 
 
-snippet djExtensionDescription  "Swift - extension description"
+snippet description "Swift - extension description"
 extension ${1:TypeName}: CustomStringConvertible {
     var description: String {
         return "\(rawValue)"
@@ -350,7 +328,7 @@ extension ${1:TypeName}: CustomStringConvertible {
 }
 endsnippet
 
-snippet swift-sortarrayofstrings  "Swift String Array locale-aware sorting"
+snippet sortArrayofstrings  "Swift String Array locale-aware sorting"
 ${1:arrayOfStrings}.sort({ (a, b) -> Bool in
     let comparisonResult = a.compare(b, options: NSStringCompareOptions.allZeros, range: Range<String.Index>(start: a.startIndex, end: a.endIndex), locale: NSLocale.currentLocale())
     return comparisonResult == NSComparisonResult.OrderedAscending
@@ -395,4 +373,27 @@ default:
     print("Invalid day")
 }
 endsnippet
+
+snippet struct "struct"
+struct ${1:Name} {
+}
+endsnippet
+
+snippet class "class"
+class ${1:Name} : ${2:NSObject} {
+}
+endsnippet
+
+snippet enum "enum"
+enum ${1:TypeName} : ${2:Int} {
+    case ${2:subType}
+}
+endsnippet
+
+snippet extension "extension"
+extension ${1:Name} {
+	${2: //Code}
+}
+endsnippet
+
 
