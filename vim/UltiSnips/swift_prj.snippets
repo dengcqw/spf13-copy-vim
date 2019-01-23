@@ -76,7 +76,7 @@ for notifName in [Notification.Name.QimoAddDevice, .QimoRemoveDevice, .QimoDevic
 
 endsnippet
 
-snippet logEvent "Pingback log event"
+snippet le "Pingback log event"
 var attr = [:]
 TVGStatisticCenter.shared().logEvent("${1:xxx}", attributes: attr)
 endsnippet
@@ -85,11 +85,11 @@ snippet dd "DDLogInfo"
 DDLogInfo("<#Tag#>: <#Text#>")
 endsnippet
 
-snippet yoga-applyLayout "Yoga"
+snippet ygapply "Yoga applyLayout"
 view.yoga.applyLayout(preservingOrigin: true)
 endsnippet
 
-snippet yoga-configure "Yoga"
+snippet ygconf "Yoga configureLayout"
 view.configureLayout { (yoga) in
 	yoga.isEnabled = true
 	yoga.flexDirection = .row
@@ -98,12 +98,29 @@ view.configureLayout { (yoga) in
 }
 endsnippet
 
+snippet ygcalc "Yoga calculateLayout, Note: CGloat.nan"
+var size = CGSize(width: view.bounds.width, height: CGFloat.nan)
+size = container.yoga.calculateLayout(with: size)
+container.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+container.yoga.applyLayout(preservingOrigin: true)
+// or
+contentView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0)
+contentView.yoga.applyLayout(preservingOrigin: true, dimensionFlexibility: .flexibleHeight)
+let height = cell.contentView.frame.height
+
+endsnippet
+
 snippet sd_setImage "SDImage"
 imageView.sd_setImage(with: URL(string: imageURL), placeholderImage: nil) { [weak self] (image, _, _, url) in
 }
 endsnippet
 
-snippet attributeString "Create Attr String"
+snippet attr "Create Attr String"
 text.attrString(align: .left).addColor(.tvgGreen).addFont(15)
 endsnippet
+
+snippet uic "UIColor(hex:)"
+UIColor(hex: 0x<#value#>)
+endsnippet
+
 

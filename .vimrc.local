@@ -409,6 +409,10 @@ augroup END
     function! GrepCustomDir(word)
         " use ag search
         "execute 'grep! ' . a:word . ' ' . './'
+        if len(a:word) < 3
+            echoerr "search word length less then 4"
+            return
+        endif
         execute 'Ack! ' . a:word
         cw
     endfunction
@@ -437,9 +441,8 @@ augroup END
         "\   'swift' : ['.', 're![_a-zA-Z]' ],
         \   'swift' : ['.'],
         \ }
-    autocmd BufNewFile,BufRead *.swift set filetype=swift
 
-    let g:ycm_log_level = 'debug'
+    "let g:ycm_log_level = 'debug'
     let g:ycm_min_num_of_chars_for_completion = 3
 
 "}
@@ -644,56 +647,71 @@ noremap <Leader>= <C-w>=
 noremap <silent> <Leader>/ :nohlsearch<CR>
 noremap <Leader>bg :call ToggleBG()<CR>
 
+" Swift {
+    " completion popup menu KeyStroke
+    "<Ctrl+N/Ctrl+P> scroll selection
+    "<Ctrl+Y>  "yes, accept that word."
+    "<Ctrl+E>  cancel the menu
+    "See :help popupmenu-keys for more.
 
-" completion popup menu KeyStroke
-"<Ctrl+N/Ctrl+P> scroll selection
-"<Ctrl+Y>  "yes, accept that word."
-"<Ctrl+E>  cancel the menu
-"See :help popupmenu-keys for more.
+    " popup menu is visible use <C-Y>
+    "Fixed: <Enter> insert newline
+    autocmd FileType swift inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+    autocmd FileType swift setlocal smartindent
+    "autocmd FileType swift nnoremap <leader>r :make&<CR>
 
-" popup menu is visible use <C-Y>
-"Fixed: <Enter> insert newline
-autocmd FileType swift inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
-autocmd FileType swift setlocal smartindent
-autocmd FileType swift nnoremap <leader>r :make&<CR>
+    command! Ff call FastSwiftCompile('')
+    command! Fs call FastSwiftCompile('-s')
+    function! FastSwiftCompile(flag)
+        update
+        let savemp = &makeprg
 
-command! Ff call FastSwiftCompile('')
-command! Fs call FastSwiftCompile('-s')
-function! FastSwiftCompile(flag)
-    update
-    let savemp = &makeprg
-
-    if a:flag == '-s'
-        let &makeprg = "sh"." /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/fastCompile.sh"
-    else
-        let &makeprg = "sh"." /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/ios_fastCompile.sh"
-    endif
-
-    silent make!
-    let qflist = getqflist()
-    let newqflist = []
-    let isError = 0
-    for d in getqflist()
-        if d.lnum == 0 && isError == 1
-            call add(newqflist, d)
-        elseif d.lnum > 0 && d.text =~ 'error:*'
-            call add(newqflist, d)
-            let isError = 1
-            "echo bufname(d.bufnr) ':' d.lnum '=' d.text
+        if a:flag == '-s'
+            let &makeprg = "sh"." /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/simulator_fastCompile.sh"
         else
-            let isError = 0
+            let &makeprg = "sh"." /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/ios_fastCompile.sh"
         endif
-    endfor
 
-    if empty(newqflist)
-        cclose
-    else
-        call setqflist(newqflist)
-        copen
-        "cfirst
-    endif
-    let &makeprg = savemp
-endfunction
+        silent make!
+        let qflist = getqflist()
+        let newqflist = []
+        let isError = 0
+        for d in getqflist()
+            if d.lnum == 0 && isError == 1
+                call add(newqflist, d)
+            elseif d.lnum > 0 && d.text =~ 'error:*'
+                call add(newqflist, d)
+                let isError = 1
+                "echo bufname(d.bufnr) ':' d.lnum '=' d.text
+            else
+                let isError = 0
+            endif
+        endfor
+
+        if empty(newqflist)
+            cclose
+        else
+            call setqflist(newqflist)
+            copen
+            "cfirst
+        endif
+        let &makeprg = savemp
+    endfunction
+
+    function FormatSwiftFile() range
+        if a:firstline != a:lastline
+            let l:start=a:firstline
+            let l:end=a:lastline
+            echomsg  "select line: ".l:start."-".l:end
+        endif
+        pyf $HOME/spf13-copy-vim/vim/swift-format.py
+    endfunction
+
+    autocmd FileType swift vnoremap <silent> = :call FormatSwiftFile()<CR>
+    autocmd FileType swift setlocal textwidth=240
+" }
+
+
 
 
 " java {

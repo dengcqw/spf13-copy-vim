@@ -391,4 +391,12 @@ export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 # e <(ag -G '\.(swift|m|mm)$' "\"")
 # sort -n $file | uniq
 
-alias fcs="sh /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/fastCompile.sh"
+# export sketch as svg
+# sketchtool export slices src/icons/icons.sketch --output=tmp/src/icons/svg --formats=svg
+alias ff="sh /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/ios_fastCompile.sh"
+alias fs="sh /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/simulator_fastCompile.sh"
+alias sketchtool='/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool'
+
+# https://github.com/junegunn/fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+bindkey '^F' fzf-file-widget

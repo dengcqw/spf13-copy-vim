@@ -21,6 +21,17 @@ v/xxx/d，删除不含xxx的行
 行尾，行首添加符号新方法: 选中行，进入命令模式，":'<,'>normal A;" 可以在行尾添加分号
 
 
+移动可视区不移到光标https://stackoverflow.com/a/3458821
+zz  move current line to the middle of the screen
+zt  top of the screen
+zb  bottom of the screen
+
+fugitive
+1. 如果快速checkout 一个文件， 一行或几行代码, co任意commit
+2. 同一个文件多个commit回放，类似xcode
+3. 熟悉了提交，还不熟悉查看历史和编辑
+
+
 user manual sample
 
 
@@ -49,6 +60,8 @@ user manual sample
     :[range]global/{pattern}/{command}
     :g+//+s/foobar/barfoo/g
     由于模式中包括正斜杠，我们用加号作分隔符，后面是一个把 "foobar" 替换成 "barfoo" 的替换命令
+
+    我常用的删除包含字符的行  :g/string/d
 
 10.9 使用外部程序
     命令 "!{motion}{program}" 用一个外部程序对一个文本块进行过滤

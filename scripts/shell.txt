@@ -168,3 +168,14 @@
     2>&1 把 标准错误输出 重定向到 标准输出.
     &>file 把 标准输出 和 标准错误输出 都重定向到文件file中
 
+16. 终端实时打印log
+    tail -f /var/log/system.log
+
+17. 修改文件  sed -i
+    sed -i -e "s/\(address=\).*/\1$1/" \
+    -e "s/\(port=\).*/\1$2/" \
+    -e "s/\(username=\).*/\1$3/" xyz.cfg
+
+最小匹配
+TestStr="-a -b -c -d"
+echo $TestStr | sed -e "s:-a[^-]*-:test:"

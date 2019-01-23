@@ -115,15 +115,15 @@ deinit {
 endsnippet
 
 snippet rect "CGRect"
-let rect = CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
+CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
 endsnippet
 
 snippet size "CGSize"
-let size = CGSize(width: <#T##CGFloat#>, height: <#T##CGFloat#>)
+CGSize(width: <#T##CGFloat#>, height: <#T##CGFloat#>)
 endsnippet
 
 snippet point "CGPoint"
-let point = CGPoint(x: <#T##CGFloat#>, y: <#T##CGFloat#>)
+CGPoint(x: <#T##CGFloat#>, y: <#T##CGFloat#>)
 endsnippet
 
 snippet edgeInsets "UIEdgeInsets"
@@ -132,10 +132,11 @@ UIEdgeInsets.left(<#xxx#>)
 UIEdgeInsets.horizontal(<#xxx#>)
 endsnippet
 
+snippet nilstr "String(describing:)"
+String(describing:<#value#>)
+endsnippet
 
-
-
-
-
-
+snippet sel "selector"
+#selector(${1:actionName})
+endsnippet
 
