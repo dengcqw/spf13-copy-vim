@@ -298,4 +298,47 @@ required init?(coder aDecoder: NSCoder) {
 
 endsnippet
 
+snippet keywindow "keywindow"
+UIApplication.shared.keyWindow
+endsnippet
 
+snippet ygScrollView "use scrollview with yoga"
+    let scrollView = UIScrollView()
+    let container = UIView()
+
+    override func loadView() {
+        super.loadView()
+        self.view.addSubview(scrollView)
+
+		/* use yoga on container subviews here */
+
+        scrollView.addSubview(container)
+	}
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        scrollView.frame = self.view.bounds
+
+		// calc container real height
+        container.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0)
+        container.yoga.applyLayout(preservingOrigin: true, dimensionFlexibility: .flexibleHeight)
+
+		// contentSize larger then scrollview frame, then scroll will be enabled
+        if container.frame.height > scrollView.frame.height {
+            scrollView.contentSize = container.frame.size
+        } else {
+            scrollView.contentSize = CGSize(width: self.view.bounds.width, height: self.view.bounds.height + 1)
+        }
+    }
+endsnippet
+
+snippet ygView "use YGView"
+final class ${0:CustomView}: YGView {
+	override func initialize() {
+
+	}
+}
+endsnippet
+
+snippet autoExapndYGView
+endsnippet

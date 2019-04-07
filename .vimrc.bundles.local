@@ -36,7 +36,7 @@
     Bundle 'vim-scripts/CompleteHelper'
     Bundle 'vim-scripts/MultiWordComplete'
 
-    Bundle 'vim-scripts/DeleteTrailingWhitespace'
+    "Bundle 'vim-scripts/DeleteTrailingWhitespace'
 
     " highlight multi word
     Bundle 't9md/vim-quickhl'
@@ -53,3 +53,14 @@
     "
     Bundle "Konfekt/FastFold"
 
+    Bundle 'octol/vim-cpp-enhanced-highlight'
+
+    Bundle 'tenfyzhong/CompleteParameter.vim'
+
+    Bundle 'vim-scripts/a.vim'
+    "Directory viewer for Vim
+    Bundle 'justinmk/vim-dirvish'
+
+    Bundle 'ludovicchabant/vim-gutentags'
+
+    Bundle 'posva/vim-vue'

@@ -1,0 +1,2 @@
+generate comand_json
+ninja -C out/defaut -t compdb cxx

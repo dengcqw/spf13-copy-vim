@@ -1,0 +1,34 @@
+编译器生成的swift内部代码, 可以用命令还原
+xcrun swift-demangle -simplified --compact S6TVGuor18VideoSearchManagerC05fetchB12AlbumsForTop8withName7pageNum0K4Size6filter11_completionAA12RequestTokenCSgSS_S2iSaySSGySayAA0B5AlbumCGSg_s5Error_pSgtctFy10Foundation4DataVSg_So13NSURLResponseCSgAStcfU0_TA
+注：xcrun swift-demangle -simplified --compact 还原这些符号的时候，需要先去掉前面的 _$ 前缀字符
+
+
+# symbolicatecrash 只支持固定格式
+# Move all the files (MyApp.app, MyApp-dSYM.dSYM and MyApp-Crash-log.crash) into a Folder
+# "djSymbolicatecrash [*.crash] [app] > output.txt"
+export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+function djSymbolicatecrash() {
+    /Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash $1 $2
+}
+# atos 支持单行符号化
+# "4   xxx         0x00748089 0x84000 + 7094409"
+# symbol:  atos -o xxx.app.dSYM/Contents/Resources/DWARF/xxx -arch armv7 -l 0x84000 0x00748089
+
+
+Swift Integer Overflow issue (similar: https://medium.com/ios-os-x-development/swift-integer-overflow-issue-2970f3896f59)
+
+    let number = Int("2202622200") // 在32位机器上转成int是 -2092345096
+    let newId = (number + 900000) * 100 // crash SIGTRAP
+
+
+https://forums.developer.apple.com/thread/112007
+
+    This part of your crash report:
+    Exception Type:  EXC_BREAKPOINT (SIGTRAP)
+    strongly implies that your code died because of a Swift safety check.
+    For example, you might be force unwrapping an optional or accessing an array out of bounds.
+
+iOS---OBJC_ASSOCIATION_ASSIGN可能引起的Crash
+https://www.jianshu.com/p/e70758d8552f?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+
+    NSNumber 应该用OBJC_ASSOCIATION_RETAIN, 12以内的number有内存优化不会崩溃

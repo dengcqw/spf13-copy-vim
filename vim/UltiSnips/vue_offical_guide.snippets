@@ -1,0 +1,127 @@
+snippet v-for-list ""
+<ul id="v-for-list">
+  <li v-for="item in items">
+    {{ item.message }}
+  </li>
+	<li v-for="(item, index) in items">
+    {{ parentMessage }} - {{ index }} - {{ item.message }}
+  </li>
+</ul>
+endsnippet
+
+snippet v-for-obj ""
+<ul id="v-for-object" class="demo">
+  <li v-for="value in object">
+    {{ value }}
+  </li>
+	<div v-for="(value, key) in object">
+		{{ key }}: {{ value }}
+	</div>
+	<div v-for="(value, key, index) in object">
+		{{ index }}. {{ key }}: {{ value }}
+	</div>
+</ul>
+endsnippet
+
+snippet v-for-component ""
+<my-component v-for="item in items" :key="item.id"></my-component>
+<ul>
+	<li
+		is="todo-item"
+		v-for="(todo, index) in todos"
+		v-bind:key="todo.id"
+		v-bind:title="todo.title"
+		v-on:remove="todos.splice(index, 1)"
+	></li>
+</ul>
+endsnippet
+
+snippet v-on-click
+<button v-on:click="counter += 1">Add 1</button>
+<button v-on:click="greet">Greet</button>
+<button v-on:click="say('hi')">Say hi</button>
+<button v-on:click="warn('msg', $event)"> Submit </button>
+// ...
+methods: {
+  warn: function (message, event) {
+    // 现在我们可以访问原生事件对象
+    if (event) event.preventDefault()
+    alert(message)
+  }
+}
+
+<!-- 阻止单击事件继续传播 -->
+<a v-on:click.stop="doThis"></a>
+
+<!-- 提交事件不再重载页面 -->
+<form v-on:submit.prevent="onSubmit"></form>
+
+<!-- 修饰符可以串联 -->
+<a v-on:click.stop.prevent="doThat"></a>
+
+<!-- 只有修饰符 -->
+<form v-on:submit.prevent></form>
+
+<!-- 添加事件监听器时使用事件捕获模式 -->
+<!-- 即元素自身触发的事件先在此处理，然后才交由内部元素进行处理 -->
+<div v-on:click.capture="doThis">...</div>
+
+<!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
+<!-- 即事件不是从内部元素触发的 -->
+<div v-on:click.self="doThat">...</div>
+
+<!-- 2.1.4 新增点击事件将只会触发一次 -->
+<a v-on:click.once="doThis"></a>
+endsnippet
+
+snippet input "input tag"
+<input v-model="message" placeholder="edit me">
+<input type="checkbox" id="checkbox" v-model="checked">
+<input type="radio" id="one" value="One" v-model="picked">
+endsnippet
+
+snippet textarea "textarea tag"
+<textarea v-model="message" placeholder="add multiple lines"></textarea>
+endsnippet
+
+snippet select "select tag"
+#selected: ""
+<select v-model="selected">
+	<option disabled value="">请选择</option>
+	<option>A</option>
+	<option>B</option>
+	<option>C</option>
+</select>
+
+#selected: []
+<select v-model="selected" multiple style="width: 50px;">
+	<option>A</option>
+	<option>B</option>
+	<option>C</option>
+</select>
+endsnippet
+
+snippet emitEvent "child emit event"
+# parent observe enlarge-text event
+<blog-post
+  ...
+  v-on:enlarge-text="postFontSize += 0.1"
+></blog-post>
+# child emit event
+<button v-on:click="$emit('enlarge-text')"> Enlarge text </button>
+<button v-on:click="$emit('enlarge-text', 0.1)"> Enlarge text </button>
+endsnippet
+
+snippet v-model-component "componet support v-model"
+Vue.component('custom-input', {
+  props: ['value'],
+  template: `
+    <input
+      v-bind:value="value"
+      v-on:input="$emit('input', $event.target.value)"
+    >
+  `
+})
+endsnippet
+
+

@@ -285,9 +285,10 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
 # "djSymbolicatecrash [*.crash] [app] > output.txt"
 export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
 function djSymbolicatecrash() {
-    #/Applications/Xcode.app/Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash $1 $2
     /Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash $1 $2
 }
+# "4   xxx         0x00748089 0x84000 + 7094409"
+# symbol:  atos -o xxx.app.dSYM/Contents/Resources/DWARF/xxx -arch armv7 -l 0x84000 0x00748089
 
 # cp file then jump to dest dir
 function djcp() {
@@ -400,3 +401,19 @@ alias sketchtool='/Applications/Sketch.app/Contents/Resources/sketchtool/bin/ske
 # https://github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 bindkey '^F' fzf-file-widget
+
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+
+#To use the bundled libc++ please add the following LDFLAGS:
+#  LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
+#
+#llvm is keg-only, which means it was not symlinked into /usr/local,
+#because macOS already provides this software and installing another version in
+#parallel can cause all kinds of trouble.
+#
+#If you need to have llvm first in your PATH run:
+#  echo 'export PATH="/usr/local/opt/llvm/bin:$PATH"' >> ~/.zshrc
+#
+#For compilers to find llvm you may need to set:
+#  export LDFLAGS="-L/usr/local/opt/llvm/lib"
+#  export CPPFLAGS="-I/usr/local/opt/llvm/include"
