@@ -124,4 +124,90 @@ Vue.component('custom-input', {
 })
 endsnippet
 
+snippet transition "vue transition css class"
+<transition name="${1:prefx}">
+  <p v-if="show">hello</p>
+</transition>
 
+.$1-enter-active, .$1-leave-active {
+// 用来定义进入过渡的过程时间，延迟和曲线函数
+  transition: opacity .5s;
+}
+// 进入的开始状态
+.$1-enter {
+}
+// 进入的结束状态
+.$1-enter-to {
+}
+// 离开的开始状态
+.$1-leave {
+}
+// 离开的结束状态
+.$1-leave-to {
+  opacity: 0;
+}
+endsnippet
+
+snippet transition-thirdparty "use thirdparty css animate"
+<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+
+<div id="example-3">
+  <button @click="show = !show">
+    Toggle render
+  </button>
+  <transition
+    name="custom-classes-transition"
+    enter-active-class="animated tada"
+    leave-active-class="animated bounceOutRight"
+  >
+    <p v-if="show">hello</p>
+  </transition>
+</div>
+endsnippet
+
+snippet transition-jshook "use js hooks, use Velocity demo"
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+
+<div id="example-4">
+  <button @click="show = !show">
+    Toggle
+  </button>
+  <transition
+    v-on:before-enter="beforeEnter"
+    v-on:enter="enter"
+    v-on:leave="leave"
+    v-bind:css="false"
+  >
+    <p v-if="show">
+      Demo
+    </p>
+  </transition>
+</div>
+
+new Vue({
+  el: '#example-4',
+  data: {
+    show: false
+  },
+  methods: {
+    beforeEnter: function (el) {
+      el.style.opacity = 0
+      el.style.transformOrigin = 'left'
+    },
+    enter: function (el, done) {
+      Velocity(el, { opacity: 1, fontSize: '1.4em' }, { duration: 300 })
+      Velocity(el, { fontSize: '1em' }, { complete: done })
+    },
+    leave: function (el, done) {
+      Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 })
+      Velocity(el, { rotateZ: '100deg' }, { loop: 2 })
+      Velocity(el, {
+        rotateZ: '45deg',
+        translateY: '30px',
+        translateX: '30px',
+        opacity: 0
+      }, { complete: done })
+    }
+  }
+})
+endsnippet

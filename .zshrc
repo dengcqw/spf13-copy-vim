@@ -50,14 +50,14 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins
-plugins=(flutter git brew common-alias dirhistory encode64 github history jsontools npm osx sudo urltools vi-mode xcode extract)
+plugins=(flutter git brew dirhistory encode64 github history jsontools npm osx urltools vi-mode extract bwana gradle dirpersist cp copyfile colored-man-pages)
 
 # User configuration
 
 export DART_BIN='/usr/local/dart-sdk/bin'
 
 source ~/.bash_profile
-export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin:$HOME/Library/Android/sdk/platform-tools:/anaconda2/bin:$HOME/flutter/bin:$DART_BIN:$HOME/.pub-cache/bin
+export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin:$HOME/Library/Android/sdk/platform-tools:$HOME/flutter/bin:$DART_BIN:$HOME/.pub-cache/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
 export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -417,3 +417,5 @@ export PATH="/usr/local/opt/llvm/bin:$PATH"
 #For compilers to find llvm you may need to set:
 #  export LDFLAGS="-L/usr/local/opt/llvm/lib"
 #  export CPPFLAGS="-I/usr/local/opt/llvm/include"
+
+#export DerivedData=~/Library/Developer/Xcode/DerivedData

@@ -603,6 +603,12 @@ augroup END
             execute "s/".a:args."/\r/g"
         endif
     endfunc
+
+    command -nargs=0 RevelInXcode call RevelInXcode()
+    function! RevelInXcode()
+        execute "!open -a /Applications/Xcode.app ".expand("%:p")
+    endfunc
+
 "}
 
 " {

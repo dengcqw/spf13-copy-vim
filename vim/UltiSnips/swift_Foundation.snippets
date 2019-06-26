@@ -140,3 +140,8 @@ snippet sel "selector"
 #selector(${1:actionName})
 endsnippet
 
+snippet substring "replace substring"
+let start = value.index(value.startIndex, offsetBy: 6);
+let end = value.index(value.startIndex, offsetBy: 6 + 3);
+value.replaceSubrange(start..<end, with: "yellow")
+endsnippet
