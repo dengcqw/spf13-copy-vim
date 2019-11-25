@@ -288,7 +288,7 @@ function djSymbolicatecrash() {
     /Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash $1 $2
 }
 # "4   xxx         0x00748089 0x84000 + 7094409"
-# symbol:  atos -o xxx.app.dSYM/Contents/Resources/DWARF/xxx -arch armv7 -l 0x84000 0x00748089
+# symbol:  atos -o TVGuor.app.dSYM/Contents/Resources/DWARF/TVGuor -arch armv7 -l 0x84000 0x00748089
 
 # cp file then jump to dest dir
 function djcp() {
@@ -394,8 +394,6 @@ export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 
 # export sketch as svg
 # sketchtool export slices src/icons/icons.sketch --output=tmp/src/icons/svg --formats=svg
-alias ff="sh /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/ios_fastCompile.sh"
-alias fs="sh /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/simulator_fastCompile.sh"
 alias sketchtool='/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool'
 
 # https://github.com/junegunn/fzf
@@ -419,3 +417,12 @@ export PATH="/usr/local/opt/llvm/bin:$PATH"
 #  export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
 #export DerivedData=~/Library/Developer/Xcode/DerivedData
+
+
+#alias ff="sh /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/ios_fastCompile.sh"
+#alias fs="sh /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/simulator_fastCompile.sh"
+alias xbuild="XcodeInstanceRun build --xcode \"\-workspace TVGuor.xcworkspace \-scheme TVGuor \-configuration Debug \-arch arm64\""
+alias xcopy="XcodeInstanceRun copy --to /Users/dengjinlong/Library/Developer/Xcode/DerivedData/TVGuor-fomvyhexvtnxgiapyrtldmbgjnod/Build/Products/Debug-iphoneos/"
+alias xcompile="XcodeInstanceRun compile; xcopy; echo 'copy done'; open -a Xcode"
+
+export HOMEBREW_NO_AUTO_UPDATE=true

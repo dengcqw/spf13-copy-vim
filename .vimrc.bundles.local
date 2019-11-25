@@ -17,6 +17,7 @@
             " The "for" is required so the syntax registers on filetype, otherwise
             " yajs has trouble overriding the default js syntax due to runtime order
             Bundle 'othree/yajs.vim', { 'for': 'javascript' }
+            Bundle 'othree/es.next.syntax.vim'
         endif
     " }
     " iOS dev {
@@ -56,6 +57,8 @@
     Bundle 'octol/vim-cpp-enhanced-highlight'
 
     Bundle 'tenfyzhong/CompleteParameter.vim'
+    " complete YCM parameter
+    "Bundle 'Shougo/echodoc.vim'
 
     Bundle 'vim-scripts/a.vim'
     "Directory viewer for Vim
@@ -64,3 +67,6 @@
     Bundle 'ludovicchabant/vim-gutentags'
 
     Bundle 'posva/vim-vue'
+
+    " useful custom mappings with [ and ]
+    "Bundle 'tpope/vim-unimpaired'

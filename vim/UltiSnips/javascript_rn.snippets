@@ -13,69 +13,6 @@ snippet copyright "js file header description"
 
 endsnippet
 
-# 4
-snippet rnCreateComponent "React.createClass()"
-var ${1:ComponentName} = React.createClass({
-
-    getInitialState: function() {
-        return {
-            ${2:Variables here used by 'this.state'}
-        };
-    },
-
-    render: function() {
-        ${3:process state here} 
-
-        return (
-            < View style = { styles.container }>
-                ${4:View hierarchy}
-            </View>
-        );
-    },
-
-    // Private Process
-    _onPress: function() {
-    },
-
-});
-
-endsnippet
-
-# 4.1
-snippet rnCreateComponentWithMount "React.createClass()"
-var ${1:ComponentName} = React.createClass({
-
-    getInitialState: function() {
-    return {
-    ${2:Variables here used by 'this.state'}
-    };
-    },
-
-    componentWillMount: function() {
-    },
-    componentDidMount: function() {
-    },
-    componentWillunmount: function() {
-    },
-
-    render: function() {
-        ${3:process state here} 
-
-        return (
-            < View style = { styles.container }>
-                ${4:View hierarchy}
-            </View>
-        );
-    },
-
-    // Private Process
-    _onPress: function() {
-    },
-
-});
-
-endsnippet
-
 # 5
 snippet rnCreateStyleSheet "StyleSheet.create()"
 var styles = StyleSheet.create({
@@ -91,25 +28,8 @@ var styles = StyleSheet.create({
 
 endsnippet
 
-# 6
-snippet rnExport "module.exports"
-/**
- * Exports
- */
-exports.title = '${1:title}'
-exports.description = '${2:This is template file for iOS Reactive Native develop! Enjoy it.}'
-
-/**
- * Private Component
- */
-module.exports = ${3:ComponentName};
-endsnippet
-
 # 7
 snippet rnRegComponent "AppRegistry.registerComponent"
-/**
- * Public Component
- */
 AppRegistry.registerComponent('${1:ComponentName}', () => ${2:ComponentName});
 endsnippet
 
@@ -123,11 +43,11 @@ ${1:varName}: function() {
 endsnippet
 
 #3
-snippet rnWinW "Description"
+snippet rnWinW "win width"
 Dimensions.get('window').width
 endsnippet
 
-snippet rnWinH "Description"
+snippet rnWinH "wid height"
 Dimensions.get('window').heigth
 endsnippet
 
@@ -282,18 +202,12 @@ import {
 } from 'react-native'
 endsnippet
 
-snippet rncs "React.addons.classSet" b
-var cx = React.addons.classSet;
-cx({
-	${1}: ${2}
-});
-endsnippet
-
 snippet rncomponentDidMount "component did mount" b
 componentDidMount () {
 	${1}
 }$0
 endsnippet
+
 
 snippet rncomponentDidUpdate "component did update" b
 componentDidUpdate (prevProps, prevState) {
@@ -325,22 +239,6 @@ componentWillUpdate (nextProps, nextState) {
 }$0
 endsnippet
 
-snippet rnGetDefaultProps "get default props" b
-getDefaultProps () {
-	return {
-		${1}
-	};
-}$0
-endsnippet
-
-snippet rnGetInitialState "get initial state" b
-getInitialState () {
-	return {
-		${1}: ${2}
-	};
-}$0
-endsnippet
-
 snippet rnPropTypes "propTypes" b
 $1.propTypes = {
   optionalArray: PropTypes.array,
@@ -367,7 +265,7 @@ text: PropTypes.oneOf([
 ])
 endsnippet
 
-snippet rnCreateClass "create class/component" b
+snippet rnClass "create component" b
 export default class ${1:ClassName} extends React.Component {
   constructor (props) {
     super(props)
@@ -386,6 +284,43 @@ export default class ${1:ClassName} extends React.Component {
   }
 
   render () {
+    return (
+      <View style={{flex:1}}>
+      {/*code here*/}
+      </View>
+    );
+  }
+}
+
+snippet rnClassWithLifeCycle "create component with life cycle" b
+class ${1:ClassName} extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  static defaultProps = {}
+
+  static getDerivedStateFromProps(props, state) {
+    return {}
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {}
+
+  componentDidMount() {}
+
+  componentWillUnmount() {}
+
+  shouldComponentUpdate(nextProps, nextState) {}
+
+  getSnapshotBeforeUpdate(prevProps, prevState) { return null; }
+
+  componentDidUpdate(prevProps) {}
+
+  render() {
     return (
       <View style={{flex:1}}>
       {/*code here*/}

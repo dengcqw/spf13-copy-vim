@@ -1,0 +1,34 @@
+snippet cml-script "cml js tempalte"
+<script>
+class Index {
+  // data
+  data =  {
+    message: 'Hello',
+  }
+  // 计算属性
+  computed = {
+    reversedMessage: function () {
+      return this.message.split('').reverse().join('')
+    }
+  }
+  // 观察数据变化
+  watch: {
+    message: function (newV, oldV) {
+    }
+  }
+  // 各种生命周期
+  mounted: function(res) {
+    // 模板或者html编译完成,且渲染到dom中完成,在整个vue的生命周期中只执行一次
+  }
+}
+export default new Index();
+</script>
+endsnippet
+
+snippet cml-json "cml json template"
+<script cml-type="json">
+  {
+    "base": {}
+  }
+</script>
+endsnippet

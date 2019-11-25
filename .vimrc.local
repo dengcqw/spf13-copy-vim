@@ -56,6 +56,9 @@
 
     " % match pairs
     set matchpairs+=<:>
+
+    " quiclfix/location open buffer options
+    set switchbuf=useopen,usetab,newtab
 "}
 
 " relative number {
@@ -460,6 +463,20 @@ augroup END
     let g:ycm_complete_in_strings=1
     set completeopt=menu,menuone
 
+    " Because clang version not equal, clangd can't use
+    " V[14:30:48.963] Ignored diagnostic. no handler registered for module format 'obj' 
+    " LLVM ERROR: unknown module format
+    let g:ycm_use_clangd = 0
+    let g:ycm_clangd_args = ['-log=verbose', '-pretty']
+    " Let clangd fully control code completion
+    "let g:ycm_clangd_uses_ycmd_caching = 0
+    " Use installed clangd, not YCM-bundled clangd which doesn't get updates.
+    "let g:ycm_clangd_binary_path = exepath("clangd")
+    " generate compile_commads.json
+    "xcodebuild -project PROJECT_NAME.xcodeproj | xcpretty -r json-compilation-database --output compile_commands.json
+    "
+    "YCM objc completion method length
+    "YouCompleteMe/third_party/ycmd/cpp/ycm/CandidateRepository.cpp  L34 MAX_CANDIDATE_SIZE
 "}
 
 " copy file path {
@@ -766,26 +783,39 @@ noremap <Leader>bg :call ToggleBG()<CR>
 
 " ALE Setting {
 
+  "gcc/clang 和 cppcheck，前者主要检查有无语法错误，后者主要会给出一些编码建议
   let g:ale_linters = {
   \   'javascript': ['eslint'],
   \   'java': ['javac'],
   \   'md': ['proselint'],
-  \   'objc': ['clang'],
-  \   'swift': ['swiftlint'],
-  \   'scala': ['scalac'],
+  \   'objc': ['clangd'],
+  \   'objcpp': ['clangd'],
+  \   'swift': ['swiftformat'],
+  \   'c': ['cppcheck', 'clangd'],
+  \   'cpp': ['cppcheck', 'clangd'],
   \}
+
+  " Only run linters named in ale_linters settings.
+  let g:ale_linters_explicit = 1
+  let g:ale_completion_enabled = 0
 
   let g:ale_sign_column_always = 1
   let g:ale_sign_error = '>>'
   let g:ale_sign_warning = '--'
   highlight clear ALEErrorSign
   highlight clear ALEWarningSign
+
   let g:ale_lint_on_text_changed = 'never'
+  " if you don't want linters to run on opening a file
   let g:ale_lint_on_enter = 0
-  let g:ale_lint_on_save=0
+  let g:ale_lint_on_save=1
+
   let g:ale_set_loclist = 0
   let g:ale_set_quickfix = 1
   let g:ale_open_list = 1
+
+  " airline extension
+  "let g:airline#extensions#ale#enabled = 1
 "}
 
 " markdown-preview.vim
@@ -969,6 +999,9 @@ set noshowmode
     " 如果使用 universal ctags 需要增加下面一行
     let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
+    " exclude
+    let g:gutentags_ctags_extra_args += ['--exclude=DerivedData']
+
     " 禁用 gutentags 自动加载 gtags 数据库的行为
     let g:gutentags_auto_add_gtags_cscope = 0
     let g:gutentags_exclude_project_root = ['/usr/local', '~/spf13-copy-vim', '~/flutter', '~/Documents/8-tvguo/FastCompileScript']
@@ -983,12 +1016,6 @@ let g:complete_parameter_use_ultisnips_mapping = 1
 "imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
 "smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 "imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-
-let g:ycm_use_clangd = 1
-" Let clangd fully control code completion
-let g:ycm_clangd_uses_ycmd_caching = 0
-" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
-let g:ycm_clangd_binary_path = exepath("clangd")
 
 autocmd FileType html,vue,js setlocal shiftwidth=2
 
