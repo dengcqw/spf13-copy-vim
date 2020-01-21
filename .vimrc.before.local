@@ -7,6 +7,7 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "my-snippets/RN-snips", "my-snip
 
 let g:spf13_clear_search_highlight = 1
 let g:spf13_leader=','
+let g:spf13_localleader='\'
 let g:ag_search_deapth='5'
 " use powerline font, need install font independently
 let g:airline_powerline_fonts = 1 
