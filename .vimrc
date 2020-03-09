@@ -57,7 +57,7 @@
           set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
         endif
     " }
-
+    
     " Arrow Key Fix {
         " https://github.com/spf13/spf13-vim/issues/780
         if &term[:4] == "xterm" || &term[:5] == 'screen' || &term[:3] == 'rxvt'
@@ -93,12 +93,11 @@
             set background=dark
         endif
     endfunction
-    " leader not defined, use default value '\'
-    map <Leader>bg :call ToggleBG()<CR>
+    noremap <leader>bg :call ToggleBG()<CR>
 
-     "if !has('gui')
+    " if !has('gui')
         "set term=$TERM          " Make arrow and other keys work
-     "endif
+    " endif
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
     set mouse=a                 " Automatically enable mouse usage
@@ -179,13 +178,8 @@
 " Vim UI {
 
     if !exists('g:override_spf13_bundles') && filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
-        " 终端需要设置正确的值，在nvim上发现的问题
-        if has("gui")
-            let g:solarized_termcolors=256
-        else
-            let g:solarized_termcolors=16
-        endif
-        let g:solarized_termtrans=0
+        let g:solarized_termcolors=256
+        let g:solarized_termtrans=1
         let g:solarized_contrast="normal"
         let g:solarized_visibility="normal"
         color solarized             " Load a colorscheme
@@ -198,7 +192,7 @@
 
     highlight clear SignColumn      " SignColumn should match background
     highlight clear LineNr          " Current line number row will have same background color in relative mode
-    highlight clear CursorLineNr    " Remove highlight color from current line number
+    "highlight clear CursorLineNr    " Remove highlight color from current line number
 
     if has('cmdline_info')
         set ruler                   " Show the ruler
@@ -259,21 +253,18 @@
     " To disable the stripping of whitespace, add the following to your
     " .vimrc.before.local file:
     "   let g:spf13_keep_trailing_whitespace = 1
-    augroup filetype_init_formatting
-        autocmd!
-        autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql,swift autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
-        "autocmd FileType go autocmd BufWritePre <buffer> Fmt
-        autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-        autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
-        " preceding line best in a plugin but here for now.
+    autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
+    "autocmd FileType go autocmd BufWritePre <buffer> Fmt
+    autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+    autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
+    " preceding line best in a plugin but here for now.
 
-        autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+    autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
-        " Workaround vim-commentary for Haskell
-        autocmd FileType haskell setlocal commentstring=--\ %s
-        " Workaround broken colour highlighting in Haskell
-        autocmd FileType haskell,rust setlocal nospell
-    augroup END
+    " Workaround vim-commentary for Haskell
+    autocmd FileType haskell setlocal commentstring=--\ %s
+    " Workaround broken colour highlighting in Haskell
+    autocmd FileType haskell,rust setlocal nospell
 
 " }
 
@@ -295,17 +286,17 @@
     endif
 
     " The default mappings for editing and applying the spf13 configuration
-    " are <Leader>ev and <Leader>sv respectively. Change them to your preference
+    " are <leader>ev and <leader>sv respectively. Change them to your preference
     " by adding the following to your .vimrc.before.local file:
-    "   let g:spf13_edit_config_mapping='<Leader>ec'
-    "   let g:spf13_apply_config_mapping='<Leader>sc'
+    "   let g:spf13_edit_config_mapping='<leader>ec'
+    "   let g:spf13_apply_config_mapping='<leader>sc'
     if !exists('g:spf13_edit_config_mapping')
-        let s:spf13_edit_config_mapping = '<Leader>ev'
+        let s:spf13_edit_config_mapping = '<leader>ev'
     else
         let s:spf13_edit_config_mapping = g:spf13_edit_config_mapping
     endif
     if !exists('g:spf13_apply_config_mapping')
-        let s:spf13_apply_config_mapping = '<Leader>sv'
+        let s:spf13_apply_config_mapping = '<leader>sv'
     else
         let s:spf13_apply_config_mapping = g:spf13_apply_config_mapping
     endif
@@ -316,10 +307,10 @@
     " .vimrc.before.local file:
     "   let g:spf13_no_easyWindows = 1
     if !exists('g:spf13_no_easyWindows')
-        nnoremap <C-J> <C-W>j<C-W>_
-        nnoremap <C-K> <C-W>k<C-W>_
-        nnoremap <C-L> <C-W>l<C-W>_
-        nnoremap <C-H> <C-W>h<C-W>_
+        map <C-J> <C-W>j<C-W>_
+        map <C-K> <C-W>k<C-W>_
+        map <C-L> <C-W>l<C-W>_
+        map <C-H> <C-W>h<C-W>_
     endif
 
     " Wrapped lines goes down/up to next row, rather than next line in file.
@@ -396,30 +387,30 @@
     nnoremap Y y$
 
     " Code folding options
-    nmap <Leader>f0 :set foldlevel=0<CR>
-    nmap <Leader>f1 :set foldlevel=1<CR>
-    nmap <Leader>f2 :set foldlevel=2<CR>
-    nmap <Leader>f3 :set foldlevel=3<CR>
-    nmap <Leader>f4 :set foldlevel=4<CR>
-    nmap <Leader>f5 :set foldlevel=5<CR>
-    nmap <Leader>f6 :set foldlevel=6<CR>
-    nmap <Leader>f7 :set foldlevel=7<CR>
-    nmap <Leader>f8 :set foldlevel=8<CR>
-    nmap <Leader>f9 :set foldlevel=9<CR>
+    nmap <leader>f0 :set foldlevel=0<CR>
+    nmap <leader>f1 :set foldlevel=1<CR>
+    nmap <leader>f2 :set foldlevel=2<CR>
+    nmap <leader>f3 :set foldlevel=3<CR>
+    nmap <leader>f4 :set foldlevel=4<CR>
+    nmap <leader>f5 :set foldlevel=5<CR>
+    nmap <leader>f6 :set foldlevel=6<CR>
+    nmap <leader>f7 :set foldlevel=7<CR>
+    nmap <leader>f8 :set foldlevel=8<CR>
+    nmap <leader>f9 :set foldlevel=9<CR>
 
     " Most prefer to toggle search highlighting rather than clear the current
     " search results. To clear search highlighting rather than toggle it on
     " and off, add the following to your .vimrc.before.local file:
     "   let g:spf13_clear_search_highlight = 1
     if exists('g:spf13_clear_search_highlight')
-        nmap <silent> <Leader>/ :nohlsearch<CR>
+        nmap <silent> <leader>/ :nohlsearch<CR>
     else
-        nmap <silent> <Leader>/ :set invhlsearch<CR>
+        nmap <silent> <leader>/ :set invhlsearch<CR>
     endif
 
 
     " Find merge conflict markers
-    map <Leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
+    map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
 
     " Shortcuts
     " Change Working Directory to that of the current file
@@ -440,24 +431,24 @@
     " Some helpers to edit mode
     " http://vimcasts.org/e/14
     cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-    map <Leader>ew :e %%
-    map <Leader>es :sp %%
-    map <Leader>ev :vsp %%
-    map <Leader>et :tabe %%
+    map <leader>ew :e %%
+    map <leader>es :sp %%
+    map <leader>ev :vsp %%
+    map <leader>et :tabe %%
 
     " Adjust viewports to the same size
     map <Leader>= <C-w>=
 
     " Map <Leader>ff to display all lines with keyword under cursor
     " and ask which one to jump to
-    nnoremap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+    nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
     " Easier horizontal scrolling
     map zl zL
     map zh zH
 
     " Easier formatting
-    nmap <silent> <Leader>q gwip
+    nnoremap <silent> <leader>q gwip
 
     " FIXME: Revert this f70be548
     " fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
@@ -480,12 +471,12 @@
             au FileType go nmap <Leader>s <Plug>(go-implements)
             au FileType go nmap <Leader>i <Plug>(go-info)
             au FileType go nmap <Leader>e <Plug>(go-rename)
-            au FileType go nmap <Leader>r <Plug>(go-run)
-            au FileType go nmap <Leader>b <Plug>(go-build)
-            au FileType go nmap <Leader>t <Plug>(go-test)
+            au FileType go nmap <leader>r <Plug>(go-run)
+            au FileType go nmap <leader>b <Plug>(go-build)
+            au FileType go nmap <leader>t <Plug>(go-test)
             au FileType go nmap <Leader>gd <Plug>(go-doc)
             au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-            au FileType go nmap <Leader>co <Plug>(go-coverage)
+            au FileType go nmap <leader>co <Plug>(go-coverage)
         endif
         " }
 
@@ -584,16 +575,16 @@
     " NerdTree {
         if isdirectory(expand("~/.vim/bundle/nerdtree"))
             map <C-e> <plug>NERDTreeTabsToggle<CR>
-            map <Leader>e :NERDTreeFind<CR>
-            nnoremap <Leader>nt :NERDTreeFind<CR>
+            map <leader>e :NERDTreeFind<CR>
+            nmap <leader>nt :NERDTreeFind<CR>
 
             let NERDTreeShowBookmarks=1
-            let NERDTreeIgnore=['.DS_Store', '\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+            let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
             let NERDTreeChDirMode=0
             let NERDTreeQuitOnOpen=1
             let NERDTreeMouseMode=2
             let NERDTreeShowHidden=1
-            let NERDTreeKeepTreeInNewTab=0
+            let NERDTreeKeepTreeInNewTab=1
             let g:nerdtree_tabs_open_on_gui_startup=0
         endif
     " }
@@ -622,15 +613,14 @@
     " Session List {
         set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
         if isdirectory(expand("~/.vim/bundle/sessionman.vim/"))
-            nnoremap <Leader>sl :SessionList<CR>
-            nnoremap <Leader>ss :SessionSave<CR>
-            nnoremap <Leader>sc :SessionClose<CR>
+            nmap <leader>sl :SessionList<CR>
+            nmap <leader>ss :SessionSave<CR>
+            nmap <leader>sc :SessionClose<CR>
         endif
     " }
 
     " JSON {
-        "nnoremap <Leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
-        " vim_json
+        nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
         let g:vim_json_syntax_conceal = 0
     " }
 
@@ -651,18 +641,14 @@
     " ctrlp {
         if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
             let g:ctrlp_working_path_mode = 'ra'
-            "nnoremap <silent> <D-t> :CtrlP<CR>
-            "nnoremap <silent> <D-r> :CtrlPMRU<CR>
+            nnoremap <silent> <D-t> :CtrlP<CR>
+            nnoremap <silent> <D-r> :CtrlPMRU<CR>
             let g:ctrlp_custom_ignore = {
                 \ 'dir':  '\.git$\|\.hg$\|\.svn$',
                 \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
 
             if executable('ag')
-                if exists('g:ag_search_deapth')
-                    let s:ctrlp_fallback = 'ag %s --depth ' . g:ag_search_deapth . ' --nocolor -l -g ""'
-                else
-                    let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
-                endif
+                let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
             elseif executable('ack-grep')
                 let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
             elseif executable('ack')
@@ -696,7 +682,7 @@
 
     " TagBar {
         if isdirectory(expand("~/.vim/bundle/tagbar/"))
-            nnoremap <silent> <Leader>tt :TagbarToggle<CR>
+            nnoremap <silent> <leader>tt :TagbarToggle<CR>
         endif
     "}
 
@@ -708,18 +694,18 @@
 
     " Fugitive {
         if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
-            nnoremap <silent> <Leader>gs :Gstatus<CR>
-            nnoremap <silent> <Leader>gd :Gdiff<CR>
-            nnoremap <silent> <Leader>gc :Gcommit<CR>
-            nnoremap <silent> <Leader>gb :Gblame<CR>
-            nnoremap <silent> <Leader>gl :Glog<CR>
-            nnoremap <silent> <Leader>gp :Git push<CR>
-            nnoremap <silent> <Leader>gr :Gread<CR>
-            nnoremap <silent> <Leader>gw :Gwrite<CR>
-            nnoremap <silent> <Leader>ge :Gedit<CR>
+            nnoremap <silent> <leader>gs :Gstatus<CR>
+            nnoremap <silent> <leader>gd :Gdiff<CR>
+            nnoremap <silent> <leader>gc :Gcommit<CR>
+            nnoremap <silent> <leader>gb :Gblame<CR>
+            nnoremap <silent> <leader>gl :Glog<CR>
+            nnoremap <silent> <leader>gp :Git push<CR>
+            nnoremap <silent> <leader>gr :Gread<CR>
+            nnoremap <silent> <leader>gw :Gwrite<CR>
+            nnoremap <silent> <leader>ge :Gedit<CR>
             " Mnemonic _i_nteractive
-            nnoremap <silent> <Leader>gi :Git add -p %<CR>
-            nnoremap <silent> <Leader>gg :SignifyToggle<CR>
+            nnoremap <silent> <leader>gi :Git add -p %<CR>
+            nnoremap <silent> <leader>gg :SignifyToggle<CR>
         endif
     "}
 
@@ -735,16 +721,14 @@
             let g:UltiSnipsJumpForwardTrigger = '<C-j>'
             let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 
-            augroup filetype_ycm
-                autocmd!
-                " Enable omni completion.
-                autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-                autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-                autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-                autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-                autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-                autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-            augroup END
+            " Enable omni completion.
+            autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+            autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+            autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+            autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+            autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+            autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
             " Haskell post write lint and check with ghcmod
             " $ `cabal install ghcmod` if missing and ensure
@@ -963,8 +947,8 @@
 
             " Enable omni completion.
             autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-            "autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-            "autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+            autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
             autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
             autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
             autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
@@ -987,8 +971,8 @@
         elseif !exists('g:spf13_no_omni_complete')
             " Enable omni-completion.
             autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-            "autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-            "autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+            autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
             autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
             autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
             autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
@@ -1092,7 +1076,7 @@
             if LINUX() && has("gui_running")
                 set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
             elseif OSX() && has("gui_running")
-                set guifont=Courier\ New:h18
+                set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
             elseif WINDOWS() && has("gui_running")
                 set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
             endif
@@ -1213,23 +1197,23 @@
         endfor
         return s:is_fork
     endfunction
-
+     
     function! s:ExpandFilenameAndExecute(command, file)
         execute a:command . " " . expand(a:file, ":p")
     endfunction
-
+     
     function! s:EditSpf13Config()
         call <SID>ExpandFilenameAndExecute("tabedit", "~/.vimrc")
         call <SID>ExpandFilenameAndExecute("vsplit", "~/.vimrc.before")
         call <SID>ExpandFilenameAndExecute("vsplit", "~/.vimrc.bundles")
-
+     
         execute bufwinnr(".vimrc") . "wincmd w"
         call <SID>ExpandFilenameAndExecute("split", "~/.vimrc.local")
         wincmd l
         call <SID>ExpandFilenameAndExecute("split", "~/.vimrc.before.local")
         wincmd l
         call <SID>ExpandFilenameAndExecute("split", "~/.vimrc.bundles.local")
-
+     
         if <SID>IsSpf13Fork()
             execute bufwinnr(".vimrc") . "wincmd w"
             call <SID>ExpandFilenameAndExecute("split", "~/.vimrc.fork")
@@ -1238,10 +1222,10 @@
             wincmd l
             call <SID>ExpandFilenameAndExecute("split", "~/.vimrc.bundles.fork")
         endif
-
+     
         execute bufwinnr(".vimrc.local") . "wincmd w"
     endfunction
-
+     
     execute "noremap " . s:spf13_edit_config_mapping " :call <SID>EditSpf13Config()<CR>"
     execute "noremap " . s:spf13_apply_config_mapping . " :source ~/.vimrc<CR>"
 " }

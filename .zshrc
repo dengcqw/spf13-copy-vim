@@ -289,6 +289,8 @@ function djSymbolicatecrash() {
 }
 # "4   xxx         0x00748089 0x84000 + 7094409"
 # symbol:  atos -o TVGuor.app.dSYM/Contents/Resources/DWARF/TVGuor -arch armv7 -l 0x84000 0x00748089
+#
+#  调试应用可以通过Xcode提供的dsymutil工具将dSYM文件从应用程序的二进制文件中剥离
 
 # cp file then jump to dest dir
 function djcp() {
