@@ -802,20 +802,25 @@ noremap <Leader>bg :call ToggleBG()<CR>
   let g:ale_sign_column_always = 1
   let g:ale_sign_error = '>>'
   let g:ale_sign_warning = '--'
-  highlight clear ALEErrorSign
-  highlight clear ALEWarningSign
+  "highlight clear ALEErrorSign
+  "highlight clear ALEWarningSign
 
   let g:ale_lint_on_text_changed = 'never'
   " if you don't want linters to run on opening a file
   let g:ale_lint_on_enter = 0
-  let g:ale_lint_on_save=1
+  let g:ale_lint_on_save=0
 
+  " use the quickfix list instead of the loclist
   let g:ale_set_loclist = 0
   let g:ale_set_quickfix = 1
   let g:ale_open_list = 1
 
+  "set omnifunc=ale#completion#OmniFunc
   " airline extension
   "let g:airline#extensions#ale#enabled = 1
+  " jump between error
+  "nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+  "nmap <silent> <C-j> <Plug>(ale_next_wrap)
 "}
 
 " markdown-preview.vim
@@ -960,10 +965,18 @@ let g:lsc_auto_map = {
 let g:lsc_trace_level = 'messages'
 
 " iterm 刷新问题
-set ttyfast
+"set ttyfast
 
-"let g:DeleteTrailingWhitespace = 1
-"let g:DeleteTrailingWhitespace_Action = 'delete'
+" turn off the automatic deletion of trailing whitespace
+let g:DeleteTrailingWhitespace = 0
+let g:DeleteTrailingWhitespace_Action = 'delete'
+
+let g:matchmaker_enable_startup = 1
+" 没有匹配时，不显示下划线
+let g:matchmaker_ignore_single_match = 1
+" 优先级比其他插件低
+let g:matchmaker_matchpriority = 0
+
 " 使用 UltiSnipsEdit 命令时垂直分割屏幕
 let g:UltiSnipsEditSplit="vertical"
 
@@ -975,6 +988,7 @@ set noshowmode
 " gutentags {
     " gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
     let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+    let g:gutentags_exclude_project_root = ['/usr/local', '/Users/dengjinlong/spf13-copy-vim']
 
     " 所生成的数据文件的名称
     let g:gutentags_ctags_tagfile = '.tags'
@@ -1019,3 +1033,5 @@ let g:complete_parameter_use_ultisnips_mapping = 1
 
 autocmd FileType html,vue,js setlocal shiftwidth=2
 
+let g:lt_location_list_toggle_map = '<leader>lc'
+let g:lt_quickfix_list_toggle_map = '<leader>qf'

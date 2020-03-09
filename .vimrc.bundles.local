@@ -26,47 +26,48 @@
     " }
 
     " Highlight the term under the cursor
+    " :Matchmaker turns it on
+    " :Matchmaker! turns it off
+    " :MatchmakerToggle toggles it
     Bundle 'qstrahl/vim-matchmaker'
 
-    Bundle 'w0rp/ale'
-
+    ":MarkdownPreview
     Bundle 'iamcco/markdown-preview.vim'
 
+    " 编程中用的较少
     " CTRL-X w e.g. `imc` completes to `insert mode completion`
-    Bundle 'vim-scripts/ingo-library'
-    Bundle 'vim-scripts/CompleteHelper'
-    Bundle 'vim-scripts/MultiWordComplete'
+    "Bundle 'vim-scripts/ingo-library'
+    "Bundle 'vim-scripts/CompleteHelper'
+    "Bundle 'vim-scripts/MultiWordComplete'
 
-    "Bundle 'vim-scripts/DeleteTrailingWhitespace'
+    Bundle 'vim-scripts/DeleteTrailingWhitespace'
 
     " highlight multi word
     Bundle 't9md/vim-quickhl'
-
-    " <leader>?
-    "Bundle "lifepillar/vim-cheat40"
 
     Bundle 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
     Bundle 'dart-lang/dart-vim-plugin'
 
-    "langserver.org
-    "Bundle 'natebosch/vim-lsc'
-    "
+    " 文件变化时，自动创建文件中全部的fold
+    ":FastFoldUpdate!
     Bundle "Konfekt/FastFold"
 
-    Bundle 'octol/vim-cpp-enhanced-highlight'
-
     Bundle 'tenfyzhong/CompleteParameter.vim'
-    " complete YCM parameter
-    "Bundle 'Shougo/echodoc.vim'
 
+    " 文件切换相关命令
     Bundle 'vim-scripts/a.vim'
+
     "Directory viewer for Vim
+    " use "-" to open a filelist
     Bundle 'justinmk/vim-dirvish'
 
+    " management of tags files
+    " 会产生大量文件，需要定期清理
     Bundle 'ludovicchabant/vim-gutentags'
 
-    Bundle 'posva/vim-vue'
+    "隐藏或者调出错误列表
+    Bundle 'Valloric/ListToggle'
 
-    " useful custom mappings with [ and ]
-    "Bundle 'tpope/vim-unimpaired'
+    " 标准请求格式
+    Bundle 'nicwest/vim-http'
