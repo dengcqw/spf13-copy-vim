@@ -918,7 +918,6 @@ nnoremap <Leader>qq :q!<CR>
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_symbols_ascii = 1
-set guifont=Roboto\ Mono\ Light\ for\ Powerline:h18
 
 let g:xcode_default_scheme = 'TVGuor'
 

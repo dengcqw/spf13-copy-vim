@@ -4,7 +4,7 @@
         if count(g:spf13_bundle_groups, 'javascript')
             Bundle 'maksimr/vim-jsbeautify'
             Bundle 'einars/js-beautify'
-            Bundle 'heavenshell/vim-jsdoc'
+            "Bundle 'heavenshell/vim-jsdoc'
             " ----------------------------------------
             " Syntax
             " ----------------------------------------
@@ -16,8 +16,8 @@
             "                                " no indent file, fork of jelera
             " The "for" is required so the syntax registers on filetype, otherwise
             " yajs has trouble overriding the default js syntax due to runtime order
-            Bundle 'othree/yajs.vim', { 'for': 'javascript' }
-            Bundle 'othree/es.next.syntax.vim'
+            "Bundle 'othree/yajs.vim', { 'for': 'javascript' }
+            "Bundle 'othree/es.next.syntax.vim'
         endif
     " }
     " iOS dev {
@@ -64,10 +64,12 @@
 
     " management of tags files
     " 会产生大量文件，需要定期清理
-    Bundle 'ludovicchabant/vim-gutentags'
+    "Bundle 'ludovicchabant/vim-gutentags'
 
     "隐藏或者调出错误列表
     Bundle 'Valloric/ListToggle'
 
     " 标准请求格式
     Bundle 'nicwest/vim-http'
+
+    Bundle 'ryanoasis/vim-devicons'

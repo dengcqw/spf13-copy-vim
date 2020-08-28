@@ -57,7 +57,7 @@ plugins=(flutter git brew dirhistory encode64 github history jsontools npm osx u
 export DART_BIN='/usr/local/dart-sdk/bin'
 
 source ~/.bash_profile
-export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin:$HOME/Library/Android/sdk/platform-tools:$HOME/flutter/bin:$DART_BIN:$HOME/.pub-cache/bin
+export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin:$HOME/Library/Android/sdk/platform-tools:$DART_BIN:$HOME/.pub-cache/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
 export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -428,3 +428,22 @@ alias xcopy="XcodeInstanceRun copy --to /Users/dengjinlong/Library/Developer/Xco
 alias xcompile="XcodeInstanceRun compile; xcopy; echo 'copy done'; open -a Xcode"
 
 export HOMEBREW_NO_AUTO_UPDATE=true
+
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+export FLUTTERSDK=/Users/dengjinlong/Documents/5-Flutter/flutter_macos_1.17.5-stable/flutter
+export PATH=$FLUTTERSDK/bin:$PATH
+
+alias startJenkins='java -jar jenkins.war --httpPort=8080'
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+source /Users/dengjinlong/.rvm/scripts/rvm
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+
+# git log --pretty=oneline commit1...commit2 > file
+# git clone --depth 1

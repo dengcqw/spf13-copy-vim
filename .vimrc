@@ -31,6 +31,16 @@
 
 " Environment {
 
+        " load python3 first
+        set pythonthreedll=/usr/local/Cellar/python@3.8/3.8.3/Frameworks/Python.framework/Versions/3.8/python
+        set pyx=3
+        if has('python3')
+          echo 'there is Python 3.x'
+        endif
+        if has('python')
+          echo 'there is Python 2.x'
+        endif
+
     " Identify platform {
         silent function! OSX()
             return has('macunix')
@@ -253,10 +263,10 @@
     " To disable the stripping of whitespace, add the following to your
     " .vimrc.before.local file:
     "   let g:spf13_keep_trailing_whitespace = 1
-    autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
+    autocmd FileType c,cpp,java,go,javascript,python,rust,xml,sql,dart autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
     "autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-    autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
+    autocmd FileType haskell,puppet,ruby,yml,dart,javascript setlocal expandtab shiftwidth=2 softtabstop=2
     " preceding line best in a plugin but here for now.
 
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
@@ -420,10 +430,6 @@
     " Visual shifting (does not exit Visual mode)
     vnoremap < <gv
     vnoremap > >gv
-
-    " Allow using the repeat operator with a visual selection (!)
-    " http://stackoverflow.com/a/8064607/127816
-    vnoremap . :normal .<CR>
 
     " For when you forget to sudo.. Really Write the file.
     cmap w!! w !sudo tee % >/dev/null
@@ -620,13 +626,13 @@
     " }
 
     " JSON {
-        nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
-        let g:vim_json_syntax_conceal = 0
+        "nmap <leader>jt <Esc>:%!python3 -m json.tool<CR><Esc>:set filetype=json<CR>
+        "let g:vim_json_syntax_conceal = 0
     " }
 
     " PyMode {
         " Disable if python support not present
-        if !has('python') && !has('python3')
+        if !has('python3') && !has('python')
             let g:pymode = 0
         endif
 
@@ -1008,14 +1014,6 @@
         endif
     " }
 
-    " FIXME: Isn't this for Syntastic to handle?
-    " Haskell post write lint and check with ghcmod
-    " $ `cabal install ghcmod` if missing and ensure
-    " ~/.cabal/bin is in your $PATH.
-    if !executable("ghcmod")
-        autocmd BufWritePost *.hs GhcModCheckAndLintAsync
-    endif
-
     " UndoTree {
         if isdirectory(expand("~/.vim/bundle/undotree/"))
             nnoremap <Leader>u :UndotreeToggle<CR>
@@ -1076,7 +1074,10 @@
             if LINUX() && has("gui_running")
                 set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
             elseif OSX() && has("gui_running")
-                set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
+                "set guifont=DejaVuSansMono\ Nerd\ Font\ Mono:h20
+                set guifont=Inconsolata\ Nerd\ Font:h20
+                "set guifont=Lekton\ Nerd\ Font\ Mono:h20
+                "set guifont=Lekton\ Nerd\ Font:h20
             elseif WINDOWS() && has("gui_running")
                 set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
             endif
