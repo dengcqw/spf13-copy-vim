@@ -48,6 +48,7 @@
     Bundle 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
     Bundle 'dart-lang/dart-vim-plugin'
+    Bundle 'neoclide/coc.nvim', {'branch': 'release'}
 
     " 文件变化时，自动创建文件中全部的fold
     ":FastFoldUpdate!
