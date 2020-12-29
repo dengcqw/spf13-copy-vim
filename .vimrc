@@ -32,10 +32,10 @@
 " Environment {
 
         " load python3 first
-        set pythonthreedll=/usr/local/Cellar/python@3.8/3.8.3/Frameworks/Python.framework/Versions/3.8/python
+        set pythonthreedll=/usr/local/bin/python3
         set pyx=3
         if has('python3')
-          echo 'there is Python 3.x'
+          "echo 'there is Python 3.x'
         endif
         if has('python')
           echo 'there is Python 2.x'
@@ -103,7 +103,7 @@
             set background=dark
         endif
     endfunction
-    noremap <leader>bg :call ToggleBG()<CR>
+    "noremap <leader>bg :call ToggleBG()<CR>
 
     " if !has('gui')
         "set term=$TERM          " Make arrow and other keys work
@@ -187,13 +187,14 @@
 
 " Vim UI {
 
-    if !exists('g:override_spf13_bundles') && filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
-        let g:solarized_termcolors=256
-        let g:solarized_termtrans=1
-        let g:solarized_contrast="normal"
-        let g:solarized_visibility="normal"
-        color solarized             " Load a colorscheme
-    endif
+    "if !exists('g:override_spf13_bundles') && filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
+        "let g:solarized_termcolors=256
+        "let g:solarized_termtrans=1
+        "let g:solarized_contrast="normal"
+        "let g:solarized_visibility="normal"
+        "color solarized             " Load a colorscheme
+    "endif
+    colorscheme solarized8
 
     set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode

@@ -102,16 +102,17 @@
     " General {
         if count(g:spf13_bundle_groups, 'general')
             Bundle 'scrooloose/nerdtree'
-            Bundle 'altercation/vim-colors-solarized'
+            "Bundle 'altercation/vim-colors-solarized'
+            Bundle "lifepillar/vim-solarized8"
             Bundle 'spf13/vim-colors'
             Bundle 'tpope/vim-surround'
             Bundle 'tpope/vim-repeat'
             Bundle 'rhysd/conflict-marker.vim'
-            "Bundle 'jiangmiao/auto-pairs'
+            Bundle 'jiangmiao/auto-pairs'
             "Bundle 'ctrlpvim/ctrlp.vim'
             "Bundle 'tacahiroy/ctrlp-funky'
             Bundle 'terryma/vim-multiple-cursors'
-            Bundle 'vim-scripts/sessionman.vim'
+            Bundle 'vim-scripts/sessionman.vim.git'
             Bundle 'matchit.zip'
             if (has("python") || has("python3")) && exists('g:spf13_use_powerline') && !exists('g:spf13_use_old_powerline')
                 Bundle 'Lokaltog/powerline', {'rtp':'/powerline/bindings/vim'}
@@ -128,7 +129,7 @@
             Bundle 'jistr/vim-nerdtree-tabs'
             "Bundle 'flazz/vim-colorschemes'
             Bundle 'mbbill/undotree'
-            Bundle 'nathanaelkane/vim-indent-guides'
+            "Bundle 'nathanaelkane/vim-indent-guides'
             if !exists('g:spf13_no_views')
                 Bundle 'vim-scripts/restore_view.vim'
             endif
@@ -155,7 +156,7 @@
             " Pick one of the checksyntax, jslint, or syntastic
             "Bundle 'scrooloose/syntastic'
             " 替换syntastic
-            Bundle 'w0rp/ale'
+            Bundle 'dense-analysis/ale'
             Bundle 'tpope/vim-fugitive'
             " 可以直接调试接口
             Bundle 'mattn/webapi-vim'
@@ -169,7 +170,7 @@
             " 通过将不同层次的括号高亮为不同的颜色, 帮助你阅读世界上最复杂的代码
             Bundle 'luochen1990/rainbow'
             if executable('ctags')
-                Bundle 'majutsushi/tagbar'
+                Bundle 'preservim/tagbar'
             endif
         endif
     " }
@@ -293,7 +294,6 @@
     " Misc {
         if count(g:spf13_bundle_groups, 'misc')
             Bundle 'rust-lang/rust.vim'
-            Bundle 'tpope/vim-markdown'
             Bundle 'spf13/vim-preview'
             Bundle 'tpope/vim-cucumber'
             Bundle 'cespare/vim-toml'

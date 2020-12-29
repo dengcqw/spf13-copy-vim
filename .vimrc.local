@@ -237,7 +237,7 @@ let NERDTreeQuitOnOpen=0
 " emmet
 let g:user_emmet_leader_key = '<C-S>'
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,ejs EmmetInstall
+autocmd FileType html,vue EmmetInstall
 
 
 " js beautify
@@ -786,6 +786,9 @@ noremap <Leader>bg :call ToggleBG()<CR>
   "gcc/clang 和 cppcheck，前者主要检查有无语法错误，后者主要会给出一些编码建议
   let g:ale_linters = {
   \   'javascript': ['eslint'],
+  \   'vue': ['prettier'],
+  \   'html': ['prettier'],
+  \   'css': ['prettier'],
   \   'java': ['javac'],
   \   'md': ['proselint'],
   \   'objc': ['clangd'],
@@ -793,6 +796,13 @@ noremap <Leader>bg :call ToggleBG()<CR>
   \   'swift': ['swiftformat'],
   \   'c': ['cppcheck', 'clangd'],
   \   'cpp': ['cppcheck', 'clangd'],
+  \}
+
+  let g:ale_fixers = {
+  \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+  \  'javascript': ['prettier', 'eslint'],
+  \  'vue': ['prettier'],
+  \  'html': ['prettier'],
   \}
 
   " Only run linters named in ale_linters settings.
@@ -1021,7 +1031,7 @@ set noshowmode
 "}
 
 
-set cmdheight=3
+set cmdheight=2
 inoremap <silent><expr> <D-o> complete_parameter#pre_complete("()")
 let g:complete_parameter_use_ultisnips_mapping = 1
 " 被ultisnips修改
@@ -1030,7 +1040,32 @@ let g:complete_parameter_use_ultisnips_mapping = 1
 "smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 "imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 
-autocmd FileType html,vue,js setlocal shiftwidth=2
+autocmd FileType html,vue,js set shiftwidth=2 tabstop=2 softtabstop=2 smartindent
+au FileType vue set syntax=html
 
-let g:lt_location_list_toggle_map = '<leader>lc'
+let g:lt_location_list_toggle_map = '<leader>cc'
 let g:lt_quickfix_list_toggle_map = '<leader>qf'
+
+set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,.DS_Store
+let NERDTreeIgnore=['\.DS_Store$', '\.git$']
+
+"org {
+   let g:org_heading_shade_leading_stars = 0
+   let g:org_agenda_files = ['~/org/*.org']
+"}
+
+" 显示缩进对齐线
+let g:indentLine_enabled = 1
+" yank {
+    let g:yoinkIncludeDeleteOperations = 1
+    nmap p <plug>(YoinkPaste_p)
+    nmap P <plug>(YoinkPaste_P)
+" }
+let g:startify_session_dir = '~/.vim/sessions'
+let g:startify_session_number = 5
+let g:startify_session_sort = 1
+
+let g:startify_bookmarks = [{'t': '~/Documents/8-tvguo/2-TVGuoiOSApp'}, {'f': '~/Documents/5-Flutter'}]
+if filereadable(expand("~/spf13-copy-vim/vimrc.startify.headers"))
+    source ~/spf13-copy-vim/vimrc.startify.headers
+endif

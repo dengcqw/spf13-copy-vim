@@ -1,0 +1,9 @@
+{
+    "languageserver":{
+        "javascript": {
+            "module":"",
+            "filetypes":["javascript"],
+            "enable": false
+        }
+    }
+}

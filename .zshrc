@@ -104,6 +104,8 @@ export brew_path=/usr/local/Cellar
 alias cls='clear'
 alias ll='ls -l'
 alias la='ls -a'
+# nnn terminal file manager
+alias ls='nnn -de'
 alias vi='mvim'
 alias e='mvim'
 alias v='mvim'
@@ -235,6 +237,9 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
     alias tgpl-rebase="git pull --rebase"
     alias tgref="git reflog"
 #}
+# clone git repo with only .git folder:
+# git fetch origin
+# git checkout master
 
 
 # Use local setting {
@@ -370,20 +375,29 @@ alias tmKillSession='tmux kill-session -t '  # +name
 
 alias iOSSDKPath='xcrun --sdk iphoneos --show-sdk-path'
 
-alias flutter-run='flutter run'
-alias flutter-run-quick='flutter run --use-application-binary '
-alias flutter-emulators='flutter emulators --launch apple_ios_simulator'
-alias flutter-pg='flutter packages get'
+
+# Flutter {
+    alias fl-run='flutter run'
+    alias fl-run-quick='flutter run --use-application-binary '
+    alias fl-emulators='flutter emulators --launch apple_ios_simulator'
+    alias fl-pg='flutter packages get'
+
+    export PUB_CACHE="$HOME/.pub-cache" # 全局缓存，保证不会存在多份缓存
+    export PUB_HOSTED_URL=https://pub.flutter-io.cn
+    export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+    export FLUTTERSDK=~/Documents/5-Flutter/qyflutter/flutter
+    export PATH=$FLUTTERSDK/bin:$PATH
+
+    #compole dart
+    export DEPOTTOOLS=~/Documents/5-Flutter/depot_tools
+    export PATH=$DEPOTTOOLS:$PATH
+#}
 
 # pipe stdout to vim
 # vim <(cat /etc/hosts)
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-
-export PUB_HOSTED_URL=https://pub.flutter-io.cn
-export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
-
 
 # launchctl 控制app启动
 # sudo launchctl remove com.apple.mrt
@@ -427,12 +441,9 @@ alias xbuild="XcodeInstanceRun build --xcode \"\-workspace TVGuor.xcworkspace \-
 alias xcopy="XcodeInstanceRun copy --to /Users/dengjinlong/Library/Developer/Xcode/DerivedData/TVGuor-fomvyhexvtnxgiapyrtldmbgjnod/Build/Products/Debug-iphoneos/"
 alias xcompile="XcodeInstanceRun compile; xcopy; echo 'copy done'; open -a Xcode"
 
-export HOMEBREW_NO_AUTO_UPDATE=true
+alias xbuildT="XcodeInstanceRun build --xcode \"\-workspace Tvguooversea.xcworkspace \-scheme Tvguooversea \-configuration Debug \-arch arm64\""
 
-export PUB_HOSTED_URL=https://pub.flutter-io.cn
-export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
-export FLUTTERSDK=/Users/dengjinlong/Documents/5-Flutter/flutter_macos_1.17.5-stable/flutter
-export PATH=$FLUTTERSDK/bin:$PATH
+export HOMEBREW_NO_AUTO_UPDATE=true
 
 alias startJenkins='java -jar jenkins.war --httpPort=8080'
 
@@ -447,3 +458,6 @@ export NVM_DIR="$HOME/.nvm"
 
 # git log --pretty=oneline commit1...commit2 > file
 # git clone --depth 1
+#
+# close spotlight
+# sudo mdutil -a -i off

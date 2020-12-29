@@ -1,29 +1,44 @@
 " local user bundle configuration
 
-    " js {
-        if count(g:spf13_bundle_groups, 'javascript')
-            Bundle 'maksimr/vim-jsbeautify'
-            Bundle 'einars/js-beautify'
-            "Bundle 'heavenshell/vim-jsdoc'
-            " ----------------------------------------
-            " Syntax
-            " ----------------------------------------
-            " Options
-            " 'pangloss/vim-javascript'      " pangloss' is probably the oldest, lot of
-            " contributors but not up-to-date
-            " Includes indent settings
-            " 'othree/yajs.vim'              " othree has the latest support
-            "                                " no indent file, fork of jelera
-            " The "for" is required so the syntax registers on filetype, otherwise
-            " yajs has trouble overriding the default js syntax due to runtime order
-            "Bundle 'othree/yajs.vim', { 'for': 'javascript' }
-            "Bundle 'othree/es.next.syntax.vim'
-        endif
-    " }
-    " iOS dev {
-        Bundle 'keith/swift.vim'
-        Bundle 'gfontenot/vim-xcode'
-    " }
+" profile (n)vim (e.g. startup)
+" https://github.com/bchretien/vim-profiler
+
+" { vim 强化
+    Bundle 'Yggdroot/LeaderF', { 'do': './install.sh' }
+
+    " 标准请求格式
+    Bundle 'nicwest/vim-http'
+
+    Bundle 'voldikss/vim-translator'
+
+    " 文件变化时，自动创建文件中全部的fold
+    ":FastFoldUpdate!
+    Bundle "Konfekt/FastFold"
+
+    "Directory viewer for Vim
+    " use "-" to open a filelist
+    Bundle 'justinmk/vim-dirvish'
+    " Adds file type icons to Vim plugins
+    Bundle 'ryanoasis/vim-devicons'
+    " a start screen for Vim and Neovim
+    Bundle "mhinz/vim-startify"
+    " 类似vscode command
+    Bundle "liuchengxu/vim-clap"
+    " 文档管理的工具
+    "Bundle 'vimwiki/vimwiki'
+    Bundle 'Yggdroot/indentLine'
+
+    " 底部会显示快捷键补全，类似emacs
+    "Bundle 'liuchengxu/vim-which-key'
+
+    " Plugin to toggle, display and navigate marks
+    " m/ show all marks
+    Bundle "kshenoy/vim-signature"
+    " yank register mgr
+    Bundle "svermeulen/vim-easyclip"
+
+    " powered shell
+    Bundle "Shougo/deol.nvim"
 
     " Highlight the term under the cursor
     " :Matchmaker turns it on
@@ -31,8 +46,45 @@
     " :MatchmakerToggle toggles it
     Bundle 'qstrahl/vim-matchmaker'
 
+    Bundle 'vim-scripts/DeleteTrailingWhitespace'
+
+    " highlight multi word
+    Bundle 't9md/vim-quickhl'
+
+    Bundle "svermeulen/vim-subversive"
+    Bundle "svermeulen/vim-cutlass"
+    Bundle "svermeulen/vim-yoink"
+" }
+
+" js {
+    if count(g:spf13_bundle_groups, 'javascript')
+        Bundle 'maksimr/vim-jsbeautify'
+        Bundle 'einars/js-beautify'
+        "Bundle 'heavenshell/vim-jsdoc'
+        " ----------------------------------------
+        " Syntax
+        " ----------------------------------------
+        " Options
+        " 'pangloss/vim-javascript'      " pangloss' is probably the oldest, lot of
+        " contributors but not up-to-date
+        " Includes indent settings
+        " 'othree/yajs.vim'              " othree has the latest support
+        "                                " no indent file, fork of jelera
+        " The "for" is required so the syntax registers on filetype, otherwise
+        " yajs has trouble overriding the default js syntax due to runtime order
+        "Bundle 'othree/yajs.vim', { 'for': 'javascript' }
+        "Bundle 'othree/es.next.syntax.vim'
+    endif
+" }
+"
+" iOS dev {
+    Bundle 'keith/swift.vim'
+    Bundle 'gfontenot/vim-xcode'
+" }
+
     ":MarkdownPreview
-    Bundle 'iamcco/markdown-preview.vim'
+    Bundle 'iamcco/markdown-preview.nvim'
+    Bundle "plasticboy/vim-markdown"
 
     " 编程中用的较少
     " CTRL-X w e.g. `imc` completes to `insert mode completion`
@@ -40,36 +92,28 @@
     "Bundle 'vim-scripts/CompleteHelper'
     "Bundle 'vim-scripts/MultiWordComplete'
 
-    Bundle 'vim-scripts/DeleteTrailingWhitespace'
-
-    " highlight multi word
-    Bundle 't9md/vim-quickhl'
-
-    Bundle 'Yggdroot/LeaderF', { 'do': './install.sh' }
-
     Bundle 'dart-lang/dart-vim-plugin'
-
-    " 文件变化时，自动创建文件中全部的fold
-    ":FastFoldUpdate!
-    Bundle "Konfekt/FastFold"
+    Bundle 'neoclide/coc.nvim', {'branch': 'release'}
 
     Bundle 'tenfyzhong/CompleteParameter.vim'
 
     " 文件切换相关命令
     Bundle 'vim-scripts/a.vim'
 
-    "Directory viewer for Vim
-    " use "-" to open a filelist
-    Bundle 'justinmk/vim-dirvish'
-
     " management of tags files
     " 会产生大量文件，需要定期清理
     "Bundle 'ludovicchabant/vim-gutentags'
+    "xolox/vim-easytags
 
     "隐藏或者调出错误列表
     Bundle 'Valloric/ListToggle'
 
-    " 标准请求格式
-    Bundle 'nicwest/vim-http'
+    Bundle "bfrg/vim-cpp-modern"
+    Bundle "rhysd/vim-clang-format"
+    " 自动切换到git项目目录
+    Bundle "airblade/vim-rooter"
 
-    Bundle 'ryanoasis/vim-devicons'
+    Bundle 'thosakwe/vim-flutter'
+
+    " Vimspector should work for any debug adapter that works in Visual Studio Code.
+    "Bundle 'puremourning/vimspector'
