@@ -34,8 +34,6 @@
     " Plugin to toggle, display and navigate marks
     " m/ show all marks
     Bundle "kshenoy/vim-signature"
-    " yank register mgr
-    Bundle "svermeulen/vim-easyclip"
 
     " powered shell
     Bundle "Shougo/deol.nvim"
@@ -50,10 +48,6 @@
 
     " highlight multi word
     Bundle 't9md/vim-quickhl'
-
-    Bundle "svermeulen/vim-subversive"
-    Bundle "svermeulen/vim-cutlass"
-    Bundle "svermeulen/vim-yoink"
 " }
 
 " js {
@@ -79,11 +73,10 @@
 "
 " iOS dev {
     Bundle 'keith/swift.vim'
-    Bundle 'gfontenot/vim-xcode'
 " }
 
     ":MarkdownPreview
-    Bundle 'iamcco/markdown-preview.nvim'
+    Bundle 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
     Bundle "plasticboy/vim-markdown"
 
     " 编程中用的较少
@@ -93,7 +86,7 @@
     "Bundle 'vim-scripts/MultiWordComplete'
 
     Bundle 'dart-lang/dart-vim-plugin'
-    Bundle 'neoclide/coc.nvim', {'branch': 'release'}
+    "Bundle 'neoclide/coc.nvim', {'branch': 'release'}
 
     Bundle 'tenfyzhong/CompleteParameter.vim'
 
@@ -108,12 +101,15 @@
     "隐藏或者调出错误列表
     Bundle 'Valloric/ListToggle'
 
+    " language server highlight
+    "Bundle "jackguo380/vim-lsp-cxx-highlight"
     Bundle "bfrg/vim-cpp-modern"
     Bundle "rhysd/vim-clang-format"
     " 自动切换到git项目目录
     Bundle "airblade/vim-rooter"
 
-    Bundle 'thosakwe/vim-flutter'
+    " 会启动dart，一直占用cpu
+    "Bundle 'thosakwe/vim-flutter'
 
     " Vimspector should work for any debug adapter that works in Visual Studio Code.
     "Bundle 'puremourning/vimspector'

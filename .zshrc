@@ -105,7 +105,7 @@ alias cls='clear'
 alias ll='ls -l'
 alias la='ls -a'
 # nnn terminal file manager
-alias ls='nnn -de'
+alias ln='nnn -de'
 alias vi='mvim'
 alias e='mvim'
 alias v='mvim'
@@ -132,9 +132,9 @@ alias -s md=mvim
     alias djgrep='grep --color=auto -r -n ./* -e '
     alias rm="trash"
 
-    export EDITOR=mvim
-    alias pushToGithub='git push -u origin master'
-    alias ptg='git push -u origin master'
+    export EDITOR=vim
+    alias pushToGithub='git push -u origin main'
+    alias ptg='git push -u origin main'
 
     #alias for cnpm
     alias cnpm="npm --registry=https://registry.npm.taobao.org \
@@ -157,6 +157,7 @@ alias -s md=mvim
 
     alias c='djcd'
 
+    alias agd='ag --ignore *test* --ignore-dir samples_2 --ignore-dir samples_dev --ignore-dir benchmarks --ignore-dir samples --ignore-dir build --ignore-dir buildtools --ignore-dir tools/sdks'
 #}
 
 # brew install coreutils
@@ -194,23 +195,25 @@ alias djFindWithKeyword="tree -f -L 10 | grep "
 
 alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
 
+# git log --pretty=oneline commit1...commit2 > file
+# git clone --depth 1
+# git checkout --track remotes/origin/optimization
+#
 # Git short key {
-    alias tgst='git status'
-    alias tgs='git status'
+    alias tgst='git status -s'
+    alias tgs='git status -s'
 
     alias tgpl='git pull'
-    alias tgp='git pull'
-
+    alias tgpl-rebase="git pull --rebase"
     alias tgps='git push'
 
-    alias tgdf='git diff'
     alias tgd='git diff'
+    alias tgd-filelist="git diff --name-status "
 
-    alias tgadd='git add *'
-    alias tga='git add *'
+    alias tga='git add -i'
 
-    alias tgc='git commit -v -m'
-    alias tgc-a='git commit -v -a -m'
+    alias tgc='git commit -v -s -m'
+    alias tgc-a='git commit -v -s -a -m'
 
     alias tgbr='git branch'
     alias tgb='git branch'
@@ -219,7 +222,6 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
     alias tgco-b='git checkout -b'
     alias tgco-t='git checkout -t'
     alias tgco-tb='git checkout --track -b'
-    alias tglog='git log'
     alias tgl='git log'
     alias tglog-p='git log --pretty=format:"%h %s" --graph'
     alias tgcl='git clone '
@@ -228,19 +230,17 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
     alias tgr-soft='git reset --soft HEAD~' # 用于未提交到服务器上的commit
     # del the last commit
     alias tgr-hard='git reset --hard HEAD~'
-    alias tgrevert='git revert HEAD~'  # 用一次新的commit来回滚之前的commit, 用于已经提交到服务器上的commit
-
-    alias tgreview='git push origin HEAD:refs/for/master'
-    alias tgpatch='git format-patch -1 HEAD'
-    alias tgpushforce='git push --force' # dangerous
-    alias tgsub='git submodule update --init --recursive'
-    alias tgpl-rebase="git pull --rebase"
-    alias tgref="git reflog"
+    alias tg-revert='git revert HEAD~'  # 用一次新的commit来回滚之前的commit, 用于已经提交到服务器上的commit
+    alias tg-review='git push origin HEAD:refs/for/master'
+    alias tg-patch='git format-patch -1 HEAD'
+    #alias tgpushforce='git push --force' # dangerous
+    alias tg-sub='git submodule update --init --recursive'
+    alias tg-ref="git reflog"
 #}
 # clone git repo with only .git folder:
 # git fetch origin
 # git checkout master
-
+# git rebase -i HEAD~3
 
 # Use local setting {
     ZSHRC_LOCAL="$HOME/spf13-copy-vim/.zshrc.local"
@@ -383,14 +383,22 @@ alias iOSSDKPath='xcrun --sdk iphoneos --show-sdk-path'
     alias fl-pg='flutter packages get'
 
     export PUB_CACHE="$HOME/.pub-cache" # 全局缓存，保证不会存在多份缓存
-    export PUB_HOSTED_URL=https://pub.flutter-io.cn
-    export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
-    export FLUTTERSDK=~/Documents/5-Flutter/qyflutter/flutter
-    export PATH=$FLUTTERSDK/bin:$PATH
+    export FLUTTER_ROOT="$HOME/Documents/5-Flutter/flutter"
+    export PATH=$FLUTTER_ROOT/bin:$PATH
+    #export FLUTTER_STORAGE_BASE_URL='http://jfrog.cloud.qiyi.domain/iqiyi-generic-android'
+    #export PUB_HOSTED_URL=http://pub-server.qiyi.domain
 
-    #compole dart
+    #compile dart
     export DEPOTTOOLS=~/Documents/5-Flutter/depot_tools
     export PATH=$DEPOTTOOLS:$PATH
+
+    # 防止提交错地方
+    alias useQyFlutterProxy="export PUB_HOSTED_URL=http://pub-server.qiyi.domain && echo \"PUB_HOSTED_URL=${PUB_HOSTED_URL}\""
+    alias flutterPkgUpdate="useQyFlutterProxy;flutter packages pub publish"
+    # 使用私有源更新
+    alias flutterUpdateProxy="useQyFlutterProxy;flutter pub get;flutter packages get"
+    # 使用官方源更新
+    alias flutterUpdate="flutter pub get;flutter packages get"
 #}
 
 # pipe stdout to vim
@@ -432,14 +440,13 @@ export PATH="/usr/local/opt/llvm/bin:$PATH"
 #  export LDFLAGS="-L/usr/local/opt/llvm/lib"
 #  export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
-#export DerivedData=~/Library/Developer/Xcode/DerivedData
+export DerivedData=~/Library/Developer/Xcode/DerivedData
 
-
-#alias ff="sh /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/ios_fastCompile.sh"
-#alias fs="sh /Users/dengjinlong/Documents/8-tvguo/FastCompileScript/simulator_fastCompile.sh"
+alias __XcodeDepoly="osascript -e 'tell application \"System Events\" to keystroke \"r\" using {command down, control down}'"
 alias xbuild="XcodeInstanceRun build --xcode \"\-workspace TVGuor.xcworkspace \-scheme TVGuor \-configuration Debug \-arch arm64\""
-alias xcopy="XcodeInstanceRun copy --to /Users/dengjinlong/Library/Developer/Xcode/DerivedData/TVGuor-fomvyhexvtnxgiapyrtldmbgjnod/Build/Products/Debug-iphoneos/"
-alias xcompile="XcodeInstanceRun compile; xcopy; echo 'copy done'; open -a Xcode"
+alias xcopy="XcodeInstanceRun copy --to $DerivedData/TVGuor-fomvyhexvtnxgiapyrtldmbgjnod/Build/Products/Debug-iphoneos/; open -a Xcode; __XcodeDepoly"
+alias xcompile="XcodeInstanceRun compile; if [ $? -eq 0 ]; then xcopy; echo 'copy done'; fi"
+alias xdepoly="XcodeInstanceRun compile; if [ $? -eq 0 ]; then XcodeInstanceRun depoly; fi"
 
 alias xbuildT="XcodeInstanceRun build --xcode \"\-workspace Tvguooversea.xcworkspace \-scheme Tvguooversea \-configuration Debug \-arch arm64\""
 
@@ -455,10 +462,6 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-
-# git log --pretty=oneline commit1...commit2 > file
-# git clone --depth 1
-#
 # close spotlight
 # sudo mdutil -a -i off
 

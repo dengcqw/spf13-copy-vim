@@ -294,7 +294,7 @@
     " Misc {
         if count(g:spf13_bundle_groups, 'misc')
             Bundle 'rust-lang/rust.vim'
-            Bundle 'spf13/vim-preview'
+            "Bundle 'spf13/vim-preview'
             Bundle 'tpope/vim-cucumber'
             Bundle 'cespare/vim-toml'
             Bundle 'quentindecock/vim-cucumber-align-pipes'

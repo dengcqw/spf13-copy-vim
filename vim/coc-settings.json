@@ -4,6 +4,11 @@
             "module":"",
             "filetypes":["javascript"],
             "enable": false
+        },
+        "sourcekit-lsp": {
+            "filetypes" : ["swift"],
+            "command": "sourcekit-lsp"
         }
-    }
+    },
+    "translator.engines": [ "bing" ]
 }

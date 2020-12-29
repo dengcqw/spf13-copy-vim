@@ -1,0 +1,613 @@
+
+snippet LiveDataCreate
+// Code place in ViewModel
+private MutableLiveData<String> currentName;
+
+public LiveData<String> getCurrentName() {
+	if (currentName == null) {
+		currentName = new MutableLiveData<String>();
+	}
+	return currentName;
+}
+endsnippet
+
+snippet LiveDataObserve
+// Code place in Activity.onCreate
+// Get the ViewModel.
+model = new ViewModelProvider(this).get(NameViewModel.class);
+
+// Create the observer which updates the UI.
+final Observer<String> nameObserver = new Observer<String>() {
+	@Override
+	public void onChanged(@Nullable final String newName) {
+		// Update the UI, in this case, a TextView.
+		nameTextView.setText(newName);
+	}
+};
+
+// Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+model.getLiveData().observe(this, nameObserver);
+endsnippet
+
+snippet LiveDataExpand "override onActive&onInactive"
+public class StockLiveData extends LiveData<BigDecimal> {
+	private StockManager stockManager;
+
+	private SimplePriceListener listener = new SimplePriceListener() {
+		@Override
+		public void onPriceChanged(BigDecimal price) {
+			setValue(price);
+		}
+	};
+
+	public StockLiveData(String symbol) {
+		stockManager = new StockManager(symbol);
+	}
+
+	@Override
+	protected void onActive() {
+		stockManager.requestPriceUpdates(listener);
+	}
+
+	@Override
+	protected void onInactive() {
+		stockManager.removeUpdates(listener);
+	}
+}
+endsnippet
+
+snippet LiveDataTransform
+LiveData<User> userLiveData = ...;
+LiveData<String> userName = Transformations.map(userLiveData, user -> {
+	user.name + " " + user.lastName
+});
+
+// switchMap() 的函数必须返回 LiveData 对象
+private LiveData<User> getUser(String id) {
+  ...;
+}
+
+LiveData<String> userId = ...;
+LiveData<User> user = Transformations.switchMap(userId, id -> getUser(id) );
+endsnippet
+
+snippet WM-Worker "subclass of worker"
+public class UploadWorker extends Worker {
+	public UploadWorker(
+		@NonNull Context context,
+		@NonNull WorkerParameters params) {
+		super(context, params);
+	}
+
+	@Override
+	public Result doWork() {
+		String imageUriInput = getInputData().getString("IMAGE_URI");
+		if(imageUriInput == null) {
+			return Result.failure();
+		}
+		// Do the work here--in this case, upload the images.
+		uploadImages();
+
+		// Indicate whether the work finished successfully with the Result
+		return Result.success();
+	}
+}
+endsnippet
+
+snippet WM-enqueue
+WorkRequest uploadWorkRequest = new OneTimeWorkRequest.Builder(UploadWorker.class).build();
+WorkManager.getInstance(myContext).enqueue(uploadWorkRequest);
+endsnippet
+
+snippet WM-Request "WorkRequest Build"
+WorkRequest myWorkRequest = OneTimeWorkRequest.from(MyWork.class);
+WorkRequest uploadWorkRequest = new OneTimeWorkRequest.Builder(MyWork.class)
+	// Additional configuration
+	// 合并执行结果
+	.setInputMerger(ArrayCreatingInputMerger.class) // or OverwritingInputMerger
+	.build();
+
+// 可以定义的最短重复间隔是 15 分钟
+// WorkManager.cancelAllWorkByTag(String)
+Constraints constraints = new Constraints.Builder()
+	.setRequiredNetworkType(NetworkType.UNMETERED)
+	.setRequiresCharging(true)
+	.build();
+PeriodicWorkRequest saveRequest = new PeriodicWorkRequest.Builder(SaveImageToFileWorker.class, 1, TimeUnit.HOURS)
+	.addTag("cleanup")
+	// Constraints
+	.setConstraints(constraints)
+	.setInitialDelay(10, TimeUnit.MINUTES)
+	.setInputData(
+		new Data.Builder().putString("IMAGE_URI", "http://...").build()
+	)
+	.build();
+endsnippet
+
+snippet WM-getWork
+// by id
+workManager.getWorkInfoById(syncWorker.id);
+
+// by name
+workManager.getWorkInfosForUniqueWork("sync");
+
+// by tag
+workManager.getWorkInfosByTag("syncTag");
+endsnippet
+
+snippet WM-observeWork
+workManager.getWorkInfoByIdLiveData(syncWorker.id)
+	.observe(getViewLifecycleOwner(), workInfo -> {
+		if (workInfo.getState() != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+			Snackbar.make(requireView(), R.string.work_completed, Snackbar.LENGTH_SHORT)
+					.show();
+		}
+	});
+endsnippet
+
+snippet WM-chainWork
+WorkManager.getInstance(myContext)
+	// Candidates to run in parallel
+	.beginWith(Arrays.asList(plantName1, plantName2, plantName3))
+	// Dependent work (only runs after all previous work in chain)
+	.then(cache)
+	.then(upload)
+	// Call enqueue to kick things off
+	.enqueue();
+endsnippet
+
+snippet BindView-Activity
+private ResultProfileBinding binding;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	// 或直接 binding = DataBindingUtil.setContentView(this, R.layout.result_profile);
+	binding = ResultProfileBinding.inflate(getLayoutInflater());
+	View view = binding.getRoot();
+	setContentView(view);
+}
+endsnippet
+
+snippet BindView-Fragment
+private ResultProfileBinding binding;
+
+@Override
+public View onCreateView (LayoutInflater inflater,
+		ViewGroup container,
+		Bundle savedInstanceState) {
+	binding = ResultProfileBinding.inflate(inflater, container, false);
+	View view = binding.getRoot();
+	return view;
+}
+
+@Override
+public void onDestroyView() {
+	super.onDestroyView();
+	binding = null;
+}
+endsnippet
+
+snippet Observable  "custom Observable subclass"
+private static class User extends BaseObservable {
+	private String firstName;
+	private String lastName;
+
+	@Bindable
+		public String getFirstName() {
+			return this.firstName;
+		}
+
+	@Bindable
+		public String getLastName() {
+			return this.lastName;
+		}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+		notifyPropertyChanged(BR.firstName);
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+		notifyPropertyChanged(BR.lastName);
+	}
+}
+endsnippet
+
+snippet RecyclerView-AdapterDemo
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+
+	private String[] localDataSet;
+
+	public static class ViewHolder extends RecyclerView.ViewHolder {
+		private final TextView textView;
+
+		public ViewHolder(View view) {
+			super(view);
+			textView = (TextView) view.findViewById(R.id.textView);
+		}
+
+		public TextView getTextView() {
+			return textView;
+		}
+	}
+
+	public CustomAdapter(String[] dataSet) {
+		localDataSet = dataSet;
+	}
+
+	// Create new views (invoked by the layout manager)
+	@Override
+	public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+		// Create a new view, which defines the UI of the list item
+		View view = LayoutInflater.from(viewGroup.getContext())
+			.inflate(R.layout.text_row_item, viewGroup, false);
+
+		return new ViewHolder(view);
+	}
+
+	// Replace the contents of a view (invoked by the layout manager)
+	@Override
+	public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+
+		// Get element from your dataset at this position and replace the
+		// contents of the view with that element
+		viewHolder.getTextView().setText(localDataSet[position]);
+	}
+
+	// Return the size of your dataset (invoked by the layout manager)
+	@Override
+	public int getItemCount() {
+		return localDataSet.length;
+	}
+}
+endsnippet
+
+snippet BindingAdapter
+endsnippet
+
+snippet Nav-get "get NavController"
+NavHostFragment.findNavController(Fragment)
+Navigation.findNavController(Activity, @IdRes int viewId)
+Navigation.findNavController(View)
+endsnippet
+
+snippet Nav-button "set button navigate"
+viewTransactionsButton.setOnClickListener(new View.OnClickListener() {
+	@Override
+	public void onClick(View view) {
+		Navigation.findNavController(view).navigate(R.id.viewTransactionsAction);
+	}
+});
+
+button.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_fragment, null));
+endsnippet
+
+snippet Nav-deeplink
+NavDeepLinkRequest request = NavDeepLinkRequest.Builder
+	.fromUri(Uri.parse("android-app://androidx.navigation.app/profile"))
+	.build()
+NavHostFragment.findNavController(this).navigate(request)
+endsnippet
+
+snippet Nav-transition-fragment "share view transition to fragment"
+FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
+	.addSharedElement(view1, "hero_image")
+	.build();
+
+Navigation.findNavController(view).navigate(
+	R.id.details,
+	null, // Bundle of args
+	null, // NavOptions
+	extras);
+endsnippet
+
+snippet Nav-transition-activity "share view transition to activity"
+ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(view1, "hero_image"));
+
+ActivityNavigatorExtras extras = new ActivityNavigatorExtras.Builder()
+	.setActivityOptions(options)
+	.build();
+
+Navigation.findNavController(view).navigate(
+	R.id.details,
+	null, // Bundle of args
+	null, // NavOptions
+	extras);
+endsnippet
+
+snippet Nav-popAnim
+override fun finish() {
+	super.finish()
+	ActivityNavigator.applyPopAnimationsToPendingTransition(this)
+}
+endsnippet
+
+snippet Nav-toolbar
+// onCreate
+NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+Toolbar toolbar = findViewById(R.id.toolbar);
+NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
+endsnippet
+
+snippet Nav-collapsing_toolbar
+CollapsingToolbarLayout layout = findViewById(R.id.collapsing_toolbar_layout);
+Toolbar toolbar = findViewById(R.id.toolbar);
+NavHostFragment navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment);
+NavController navController = navHostFragment.getNavController();
+AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+NavigationUI.setupWithNavController(layout, toolbar, navController, appBarConfiguration);
+endsnippet
+
+snippet Nav-drawer
+NavHostFragment navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment);
+NavController navController = navHostFragment.getNavController();
+NavigationView navView = findViewById(R.id.nav_view);
+NavigationUI.setupWithNavController(navView, navController);
+endsnippet
+
+snippet Nav-bottombar
+NavHostFragment navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment);
+NavController navController = navHostFragment.getNavController();
+BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+NavigationUI.setupWithNavController(bottomNav, navController);
+endsnippet
+
+snippet Nav-change-listener
+navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+	@Override
+	public void onDestinationChanged(@NonNull NavController controller,
+		@NonNull NavDestination destination, @Nullable Bundle arguments) {
+		if(destination.getId() == R.id.full_screen_destination) {
+			toolbar.setVisibility(View.GONE);
+			bottomNavigationView.setVisibility(View.GONE);
+		} else {
+			toolbar.setVisibility(View.VISIBLE);
+			bottomNavigationView.setVisibility(View.VISIBLE);
+		}
+	}
+});
+endsnippet
+
+snippet ViewPager-demo
+public class CollectionDemoFragment extends Fragment {
+	// When requested, this adapter returns a DemoObjectFragment,
+	// representing an object in the collection.
+	DemoCollectionAdapter demoCollectionAdapter;
+	ViewPager2 viewPager;
+
+	@Nullable
+	@Override
+	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+			@Nullable Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.collection_demo, container, false);
+	}
+
+	@Override
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		demoCollectionAdapter = new DemoCollectionAdapter(this);
+		viewPager = view.findViewById(R.id.pager);
+		viewPager.setAdapter(demoCollectionAdapter);
+	}
+}
+
+public class DemoCollectionAdapter extends FragmentStateAdapter {
+	public DemoCollectionAdapter(Fragment fragment) {
+		super(fragment);
+	}
+
+	@NonNull
+	@Override
+	public Fragment createFragment(int position) {
+		// Return a NEW fragment instance in createFragment(int)
+		Fragment fragment = new DemoObjectFragment();
+		Bundle args = new Bundle();
+		// Our object is just an integer :-P
+		args.putInt(DemoObjectFragment.ARG_OBJECT, position + 1);
+		fragment.setArguments(args);
+		return fragment;
+	}
+
+	@Override
+	public int getItemCount() {
+		return 100;
+	}
+}
+
+// Instances of this class are fragments representing a single
+// object in our collection.
+public class DemoObjectFragment extends Fragment { }
+endsnippet
+
+snippet CustomView
+onFinishInflate()	在视图及其所有子级都已从 XML 扩充之后调用。
+onMeasure(int, int)	调用以确定此视图及其所有子级的大小要求。
+onLayout(boolean, int, int, int, int)	在此视图应为其所有子级分配大小和位置时调用。
+onSizeChanged(int, int, int, int)	在此视图的大小发生变化时调用。
+onDraw(Canvas)	在视图应渲染其内容时调用。
+onKeyDown(int, KeyEvent)	在发生新的按键事件时调用。
+onKeyUp(int, KeyEvent)	在发生 key up 事件时调用。
+onTrackballEvent(MotionEvent)	在发生轨迹球动作事件时调用。
+onTouchEvent(MotionEvent)	在发生触屏动作事件时调用。
+onFocusChanged(boolean, int, Rect)	在视图获得或失去焦点时调用。
+onWindowFocusChanged(boolean)	在包含视图的窗口获得或失去焦点时调用。
+onAttachedToWindow()	在视图附加到窗口时调用。
+onDetachedFromWindow()	在视图与其窗口分离时调用。
+onWindowVisibilityChanged(int)	在包含视图的窗口的可见性发生变化时调用。
+endsnippet
+
+snippet Service-demo
+public class LocalService extends Service {
+	// Binder given to clients
+	private final IBinder binder = new LocalBinder();
+	// Random number generator
+	private final Random mGenerator = new Random();
+
+	/**
+	 * Class used for the client Binder.  Because we know this service always
+	 * runs in the same process as its clients, we don't need to deal with IPC.
+	*/
+	public class LocalBinder extends Binder {
+		LocalService getService() {
+			// Return this instance of LocalService so clients can call public methods
+			return LocalService.this;
+		}
+	}
+
+	@Override
+	public IBinder onBind(Intent intent) {
+		return binder;
+	}
+
+	/** method for clients */
+	public int getRandomNumber() {
+		return mGenerator.nextInt(100);
+	}
+}
+public class BindingActivity extends Activity {
+	LocalService mService;
+	boolean mBound = false;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		// Bind to LocalService
+		Intent intent = new Intent(this, LocalService.class);
+		bindService(intent, connection, Context.BIND_AUTO_CREATE);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		unbindService(connection);
+		mBound = false;
+	}
+
+	/** Called when a button is clicked (the button in the layout file attaches to
+	 * this method with the android:onClick attribute) */
+	public void onButtonClick(View v) {
+		if (mBound) {
+			// Call a method from the LocalService.
+			// However, if this call were something that might hang, then this request should
+			// occur in a separate thread to avoid slowing down the activity performance.
+			int num = mService.getRandomNumber();
+			Toast.makeText(this, "number: " + num, Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	/** Defines callbacks for service binding, passed to bindService() */
+	private ServiceConnection connection = new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(ComponentName className,
+				IBinder service) {
+			// We've bound to LocalService, cast the IBinder and get LocalService instance
+			LocalBinder binder = (LocalBinder) service;
+			mService = binder.getService();
+			mBound = true;
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName arg0) {
+			mBound = false;
+		}
+	};
+}
+endsnippet
+
+snippet Tag "Log Tag"
+private static final String TAG = Activity.class.getSimpleName(); 
+endsnippet
+
+snippet thread
+Thread t = new Thread(()-> {
+	System.out.println("thread run...");
+	System.out.println("thread end.");
+});
+t.start();
+endsnippet
+
+snippet TaskQueue "synchronized demo"
+class TaskQueue {
+	Queue<String> queue = new LinkedList<>();
+
+	public synchronized void addTask(String s) {
+		this.queue.add(s);
+		this.notifyAll(); // 唤醒在this锁等待的线程
+	}
+
+	public synchronized String getTask() throws InterruptedException {
+		while (queue.isEmpty()) {
+			// 释放this锁
+			this.wait();
+			// 重新获取this锁
+		}
+		return queue.remove();
+	}
+}
+endsnippet
+
+snippet TaskQueue "ReentrantLock-Condition demo"
+class TaskQueue {
+	private final Lock lock = new ReentrantLock();
+	private final Condition condition = lock.newCondition();
+	private Queue<String> queue = new LinkedList<>();
+
+	public void addTask(String s) {
+		lock.lock();
+		try {
+			queue.add(s);
+			condition.signalAll();
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	public String getTask() {
+		lock.lock();
+		try {
+			while (queue.isEmpty()) {
+				condition.await();
+			}
+			return queue.remove();
+		} finally {
+			lock.unlock();
+		}
+	}
+}
+endsnippet
+
+snippet ReadWriteLock "ReadWriteLock demo"
+public class Counter {
+	private final ReadWriteLock rwlock = new ReentrantReadWriteLock();
+	private final Lock rlock = rwlock.readLock();
+	private final Lock wlock = rwlock.writeLock();
+	private int[] counts = new int[10];
+
+	public void inc(int index) {
+		wlock.lock(); // 加写锁
+		try {
+			counts[index] += 1;
+		} finally {
+			wlock.unlock(); // 释放写锁
+		}
+	}
+
+	public int[] get() {
+		rlock.lock(); // 加读锁
+		try {
+			return Arrays.copyOf(counts, counts.length);
+		} finally {
+			rlock.unlock(); // 释放读锁
+		}
+	}
+}
+endsnippet

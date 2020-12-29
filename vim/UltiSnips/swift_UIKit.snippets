@@ -266,7 +266,7 @@ endsnippet
 
 snippet shadow "layer shadow"
 // 设置圆角
-${1:contentView}.layer.cornerRadius = 8
+${1:view}.layer.cornerRadius = 8
 $1.layer.borderColor = UIColor(hex: 0xE0E0E0).withAlphaComponent(0.5).cgColor
 $1.layer.borderWidth = UIView.onePixel
 
@@ -280,7 +280,7 @@ $1.layer.shadowRadius = 5
 endsnippet
 
 snippet border "layer border&corner"
-${1:contentView}.layer.cornerRadius = 8
+${1:view}.layer.cornerRadius = 8
 $1.layer.borderColor = UIColor(hex: 0xE0E0E0).withAlphaComponent(0.5).cgColor
 $1.layer.borderWidth = UIView.onePixel
 $1.backgroundColor = .white

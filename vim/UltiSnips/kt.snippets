@@ -1,0 +1,473 @@
+snippet LiveDataCreate
+val currentName: MutableLiveData<String> by lazy {
+	MutableLiveData<String>()
+}
+endsnippet
+
+snippet LiveDataObserve
+private val model: NameViewModel by viewModels()
+
+override fun onCreate(savedInstanceState: Bundle?) {
+	super.onCreate(savedInstanceState)
+
+	// Other code to setup the activity...
+
+	// Create the observer which updates the UI.
+	val nameObserver = Observer<String> { newName ->
+		// Update the UI, in this case, a TextView.
+		nameTextView.text = newName
+	}
+
+	// Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+	model.currentName.observe(this, nameObserver)
+}
+endsnippet
+
+snippet LiveDataExpand "override onActive&onInactive"
+class StockLiveData(symbol: String) : LiveData<BigDecimal>() {
+	private val stockManager = StockManager(symbol)
+
+	private val listener = { price: BigDecimal ->
+		value = price
+	}
+
+	override fun onActive() {
+		stockManager.requestPriceUpdates(listener)
+	}
+
+	override fun onInactive() {
+		stockManager.removeUpdates(listener)
+	}
+}
+endsnippet
+
+snippet LiveDataTransform
+val userLiveData: LiveData<User> = UserLiveData()
+val userName: LiveData<String> = Transformations.map(userLiveData) {
+    user -> "${user.name} ${user.lastName}"
+}
+
+private fun getUser(id: String): LiveData<User> {
+  ...
+}
+val userId: LiveData<String> = ...
+val user = Transformations.switchMap(userId) { id -> getUser(id) }
+endsnippet
+
+snippet WM-Worker "subclass of worker"
+class UploadWorker(appContext: Context, workerParams: WorkerParameters): Worker(appContext, workerParams) {
+	override fun doWork(): Result {
+		// Do the work here--in this case, upload the images.
+		uploadImages()
+
+		// Indicate whether the work finished successfully with the Result
+		return Result.success()
+	}
+}
+endsnippet
+
+snippet WM-enqueue
+val uploadWorkRequest: WorkRequest = OneTimeWorkRequestBuilder<UploadWorker>().build()
+WorkManager.getInstance(myContext).enqueue(uploadWorkRequest)
+endsnippet
+
+snippet WM-Request "WorkRequest Build"
+val myWorkRequest = OneTimeWorkRequest.from(MyWork::class.java)
+val uploadWorkRequest: WorkRequest = OneTimeWorkRequestBuilder<MyWork>()
+	// Additional configuration
+	// 合并执行结果
+	.setInputMerger(ArrayCreatingInputMerger::class) // or OverwritingInputMerger
+	.build()
+
+// 可以定义的最短重复间隔是 15 分钟
+// WorkManager.cancelAllWorkByTag(String)
+val constraints = Constraints.Builder()
+	.setRequiredNetworkType(NetworkType.UNMETERED)
+	.setRequiresCharging(true)
+	.build()
+val saveRequest = PeriodicWorkRequestBuilder<SaveImageToFileWorker>(1, TimeUnit.HOURS)
+	.addTag("cleanup")
+	// Additional configuration
+	.setConstraints(constraints)
+	.setInitialDelay(10, TimeUnit.MINUTES)
+	.setInputData(workDataOf("IMAGE_URI" to "http://..."))
+	.build()
+endsnippet
+
+snippet WM-getWork
+// by id
+workManager.getWorkInfoById(syncWorker.id)
+
+// by name
+workManager.getWorkInfosForUniqueWork("sync")
+
+// by tag
+workManager.getWorkInfosByTag("syncTag")
+endsnippet
+
+snippet WM-observeWork
+workManager.getWorkInfoByIdLiveData(syncWorker.id)
+	.observe(viewLifecycleOwner) { workInfo ->
+		if(workInfo?.state == WorkInfo.State.SUCCEEDED) {
+			Snackbar.make(requireView(), R.string.work_completed, Snackbar.LENGTH_SHORT).show()
+		}
+	}
+endsnippet
+
+snippet WM-chainWork
+WorkManager.getInstance(myContext)
+	// Candidates to run in parallel
+	.beginWith(listOf(plantName1, plantName2, plantName3))
+	// Dependent work (only runs after all previous work in chain)
+	.then(cache)
+	.then(upload)
+	// Call enqueue to kick things off
+	.enqueue()
+endsnippet
+
+snippet BindView-Activity
+private lateinit var binding: ResultProfileBinding
+
+override fun onCreate(savedInstanceState: Bundle) {
+	super.onCreate(savedInstanceState)
+	// 或直接 binding = DataBindingUtil.setContentView(this, R.layout.result_profile);
+	binding = ResultProfileBinding.inflate(layoutInflater)
+	val view = binding.root
+	setContentView(view)
+}
+endsnippet
+
+snippet BindView-Fragment
+private var _binding: ResultProfileBinding? = null
+// This property is only valid between onCreateView and
+// onDestroyView.
+private val binding get() = _binding!!
+
+override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+		): View? {
+	_binding = ResultProfileBinding.inflate(inflater, container, false)
+	val view = binding.root
+	return view
+}
+
+override fun onDestroyView() {
+	super.onDestroyView()
+	_binding = null
+}
+endsnippet
+
+snippet Observable  "custom Observable subclass"
+class User : BaseObservable() {
+
+	@get:Bindable
+		var firstName: String = ""
+		set(value) {
+			field = value
+			notifyPropertyChanged(BR.firstName)
+		}
+
+	@get:Bindable
+		var lastName: String = ""
+		set(value) {
+			field = value
+			notifyPropertyChanged(BR.lastName)
+		}
+}
+endsnippet
+
+snippet RecyclerView-AdapterDemo
+class CustomAdapter(private val dataSet: Array<String>) :
+	RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+
+	class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+		val textView: TextView
+
+		init {
+			textView = view.findViewById(R.id.textView)
+		}
+	}
+
+	// Create new views (invoked by the layout manager)
+	override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+		// Create a new view, which defines the UI of the list item
+		val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.text_row_item, viewGroup, false)
+
+		return ViewHolder(view)
+	}
+
+	// Replace the contents of a view (invoked by the layout manager)
+	override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+		viewHolder.textView.text = dataSet[position]
+	}
+
+	// Return the size of your dataset (invoked by the layout manager)
+	override fun getItemCount() = dataSet.size
+}
+endsnippet
+
+snippet BindingAdapter_1
+@BindingAdapter("property")
+@JvmStatic fun ViewClass.propertyMethod(parameter1: Param1, parameter2: Param2...) {
+}
+endsnippet
+
+snippet BindingAdapter_2
+@BindingAdapter("property")
+@JvmStatic fun ViewClass.propertyMethod(parameter1: Param1, parameter2: Param2...) {
+}
+endsnippet
+
+snippet BindingAdapter_3 "set dependence"
+@BindingAdapter(value=["android:max", "android:progress"], requireAll = true)
+@JvmStatic fun updateProgress(progressBar: ProgressBar, max: Int, progress: Int) {
+}
+endsnippet
+
+
+snippet BindingAdapter_demo
+@BindingAdapter("clearTextOnFocus")
+@JvmStatic fun EditText.clearTextOnFocus(enabled: Boolean) {
+}
+
+@BindingAdapter("hideKeyboardOnInputDone")
+@JvmStatic fun hideKeyboardOnInputDone(view: EditText, enabled: Boolean) {
+}
+
+@BindingAdapter(value=["android:max", "android:progress"], requireAll = true)
+@JvmStatic fun updateProgress(progressBar: ProgressBar, max: Int, progress: Int) {
+}
+endsnippet
+
+snippet NavController "get"
+Fragment.findNavController()
+View.findNavController()
+Activity.findNavController(viewId: Int)
+endsnippet
+
+snippet Nav-button "set button navigate"
+viewTransactionsButton.setOnClickListener { view ->
+	view.findNavController().navigate(R.id.viewTransactionsAction)
+}
+button.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_fragment, null))
+endsnippet
+
+snippet Nav-deeplink
+val request = NavDeepLinkRequest.Builder
+	.fromUri("android-app://androidx.navigation.app/profile".toUri())
+	.build()
+findNavController().navigate(request)
+endsnippet
+
+snippet Nav-transition-fragment "share view transition to fragment"
+val extras = FragmentNavigatorExtras(view1 to "hero_image")
+
+view.findNavController().navigate(
+	R.id.confirmationAction,
+	null, // Bundle of args
+	null, // NavOptions
+	extras)
+endsnippet
+
+snippet Nav-transition-activity "share view transition to activity"
+// Rename the Pair class from the Android framework to avoid a name clash
+import android.util.Pair as UtilPair
+...
+val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, UtilPair.create(view1, "hero_image"))
+val extras = ActivityNavigatorExtras(options)
+view.findNavController().navigate(
+	R.id.details,
+	null, // Bundle of args
+	null, // NavOptions
+	extras)
+endsnippet
+
+snippet Nav-popAnim
+@Override
+public void finish() {
+	super.finish();
+	ActivityNavigator.applyPopAnimationsToPendingTransition(this);
+}
+endsnippet
+
+snippet Nav-toolbar
+// onCreate
+val navController = findNavController(R.id.nav_host_fragment)
+val appBarConfiguration = AppBarConfiguration(navController.graph)
+findViewById<Toolbar>(R.id.toolbar).setupWithNavController(navController, appBarConfiguration)
+endsnippet
+
+snippet Nav-collapsing_toolbar
+val layout = findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar_layout)
+val toolbar = findViewById<Toolbar>(R.id.toolbar)
+val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+val navController = navHostFragment.navController
+val appBarConfiguration = AppBarConfiguration(navController.graph)
+layout.setupWithNavController(toolbar, navController, appBarConfiguration)
+endsnippet
+
+snippet Nav-drawer
+val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+val navController = navHostFragment.navController
+findViewById<NavigationView>(R.id.nav_view).setupWithNavController(navController)
+endsnippet
+
+snippet Nav-bottombar
+val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+val navController = navHostFragment.navController
+findViewById<BottomNavigationView>(R.id.bottom_nav).setupWithNavController(navController)
+endsnippet
+
+snippet Nav-change-listener
+navController.addOnDestinationChangedListener { _, destination, _ ->
+	if(destination.id == R.id.full_screen_destination) {
+		toolbar.visibility = View.GONE
+		bottomNavigationView.visibility = View.GONE
+	} else {
+		toolbar.visibility = View.VISIBLE
+		bottomNavigationView.visibility = View.VISIBLE
+	}
+}
+endsnippet
+
+snippet ViewPager-demo
+class CollectionDemoFragment : Fragment() {
+	// When requested, this adapter returns a DemoObjectFragment,
+	// representing an object in the collection.
+	private lateinit var demoCollectionAdapter: DemoCollectionAdapter
+	private lateinit var viewPager: ViewPager2
+
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? {
+		return inflater.inflate(R.layout.collection_demo, container, false)
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		demoCollectionAdapter = DemoCollectionAdapter(this)
+		viewPager = view.findViewById(R.id.pager)
+		viewPager.adapter = demoCollectionAdapter
+	}
+}
+
+class DemoCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+
+	override fun getItemCount(): Int = 100
+
+	override fun createFragment(position: Int): Fragment {
+		// Return a NEW fragment instance in createFragment(int)
+		val fragment = DemoObjectFragment()
+		fragment.arguments = Bundle().apply {
+			// Our object is just an integer :-P
+			putInt(ARG_OBJECT, position + 1)
+		}
+		return fragment
+	}
+}
+
+private const val ARG_OBJECT = "object"
+
+// Instances of this class are fragments representing a single
+// object in our collection.
+class DemoObjectFragment : Fragment() {
+}
+endsnippet
+
+snippet CustomView
+onFinishInflate()	在视图及其所有子级都已从 XML 扩充之后调用。
+onMeasure(int, int)	调用以确定此视图及其所有子级的大小要求。
+onLayout(boolean, int, int, int, int)	在此视图应为其所有子级分配大小和位置时调用。
+onSizeChanged(int, int, int, int)	在此视图的大小发生变化时调用。
+onDraw(Canvas)	在视图应渲染其内容时调用。
+onKeyDown(int, KeyEvent)	在发生新的按键事件时调用。
+onKeyUp(int, KeyEvent)	在发生 key up 事件时调用。
+onTrackballEvent(MotionEvent)	在发生轨迹球动作事件时调用。
+onTouchEvent(MotionEvent)	在发生触屏动作事件时调用。
+onFocusChanged(boolean, int, Rect)	在视图获得或失去焦点时调用。
+onWindowFocusChanged(boolean)	在包含视图的窗口获得或失去焦点时调用。
+onAttachedToWindow()	在视图附加到窗口时调用。
+onDetachedFromWindow()	在视图与其窗口分离时调用。
+onWindowVisibilityChanged(int)	在包含视图的窗口的可见性发生变化时调用。
+endsnippet
+
+snippet Service-demo
+class LocalService : Service() {
+	// Binder given to clients
+	private val binder = LocalBinder()
+
+	// Random number generator
+	private val mGenerator = Random()
+
+	/** method for clients  */
+	val randomNumber: Int
+		get() = mGenerator.nextInt(100)
+
+	/**
+	 * Class used for the client Binder.  Because we know this service always
+	 * runs in the same process as its clients, we don't need to deal with IPC.
+	 */
+	inner class LocalBinder : Binder() {
+		// Return this instance of LocalService so clients can call public methods
+		fun getService(): LocalService = this@LocalService
+	}
+
+	override fun onBind(intent: Intent): IBinder {
+		return binder
+	}
+}
+
+class BindingActivity : Activity() {
+	private lateinit var mService: LocalService
+	private var mBound: Boolean = false
+
+	/** Defines callbacks for service binding, passed to bindService()  */
+	private val connection = object : ServiceConnection {
+
+		override fun onServiceConnected(className: ComponentName, service: IBinder) {
+			// We've bound to LocalService, cast the IBinder and get LocalService instance
+			val binder = service as LocalService.LocalBinder
+			mService = binder.getService()
+			mBound = true
+		}
+
+		override fun onServiceDisconnected(arg0: ComponentName) {
+			mBound = false
+		}
+	}
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.main)
+	}
+
+	override fun onStart() {
+		super.onStart()
+		// Bind to LocalService
+		Intent(this, LocalService::class.java).also { intent ->
+			bindService(intent, connection, Context.BIND_AUTO_CREATE)
+		}
+	}
+
+	override fun onStop() {
+		super.onStop()
+		unbindService(connection)
+		mBound = false
+	}
+
+	/** Called when a button is clicked (the button in the layout file attaches to
+	 * this method with the android:onClick attribute)  */
+	fun onButtonClick(v: View) {
+		if (mBound) {
+			// Call a method from the LocalService.
+			// However, if this call were something that might hang, then this request should
+			// occur in a separate thread to avoid slowing down the activity performance.
+			val num: Int = mService.randomNumber
+			Toast.makeText(this, "number: $num", Toast.LENGTH_SHORT).show()
+		}
+	}
+}
+endsnippet

@@ -26,6 +26,7 @@
     " Remember info about open buffers on close
     " My session manager has saved session viminfo, but other buffer needs viminfo too.
     "set viminfo^=%
+
     " Remap VIM 0 to first non-blank character
     map 0 ^
     "{
@@ -429,65 +430,6 @@ augroup END
     nnoremap K :call GrepCustomDir("<C-R><C-W>")<CR>
 "}
 
-" ycm youcompleteme {
-    nnoremap <Leader>d :YcmCompleter GoToDefinition <cr>
-    nnoremap <Leader>s :YcmCompleter GoToDeclaration <cr>
-
-    let g:ycm_filetype_blacklist = {
-        \ 'tagbar' : 1,
-        \ 'qf' : 1,
-        \ 'notes' : 1,
-        \ 'markdown' : 1,
-        \ 'unite' : 1,
-        \ 'text' : 1,
-        \ 'vimwiki' : 1,
-        \ 'gitcommit' : 1,
-        \ 'json' : 1,
-        \ 'dart' : 1
-        \}
-
-    " swift not auto complete for (, because not used too much
-    let g:ycm_semantic_triggers =  {
-        "\   'swift' : ['.', 're![_a-zA-Z]' ],
-        \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-        \   'swift' : ['.'],
-        \ }
-
-    "http://www.skywind.me/blog/archives/2084
-    let g:ycm_min_num_of_chars_for_completion = 3
-    let g:ycm_add_preview_to_completeopt = 0
-    let g:ycm_show_diagnostics_ui = 0
-    "let g:ycm_log_level = 'debug'
-    let g:ycm_server_log_level = 'info'
-    let g:ycm_min_num_identifier_candidate_chars = 2
-    let g:ycm_collect_identifiers_from_comments_and_strings = 1
-    let g:ycm_complete_in_strings=1
-    set completeopt=menu,menuone
-
-    " Because clang version not equal, clangd can't use
-    " V[14:30:48.963] Ignored diagnostic. no handler registered for module format 'obj' 
-    " LLVM ERROR: unknown module format
-    let g:ycm_use_clangd = 0
-    let g:ycm_clangd_args = ['-log=verbose', '-pretty']
-    " Let clangd fully control code completion
-    "let g:ycm_clangd_uses_ycmd_caching = 0
-    " Use installed clangd, not YCM-bundled clangd which doesn't get updates.
-    "let g:ycm_clangd_binary_path = exepath("clangd")
-    " generate compile_commads.json
-    "xcodebuild -project PROJECT_NAME.xcodeproj | xcpretty -r json-compilation-database --output compile_commands.json
-    "
-    "YCM objc completion method length
-    "YouCompleteMe/third_party/ycmd/cpp/ycm/CandidateRepository.cpp  L34 MAX_CANDIDATE_SIZE
-    
-    "let g:ycm_language_server = [
-      "\   {
-      "\     'name': 'dart',
-      "\     'cmdline': ['dart', '/usr/local/Cellar/dart/2.8.2/libexec/bin/snapshots/analysis_server.dart.snapshot', '--lsp'],
-      "\     'filetypes': [ 'dart' ],
-      "\   },
-      "\ ]
-"}
-
 " copy file path {
     " copy current file name (relative/absolute) to system clipboard
     if has("mac") || has("gui_macvim") || has("gui_mac")
@@ -756,9 +698,13 @@ noremap <Leader>bg :call ToggleBG()<CR>
     endfunction
 
     function LLDBBreakLine()
-      let @*="breakpoint set --file ".expand("%:p")." --line ".line(".")
+      let @*="breakpoint set --file ".expand("%:t")." --line ".line(".")
     endfunction
     command! Llbr call LLDBBreakLine()
+    function DjCopyLine()
+      let @*=expand("%:t")." L".line(".")
+    endfunction
+    command! DjcopyLine call DjCopyLine()
 
     autocmd FileType swift vnoremap <silent> = :call FormatSwiftFile()<CR>
     autocmd FileType swift setlocal textwidth=240
@@ -791,6 +737,8 @@ noremap <Leader>bg :call ToggleBG()<CR>
 "}
 
 " ALE Setting {
+  "let g:ale_dart_dartanalyzer_executable = ""
+  "let g:ale_dart_language_server_executable = ""
 
   "gcc/clang 和 cppcheck，前者主要检查有无语法错误，后者主要会给出一些编码建议
   let g:ale_linters = {
@@ -938,8 +886,6 @@ nnoremap <Leader>qq :q!<CR>
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_symbols_ascii = 1
 
-let g:xcode_default_scheme = 'TVGuor'
-
 " Leaderf {
 let g:Lf_ShortcutF = '<D-p>'
 let g:Lf_ShortcutB = '<leader>fb'
@@ -966,21 +912,21 @@ let g:dart_style_guide = 2
 let dart_format_on_save = 0
 autocmd FileType dart setlocal cinoptions=j1,J1,(2,m1
 "source ~/.zshrc  " vim use system path and /etc/path.d only, need source custom profile file
-autocmd FileType dart setlocal completefunc=youcompleteme#Complete
-let g:lsc_server_commands = {'dart': 'dart_language_server'}
-let g:lsc_auto_map = {
-    \ 'GoToDefinition': '<C-]>',
-    \ 'FindReferences': 'gr',
-    \ 'NextReference': '<C-n>',
-    \ 'PreviousReference': '<C-p>',
-    \ 'FindImplementations': 'gI',
-    \ 'FindCodeActions': 'ga',
-    \ 'DocumentSymbol': 'go',
-    \ 'WorkspaceSymbol': 'gS',
-    \ 'ShowHover': 'K',
-    \ 'Completion': 'completefunc',
-    \}
-let g:lsc_trace_level = 'messages'
+"autocmd FileType dart setlocal completefunc=youcompleteme#Complete
+"let g:lsc_server_commands = {'dart': 'dart_language_server'}
+"let g:lsc_auto_map = {
+    "\ 'GoToDefinition': '<C-]>',
+    "\ 'FindReferences': 'gr',
+    "\ 'NextReference': '<C-n>',
+    "\ 'PreviousReference': '<C-p>',
+    "\ 'FindImplementations': 'gI',
+    "\ 'FindCodeActions': 'ga',
+    "\ 'DocumentSymbol': 'go',
+    "\ 'WorkspaceSymbol': 'gS',
+    "\ 'ShowHover': 'K',
+    "\ 'Completion': 'completefunc',
+    "\}
+"let g:lsc_trace_level = 'messages'
 
 " iterm 刷新问题
 "set ttyfast
@@ -1065,134 +1011,237 @@ let NERDTreeIgnore=['\.DS_Store$', '\.git$']
 
 " 显示缩进对齐线
 let g:indentLine_enabled = 1
-" yank {
-    let g:yoinkIncludeDeleteOperations = 1
-    nmap [y <plug>(YoinkRotateBack)
-    nmap ]y <plug>(YoinkRotateForward)
-    nmap <expr> p yoink#canSwap() ? '<plug>(YoinkPostPasteSwapBack)' : '<plug>(YoinkPaste_p)'
-    nmap <expr> P yoink#canSwap() ? '<plug>(YoinkPostPasteSwapForward)' : '<plug>(YoinkPaste_P)'
-" }
-let g:startify_session_dir = '~/.vim/sessions'
-let g:startify_session_number = 5
-let g:startify_session_sort = 1
 
-let g:startify_bookmarks = [{'t': '~/Documents/8-tvguo/2-TVGuoiOSApp'}, {'f': '~/Documents/5-Flutter'}]
-if filereadable(expand("~/spf13-copy-vim/vimrc.startify.headers"))
-    source ~/spf13-copy-vim/vimrc.startify.headers
-endif
+" startify {
+    let g:startify_session_dir = '~/.vim/sessions'
+    let g:startify_session_number = 5
+    let g:startify_session_sort = 1
+    let g:startify_files_number = 6
+
+    let g:startify_bookmarks = [{'t': '~/Documents/8-tvguo/2-TVGuoiOSApp'}, {'f': '~/Documents/5-Flutter'}]
+    if filereadable(expand("~/spf13-copy-vim/vimrc.startify.headers"))
+        source ~/spf13-copy-vim/vimrc.startify.headers
+    endif
+
+    let g:startify_lists = [
+          \ { 'type': 'files',     'header': ['   MRU']            },
+          \ { 'type': 'sessions',  'header': ['   Sessions']       },
+          \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+          \ { 'type': 'commands',  'header': ['   Commands']       },
+          \ ]
+" }
+
+" ycm youcompleteme {
+fun! GoYCM()
+    "autocmd FileType * CocDisable
+
+    nnoremap <buffer> <silent> <leader>gt :YcmCompleter GoTo<CR>
+    nnoremap <buffer> <silent> <leader>gr :YcmCompleter GoToReferences<CR>
+
+    " swift not auto complete for (, because not used too much
+    let g:ycm_semantic_triggers =  {
+        "\   'swift' : ['.', 're![_a-zA-Z]' ],
+        \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+        \   'swift' : ['.'],
+        \ }
+
+  let g:ycm_filetype_blacklist = {
+        \ 'tagbar': 1,
+        \ 'notes': 1,
+        \ 'markdown': 1,
+        \ 'netrw': 1,
+        \ 'unite': 1,
+        \ 'text': 1,
+        \ 'vimwiki': 1,
+        \ 'pandoc': 1,
+        \ 'infolog': 1,
+        \ 'leaderf': 1,
+        \ 'mail': 1,
+        \ 'ycm_nofiletype': 1,
+        \ 'startify': 1
+        \}
+
+    "http://www.skywind.me/blog/archives/2084
+    let g:ycm_min_num_of_chars_for_completion = 3
+    let g:ycm_add_preview_to_completeopt = 0
+    let g:ycm_show_diagnostics_ui = 0
+    let g:ycm_log_level = 'debug'
+    let g:ycm_server_log_level = 'info'
+    let g:ycm_min_num_identifier_candidate_chars = 2
+    let g:ycm_collect_identifiers_from_comments_and_strings = 1
+    let g:ycm_complete_in_strings=0
+
+    " Because clang version not equal, clangd can't use
+    " V[14:30:48.963] Ignored diagnostic. no handler registered for module format 'obj'
+    " LLVM ERROR: unknown module format
+    let g:ycm_use_clangd = 1
+    let g:ycm_clangd_args = ['-log=verbose', '-pretty']
+    " Let clangd fully control code completion
+    "let g:ycm_clangd_uses_ycmd_caching = 0
+    " Use installed clangd, not YCM-bundled clangd which doesn't get updates.
+    "let g:ycm_clangd_binary_path = exepath("clangd")
+    " generate compile_commads.json
+    "xcodebuild -project PROJECT_NAME.xcodeproj | xcpretty -r json-compilation-database --output compile_commands.json
+    "
+    "YCM objc completion method length
+    "YouCompleteMe/third_party/ycmd/cpp/ycm/CandidateRepository.cpp  L34 MAX_CANDIDATE_SIZE
+    " https://haifengkao.medium.com/no-such-module-uikit-b51d2ce76e6  fix UIKit not found
+    " it reads the arguments directly from .build/debug.yaml, which is generated by swift build
+
+    " https://github.com/ycm-core/lsp-examples
+    "
+    "let SDKPATH = '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator14.3.sdk'
+    "let g:ycm_lsp_dir = '~/Documents/5-Flutter/lsp-examples-master'
+    "let g:ycm_language_server = [
+      "\   {
+      "\     'name': 'dart',
+      "\     'cmdline': [ 'dart', expand( g:ycm_lsp_dir . '/dart/analysis_server.dart.snapshot' ), '--lsp' ],
+      "\     'filetypes': [ 'dart' ],
+      "\   },
+      "\   {
+      "\     'name': 'swift',
+      "\     'cmdline': ['/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp',
+      "\         '-Xswiftc', '-sdk', '-Xswiftc', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator14.3.sdk',
+      "\         '-Xswiftc', '-target', '-Xswiftc', 'x86_64-apple-ios14.3-simulator'
+      "\     ],
+      "\     'filetypes': [ 'swift' ],
+      "\   },
+      "\ ]
+endfun
+"}
 
 "{ https://github.com/neoclide/coc.nvim
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+func! GoCoc()
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
+    let g:ycm_auto_trigger = 0
 
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+    " Use <c-space> to trigger completion.
+    if has('nvim')
+        inoremap <silent><expr> <c-space> coc#refresh()
+    else
+        inoremap <silent><expr> <c-@> coc#refresh()
+    endif
 
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+    " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+    " position. Coc only does snippet and additional edit on confirm.
+    " <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+    if exists('*complete_info')
+        inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+    else
+        inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+    endif
 
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+    " Use `[g` and `]g` to navigate diagnostics
+    " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+    nmap <silent> [g <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+    " GoTo code navigation.
+    nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gy <Plug>(coc-type-definition)
+    nmap <silent> gi <Plug>(coc-implementation)
+    nmap <silent> gr <Plug>(coc-references)
 
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+    " Use K to show documentation in preview window.
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+    function! s:show_documentation()
+        if (index(['vim','help'], &filetype) >= 0)
+            execute 'h '.expand('<cword>')
+        else
+            call CocAction('doHover')
+        endif
+    endfunction
 
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+    " Highlight the symbol and its references when holding the cursor.
+    autocmd CursorHold * silent call CocActionAsync('highlight')
 
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+    " Symbol renaming.
+    nmap <leader>rn <Plug>(coc-rename)
 
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+    " Formatting selected code.
+    xmap <leader>f  <Plug>(coc-format-selected)
+    nmap <leader>f  <Plug>(coc-format-selected)
 
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+    augroup mygroup
+        autocmd!
+        " Setup formatexpr specified filetype(s).
+        autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+        " Update signature help on jump placeholder.
+        autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    augroup end
 
-" Map function and class text objects
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
+    " Applying codeAction to the selected region.
+    " Example: `<leader>aap` for current paragraph
+    xmap <leader>a  <Plug>(coc-codeaction-selected)
+    nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" Use CTRL-S for selections ranges.
-" Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
+    " Remap keys for applying codeAction to the current buffer.
+    nmap <leader>ac  <Plug>(coc-codeaction)
+    " Apply AutoFix to problem on the current line.
+    nmap <leader>qf  <Plug>(coc-fix-current)
 
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
+    " Map function and class text objects
+    " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+    xmap if <Plug>(coc-funcobj-i)
+    omap if <Plug>(coc-funcobj-i)
+    xmap af <Plug>(coc-funcobj-a)
+    omap af <Plug>(coc-funcobj-a)
+    xmap ic <Plug>(coc-classobj-i)
+    omap ic <Plug>(coc-classobj-i)
+    xmap ac <Plug>(coc-classobj-a)
+    omap ac <Plug>(coc-classobj-a)
 
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+    " Use CTRL-S for selections ranges.
+    " Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
+    nmap <silent> <C-s> <Plug>(coc-range-select)
+    xmap <silent> <C-s> <Plug>(coc-range-select)
 
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+    " Add `:Format` command to format current buffer.
+    command! -nargs=0 Format :call CocAction('format')
 
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+    " Add `:Fold` command to fold current buffer.
+    command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-" Mappings for CoCList
-" Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-" Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+    " Add `:OR` command for organize imports of the current buffer.
+    command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+    " Add (Neo)Vim's native statusline support.
+    " NOTE: Please see `:h coc-status` for integrations with external plugins that
+    " provide custom statusline: lightline.vim, vim-airline.
+    set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+    " Mappings for CoCList
+    " Show all diagnostics.
+    nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+    " Manage extensions.
+    nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+    " Show commands.
+    nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+    " Find symbol of current document.
+    nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+    " Search workspace symbols.
+    nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+    " Do default action for next item.
+    nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+    " Do default action for previous item.
+    nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+    " Resume latest coc list.
+    nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+endfun
 "}
+
+nnoremap <silent> <leader>y  :<C-u>CocList -A --normal yank<cr>
+" :CocCommand yank.clean
+" append result on current expression
+nmap <Leader>ca <Plug>(coc-calc-result-append)
+" replace result on current expression
+nmap <Leader>cr <Plug>(coc-calc-result-replace)
+
+nmap <Leader>tl <Plug>(coc-translator-p)
+vmap <Leader>tl <Plug>(coc-translator-pv)
+
+autocmd FileType * call GoYCM()
+"autocmd FileType * call GoCoc()
+"autocmd FileType cpp,cxx,h,hpp,c call GoCoc()
+
