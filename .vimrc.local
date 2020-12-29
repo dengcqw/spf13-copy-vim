@@ -1058,8 +1058,10 @@ let NERDTreeIgnore=['\.DS_Store$', '\.git$']
 let g:indentLine_enabled = 1
 " yank {
     let g:yoinkIncludeDeleteOperations = 1
-    nmap p <plug>(YoinkPaste_p)
-    nmap P <plug>(YoinkPaste_P)
+    nmap [y <plug>(YoinkRotateBack)
+    nmap ]y <plug>(YoinkRotateForward)
+    nmap <expr> p yoink#canSwap() ? '<plug>(YoinkPostPasteSwapBack)' : '<plug>(YoinkPaste_p)'
+    nmap <expr> P yoink#canSwap() ? '<plug>(YoinkPostPasteSwapForward)' : '<plug>(YoinkPaste_P)'
 " }
 let g:startify_session_dir = '~/.vim/sessions'
 let g:startify_session_number = 5

@@ -461,3 +461,5 @@ export NVM_DIR="$HOME/.nvm"
 #
 # close spotlight
 # sudo mdutil -a -i off
+
+node ~/spf13-copy-vim/fetchPoetry.js
