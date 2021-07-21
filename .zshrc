@@ -50,13 +50,13 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins
-plugins=(flutter git brew dirhistory encode64 github history jsontools npm osx urltools vi-mode extract bwana gradle dirpersist cp copyfile colored-man-pages)
+plugins=(flutter git brew dirhistory encode64 github history jsontools npm osx urltools vi-mode extract gradle dirpersist cp copyfile colored-man-pages)
 
 # User configuration
 
 export DART_BIN='/usr/local/dart-sdk/bin'
 
-source ~/.bash_profile
+#source ~/.bash_profile
 export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin:$HOME/Library/Android/sdk/platform-tools:$DART_BIN:$HOME/.pub-cache/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -105,7 +105,7 @@ alias cls='clear'
 alias ll='ls -l'
 alias la='ls -a'
 # nnn terminal file manager
-alias ln='nnn -de'
+#alias ln='nnn -de'
 alias vi='mvim'
 alias e='mvim'
 alias v='mvim'
@@ -135,6 +135,7 @@ alias -s md=mvim
     export EDITOR=vim
     alias pushToGithub='git push -u origin main'
     alias ptg='git push -u origin main'
+    alias ptr='git push origin `git branch --show-current`'
 
     #alias for cnpm
     alias cnpm="npm --registry=https://registry.npm.taobao.org \
@@ -454,10 +455,6 @@ export HOMEBREW_NO_AUTO_UPDATE=true
 
 alias startJenkins='java -jar jenkins.war --httpPort=8080'
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-source /Users/dengjinlong/.rvm/scripts/rvm
 export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
@@ -465,4 +462,8 @@ export NVM_DIR="$HOME/.nvm"
 # close spotlight
 # sudo mdutil -a -i off
 
-node ~/spf13-copy-vim/fetchPoetry.js
+#node ~/spf13-copy-vim/fetchPoetry.js
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

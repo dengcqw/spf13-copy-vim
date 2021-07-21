@@ -897,7 +897,7 @@ let g:Lf_StlSeparator = { 'left': '', 'right': '' } " powerline font
 nnoremap <silent> <D-r> :LeaderfMru<CR>
 nnoremap <silent> <D-b> :LeaderfBuffer<CR>
 nnoremap <silent> <leader>fs :LeaderfSelf<CR>
-nnoremap <silent> <leader>fw :Leaderf file --cword<CR>
+nnoremap <silent> <leader>ff :Leaderf file --cword<CR>
 nnoremap <silent> <leader>ft :Leaderf tag --cword<CR>
 nnoremap <silent> <leader>fl :Leaderf line --cword<CR>
 

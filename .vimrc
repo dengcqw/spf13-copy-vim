@@ -1075,10 +1075,9 @@
             if LINUX() && has("gui_running")
                 set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
             elseif OSX() && has("gui_running")
-                "set guifont=DejaVuSansMono\ Nerd\ Font\ Mono:h20
-                set guifont=Inconsolata\ Nerd\ Font:h20
-                "set guifont=Lekton\ Nerd\ Font\ Mono:h20
-                "set guifont=Lekton\ Nerd\ Font:h20
+                "https://github.com/ryanoasis/nerd-fonts
+                set guifont=Sauce\ Code\ Pro\ ExtraLight\ Nerd\ Font\ Complete\ Mono\ Windows\ Compatible:h22
+                "set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete\ Mono\ Windows\ Compatible:h20
             elseif WINDOWS() && has("gui_running")
                 set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
             endif
