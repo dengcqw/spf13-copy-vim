@@ -890,10 +890,12 @@ let g:airline_symbols_ascii = 1
 let g:Lf_ShortcutF = '<D-p>'
 let g:Lf_ShortcutB = '<leader>fb'
 let g:Lf_WildIgnore = {
-            \ 'dir': ['.svn','.git','.hg'],
+            \ 'dir': ['.svn','.git','.hg', 'Target Support Files', 'Headers'],
             \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
             \}
 let g:Lf_StlSeparator = { 'left': '', 'right': '' } " powerline font
+let g:Lf_UseVersionControlTool=0  " Don't respect version control ignore files
+let g:Lf_ExternalCommand = 'find "%s" -type f -not -path "./.git/*"'
 nnoremap <silent> <D-r> :LeaderfMru<CR>
 nnoremap <silent> <D-b> :LeaderfBuffer<CR>
 nnoremap <silent> <leader>fs :LeaderfSelf<CR>
@@ -1018,7 +1020,10 @@ let g:indentLine_enabled = 1
     let g:startify_session_sort = 1
     let g:startify_files_number = 6
 
-    let g:startify_bookmarks = [{'t': '~/Documents/8-tvguo/2-TVGuoiOSApp'}, {'f': '~/Documents/5-Flutter'}]
+    let g:startify_bookmarks = [
+                \ {'t': '~/Documents/tuya/1-tuyasmartapp_ios'},
+                \ {'f': '~/Documents/tuya/2-tysmartoutdoor'}
+                \]
     if filereadable(expand("~/spf13-copy-vim/vimrc.startify.headers"))
         source ~/spf13-copy-vim/vimrc.startify.headers
     endif
@@ -1244,4 +1249,7 @@ vmap <Leader>tl <Plug>(coc-translator-pv)
 autocmd FileType * call GoYCM()
 "autocmd FileType * call GoCoc()
 "autocmd FileType cpp,cxx,h,hpp,c call GoCoc()
+
+let g:alternateExtensions_m = "h"
+let g:alternateExtensions_h = "m"
 

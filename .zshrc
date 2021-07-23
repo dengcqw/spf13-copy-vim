@@ -242,6 +242,7 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
 # git fetch origin
 # git checkout master
 # git rebase -i HEAD~3
+# git reset --hard HEAD   delete not commit changed
 
 # Use local setting {
     ZSHRC_LOCAL="$HOME/spf13-copy-vim/.zshrc.local"
@@ -386,15 +387,13 @@ alias iOSSDKPath='xcrun --sdk iphoneos --show-sdk-path'
     export PUB_CACHE="$HOME/.pub-cache" # 全局缓存，保证不会存在多份缓存
     export FLUTTER_ROOT="$HOME/Documents/5-Flutter/flutter"
     export PATH=$FLUTTER_ROOT/bin:$PATH
-    #export FLUTTER_STORAGE_BASE_URL='http://jfrog.cloud.qiyi.domain/iqiyi-generic-android'
-    #export PUB_HOSTED_URL=http://pub-server.qiyi.domain
 
     #compile dart
     export DEPOTTOOLS=~/Documents/5-Flutter/depot_tools
     export PATH=$DEPOTTOOLS:$PATH
 
     # 防止提交错地方
-    alias useQyFlutterProxy="export PUB_HOSTED_URL=http://pub-server.qiyi.domain && echo \"PUB_HOSTED_URL=${PUB_HOSTED_URL}\""
+    alias useQyFlutterProxy="export PUB_HOSTED_URL=http://pub-server.domain && echo \"PUB_HOSTED_URL=${PUB_HOSTED_URL}\""
     alias flutterPkgUpdate="useQyFlutterProxy;flutter packages pub publish"
     # 使用私有源更新
     alias flutterUpdateProxy="useQyFlutterProxy;flutter pub get;flutter packages get"
