@@ -1,0 +1,48 @@
+
+snippet initWithFrame
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.${1:subview1} = [[UIView alloc] initWithFrame:CGRectZero];
+        self.${2:subview2} = [[UIView alloc] initWithFrame:CGRectZero];
+        [self addSubview:self.$1];
+        [self addSubview:self.$2];
+        [self initConstraint];
+    }
+    return self;
+}
+
+- (void)initConstraint {
+    UIView *superview = self;
+    [self.$1 mas_makeConstraints:^(MASConstraintMaker *make){
+        make.top.equalTo(superview.mas_top).offset(0);
+        make.left.equalTo(superview.mas_left).offset(0);
+        make.right.equalTo(superview.mas_right).offset(0);
+        make.width.equalTo(@0);
+        make.height.equalTo(@0);
+    }];
+    [self.$2 mas_makeConstraints:^(MASConstraintMaker *make){
+        make.top.equalTo(superview.mas_top).offset(0);
+        make.left.equalTo(superview.mas_left).offset(0);
+        make.right.equalTo(superview.mas_right).offset(0);
+        make.width.equalTo(@0);
+        make.height.equalTo(@0);
+    }];
+}
+endsnippet
+
+snippet djSize "description"
+- (instancetype)initWithDefaultSize {
+    return [self initWithFrame:[self defaultFrame]];
+}
+
+- (CGRect)defaultFrame {
+    return CGRectMake(0, 0, ${1:0}, ${2:0});
+}
+
+- (CGSize)intrinsicContentSize {
+    return [self defaultFrame].size;
+}
+endsnippet
+
+

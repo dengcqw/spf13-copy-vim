@@ -406,7 +406,7 @@ augroup END
 " {
     if executable('ag')
       " Use ag over grep
-      set grepprg=ag\ --nogroup\ --nocolor
+      set grepprg=ag\ --nogroup\ --nocolor\ -U
     endif
 
     "autocmd FileType shell setlocal keyworkprg=man\ -s
@@ -423,7 +423,7 @@ augroup END
             echoerr "search word length less then 4"
             return
         endif
-        execute 'Ack! ' . a:word
+        execute 'Ack! -U ' . a:word
         cw
     endfunction
 
@@ -447,9 +447,7 @@ augroup END
     endif
 "}
 
-" try gtags, etags, cquery
-" http://www.vimer.cn/2009/10/%E5%9C%A8vim%E4%B8%AD%E4%BD%BF%E7%94%A8ctags.html
-" brew install ctags --HEAD
+" brew install ctags --HEAD  // support objc
 " find . -name "*.h" -o -name "*.c" -o -name "*.cpp" -o -name "*.m" -o -name "*.mm" -o -name "*.js"> src.files
 " ctags --exclude='.git' -R --c++-kinds=+px --fields=+iaS --extra=+q --langmap=ObjectiveC:.m.h -L src.files
 " set tags+=tags的文件路径
@@ -473,23 +471,8 @@ augroup END
         \ 't:type_alias',
         \ 's:type_structure',
         \ 'e:enumeration',
-        \ 'M:preprocessor_macro',
-    \ ],
-    \ 'sro'        : ' ',
-    \ 'kind2scope' : {
-        \ 'i' : 'interface',
-        \ 'I' : 'implementation',
-        \ 'p' : 'Protocol',
-        \ 's' : 'type_structure',
-        \ 'e' : 'enumeration'
-    \ },
-    \ 'scope2kind' : {
-        \ 'interface'      : 'i',
-        \ 'implementation' : 'I',
-        \ 'Protocol'       : 'p',
-        \ 'type_structure' : 's',
-        \ 'enumeration'    : 'e'
-    \ }
+        \ 'M:preprocessor_macro'
+    \ ]
 \ }
 
     " ctags --list-kinds=all
@@ -748,8 +731,8 @@ noremap <Leader>bg :call ToggleBG()<CR>
   \   'css': ['prettier'],
   \   'java': ['javac'],
   \   'md': ['proselint'],
-  \   'objc': ['clangd'],
-  \   'objcpp': ['clangd'],
+  "\   'objc': ['clangd'],
+  "\   'objcpp': ['clangd'],
   \   'swift': ['swiftformat'],
   \   'c': ['cppcheck', 'clangd'],
   \   'cpp': ['cppcheck', 'clangd'],
@@ -779,8 +762,8 @@ noremap <Leader>bg :call ToggleBG()<CR>
 
   " use the quickfix list instead of the loclist
   let g:ale_set_loclist = 0
-  let g:ale_set_quickfix = 1
-  let g:ale_open_list = 1
+  let g:ale_set_quickfix = 0
+  let g:ale_open_list = 0
 
   "set omnifunc=ale#completion#OmniFunc
   " airline extension
@@ -1022,7 +1005,8 @@ let g:indentLine_enabled = 1
 
     let g:startify_bookmarks = [
                 \ {'t': '~/Documents/tuya/1-tuyasmartapp_ios'},
-                \ {'f': '~/Documents/tuya/2-tysmartoutdoor'}
+                \ {'f': '~/Documents/tuya/2-tysmartoutdoor'},
+                \ {'d': '~/Documents/dart-sdk/sdk'}
                 \]
     if filereadable(expand("~/spf13-copy-vim/vimrc.startify.headers"))
         source ~/spf13-copy-vim/vimrc.startify.headers
@@ -1252,4 +1236,6 @@ autocmd FileType * call GoYCM()
 
 let g:alternateExtensions_m = "h"
 let g:alternateExtensions_h = "m"
-
+let g:XkbSwitchEnabled = 1
+let g:XkbSwitchNLayout = 'us'
+autocmd BufEnter * let b:XkbSwitchILayout = 'us'

@@ -50,7 +50,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins
-plugins=(flutter git brew dirhistory encode64 github history jsontools npm osx urltools vi-mode extract gradle dirpersist cp copyfile colored-man-pages)
+plugins=(flutter git brew dirhistory encode64 github history jsontools npm macos urltools vi-mode extract gradle dirpersist cp copyfile colored-man-pages)
 
 # User configuration
 
@@ -132,11 +132,6 @@ alias -s md=mvim
     alias djgrep='grep --color=auto -r -n ./* -e '
     alias rm="trash"
 
-    export EDITOR=vim
-    alias pushToGithub='git push -u origin main'
-    alias ptg='git push -u origin main'
-    alias ptr='git push origin `git branch --show-current`'
-
     #alias for cnpm
     alias cnpm="npm --registry=https://registry.npm.taobao.org \
       --cache=$HOME/.npm/.cache/cnpm \
@@ -175,6 +170,11 @@ MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # diff
 # diff -u oldfile1 newfile2 > diff.txt
+#
+# open git trace log
+# export GIT_TRACE_PACKET=1
+# export GIT_TRACE=1
+# export GIT_CURL_VERBOSE=1
 
 # Xcode plugin UUID
 function updateXcodeUUID() {
@@ -200,7 +200,16 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
 # git clone --depth 1
 # git checkout --track remotes/origin/optimization
 #
+# 关联目的是在执行git pull, git push操作时就不需要指定对应的远程分支
+#git branch --set-upstream-to=origin/remote_branch  your_branch
+#
 # Git short key {
+    export EDITOR=vim
+    alias pushToGithub='git push -u origin main'
+    alias ptg='git push -u origin main'
+    alias ptr='git push origin `git branch --show-current`'
+    alias ptrm='git push -o merge_request.create -o merge_request.target=develop --set-upstream origin '
+    alias tgamend='git commit --amend --no-edit'
     alias tgst='git status -s'
     alias tgs='git status -s'
 
@@ -213,8 +222,8 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
 
     alias tga='git add -i'
 
-    alias tgc='git commit -v -s -m'
-    alias tgc-a='git commit -v -s -a -m'
+    alias tgc='git commit -v -s -m '
+    alias tgc-a='git commit -v -s -a -m '
 
     alias tgbr='git branch'
     alias tgb='git branch'
@@ -243,6 +252,8 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
 # git checkout master
 # git rebase -i HEAD~3
 # git reset --hard HEAD   delete not commit changed
+# clear reflog:
+# git reflog expire --expire=now --all && git gc --prune=now --aggressive
 
 # Use local setting {
     ZSHRC_LOCAL="$HOME/spf13-copy-vim/.zshrc.local"
@@ -389,7 +400,7 @@ alias iOSSDKPath='xcrun --sdk iphoneos --show-sdk-path'
     export PATH=$FLUTTER_ROOT/bin:$PATH
 
     #compile dart
-    export DEPOTTOOLS=~/Documents/5-Flutter/depot_tools
+    export DEPOTTOOLS=~/Documents/dart-sdk/depot_tools
     export PATH=$DEPOTTOOLS:$PATH
 
     # 防止提交错地方
@@ -466,3 +477,5 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+ # sudo xattr -d com.apple.quarantine /Applications/Sketch.app

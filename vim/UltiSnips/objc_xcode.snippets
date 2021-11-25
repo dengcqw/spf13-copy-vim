@@ -1111,6 +1111,19 @@ snippet NoDefine  "JS - callback block"
 
 endsnippet
 
+
+snippet djGestureTap  "UI - Tap Gesture"
+- (void)addTapGesture:(UIView *)view action:(SEL)selector {
+    view.userInteractionEnabled = true;
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:selector];
+    [view addGestureRecognizer:tapRecognizer];
+}
+
+- (void)tapAction:(UIGestureRecognizer *)gr {
+    NSLog(@"Tap action");
+}
+
+endsnippet
 snippet djGestureDoubleTap  "UI -  Tap Gesture Recognize"
 // 另外有个文件在filesnippt文件夹中关于gesture
 // 可override gesture 类，并添加新属性

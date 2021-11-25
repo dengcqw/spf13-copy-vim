@@ -1,0 +1,26 @@
+{
+  "title": "My Modifications",
+  "rules": [
+        {
+      "description": "Change left ctrl to esc",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "left_control"
+          },
+          "to": [
+            {
+              "key_code": "left_control"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "escape"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}
