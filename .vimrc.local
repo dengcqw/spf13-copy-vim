@@ -557,7 +557,7 @@ augroup END
 
     command -nargs=0 RevelInXcode call RevelInXcode()
     function! RevelInXcode()
-        execute "!open -a /Applications/Xcode.app ".expand("%:p")
+        silent execute "!open -a /Applications/Xcode.app ".expand("%:p")
     endfunc
 
 "}
@@ -873,7 +873,7 @@ let g:airline_symbols_ascii = 1
 let g:Lf_ShortcutF = '<D-p>'
 let g:Lf_ShortcutB = '<leader>fb'
 let g:Lf_WildIgnore = {
-            \ 'dir': ['.svn','.git','.hg', 'Target Support Files', 'Headers'],
+            \ 'dir': ['.svn','.git','.hg', 'Target Support Files', 'Headers', '.cache'],
             \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
             \}
 let g:Lf_StlSeparator = { 'left': '', 'right': '' } " powerline font
@@ -1239,3 +1239,18 @@ let g:alternateExtensions_h = "m"
 let g:XkbSwitchEnabled = 1
 let g:XkbSwitchNLayout = 'us'
 autocmd BufEnter * let b:XkbSwitchILayout = 'us'
+
+nnoremap <leader>gs :G<CR>
+nnoremap <leader>gc :Gcommit -v -q<CR>
+nnoremap <leader>ga :Gcommit --amend<CR>
+nnoremap <leader>gt :Gcommit -v -q %<CR>
+nnoremap <leader>gd :Gvdiffsplit<CR>
+nnoremap <leader>ge :Gedit<CR>
+nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>gw :Gwrite<CR><CR>
+nnoremap <leader>gl :0Gclog! -5<CR>
+nnoremap <leader>gb :Git branch<CR>
+nnoremap <leader>gm :Gmove<Space>
+nnoremap <leader>go :Git checkout<Space>
+
+"command -nargs=0 Tybuild :call job_start('/Users/dengjinlong/Documents/tuya/compile.sh')

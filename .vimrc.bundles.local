@@ -115,3 +115,14 @@
     "Bundle 'puremourning/vimspector'
 
     Bundle 'lyokha/vim-xkbswitch'
+    "Bundle 'gfontenot/vim-xcode'
+    "Bundle 'skywind3000/asyncrun.vim'
+    "{
+    Bundle 'jceb/vim-orgmode'
+    Bundle 'utl.vim'
+    Bundle 'mattn/calendar-vim'
+    Bundle 'speeddating.vim'
+    Bundle 'inkarkat/vim-SyntaxRange'
+    "}
+
+

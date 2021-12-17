@@ -50,7 +50,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins
-plugins=(flutter git brew dirhistory encode64 github history jsontools npm macos urltools vi-mode extract gradle dirpersist cp copyfile colored-man-pages)
+plugins=(zsh-autosuggestions flutter git brew dirhistory encode64 github history jsontools npm macos urltools vi-mode extract gradle dirpersist cp copyfile colored-man-pages)
 
 # User configuration
 
@@ -246,6 +246,9 @@ alias toggleDockIcon='sh $HOME/spf13-copy-vim/scripts/toggleDockIcon.sh'
     #alias tgpushforce='git push --force' # dangerous
     alias tg-sub='git submodule update --init --recursive'
     alias tg-ref="git reflog"
+    function tg-rebase {
+        git rebase -i HEAD~$1
+    }
 #}
 # clone git repo with only .git folder:
 # git fetch origin
@@ -473,9 +476,9 @@ export NVM_DIR="$HOME/.nvm"
 # sudo mdutil -a -i off
 
 #node ~/spf13-copy-vim/fetchPoetry.js
-export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
- # sudo xattr -d com.apple.quarantine /Applications/Sketch.app
+source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
