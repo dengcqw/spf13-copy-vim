@@ -878,19 +878,18 @@ let g:Lf_WildIgnore = {
             \}
 let g:Lf_StlSeparator = { 'left': '', 'right': '' } " powerline font
 let g:Lf_UseVersionControlTool=0  " Don't respect version control ignore files
-let g:Lf_ExternalCommand = 'find "%s" -type f -not -path "./.git/*"'
 nnoremap <silent> <D-r> :LeaderfMru<CR>
 nnoremap <silent> <D-b> :LeaderfBuffer<CR>
 nnoremap <silent> <leader>fs :LeaderfSelf<CR>
 nnoremap <silent> <leader>ff :Leaderf file --cword<CR>
 nnoremap <silent> <leader>ft :Leaderf tag --cword<CR>
-nnoremap <silent> <leader>fl :Leaderf line --cword<CR>
+nnoremap <silent> <leader>fl :Leaderf line<CR>
 
-let g:Lf_CtagsFuncOpts = {
-        \ 'c': '--c-kinds=fp',
-        \ 'c++': '--c++-kinds=fp',
-        \ 'swift': '',
-        \ }
+"let g:Lf_CtagsFuncOpts = {
+"        \ 'c': '--c-kinds=fp',
+"        \ 'c++': '--c++-kinds=fp',
+"        \ 'swift': '',
+"        \ }
 "}
 
 let g:dart_style_guide = 2
