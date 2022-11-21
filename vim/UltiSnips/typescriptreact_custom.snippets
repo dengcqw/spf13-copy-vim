@@ -1,0 +1,429 @@
+
+snippet tsrcc "React Component" b
+import * as React from 'react';
+
+export interface I$1Props {
+}
+
+export default class $1 extends React.Component<I$1Props> {
+  public render() {
+    return (
+      <View>
+        $2
+      </View>
+    );
+  }
+}
+endsnippet
+
+snippet tsrcfull "React Component - Full" b
+import * as React from 'react';
+
+export interface I$1Props {
+}
+
+export interface I$1State {
+}
+
+export default class $1 extends React.Component<I$1Props, I$1State> {
+  constructor(props: I$1Props) {
+    super(props);
+
+    this.state = {
+    }
+  }
+
+  public render() {
+    return (
+      <div>
+        ${2:}
+      </div>
+    );
+  }
+}
+endsnippet
+
+snippet tsrcjc "React Component without import and export" b
+export interface I${1:App}Props {
+}
+
+class $1 extends React.Component<I$1Props> {
+  public render() {
+    return (
+      <div>
+        ${2:}
+      </div>
+    );
+  }
+}
+endsnippet
+
+snippet tsrpcc "React PureComponent" b
+import * as React from 'react';
+
+export interface I${1:App}Props {
+}
+
+export default class $1 extends React.PureComponent<I$1Props> {
+  public render() {
+    return (
+      <div>
+        ${2:}
+      </div>
+    );
+  }
+}
+endsnippet
+
+snippet tsrpcjc "React PureComponent without import and export" b
+export interface I${1:App}Props {
+}
+
+class $1 extends React.PureComponent<I$1Props> {
+  public render() {
+    return (
+      <div>
+        ${2:}
+      </div>
+    );
+  }
+}
+endsnippet
+snippet tsrpfc "React Pure Function Component" b
+import * as React from 'react';
+
+export interface I${1:App}Props {
+}
+
+export function $1 (props: I$1Props) {
+  return (
+    <div>
+      ${0}
+    </div>
+  );
+}
+endsnippet
+snippet tsdrpfc "Export Default React Pure Function Component" b
+import * as React from 'react';
+
+export interface I${1:App}Props {
+}
+
+export default function $1 (props: I$1Props) {
+  return (
+    <div>
+      ${0}
+    </div>
+  );
+}
+endsnippet
+snippet tsrsfc "React Stateless Functional Component" b
+import * as React from 'react';
+
+interface I${1:App}Props {$2
+}
+
+const $1: React.FunctionComponent<I$1Props> = (props) => {
+  return $0;
+};
+
+export default $1;
+endsnippet
+snippet conc "constructor" b
+constructor(props) {
+  super(props);
+  $1
+}
+endsnippet
+
+snippet cwm "componentWillMount" b
+componentWillMount() {
+  $1
+}
+endsnippet
+snippet ren "render" b
+public render() {
+  return (
+    $1
+  );
+}
+endsnippet
+snippet cdm "componentDidMount" b
+componentDidMount() {
+  $1
+}
+endsnippet
+snippet cwrp "componentWillReceiveProps" b
+componentWillReceiveProps(nextProps: $1) {
+  ${2:}
+}
+endsnippet
+snippet scu "shouldComponentUpdate" b
+shouldComponentUpdate(nextProps: $1, nextState) {
+  ${2:}
+}
+endsnippet
+snippet cwu "componentWillUpdate" b
+componentWillUpdate(nextProps: $1, nextState) {
+  ${2:}
+}
+endsnippet
+snippet cdu "componentDidUpdate" b
+componentDidUpdate(prevProps: $1, prevState) {
+  ${2:}
+}
+endsnippet
+snippet cwum "componentWillUnmount" b
+componentWillUnmount() {
+  $1
+}
+endsnippet
+snippet bnd "bind method" b
+
+this.$1 = this.$1.bind(this);
+endsnippet
+snippet met "method" b
+${1:methodName} = (${2:e}) => {
+  ${3:}
+}
+endsnippet
+snippet tscntr "React redux container" b
+import * as React from 'react';
+import { connect } from 'react-redux'
+
+export interface I${1:App}Props {
+}
+
+class $1 extends React.Component<I$1Props> {
+  public render() {
+    return (
+      <div>
+        ${2:}
+      </div>
+    );
+  }
+}
+
+const mapState2Props = state => {
+  return {
+  };
+}
+
+export default connect(mapState2Props)($1);
+endsnippet
+snippet imt "import" b
+import { $2 } from '$1';
+endsnippet
+snippet gdsfp "getDerivedStateFromProps" b
+static getDerivedStateFromProps(nextProps: ${1:any}, prevState: ${2:any}) {
+  ${0}
+}
+endsnippet
+
+
+snippet tstype "TypeScript types used in a React+TypeScript" b
+type AppProps = {
+  message: string;
+  count: number;
+  disabled: boolean;
+  /** array of a type! */
+  names: string[];
+  /** string literals to specify exact string values, with a union type to join them together */
+  status: "waiting" | "success";
+  /** any object as long as you dont use its properties (NOT COMMON but useful as placeholder) */
+  obj: object;
+  obj2: {}; // almost the same as `object`, exactly the same as `Object`
+  /** an object with any number of properties (PREFERRED) */
+  obj3: {
+    id: string;
+    title: string;
+  };
+  /** array of objects! (common) */
+  objArr: {
+    id: string;
+    title: string;
+  }[];
+  /** a dict object with any number of properties of the same type */
+  dict1: {
+    [key: string]: MyTypeHere;
+  };
+  dict2: Record<string, MyTypeHere>; // equivalent to dict1
+  /** any function as long as you don't invoke it (not recommended) */
+  onSomething: Function;
+  /** function that doesn't take or return anything (VERY COMMON) */
+  onClick: () => void;
+  /** function with named prop (VERY COMMON) */
+  onChange: (id: number) => void;
+  /** function type syntax that takes an event (VERY COMMON) */
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  /** alternative function type syntax that takes an event (VERY COMMON) */
+  onClick(event: React.MouseEvent<HTMLButtonElement>): void;
+  /** an optional prop (VERY COMMON!) */
+  optional?: OptionalType;
+};
+endsnippet
+
+snippet tsprop_interface "React Prop Type" b
+export declare interface AppProps {
+  children?: React.ReactNode; // best, accepts everything React can render
+  childrenElement: JSX.Element; // A single React element
+  style?: React.CSSProperties; // to pass through style props
+  onChange?: React.FormEventHandler<HTMLInputElement>; // form events! the generic parameter is the type of event.target
+  //  more info: https://react-typescript-cheatsheet.netlify.app/docs/advanced/patterns_by_usecase/#wrappingmirroring
+  props: Props & React.ComponentPropsWithoutRef<"button">; // to impersonate all the props of a button element and explicitly not forwarding its ref
+  props2: Props & React.ComponentPropsWithRef<MyButtonWithForwardRef>; // to impersonate all the props of MyButtonForwardedRef and explicitly forwarding its ref
+}
+endsnippet
+
+snippet tsfc "Function Components" b
+// Declaring type of props - see "Typing Component Props" for more examples
+type AppProps = {
+  message: string;
+}; /* use `interface` if exporting so that consumers can extend */
+
+// Easiest way to declare a Function Component; return type is inferred.
+const App = ({ message }: AppProps) => <div>{message}</div>;
+
+// you can choose annotate the return type so an error is raised if you accidentally return some other type
+const App = ({ message }: AppProps): JSX.Element => <div>{message}</div>;
+
+// you can also inline the type declaration; eliminates naming the prop types, but looks repetitive
+const App = ({ message }: { message: string }) => <div>{message}</div>;
+endsnippet
+
+snippet ts_component "Class Component" b
+type Props = {
+  // using `interface` is also ok
+  message: string;
+};
+type State = {
+  count: number; // like this
+};
+class App extends React.Component<Props, State> {
+  state: MyState = {
+    // optional second annotation for better type inference
+    count: 0,
+  };
+  // properties
+  pointer: number;
+  // method
+  increment = (amt: number) => {
+  };
+
+  static getDerivedStateFromProps(
+    props: Props,
+    state: State
+  ): Partial<State> | null {
+    //
+  }
+
+  render() {
+    return (
+      <div>
+        {this.props.message} {this.state.count}
+      </div>
+    );
+  }
+}
+endsnippet
+
+
+snippet djErrorBoundary "react-error-boundary" b
+import {ErrorBoundary} from 'react-error-boundary'
+
+function ErrorFallback({error, resetErrorBoundary}) {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  )
+}
+
+const ui = (
+  <ErrorBoundary
+    FallbackComponent={ErrorFallback}
+    onReset={() => {
+      // reset the state of your app so the error doesn't happen again
+    }}
+  >
+    <ComponentThatMayError />
+  </ErrorBoundary>
+)
+
+
+// higher-order component
+import {withErrorBoundary} from 'react-error-boundary'
+
+const ComponentWithErrorBoundary = withErrorBoundary(ComponentThatMayError, {
+  FallbackComponent: ErrorBoundaryFallbackComponent,
+  onError(error, info) {
+    // Do something with the error
+    // E.g. log to an error logging client here
+  },
+})
+
+const ui = <ComponentWithErrorBoundary />
+endsnippet
+
+snippet djUseNavigation "react-navigation hook" b
+import { useNavigation } from '@react-navigation/native';
+const navigation = useNavigation();
+endsnippet
+
+snippet rnc "component template" b
+/**
+ * `!p snip.rv = fn`
+ * J&T Express Copyright (c) 2023
+ *
+ * Created by DengJinlong on `date +%d/%m/%y`.
+ */
+import React from 'react'
+import {View, Image, Text, Pressable, StyleSheet} from 'react-native'
+
+type $1Props = {}
+
+const ${1:Component} = ({}: $1Props) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>text</Text>
+      <Image style={styles.image} source={1} />
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red',
+  },
+  text: {
+    fontSize: 16,
+    color: 'blue',
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
+})
+
+export default $1
+endsnippet
+
+snippet rnco "simple component template" b
+
+type $1Props = {}
+
+const ${1:Component} = ({}: $1Props) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>text</Text>
+      <Image style={styles.image} source={1} />
+    </View>
+  )
+}
+
+endsnippet

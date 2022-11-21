@@ -32,13 +32,14 @@
 " Environment {
 
         " load python3 first
-        set pythonthreedll=/usr/local/bin/python3
-        set pyx=3
+        set pythonthreedll=/usr/local/Cellar/python@3.10/3.10.5/bin/python3
         if has('python3')
           "echo 'there is Python 3.x'
+          set pyx=3
         endif
         if has('python')
-          echo 'there is Python 2.x'
+          "echo 'there is Python 2.x'
+          set pyx=2
         endif
 
     " Identify platform {
@@ -1075,7 +1076,7 @@
                 set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
             elseif OSX() && has("gui_running")
                 "https://github.com/ryanoasis/nerd-fonts
-                set guifont=Sauce\ Code\ Pro\ ExtraLight\ Nerd\ Font\ Complete\ Mono\ Windows\ Compatible:h22
+                set guifont=SauceCodePro\ Nerd\ Font\ Mono:h20
                 "set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete\ Mono\ Windows\ Compatible:h20
             elseif WINDOWS() && has("gui_running")
                 set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10

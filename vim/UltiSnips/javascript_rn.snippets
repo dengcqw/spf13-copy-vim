@@ -4,7 +4,7 @@
 snippet copyright "js file header description"
 /**
  * `!p snip.rv = fn`
- * TVGuo
+ * J&T
  * 
  * Created by DengJinlong on `date +%d/%m/%y`.
  */
@@ -202,42 +202,42 @@ import {
 } from 'react-native'
 endsnippet
 
-snippet rncomponentDidMount "component did mount" b
-componentDidMount () {
-	${1}
-}$0
-endsnippet
+#snippet rncomponentDidMount "component did mount" b
+#componentDidMount () {
+	#${1}
+#}$0
+#endsnippet
 
 
-snippet rncomponentDidUpdate "component did update" b
-componentDidUpdate (prevProps, prevState) {
-	${1}
-}$0
-endsnippet
+#snippet rncomponentDidUpdate "component did update" b
+#componentDidUpdate (prevProps, prevState) {
+	#${1}
+#}$0
+#endsnippet
 
-snippet rncomponentWillMount "component will mount" b
-componentWillMount () {
-	${1}
-}$0
-endsnippet
+#snippet rncomponentWillMount "component will mount" b
+#componentWillMount () {
+	#${1}
+#}$0
+#endsnippet
 
-snippet rncomponentWillReceiveProps "component will receive props" b
-componentWillReceiveProps (nextProps) {
-	${1}
-}$0
-endsnippet
+#snippet rncomponentWillReceiveProps "component will receive props" b
+#componentWillReceiveProps (nextProps) {
+	#${1}
+#}$0
+#endsnippet
 
-snippet rncomponentWillUnmount "component will unmount" b
-componentWillUnmount () {
-	${1}
-}$0
-endsnippet
+#snippet rncomponentWillUnmount "component will unmount" b
+#componentWillUnmount () {
+	#${1}
+#}$0
+#endsnippet
 
-snippet rncomponentWillUpdate "component will update" b
-componentWillUpdate (nextProps, nextState) {
-	${1}
-}$0
-endsnippet
+#snippet rncomponentWillUpdate "component will update" b
+#componentWillUpdate (nextProps, nextState) {
+	#${1}
+#}$0
+#endsnippet
 
 snippet rnPropTypes "propTypes" b
 $1.propTypes = {
@@ -439,4 +439,28 @@ endsnippet
 
 snippet ref "ref prop"
 ref={component => this._${1:textInput}= component}
+endsnippet
+
+snippet rnview "View component"
+<View style={styles.${1:container}}>
+</View>
+endsnippet
+
+snippet rntext "Text component" b
+<Text style={styles.${1:text}}>$2</Text>
+endsnippet
+
+snippet rnimage "Image component" b
+<Image style={styles.${1:image}} source={require('')}/>
+endsnippet
+
+snippet rnpress "Pressable component" b
+<Pressable style={styles.${1:pressable}} onPress={()=>{}}>
+$2
+</Pressable>
+endsnippet
+
+snippet rnScrollView "ScrollView component" b
+<ScrollView style={styles.scrollview}>
+</ScrollView>
 endsnippet

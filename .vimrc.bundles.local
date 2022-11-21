@@ -114,7 +114,7 @@
     " Vimspector should work for any debug adapter that works in Visual Studio Code.
     "Bundle 'puremourning/vimspector'
 
-    Bundle 'lyokha/vim-xkbswitch'
+    "Bundle 'lyokha/vim-xkbswitch'
     "Bundle 'gfontenot/vim-xcode'
     "Bundle 'skywind3000/asyncrun.vim'
     "{
@@ -123,6 +123,7 @@
     Bundle 'mattn/calendar-vim'
     Bundle 'speeddating.vim'
     Bundle 'inkarkat/vim-SyntaxRange'
+    Bundle 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
     "}
 
 

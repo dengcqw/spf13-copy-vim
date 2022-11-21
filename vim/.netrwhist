@@ -1,3 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =1
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/Users/dengjinlong/spf13-copy-vim/vim/bundle'
+let g:netrw_dirhist_5='/Users/dengjinlong'
+let g:netrw_dirhist_4='/Users/dengjinlong/.vim'
+let g:netrw_dirhist_3='/Users/dengjinlong'
+let g:netrw_dirhist_2='/Users'
 let g:netrw_dirhist_1='/Users/dengjinlong'

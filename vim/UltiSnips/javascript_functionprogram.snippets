@@ -1,5 +1,5 @@
 
-snippet ramdaSampleGroup "find groups with same properties" b
+snippet fpRamdaSampleGroup "find groups with same properties" b
 var layers = [
   {id:1, type:'xxx', source:'a'},
   {id:2, type:'yyy', source:'b'},
@@ -21,7 +21,7 @@ console.log("----> "+R.toString(candidates))
 
 endsnippet
 
-snippet ramdaTransformProp "sample for transform prop" b
+snippet fpRamdaTransformProp "sample for transform prop" b
 const nextAge = compose(inc, prop('age'))
 const celebrateBirthday = person => assoc('age', nextAge(person), person)
 //or

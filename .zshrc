@@ -100,6 +100,8 @@ fpath=(/usr/local/share/zsh/site-functions $fpath)
 export brew_path=/usr/local/Cellar
 
 
+alias mvim='/Applications/MacVim.app/Contents/bin/mvim'
+alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 
 alias cls='clear'
 alias ll='ls -l'
@@ -140,9 +142,10 @@ alias -s md=mvim
 
     alias npmi="npm install --save "
     alias ns='npm start'
-    alias ni='node-inspector --web-port 8082 &'
-
-    alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+    #alias ni='node-inspector --web-port 8082 &'
+    alias ni='npm install'
+    alias pi='pod install'
+    alias o='open'
 
     alias djCopyPath='sh ~/spf13-copy-vim/bin/copy-file-path '
 
@@ -152,6 +155,7 @@ alias -s md=mvim
     alias djSwitchNetork='node ~/spf13-copy-vim/scripts/network_switch.js'
 
     alias c='djcd'
+    alias mv='mv -n -v'
 
     alias agd='ag --ignore *test* --ignore-dir samples_2 --ignore-dir samples_dev --ignore-dir benchmarks --ignore-dir samples --ignore-dir build --ignore-dir buildtools --ignore-dir tools/sdks'
 #}
@@ -399,7 +403,7 @@ alias iOSSDKPath='xcrun --sdk iphoneos --show-sdk-path'
     alias fl-pg='flutter packages get'
 
     export PUB_CACHE="$HOME/.pub-cache" # 全局缓存，保证不会存在多份缓存
-    export FLUTTER_ROOT="$HOME/Documents/5-Flutter/flutter"
+    export FLUTTER_ROOT="$HOME/flutter"
     export PATH=$FLUTTER_ROOT/bin:$PATH
 
     #compile dart
@@ -478,7 +482,19 @@ export NVM_DIR="$HOME/.nvm"
 #node ~/spf13-copy-vim/fetchPoetry.js
 export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
 
+export GEM_HOME=$HOME/.gem
+export PATH=$GEM_HOME/ruby/3.1.0/bin:$PATH
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
 source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+export PATH=$PATH:$ANDROID_SDK_ROOT/tools
+export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+
+alias changeHeaderImport="node ~/spf13-copy-vim/scripts/changeImport.js"
+

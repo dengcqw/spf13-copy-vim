@@ -1,0 +1,446 @@
+
+snippet djBasicPropTypes "A list of TypeScript types"
+type AppProps = {
+  message: string;
+  count: number;
+  disabled: boolean;
+  /** array of a type! */
+  names: string[];
+  /** string literals to specify exact string values, with a union type to join them together */
+  status: "waiting" | "success";
+  /** any object as long as you dont use its properties (NOT COMMON but useful as placeholder) */
+  obj: object;
+  obj2: {}; // almost the same as `object`, exactly the same as `Object`
+  /** an object with any number of properties (PREFERRED) */
+  obj3: {
+    id: string;
+    title: string;
+  };
+  /** array of objects! (common) */
+  objArr: {
+    id: string;
+    title: string;
+  }[];
+  /** a dict object with any number of properties of the same type */
+  dict1: {
+    [key: string]: MyTypeHere;
+  };
+  dict2: Record<string, MyTypeHere>; // equivalent to dict1
+  /** any function as long as you don't invoke it (not recommended) */
+  onSomething: Function;
+  /** function that doesn't take or return anything (VERY COMMON) */
+  onClick: () => void;
+  /** function with named prop (VERY COMMON) */
+  onChange: (id: number) => void;
+  /** function type syntax that takes an event (VERY COMMON) */
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  /** alternative function type syntax that takes an event (VERY COMMON) */
+  onClick(event: React.MouseEvent<HTMLButtonElement>): void;
+  /** an optional prop (VERY COMMON!) */
+  optional?: OptionalType;
+};
+endsnippet
+
+snippet djFunctionComponent "ts"
+// Declaring type of props - see "Typing Component Props" for more examples
+type AppProps = {
+  message: string;
+}; /* use `interface` if exporting so that consumers can extend */
+
+// Easiest way to declare a Function Component; return type is inferred.
+const App = ({ message }: AppProps) => <div>{message}</div>;
+
+// you can choose annotate the return type so an error is raised if you accidentally return some other type
+const App = ({ message }: AppProps): JSX.Element => <div>{message}</div>;
+
+// you can also inline the type declaration; eliminates naming the prop types, but looks repetitive
+const App = ({ message }: { message: string }) => <div>{message}</div>;
+endsnippet
+
+snippet djUseState "ts"
+// Type inference works very well for simple values
+const [state, setState] = useState(false);
+// null default values
+const [user, setUser] = useState<User | null>(null);
+// temporarily "lies" to the TypeScript compiler that {} is of type User
+// You should follow up by setting the user state
+const [user, setUser] = useState<User>({} as User);
+endsnippet
+
+snippet djUseReducer "ts"
+import { useReducer } from "react";
+
+const initialState = { count: 0 };
+
+type ACTIONTYPE =
+  | { type: "increment"; payload: number }
+  | { type: "decrement"; payload: string };
+
+function reducer(state: typeof initialState, action: ACTIONTYPE) {
+  switch (action.type) {
+    case "increment":
+      return { count: state.count + action.payload };
+    case "decrement":
+      return { count: state.count - Number(action.payload) };
+    default:
+      throw new Error();
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({ type: "decrement", payload: "5" })}>
+        -
+      </button>
+      <button onClick={() => dispatch({ type: "increment", payload: 5 })}>
+        +
+      </button>
+    </>
+  );
+}
+
+// 带类型的reducer函数
+import { Reducer } from 'redux';
+export function reducer: Reducer<AppState, Action>() {}
+endsnippet
+
+snippet djUseRef_UseEffect "ts"
+function Foo() {
+  // - If possible, prefer as specific as possible. For example, HTMLDivElement
+  //   is better than HTMLElement and way better than Element.
+  // - Technical-wise, this returns RefObject<HTMLDivElement>
+  const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Note that ref.current may be null. This is expected, because you may
+    // conditionally render the ref-ed element, or you may forgot to assign it
+    if (!divRef.current) throw Error("divRef is not assigned");
+
+    // Now divRef.current is sure to be HTMLDivElement
+    doSomethingWith(divRef.current);
+  });
+
+  // Give the ref to an element so React can manage it for you
+  return <div ref={divRef}>etc</div>;
+}
+endsnippet
+
+snippet djCustomHooks "ts"
+import { useState } from "react";
+
+export function useLoading() {
+  const [isLoading, setState] = useState(false);
+  const load = (aPromise: Promise<any>) => {
+    setState(true);
+    return aPromise.finally(() => setState(false));
+  };
+	// infers [boolean, typeof load] instead of (boolean | typeof load)[]
+	// 使用as const 关键字，使用禁止ts类型推倒为union类型
+  return [isLoading, load] as const; 
+	// or
+	return [isLoading, load] as [
+    boolean,
+    (aPromise: Promise<any>) => Promise<any>
+  ];
+}
+
+// A helper function that automatically types tuples
+function tuplify<T extends any[]>(...elements: T) {
+  return elements;
+}
+
+function useArray() {
+  const numberValue = useRef(3).current;
+  const functionValue = useRef(() => {}).current;
+  return [numberValue, functionValue]; // type is (number | (() => void))[]
+}
+
+function useTuple() {
+  const numberValue = useRef(3).current;
+  const functionValue = useRef(() => {}).current;
+  return tuplify(numberValue, functionValue); // type is [number, () => void]
+}
+endsnippet
+
+snippet djClassComponent "ts"
+type MyProps = {
+  // using `interface` is also ok
+  message: string;
+};
+type MyState = {
+  count: number;
+};
+class App extends React.Component<MyProps, MyState> {
+  state: MyState = {
+    // 这里指逗号optional second annotation for better type inference
+    count: 0,
+  };
+	pointer: number; // Class Properties
+  componentDidMount() {
+    this.pointer = 3;
+  }
+	render() {
+    return (
+      <div onClick={() => this.increment(1)}>
+        {this.props.message} {this.state.count}
+      </div>
+    );
+  }
+  increment = (amt: number) => {
+    // like this
+    this.setState((state) => ({
+      count: state.count + amt,
+    }));
+  };
+}
+endsnippet
+
+snippet djDefaultProps "ts"
+// 不推荐使用, ts支持参数默认值
+type  ComponentProps = { name: string; }
+
+const  Component = ({ name }: ComponentProps) => (
+	<div>
+		{name.toUpperCase()} /* Safe since name is required */
+	</div>
+);
+Component.defaultProps = { name: "John" };
+
+const  Example = () => (<Component />) /* Safe to omit since name has a default value */
+endsnippet
+
+snippet djGenericComponent "ts"
+type GenericComponentProps<T> = {
+   prop: T
+   callback: (t: T) => void
+}
+const GenericComponent = <T>(props: GenericComponentProps<T>) => {/*...*/}
+endsnippet
+
+snippet djContext "ts"
+import { createContext } from "react";
+
+interface AppContextInterface {
+  name: string;
+  author: string;
+  url: string;
+}
+
+const AppCtx = createContext<AppContextInterface | null>(null);
+
+// Provider in your app
+
+const sampleAppContext: AppContextInterface = {
+  name: "Using React Context in a Typescript App",
+  author: "thehappybug",
+  url: "http://www.example.com",
+};
+
+export const App = () => (
+  <AppCtx.Provider value={sampleAppContext}>...</AppCtx.Provider>
+);
+
+// Consume in your app
+import { useContext } from "react";
+
+export const PostInfo = () => {
+  const appContext = useContext(AppCtx);
+  return (
+    <div>
+      Name: {appContext.name}, Author: {appContext.author}, Url:{" "}
+      {appContext.url}
+    </div>
+  );
+};
+endsnippet
+
+snippet djUseFetch "ts"
+export function useFetch(request: RequestInfo, init?: RequestInit) {
+  const [response, setResponse] = useState<null | Response>(null);
+  const [error, setError] = useState<Error | null>();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    setIsLoading(true);
+    (async () => {
+      try {
+        const response = await fetch(request, {
+          ...init,
+          signal: abortController.signal,
+        });
+        setResponse(await response?.json());
+        setIsLoading(false);
+      } catch (error) {
+        if (isAbortError(error)) {
+          return;
+        }
+        setError(error as any);
+        setIsLoading(false);
+      }
+    })();
+    return () => {
+      abortController.abort();
+    };
+  }, [init, request]);
+
+  return { response, error, isLoading };
+}
+
+// type guards
+function isAbortError(error: any): error is DOMException {
+  if (error && error.name === "AbortError") {
+    return true;
+  }
+  return false;
+}
+endsnippet
+
+snippet djUseAsyncTask "ts"
+// Usage
+const task = useAsyncTask(async (data: any) => await myApiRequest(data));
+task.run(data);
+useEffect(() => {
+  console.log(task.status); // 'IDLE' | 'PROCESSING' | 'ERROR' | 'SUCCESS';
+}, [task.status]);
+
+// Implementation
+
+import { useCallback, useState } from "react";
+
+type TStatus = "IDLE" | "PROCESSING" | "ERROR" | "SUCCESS";
+
+function useAsyncTask<T extends any[], R = any>(
+  task: (...args: T) => Promise<R>
+) {
+  const [status, setStatus] = useState<TStatus>("IDLE");
+  const [message, setMessage] = useState("");
+
+  const run = useCallback(async (...arg: T) => {
+    setStatus("PROCESSING");
+    try {
+      const resp: R = await task(...arg);
+      setStatus("SUCCESS");
+      return resp;
+    } catch (error) {
+      let message = error?.response?.data?.error?.message || error.message;
+      setMessage(message);
+      setStatus("ERROR");
+      throw error;
+    }
+  }, []);
+
+  const reset = useCallback(() => {
+    setMessage("");
+    setStatus("IDLE");
+  }, []);
+
+  return {
+    run,
+    status,
+    message,
+    reset,
+  };
+}
+
+export default useAsyncTask;
+endsnippet
+
+snippet djUseLocalStorage "ts"
+import { useState } from "react";
+
+// Usage
+function App() {
+  // Similar to useState but first arg is key to the value in local storage.
+  const [name, setName] = useLocalStorage<string>("name", "Bob");
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Enter your name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+    </div>
+  );
+}
+
+// Hook
+function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): [T, (value: T | ((val: T) => T)) => void] {
+  // State to store our value
+  // Pass initial state function to useState so logic is only executed once
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    try {
+      // Get from local storage by key
+      const item = window.localStorage.getItem(key);
+      // Parse stored json or if none return initialValue
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      // If error also return initialValue
+      console.log(error);
+      return initialValue;
+    }
+  });
+
+  // Return a wrapped version of useState's setter function that ...
+  // ... persists the new value to localStorage.
+  const setValue = (value: T | ((val: T) => T)) => {
+    try {
+      // Allow value to be a function so we have same API as useState
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value;
+      // Save state
+      setStoredValue(valueToStore);
+      // Save to local storage
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+    } catch (error) {
+      // A more advanced implementation would handle the error case
+      console.log(error);
+    }
+  };
+
+  return [storedValue, setValue];
+}
+endsnippet
+
+snippet djHighOrderComponent ""
+
+type PropsAreEqual<P> = (
+  prevProps: Readonly<P>,
+  nextProps: Readonly<P>
+) => boolean;
+
+const withSampleHoC = <P extends {}>(
+  component: {
+    (props: P): Exclude<React.ReactNode, undefined>;
+    displayName?: string;
+  },
+  propsAreEqual?: PropsAreEqual<P> | false,
+
+  componentName = component.displayName ?? component.name
+): {
+  (props: P): JSX.Element;
+  displayName: string;
+} => {
+
+  function WithSampleHoc(props: P) {
+    //Do something special to justify the HoC.
+    return component(props) as JSX.Element;
+  }
+
+  WithSampleHoc.displayName = `withSampleHoC(${componentName})`;
+
+  let wrappedComponent = propsAreEqual === false ? WithSampleHoc : React.memo(WithSampleHoc, propsAreEqual);
+
+  //copyStaticProperties(component, wrappedComponent);
+
+  return wrappedComponent as typeof WithSampleHoc
+};
+endsnippet

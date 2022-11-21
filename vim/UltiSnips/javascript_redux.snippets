@@ -265,3 +265,53 @@ snippet rdProvider "react-redux Provider" b
     <App />
 </Provider>
 endsnippet
+
+snippet rdWrapFunction "wrap function" b
+export default function wrapDispatch(dispatch, reducerKey) {
+  const wrappedDispatch = (action) => {
+    let wrappedAction;
+    if (typeof action === 'function') {
+      wrappedAction = (_, getState) => action(wrappedDispatch, getState);
+    } else if (typeof action === 'object') {
+      wrappedAction = wrapAction(action, reducerKey);
+    }
+    return dispatch(wrappedAction);
+  };
+
+  return wrappedDispatch;
+}
+endsnippet
+
+snippet rdWrapObject "wrap object" b
+export default function wrapAction(action, reducerKey) {
+  return {
+    ...action,
+    meta: {
+      ...action.meta,
+      [key]: reducerKey,
+    }
+  };
+}
+endsnippet
+
+snippet rdUseHooks "useXXX" b
+import {useSelector, useDispatch} from 'react-redux';
+const todo = useSelector(state => state.todo));
+const dispatch = useDispatch();
+endsnippet
+
+snippet rdSlice "createSlice template" b
+import { createSlice } from '@reduxjs/toolkit'
+
+const ${1:todos}Slice = createSlice({
+  name: '${1:todos}',
+  initialState: [],
+  reducers: {
+    todoToggled: (state, action) => {
+    }
+  }
+})
+
+export const { todoAdded, todoToggled } = ${1:todos}Slice.actions
+export default ${1:todos}Slice.reducer
+endsnippet

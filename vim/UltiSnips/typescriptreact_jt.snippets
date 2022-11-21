@@ -1,0 +1,35 @@
+
+snippet tjcolor ""
+import Colors from "@src/styles/Colors";
+endsnippet
+
+snippet tjicon ""
+import Iconfont from "@src/screens/home/components/AntIcon";
+endsnippet
+
+snippet jtimportImg ""
+import * as  JTImages from '@jtcenter/jtimages'
+endsnippet
+
+
+snippet jtimportCom ""
+import {$1} from '@jtcenter/jtcomponents'
+endsnippet
+
+snippet jtdispatch "dispatch" b
+dispatch(actions.${name}(${txt}))
+endsnippet
+
+
+snippet jtselector "selector" b
+const $1 = useAppSelector(selectors.select${1:Name})
+endsnippet
+
+snippet jtimportRedux "imort redux tools" b
+import { useAppSelector, useAppDispatch } from '../../tools/hooks'
+import { actions, selectors} from './Slice'
+endsnippet
+
+snippet rnIcon "Icon"
+<Icon name={IconName.info} size={20} color={"#4F8EF7"} />
+endsnippet
