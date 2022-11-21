@@ -270,7 +270,10 @@ endfunction
 
 augroup filetype_jsformat
     autocmd!
-    autocmd FileType javascript :call ChangeJavascriptTab()
+    autocmd FileType typescript,javascript,typescriptreact,javascriptreact  :call ChangeJavascriptTab()
+    autocmd FileType typescript,javascript,typescriptreact,javascriptreact vnoremap <silent> = :'<,'>:PrettierFragment<CR>
+    autocmd FileType typescript,javascript,typescriptreact,javascriptreact let b:ale_linters = ['eslint']
+    autocmd FileType typescript,javascript,typescriptreact,javascriptreact let b:ale_fixers = ['eslint', 'prettier']
 augroup END
 
 "surrounding command list {
@@ -758,12 +761,25 @@ noremap <Leader>bg :call ToggleBG()<CR>
   let g:ale_lint_on_text_changed = 'never'
   " if you don't want linters to run on opening a file
   let g:ale_lint_on_enter = 0
-  let g:ale_lint_on_save=0
+  let g:ale_lint_on_save=1
 
   " use the quickfix list instead of the loclist
   let g:ale_set_loclist = 0
-  let g:ale_set_quickfix = 0
+  let g:ale_set_quickfix = 1
   let g:ale_open_list = 0
+
+
+  noremap <space>ll :call QFixToggle()<CR>
+
+function! QFixToggle()
+  if exists("g:qfix_win")
+    cclose
+    unlet g:qfix_win
+  else
+    copen 10
+    let g:qfix_win = bufnr("$")
+  endif
+endfunction
 
   "set omnifunc=ale#completion#OmniFunc
   " airline extension
@@ -861,6 +877,9 @@ let g:AutoPairsMultilineClose=0
 "nnoremap <Leader>gd :Gdiff<cr>
 "switch back to current file and closes fugitive buffer
 "quit fugitive buffer or Geidt
+"G log %
+"G log -p % 可以显示每次提交的diff
+":G log -10 -- %  Load the last 10 commits for the current file
 
 nnoremap <Leader>qq :q!<CR>
 
@@ -1003,13 +1022,16 @@ let g:indentLine_enabled = 1
     let g:startify_files_number = 6
 
     let g:startify_bookmarks = [
-                \ {'t': '~/Documents/tuya/1-tuyasmartapp_ios'},
-                \ {'f': '~/Documents/tuya/2-tysmartoutdoor'},
-                \ {'d': '~/Documents/dart-sdk/sdk'}
+                \ {'i': '~/Documents/jitu/1-JMS-Center-iOS'},
+                \ {'r': '~/Documents/jitu/3-jtreact-codepush'},
+                \ {'f': '~/Documents/jitu/3-flutter_jtcenter'},
+                \ {'b': '~/Documents/blog/djlblogsource'},
+                \ {'v': '~/Documents/jitu/jtbrain-vue'},
+                \ {'j': '~/Documents/jitu/4-brain-center'}
                 \]
-    if filereadable(expand("~/spf13-copy-vim/vimrc.startify.headers"))
-        source ~/spf13-copy-vim/vimrc.startify.headers
-    endif
+    "if filereadable(expand("~/spf13-copy-vim/vimrc.startify.headers"))
+        "source ~/spf13-copy-vim/vimrc.startify.headers
+    "endif
 
     let g:startify_lists = [
           \ { 'type': 'files',     'header': ['   MRU']            },
@@ -1253,3 +1275,24 @@ nnoremap <leader>gm :Gmove<Space>
 nnoremap <leader>go :Git checkout<Space>
 
 "command -nargs=0 Tybuild :call job_start('/Users/dengjinlong/Documents/tuya/compile.sh')
+
+autocmd BufNewFile,BufRead *.iconfont set guifont=iconfont:h30
+
+" Asks for confirmation before deleting all marks/markers
+let g:SignaturePurgeConfirmation = 1
+
+"Copy file path
+nnoremap <silent> <space>cpp :let @*=expand("%:p")<cr>:echo '-= File path copied=-'<cr>
+"Copy file name
+nnoremap <silent> <space>cpf :let @*=expand("%:t")<cr>:echo '-= File name copied=-'<cr>
+"Copy bookmark position reference
+nnoremap <silent> <space>cpb :let @*=expand("%:p").':'.line(".").':'.col(".")<cr>:echo '-= Cursor bookmark copied=-'<cr>
+
+"Open scratch split buffers
+nnoremap <silent> <space>ttss<space> :new<cr>:setl bt=nofile bh=wipe nobl noswf<cr>
+nnoremap <silent> <space>ttsv<space> :vnew<cr>:setl bt=nofile bh=wipe nobl noswf<cr>
+"}}}
+"########## Run Command ##########{{{
+nmap <space>sh<space> yy<space>ttss<space>P:.!zsh<cr>
+xmap <space>sh<space> y<space>ttss<space>P:%!zsh<cr>
+"}}}
