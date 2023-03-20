@@ -90,6 +90,22 @@
 " }
 
 
+" quick console.log
+    function! VisualSelectionLog() range
+        let l:saved_reg = @"   " save
+        execute "normal! vgvy"
+        let l:pattern = escape(@", '\\/.*$^~[]')
+        let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+        let line = "console.log('---->" . l:pattern . "', " . l:pattern . ")"
+        exe "normal! o" . line . "\<Esc>"
+        w
+
+        let @" = l:saved_reg " resotre
+    endfunction
+
+    vnoremap <silent> L :call VisualSelectionLog()<CR>
+
 "vimgrep searching and cope displaying {
     " Visual mode pressing * or # searches for the current selection
     " Super useful! From an idea by Michael Naumann
@@ -112,6 +128,10 @@
 
         let l:pattern = escape(@", '\\/.*$^~[]')
         let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+        if len(l:pattern) < 3
+            return
+        endif
 
         if a:direction == 'b'
             execute "normal ?" . l:pattern . "^M"
@@ -725,6 +745,7 @@ noremap <Leader>bg :call ToggleBG()<CR>
 " ALE Setting {
   "let g:ale_dart_dartanalyzer_executable = ""
   "let g:ale_dart_language_server_executable = ""
+  let g:ale_virtualtext_cursor = "current"
 
   "gcc/clang 和 cppcheck，前者主要检查有无语法错误，后者主要会给出一些编码建议
   let g:ale_linters = {
@@ -1022,11 +1043,9 @@ let g:indentLine_enabled = 1
     let g:startify_files_number = 6
 
     let g:startify_bookmarks = [
-                \ {'i': '~/Documents/jitu/1-JMS-Center-iOS'},
                 \ {'r': '~/Documents/jitu/3-jtreact-codepush'},
-                \ {'f': '~/Documents/jitu/3-flutter_jtcenter'},
+                \ {'s': '~/Documents/jitu/sandytalk'},
                 \ {'b': '~/Documents/blog/djlblogsource'},
-                \ {'v': '~/Documents/jitu/jtbrain-vue'},
                 \ {'j': '~/Documents/jitu/4-brain-center'}
                 \]
     "if filereadable(expand("~/spf13-copy-vim/vimrc.startify.headers"))

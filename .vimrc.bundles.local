@@ -54,6 +54,12 @@
     if count(g:spf13_bundle_groups, 'javascript')
         Bundle 'maksimr/vim-jsbeautify'
         Bundle 'einars/js-beautify'
+
+        Bundle 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+        Bundle 'leafgarland/typescript-vim'
+        Bundle 'pangloss/vim-javascript'
+
+        "Bundle 'briancollins/vim-jst'
         "Bundle 'heavenshell/vim-jsdoc'
         " ----------------------------------------
         " Syntax
@@ -119,11 +125,11 @@
     "Bundle 'skywind3000/asyncrun.vim'
     "{
     Bundle 'jceb/vim-orgmode'
+    Bundle 'dhruvasagar/vim-dotoo'
     Bundle 'utl.vim'
     Bundle 'mattn/calendar-vim'
     Bundle 'speeddating.vim'
     Bundle 'inkarkat/vim-SyntaxRange'
-    Bundle 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
     "}
 
 
