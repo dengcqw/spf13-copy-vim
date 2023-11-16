@@ -495,6 +495,47 @@ export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
 export PATH=$PATH:$ANDROID_SDK_ROOT/tools
 export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
 export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+export PATH=$PATH:$HOME/depot_tools
+export PATH=/usr/local/Cellar/openjdk@17/17.0.5/bin:$PATH
 
 alias changeHeaderImport="node ~/spf13-copy-vim/scripts/changeImport.js"
 
+export HOMEBREW_GITHUB_API_TOKEN='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'
+
+# brew intall qrencode
+alias qrcode="qrencode -t ANSIUTF8 "
+# 命令前有空格，不存历史
+setopt HIST_IGNORE_SPACE
+
+# *.ipa & *.mobileprovision file path and CertificateName from keychain or xcode
+alias resignIpa="sh ~/spf13-copy-vim/scripts/resignipa.sh "
+
+# place this after nvm initialization!
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version
+    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use
+    fi
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+
+add-zsh-hook chpwd load-nvmrc
+
+# bun completions
+[ -s "/Users/dengjinlong/.bun/_bun" ] && source "/Users/dengjinlong/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

@@ -372,6 +372,61 @@ import { useNavigation } from '@react-navigation/native';
 const navigation = useNavigation();
 endsnippet
 
+snippet rns "screen template" b
+/**
+ * `!p snip.rv = fn`
+ * J&T Express Copyright (c) 2023
+ *
+ * Created by DengJinlong on `date +%d/%m/%y`.
+ */
+import React from 'react'
+import {View, StyleSheet} from 'react-native'
+import { $1ScreenProps } from '@src/navigation/RootScreenParams'
+
+import { APIRequest } from '@src/api'
+import { useAppSelector, useAppDispatch } from '@src/store'
+import { selectors, actions } from '@src/store/usersSlice'
+
+/*
+copy to RootScreenParams.ts
+
+import { $1ScreenParams } from '@src/screens/.../$1Screen'
+$1: $1ScreenParams
+export type $1ScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  '$1'
+>
+
+copy to RootStackScreen.ts
+import $1Screen from '@src/screens/.../$1Screen'
+<RootStack.Screen
+  name="$1"
+  component={$1Screen}
+  options={{ title: $t('') }}
+/>
+*/
+
+export type $1ScreenParams = {}
+
+const ${1:Component}Screen = ({ route, navigation }: $1ScreenProps) => {
+  return (
+    <View style={styles.container}>
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red',
+  }
+})
+
+export default $1Screen
+endsnippet
+
 snippet rnc "component template" b
 /**
  * `!p snip.rv = fn`
@@ -381,6 +436,10 @@ snippet rnc "component template" b
  */
 import React from 'react'
 import {View, Image, Text, Pressable, StyleSheet} from 'react-native'
+
+import Colors from '@src/styles/Colors'
+import IconFont from '@src/utils/IconFont'
+import CommonStyles from '@src/styles/CommonStyles'
 
 type $1Props = {}
 
@@ -413,6 +472,58 @@ const styles = StyleSheet.create({
 export default $1
 endsnippet
 
+snippet rnlist "ListView template" b
+import createListView, {
+  usePageControl,
+  CellProps
+} from '@src/components/ListView'
+
+const Cell = ({ data }: CellProps<Record, {}>) => {
+  if (data == null) return null
+	return <View/>
+}
+
+const PageView = ({ pageData }: PageViewProps) => {
+	const ListView = React.useMemo(() => {
+		return createListView<Record>()
+	})
+  const [dataList, noMoreData, fetchData, pageIndex] = usePageControl<Record>()
+  const status = pageData
+
+  const fetchPromise = React.useCallback(
+    (current: number) => {
+      return APIRequest.Course.postMyCourseList({
+        sorts: [{ desc: true, sortType: 1 }],
+        size: 15,
+        current,
+        status
+      })
+    },
+    [status]
+  )
+
+  React.useEffect(() => {
+    fetchData(fetchPromise(1))
+  }, [])
+
+  return (
+		<ListView.Container
+			onRefresh={() => {
+				fetchData(fetchPromise(1))
+			}}
+			onLoadMore={() => {
+				if (noMoreData) return
+				fetchData(fetchPromise(pageIndex))
+			}}
+			noMoreData={noMoreData}
+			cellDataList={dataList}
+			layoutForData={LayoutFunc}>
+			<ListView.Cell name={'MyStudyCell'} component={Cell} />
+		</ListView.Container>
+  )
+}
+endsnippet
+
 snippet rnco "simple component template" b
 
 type $1Props = {}
@@ -426,4 +537,41 @@ const ${1:Component} = ({}: $1Props) => {
   )
 }
 
+endsnippet
+
+
+snippet nextpages
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
+
+export const getStaticProps = (async (context) => {
+  // ...
+}) satisfies GetStaticProps
+ 
+export const getStaticPaths = (async () => {
+  // ...
+}) satisfies GetStaticPaths
+ 
+export const getServerSideProps = (async (context) => {
+  // ...
+}) satisfies GetServerSideProps
+endsnippet
+
+snippet nextapi
+import type { NextApiRequest, NextApiResponse } from 'next'
+
+type Data = {
+  name: string
+}
+
+export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  res.status(200).json({ name: 'John Doe' })
+}
+endsnippet
+
+snippet nextapp
+import type { AppProps } from 'next/app'
+
+export default function MyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />
+}
 endsnippet

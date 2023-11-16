@@ -32,7 +32,7 @@
 " Environment {
 
         " load python3 first
-        set pythonthreedll=/usr/local/Cellar/python@3.10/3.10.8/bin/python3
+        set pythonthreedll=/usr/local/Cellar/python@3.11/3.11.6/bin/python3
         if has('python3')
           "echo 'there is Python 3.x'
           set pyx=3

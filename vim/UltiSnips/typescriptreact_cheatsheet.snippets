@@ -41,6 +41,16 @@ type AppProps = {
 };
 endsnippet
 
+snippet djReactPropType "ts"
+export declare interface AppProps {
+  children?: React.ReactNode // best, accepts everything React can render
+  style?: ViewStyle // to pass through style props
+  childrenElement: JSX.Element // A single React element
+  onChange?: (event: NativeSyntheticEvent<EventType>) => void
+  props2: ViewProps
+}
+endsnippet
+
 snippet djFunctionComponent "ts"
 // Declaring type of props - see "Typing Component Props" for more examples
 type AppProps = {
@@ -139,7 +149,7 @@ export function useLoading() {
   };
 	// infers [boolean, typeof load] instead of (boolean | typeof load)[]
 	// 使用as const 关键字，使用禁止ts类型推倒为union类型
-  return [isLoading, load] as const; 
+  return [isLoading, load] as const;
 	// or
 	return [isLoading, load] as [
     boolean,
@@ -167,49 +177,39 @@ endsnippet
 
 snippet djClassComponent "ts"
 type MyProps = {
-  // using `interface` is also ok
   message: string;
 };
 type MyState = {
   count: number;
 };
+
+// React.PureComponent
+// PureComponent is equivalent to defining a custom shouldComponentUpdate method that shallowly compares props and state.
 class App extends React.Component<MyProps, MyState> {
   state: MyState = {
-    // 这里指逗号optional second annotation for better type inference
+    // 逗号的作用: optional second annotation for better type inference
     count: 0,
   };
-	pointer: number; // Class Properties
+  pointer: number; // Class Properties
+
+  increment = (amt: number) => {
+    this.setState((state) => ({
+      count: state.count + amt,
+    }));
+  };
+
   componentDidMount() {
     this.pointer = 3;
   }
-	render() {
+  render() {
     return (
       <div onClick={() => this.increment(1)}>
         {this.props.message} {this.state.count}
       </div>
     );
   }
-  increment = (amt: number) => {
-    // like this
-    this.setState((state) => ({
-      count: state.count + amt,
-    }));
-  };
 }
-endsnippet
 
-snippet djDefaultProps "ts"
-// 不推荐使用, ts支持参数默认值
-type  ComponentProps = { name: string; }
-
-const  Component = ({ name }: ComponentProps) => (
-	<div>
-		{name.toUpperCase()} /* Safe since name is required */
-	</div>
-);
-Component.defaultProps = { name: "John" };
-
-const  Example = () => (<Component />) /* Safe to omit since name has a default value */
 endsnippet
 
 snippet djGenericComponent "ts"
@@ -443,4 +443,123 @@ const withSampleHoC = <P extends {}>(
 
   return wrappedComponent as typeof WithSampleHoc
 };
+endsnippet
+
+snippet djRef "forwardRef/createRef"
+import { createRef, PureComponent } from "react";
+class CssThemeProvider extends PureComponent<Props> {
+  private rootRef = createRef<HTMLDivElement>(); // like this
+  render() {
+    return <div ref={this.rootRef}>{this.props.children}</div>;
+  }
+}
+
+import { forwardRef, ReactNode } from "react";
+
+interface Props {
+  children?: ReactNode;
+  type: "submit" | "button";
+}
+export type Ref = HTMLButtonElement;
+
+// 写法1
+export const FancyButton = forwardRef<Ref, Props>((props, ref) => (
+  <button ref={ref} className="MyClassName" type={props.type}>
+    {props.children}
+  </button>
+));
+
+import { forwardRef, ReactNode, Ref } from "react";
+
+interface Props {
+  children?: ReactNode;
+  type: "submit" | "button";
+}
+
+// 写法2
+export const FancyButton = forwardRef(
+  (
+    props: Props,
+    ref: Ref<HTMLButtonElement> // <-- here!
+  ) => (
+    <button ref={ref} className="MyClassName" type={props.type}>
+      {props.children}
+    </button>
+  )
+);
+
+// 导出方法
+// Define the handle types which will be passed to the forwardRef
+export type CountdownHandle = {
+  start: () => void;
+};
+type CountdownProps = {};
+const Countdown = forwardRef<CountdownHandle, CountdownProps>((props, ref) => {
+  useImperativeHandle(ref, () => ({
+    // start() has type inference here
+    start() {
+      alert("Start");
+    },
+  }));
+
+  return <div>Countdown</div>;
+});
+
+import Countdown, { CountdownHandle } from "./Countdown.tsx";
+
+function App() {
+  const countdownEl = useRef<CountdownHandle>(null);
+
+  useEffect(() => {
+    if (countdownEl.current) {
+      countdownEl.current.start();
+    }
+  }, []);
+
+  return <Countdown ref={countdownEl} />;
+}
+
+??, unlike ||, falls back only for null or undefined, not for all falsy values.
+endsnippet
+
+snippet djCompProps
+import { Button } from "library"; // but doesn't export ButtonProps! oh no!
+type ButtonProps = React.ComponentProps<typeof Button>; // no problem! grab your own!
+type AlertButtonProps = Omit<ButtonProps, "onClick">; // modify
+const AlertButton = (props: AlertButtonProps) => (
+  <Button onClick={() => alert("hello")} {...props} />
+);
+
+You may also use ComponentPropsWithoutRef (instead of ComponentProps) and ComponentPropsWithRef (if your component specifically forwards refs)
+
+// 获取函数返回值的类型
+type State = ReturnType<typeof transformPropsToState>;
+function transformPropsToState(props: Props) {
+  return {
+    savedPropA: props.propA, // save for memoization
+    derivedState: props.propA,
+  };
+}
+
+// 拆解类型
+function foo() {
+  return {
+    a: 1,
+    b: 2,
+    subInstArr: [
+      {
+        c: 3,
+        d: 4,
+      },
+    ],
+  };
+}
+
+type InstType = ReturnType<typeof foo>;
+type SubInstArr = InstType["subInstArr"];
+type SubInstType = SubInstArr[0];
+
+// https://react-typescript-cheatsheet.netlify.app/docs/basic/troubleshooting/utilities
+Record: A map from a key type to a value type
+
 endsnippet

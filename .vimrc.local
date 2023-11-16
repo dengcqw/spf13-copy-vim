@@ -1030,7 +1030,9 @@ let NERDTreeIgnore=['\.DS_Store$', '\.git$']
 
 "org {
    let g:org_heading_shade_leading_stars = 0
-   let g:org_agenda_files = ['~/org/*.org']
+   let g:org_agenda_files = ['~/Documents/dotoo-files/*.org']
+   let g:dotoo#agenda#files = ['~/Documents/dotoo-files/*.org']
+   let g:dotoo#capture#refile = expand('~/Documents/dotoo-files/refile.org')
 "}
 
 " 显示缩进对齐线
@@ -1045,6 +1047,7 @@ let g:indentLine_enabled = 1
     let g:startify_bookmarks = [
                 \ {'r': '~/Documents/jitu/3-jtreact-codepush'},
                 \ {'s': '~/Documents/jitu/sandytalk'},
+                \ {'d': '~/Documents/dart-sdk/sdk'},
                 \ {'b': '~/Documents/blog/djlblogsource'},
                 \ {'j': '~/Documents/jitu/4-brain-center'}
                 \]
@@ -1067,11 +1070,14 @@ fun! GoYCM()
     nnoremap <buffer> <silent> <leader>gt :YcmCompleter GoTo<CR>
     nnoremap <buffer> <silent> <leader>gr :YcmCompleter GoToReferences<CR>
 
+    let java_binary_path='/usr/local/Cellar/openjdk@17/17.0.5/bin/java'
+
     " swift not auto complete for (, because not used too much
     let g:ycm_semantic_triggers =  {
-        "\   'swift' : ['.', 're![_a-zA-Z]' ],
-        \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+        \   'c': ['->', '.'],
+        \   'cpp,objcpp': ['->', '.', '::'],
         \   'swift' : ['.'],
+        \   'java,javascript,python,typescript': ['.'],
         \ }
 
   let g:ycm_filetype_blacklist = {
@@ -1274,8 +1280,8 @@ autocmd FileType * call GoYCM()
 "autocmd FileType * call GoCoc()
 "autocmd FileType cpp,cxx,h,hpp,c call GoCoc()
 
-let g:alternateExtensions_m = "h"
-let g:alternateExtensions_h = "m"
+let g:alternateExtensions_cc = "h"
+let g:alternateExtensions_h = "cc"
 let g:XkbSwitchEnabled = 1
 let g:XkbSwitchNLayout = 'us'
 autocmd BufEnter * let b:XkbSwitchILayout = 'us'

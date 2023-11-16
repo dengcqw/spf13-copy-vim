@@ -785,3 +785,26 @@ PropTypes.shape({
 	$1
 }).isRequired
 endsnippet
+
+
+snippet store "zustand store"
+import create from 'zustand';
+interface I$1State {
+  count: number;
+  increment: () => void;
+  decrement: () => void;
+}
+
+const use${1:Count}Store = create<I$1State>((set) => ({
+  count: 0,
+  increment: () => set((state) => ({ count: state.count + 1 })),
+  decrement: () => set((state) => ({ count: state.count - 1 })),
+}));
+
+const { count, increment, decrement } = use$1Store((state) => ({
+	count: state.count,
+	increment: state.increment,
+	decrement: state.decrement,
+}));
+
+endsnippet

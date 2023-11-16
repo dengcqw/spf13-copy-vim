@@ -1,16 +1,15 @@
 
-snippet tjcolor ""
+snippet jtcolor ""
 import Colors from "@src/styles/Colors";
 endsnippet
 
-snippet tjicon ""
-import Iconfont from "@src/screens/home/components/AntIcon";
+snippet jticonImp ""
+import Iconfont from "@src/components/Iconfont";
 endsnippet
 
 snippet jtimportImg ""
 import * as  JTImages from '@jtcenter/jtimages'
 endsnippet
-
 
 snippet jtimportCom ""
 import {$1} from '@jtcenter/jtcomponents'
@@ -30,6 +29,6 @@ import { useAppSelector, useAppDispatch } from '../../tools/hooks'
 import { actions, selectors} from './Slice'
 endsnippet
 
-snippet rnIcon "Icon"
+snippet jtIcon "Icon"
 <Icon name={IconName.info} size={20} color={"#4F8EF7"} />
 endsnippet
