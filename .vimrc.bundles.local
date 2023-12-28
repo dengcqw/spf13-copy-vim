@@ -15,6 +15,7 @@
     "Directory viewer for Vim
     " use "-" to open a filelist
     Bundle 'justinmk/vim-dirvish'
+    Bundle 'roginfarrer/vim-dirvish-dovish'
     " Adds file type icons to Vim plugins
     Bundle 'ryanoasis/vim-devicons'
     " a start screen for Vim and Neovim
