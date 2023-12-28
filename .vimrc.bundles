@@ -160,11 +160,13 @@
             Bundle 'tpope/vim-fugitive'
             " 可以直接调试接口
             Bundle 'mattn/webapi-vim'
+            Bundle 'mattn/vdbi-vim'
+            Bundle 'nicwest/vim-http'
             " github代码片段管理
             Bundle 'mattn/gist-vim'
-            Bundle 'scrooloose/nerdcommenter'
             " 添加注释
-            Bundle 'tpope/vim-commentary'
+            Bundle 'scrooloose/nerdcommenter'
+            "Bundle 'tpope/vim-commentary'
             " 文本对齐
             Bundle 'godlygeek/tabular'
             " 通过将不同层次的括号高亮为不同的颜色, 帮助你阅读世界上最复杂的代码
@@ -295,9 +297,10 @@
         if count(g:spf13_bundle_groups, 'misc')
             Bundle 'rust-lang/rust.vim'
             "Bundle 'spf13/vim-preview'
-            Bundle 'tpope/vim-cucumber'
+            " Ruby
+            "Bundle 'tpope/vim-cucumber'
+            "Bundle 'quentindecock/vim-cucumber-align-pipes'
             Bundle 'cespare/vim-toml'
-            Bundle 'quentindecock/vim-cucumber-align-pipes'
             Bundle 'saltstack/salt-vim'
         endif
     " }

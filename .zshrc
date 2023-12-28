@@ -539,3 +539,4 @@ add-zsh-hook chpwd load-nvmrc
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export NODE_PATH=$(npm root -g)

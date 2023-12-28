@@ -6,9 +6,6 @@
 " { vim 强化
     Bundle 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
-    " 标准请求格式
-    Bundle 'nicwest/vim-http'
-
     Bundle 'voldikss/vim-translator'
 
     " 文件变化时，自动创建文件中全部的fold
@@ -23,7 +20,7 @@
     " a start screen for Vim and Neovim
     Bundle "mhinz/vim-startify"
     " 类似vscode command
-    Bundle "liuchengxu/vim-clap"
+    "Bundle "liuchengxu/vim-clap"
     " 文档管理的工具
     "Bundle 'vimwiki/vimwiki'
     Bundle 'Yggdroot/indentLine'
@@ -77,9 +74,6 @@
     endif
 " }
 "
-" iOS dev {
-    Bundle 'keith/swift.vim'
-" }
 
     ":MarkdownPreview
     Bundle 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
@@ -94,7 +88,7 @@
     Bundle 'dart-lang/dart-vim-plugin'
     "Bundle 'neoclide/coc.nvim', {'branch': 'release'}
 
-    Bundle 'tenfyzhong/CompleteParameter.vim'
+    "Bundle 'tenfyzhong/CompleteParameter.vim'
 
     " 文件切换相关命令
     Bundle 'vim-scripts/a.vim'
@@ -116,19 +110,20 @@
 
     " 会启动dart，一直占用cpu
     "Bundle 'thosakwe/vim-flutter'
-
     " Vimspector should work for any debug adapter that works in Visual Studio Code.
     "Bundle 'puremourning/vimspector'
 
-    "Bundle 'gfontenot/vim-xcode'
+    " iOS dev {
+        "Bundle 'keith/swift.vim'
+        "Bundle 'gfontenot/vim-xcode'
+    " }
     "Bundle 'skywind3000/asyncrun.vim'
     "{
     Bundle 'jceb/vim-orgmode'
     Bundle 'dhruvasagar/vim-dotoo'
+    "Bundle 'tpope/vim-speeddating'
     Bundle 'utl.vim'
-    Bundle 'mattn/calendar-vim'
-    Bundle 'speeddating.vim'
-    Bundle 'inkarkat/vim-SyntaxRange'
+    "Bundle 'mattn/calendar-vim'
+    Bundle 'itchyny/calendar.vim'
+    "Bundle 'inkarkat/vim-SyntaxRange'
     "}
-
-

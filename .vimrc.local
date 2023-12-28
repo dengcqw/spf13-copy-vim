@@ -913,11 +913,26 @@ let g:airline_symbols_ascii = 1
 let g:Lf_ShortcutF = '<D-p>'
 let g:Lf_ShortcutB = '<leader>fb'
 let g:Lf_WildIgnore = {
-            \ 'dir': ['.svn','.git','.hg', 'Target Support Files', 'Headers', '.cache'],
+            \ 'dir': ['.svn','.git','.hg', 'Target Support Files', 'Headers', '.cache', 'Library', 'node_modules', 'spf13-copy-vim', 'depot_tools', 'flutter'],
             \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
             \}
 let g:Lf_StlSeparator = { 'left': '', 'right': '' } " powerline font
 let g:Lf_UseVersionControlTool=0  " Don't respect version control ignore files
+let g:Lf_WindowPosition='bottom'
+let g:Lf_QuickSelect=1  " 0-9
+let g:Lf_PreviewResult = {
+            \ 'File': 0,
+            \ 'Buffer': 1,
+            \ 'Mru': 0,
+            \ 'Tag': 1,
+            \ 'BufTag': 1,
+            \ 'Function': 1,
+            \ 'Line': 1,
+            \ 'Colorscheme': 1,
+            \ 'Rg': 1,
+            \ 'Gtags': 1
+            \}
+
 nnoremap <silent> <D-r> :LeaderfMru<CR>
 nnoremap <silent> <D-b> :LeaderfBuffer<CR>
 nnoremap <silent> <leader>fs :LeaderfSelf<CR>
@@ -1047,8 +1062,9 @@ let g:indentLine_enabled = 1
     let g:startify_bookmarks = [
                 \ {'r': '~/Documents/jitu/3-jtreact-codepush'},
                 \ {'s': '~/Documents/jitu/sandytalk'},
+                \ {'b': '~/Documents/jitu/BosumMobile'},
                 \ {'d': '~/Documents/dart-sdk/sdk'},
-                \ {'b': '~/Documents/blog/djlblogsource'},
+                \ {'g': '~/Documents/blog/djlblogsource'},
                 \ {'j': '~/Documents/jitu/4-brain-center'}
                 \]
     "if filereadable(expand("~/spf13-copy-vim/vimrc.startify.headers"))
@@ -1321,3 +1337,12 @@ nnoremap <silent> <space>ttsv<space> :vnew<cr>:setl bt=nofile bh=wipe nobl noswf
 nmap <space>sh<space> yy<space>ttss<space>P:.!zsh<cr>
 xmap <space>sh<space> y<space>ttss<space>P:%!zsh<cr>
 "}}}
+
+" 禁用vim-markdown 语法隐藏
+let g:vim_markdown_conceal = 0
+
+let g:translator_history_enable = 1
+let g:translator_default_engines = ['google']
+
+let g:calendar_view = 'week'
+let g:calendar_views = ['month', 'week', 'day', 'event', 'agenda']
