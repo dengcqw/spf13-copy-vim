@@ -92,7 +92,7 @@
 
 " General {
 
-    set background=dark         " Assume a dark background
+    set background=light         " Assume a dark background
 
     " Allow to trigger background
     function! ToggleBG()
@@ -645,48 +645,6 @@
         endif
     " }
 
-    " ctrlp {
-        if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
-            let g:ctrlp_working_path_mode = 'ra'
-            nnoremap <silent> <D-t> :CtrlP<CR>
-            nnoremap <silent> <D-r> :CtrlPMRU<CR>
-            let g:ctrlp_custom_ignore = {
-                \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
-
-            if executable('ag')
-                let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
-            elseif executable('ack-grep')
-                let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
-            elseif executable('ack')
-                let s:ctrlp_fallback = 'ack %s --nocolor -f'
-            " On Windows use "dir" as fallback command.
-            elseif WINDOWS()
-                let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
-            else
-                let s:ctrlp_fallback = 'find %s -type f'
-            endif
-            if exists("g:ctrlp_user_command")
-                unlet g:ctrlp_user_command
-            endif
-            let g:ctrlp_user_command = {
-                \ 'types': {
-                    \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-                    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-                \ },
-                \ 'fallback': s:ctrlp_fallback
-            \ }
-
-            if isdirectory(expand("~/.vim/bundle/ctrlp-funky/"))
-                " CtrlP extensions
-                let g:ctrlp_extensions = ['funky']
-
-                "funky
-                nnoremap <Leader>fu :CtrlPFunky<Cr>
-            endif
-        endif
-    "}
-
     " TagBar {
         if isdirectory(expand("~/.vim/bundle/tagbar/"))
             nnoremap <silent> <leader>tt :TagbarToggle<CR>
@@ -701,18 +659,18 @@
 
     " Fugitive {
         if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
-            nnoremap <silent> <leader>gs :Gstatus<CR>
-            nnoremap <silent> <leader>gd :Gdiff<CR>
-            nnoremap <silent> <leader>gc :Gcommit<CR>
-            nnoremap <silent> <leader>gb :Gblame<CR>
-            nnoremap <silent> <leader>gl :Glog<CR>
-            nnoremap <silent> <leader>gp :Git push<CR>
-            nnoremap <silent> <leader>gr :Gread<CR>
-            nnoremap <silent> <leader>gw :Gwrite<CR>
-            nnoremap <silent> <leader>ge :Gedit<CR>
+            "nnoremap <silent> <leader>gs :Gstatus<CR>
+            "nnoremap <silent> <leader>gd :Gdiff<CR>
+            "nnoremap <silent> <leader>gc :Gcommit<CR>
+            "nnoremap <silent> <leader>gb :Gblame<CR>
+            "nnoremap <silent> <leader>gl :Glog<CR>
+            "nnoremap <silent> <leader>gp :Git push<CR>
+            "nnoremap <silent> <leader>gr :Gread<CR>
+            "nnoremap <silent> <leader>gw :Gwrite<CR>
+            "nnoremap <silent> <leader>ge :Gedit<CR>
             " Mnemonic _i_nteractive
-            nnoremap <silent> <leader>gi :Git add -p %<CR>
-            nnoremap <silent> <leader>gg :SignifyToggle<CR>
+            "nnoremap <silent> <leader>gi :Git add -p %<CR>
+            "nnoremap <silent> <leader>gg :SignifyToggle<CR>
         endif
     "}
 

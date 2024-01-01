@@ -119,12 +119,22 @@
         "Bundle 'gfontenot/vim-xcode'
     " }
     "Bundle 'skywind3000/asyncrun.vim'
-    "{
+    " org mode {
     Bundle 'jceb/vim-orgmode'
-    Bundle 'dhruvasagar/vim-dotoo'
-    "Bundle 'tpope/vim-speeddating'
+    Bundle 'dengcqw/vim-dotoo'
+    Bundle 'tpope/vim-speeddating'
     Bundle 'utl.vim'
-    "Bundle 'mattn/calendar-vim'
-    Bundle 'itchyny/calendar.vim'
-    "Bundle 'inkarkat/vim-SyntaxRange'
+    Bundle 'mattn/calendar-vim'
+    Bundle 'chrisbra/NrrwRgn'
+    Bundle 'inkarkat/vim-SyntaxRange'
     "}
+    "Bundle 'itchyny/calendar.vim'
+
+    " session manager
+    Bundle 'tpope/vim-obsession'
+    Bundle 'dhruvasagar/vim-prosession'
+
+    Bundle 'ybian/smartim'
+
+    " manager branch
+    Bundle 'sodapopcan/vim-twiggy'

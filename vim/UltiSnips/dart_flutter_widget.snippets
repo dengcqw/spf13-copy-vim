@@ -1,0 +1,184 @@
+snippet wgttext "widget Text"
+const Text(
+	'$1',
+	style: TextStyle(
+		color: ColorStyle.titleColor,
+		fontWeight: FontWeight.bold,
+		fontSize: 19),
+),
+endsnippet
+
+snippet wgtcon "widget Container"
+Container(
+	alignment: Alignment.center,
+	height: 50,
+	width: 50,
+	padding: const EdgeInsets.symmetric(horizontal: 5),
+	margin: const EdgeInsets.only(left: 5),
+	decoration: BoxDecoration(
+		borderRadius: BorderRadius.circular(10),
+		border: Border.all(color: Colors.red),
+	),
+	child: Text(
+		'$1',
+		style: TextStyle(
+			height: 15,
+			color: tmpColor,
+			fontSize: 10,
+		),
+	),
+),
+endsnippet
+
+snippet wgtbtn "widget InkWell"
+InkWell(
+	onTap: () {
+	},
+	child: $1,
+),
+endsnippet
+
+snippet wgtrow "widget Row"
+const Row(
+  mainAxisAlignment: MainAxisAlignment.start,
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+	$1
+  ],
+),
+endsnippet
+
+snippet wgtrow "widget Row"
+const Column(
+  mainAxisAlignment: MainAxisAlignment.start,
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+  $1
+  ],
+),
+endsnippet
+
+
+snippet wgtexpand "widget Expand"
+const Expanded(
+  child: $1
+),
+endsnippet
+
+snippet wgtpadding "widget Padding"
+const Padding(
+  padding: EdgeInsets.only(left: 19),
+  child: $1
+),
+endsnippet
+
+snippet wgticon "widget Icon"
+const Icon(IconData(0xe702, fontFamily: 'iconfont'),
+  size: 10.0,
+  color: Colors.red,
+),
+endsnippet
+
+snippet wgtcenter "widget Center"
+const Center(
+  child: $1
+),
+endsnippet
+
+snippet wgtimage_asset "widget Image"
+const Image.asset(
+  'images/icon_user.png',
+  width: 26,
+  height: 26,
+  fit: BoxFit.fill,
+),
+endsnippet
+
+snippet wgtsizebox "widget SizeBox"
+const SizedBox(width: 0, height: 0, child: $1)
+endsnippet
+
+snippet future_delay
+Future.delayed(const Duration(milliseconds: 500)).then((_) {
+});
+endsnippet
+
+snippet tabbar "tabbar demo"
+_tabController = TabController(
+  initialIndex: 0,
+  length: 3,
+  vsync: this,
+);
+_tabController!.addListener(() {
+  tabNum = _tabController!.index;
+}
+});
+
+Widget dian = ClipOval(
+  child: Container(
+	width: 6.0,
+	height: 6.0,
+	color: ColorStyle.appColor,
+	alignment: Alignment.center,
+  ),
+);
+Widget _tabBar() {
+  return TabBar(
+	controller: _tabController,
+	tabs: tabs.map<Widget>((e) {
+	  return Container(
+		width: MediaQuery.of(context).size.width / 3,
+		alignment: Alignment.center,
+		child: Row(
+		  mainAxisAlignment: MainAxisAlignment.center,
+		  children: [
+			Text(
+			  e['name'],
+			  style: const TextStyle(fontSize: 14),
+			),
+			e['sign']
+				? Align(
+					widthFactor: 2,
+					heightFactor: 2,
+					alignment: const Alignment(0.0, -2),
+					child: dian,
+				  )
+				: const SizedBox(),
+		  ],
+		),
+	  );
+	}).toList(),
+	isScrollable: true,
+	unselectedLabelColor: ColorStyle.swordsColor,
+	indicatorColor: ColorStyle.appColor,
+	indicator: const MyTabIndicator(20.0),
+	indicatorWeight: 2.0,
+	indicatorSize: TabBarIndicatorSize.label,
+	indicatorPadding: const EdgeInsets.only(left: 10, right: 15),
+	labelStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+	labelColor: ColorStyle.titleColor,
+	labelPadding: EdgeInsets.zero,
+  );
+}
+TabBarView(
+  controller: _tabController,
+  children: [
+	page1(),
+	page2(),
+	page3(),
+  ],
+)
+endsnippet
+
+snippet wgtstack "widget Stack & Position"
+Stack(
+  children: [
+  Positioned(
+	top: 0,
+	right: 0,
+	bottom: 0,
+	left: 0,
+	child: $1,
+  )
+),
+endsnippet

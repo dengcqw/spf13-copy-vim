@@ -611,3 +611,11 @@ public class Counter {
 	}
 }
 endsnippet
+
+snippet runOnMain
+new Handler(Looper.getMainLooper()).post(new Runnable() {
+  @Override
+  public void run() {
+  }
+});
+endsnippet

@@ -80,7 +80,7 @@
     nnoremap <Leader>tn :tabnew<cr>
     " nnoremap <Leader>to :tabonly<cr>
     nnoremap <Leader>tc :tabclose<cr>
-    nnoremap <Leader>tm :tabmove
+    "nnoremap <Leader>tm :tabmove
     " shift tab pages; i is ahead of o  likt <C-I><C-O>
     nnoremap <Leader>ti :tabp<CR>
     nnoremap <Leader>to :tabn<CR>
@@ -286,19 +286,17 @@ let g:used_javascript_libs = 'underscore,react'
 " vim-jsx.vim
 let g:jsx_ext_required = 0
 
-function! ChangeJavascriptTab()
+"function! ChangeJavascriptTab()
     set tabstop=2
     set softtabstop=2
     set shiftwidth=2
     set expandtab
-endfunction
+"endfunction
 
 augroup filetype_jsformat
     autocmd!
-    autocmd FileType typescript,javascript,typescriptreact,javascriptreact  :call ChangeJavascriptTab()
+    "autocmd FileType typescript,javascript,typescriptreact,javascriptreact  :call ChangeJavascriptTab()
     autocmd FileType typescript,javascript,typescriptreact,javascriptreact vnoremap <silent> = :'<,'>:PrettierFragment<CR>
-    autocmd FileType typescript,javascript,typescriptreact,javascriptreact let b:ale_linters = ['eslint']
-    autocmd FileType typescript,javascript,typescriptreact,javascriptreact let b:ale_fixers = ['eslint', 'prettier']
 augroup END
 
 "surrounding command list {
@@ -707,6 +705,7 @@ noremap <Leader>bg :call ToggleBG()<CR>
   "gcc/clang 和 cppcheck，前者主要检查有无语法错误，后者主要会给出一些编码建议
   let g:ale_linters = {
   \   'javascript': ['eslint'],
+  \   'typescriptreact': ['eslint'],
   \   'vue': ['prettier'],
   \   'html': ['prettier'],
   \   'css': ['prettier'],
@@ -714,7 +713,7 @@ noremap <Leader>bg :call ToggleBG()<CR>
   \   'md': ['proselint'],
   "\   'objc': ['clangd'],
   "\   'objcpp': ['clangd'],
-  \   'swift': ['swiftformat'],
+  "\   'swift': ['swiftformat'],
   \   'c': ['cppcheck', 'clangd'],
   \   'cpp': ['cppcheck', 'clangd'],
   \}
@@ -722,6 +721,7 @@ noremap <Leader>bg :call ToggleBG()<CR>
   let g:ale_fixers = {
   \   '*': ['remove_trailing_lines', 'trim_whitespace'],
   \  'javascript': ['prettier', 'eslint'],
+  \  'typescriptreact': ['prettier', 'eslint'],
   \  'vue': ['prettier'],
   \  'html': ['prettier'],
   \}
@@ -746,6 +746,8 @@ noremap <Leader>bg :call ToggleBG()<CR>
   let g:ale_set_quickfix = 1
   let g:ale_open_list = 0
 
+  let g:ale_dart_analysis_server_executable = '/Users/dengjinlong/flutter/bin/dart'
+  let g:ale_dart_format_executable = '/Users/dengjinlong/flutter/bin/dart'
 
   noremap <space>ll :call QFixToggle()<CR>
 
@@ -1003,8 +1005,61 @@ let NERDTreeIgnore=['\.DS_Store$', '\.git$']
 "org {
    let g:org_heading_shade_leading_stars = 0
    let g:org_agenda_files = ['~/Documents/dotoo-files/*.org']
-   let g:dotoo#agenda#files = ['~/Documents/dotoo-files/*.org']
+   let g:dotoo#agenda#files = ['~/Documents/dotoo-files/*.org', '~/Documents/dotoo-files/notes/*.org']
    let g:dotoo#capture#refile = expand('~/Documents/dotoo-files/refile.org')
+   let g:dotoo#capture#clock = 0
+   let g:org_indent = 1
+
+   let g:org_todo_keywords = [['TODO(t)', 'WAITING(w)', '|', 'DONE(d)'],
+               \ ['严重(r)', 'BUG(b)', '|', 'FIXED(f)'],
+               \ ['|', 'CANCELED(c)', 'DELEGATED(l)']]
+   let g:org_todo_keyword_faces = [['严重', 'cyan'], ['BUG', 'cyan'],['FIXED', 'cyan'], ['WAITING', 'cyan'], ['CANCELED',
+               \ [':foreground red', ':background black', ':weight bold',
+               \ ':slant italic', ':decoration underline']]]
+
+   let g:dotoo#capture#templates = {
+      \ 't': {
+      \   'description': 'Todo',
+      \   'lines': [
+      \     '* TODO %?',
+      \     'DEADLINE: [%(strftime(g:dotoo#time#datetime_format))]'
+      \   ],
+      \  'target': 'refile',
+      \  'clock': 0,
+      \ },
+      \ 'n': {
+      \   'description': 'Note',
+      \   'lines': ['* %? :NOTE:'],
+      \ },
+      \ 'j': {
+      \   'description': 'Journal Entry',
+      \   'lines': [
+      \     '* %(strftime(g:dotoo#time#time_format)) %?'
+      \   ],
+      \   'target': 'notes/diary/%(strftime(g:dotoo#time#date_format)).org',
+      \   'append': 1,
+      \ },
+      \ 'm': {
+      \ },
+      \ 'p': {
+      \ },
+      \ 'h': {
+      \ }
+      \}
+
+   let g:dotoo#parser#todo_keywords = [
+      \ 'TODO',
+      \ 'NEXT',
+      \ 'WAITING',
+      \ 'HOLD',
+      \ 'PHONE',
+      \ 'MEETING',
+      \ '|',
+      \ 'CANCELLED',
+      \ 'DONE'
+      \ ]
+
+   let g:dotoo_todo_keyword_faces = []
 "}
 
 " 显示缩进对齐线
@@ -1022,6 +1077,7 @@ let g:indentLine_enabled = 1
                 \ {'b': '~/Documents/jitu/BosumMobile'},
                 \ {'d': '~/Documents/dart-sdk/sdk'},
                 \ {'g': '~/Documents/blog/djlblogsource'},
+                \ {'f': '~/Documents/jitu/1-JMS-Center-iOS/flutter_jtcenter'},
                 \ {'j': '~/Documents/jitu/4-brain-center'}
                 \]
     "if filereadable(expand("~/spf13-copy-vim/vimrc.startify.headers"))
@@ -1040,6 +1096,12 @@ let g:indentLine_enabled = 1
 fun! GoYCM()
     "autocmd FileType * CocDisable
 
+    let g:ycm_key_detailed_diagnostics = '\e'
+    let g:ycm_show_detailed_diag_in_popup=1
+    let g:ycm_auto_hover = ''
+    nnoremap <silent> \d <plug>(YCMHover)
+    nnoremap <silent> \e :YcmShowDetailedDiagnostic<CR>
+    nnoremap <silent> \f :YcmCompleter Format<CR>
     nnoremap <buffer> <silent> <leader>gt :YcmCompleter GoTo<CR>
     nnoremap <buffer> <silent> <leader>gr :YcmCompleter GoToReferences<CR>
 
@@ -1049,7 +1111,7 @@ fun! GoYCM()
     let g:ycm_semantic_triggers =  {
         \   'c': ['->', '.'],
         \   'cpp,objcpp': ['->', '.', '::'],
-        \   'swift' : ['.'],
+        \   'swift,dart' : ['.'],
         \   'java,javascript,python,typescript': ['.'],
         \ }
 
@@ -1099,14 +1161,15 @@ fun! GoYCM()
     " https://github.com/ycm-core/lsp-examples
     "
     "let SDKPATH = '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator14.3.sdk'
-    "let g:ycm_lsp_dir = '~/Documents/5-Flutter/lsp-examples-master'
-    "let g:ycm_language_server = [
-      "\   {
-      "\     'name': 'dart',
-      "\     'cmdline': [ 'dart', expand( g:ycm_lsp_dir . '/dart/analysis_server.dart.snapshot' ), '--lsp' ],
-      "\     'filetypes': [ 'dart' ],
-      "\   },
-      "\   {
+    "https://github.com/dart-lang/sdk/blob/master/pkg/analysis_server/tool/lsp_spec/README.md
+    "dart language-server --client-id my-editor.my-plugin --client-version 1.2
+    let g:ycm_language_server = [
+      \   {
+      \     'name': 'dart',
+      \     'cmdline': [ '/Users/dengjinlong/flutter/bin/dart', 'language-server'],
+      \     'filetypes': [ 'dart' ],
+      \   }
+      "\  , {
       "\     'name': 'swift',
       "\     'cmdline': ['/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp',
       "\         '-Xswiftc', '-sdk', '-Xswiftc', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator14.3.sdk',
@@ -1114,7 +1177,7 @@ fun! GoYCM()
       "\     ],
       "\     'filetypes': [ 'swift' ],
       "\   },
-      "\ ]
+      \ ]
 endfun
 "}
 
@@ -1291,15 +1354,15 @@ nnoremap <silent> <space>ttss<space> :new<cr>:setl bt=nofile bh=wipe nobl noswf<
 nnoremap <silent> <space>ttsv<space> :vnew<cr>:setl bt=nofile bh=wipe nobl noswf<cr>
 "}}}
 "########## Run Command ##########{{{
-nmap <space>sh<space> yy<space>ttss<space>P:.!zsh<cr>
-xmap <space>sh<space> y<space>ttss<space>P:%!zsh<cr>
+"nmap <space>sh<space> yy<space>ttss<space>P:.!zsh<cr>
+"xmap <space>sh<space> y<space>ttss<space>P:%!zsh<cr>
 "}}}
 
 " 禁用vim-markdown 语法隐藏
 let g:vim_markdown_conceal = 0
 
 let g:translator_history_enable = 1
-let g:translator_default_engines = ['google']
+let g:translator_default_engines = ['youdao', 'haici', 'bing']
 
 let g:calendar_view = 'week'
 let g:calendar_views = ['month', 'week', 'day', 'event', 'agenda']
@@ -1345,3 +1408,63 @@ let g:SignatureMap = {
 " jump between edit postio  changlist
 " g; and g,
 " :changes
+
+" exit deol terminal buffer
+tnoremap <ESC>   <C-\><C-n>
+command! Tm call deol#start(#{ toggle: v:true, split: 'horizontal', cwd: '%'->expand()->fnamemodify(':h') })
+nnoremap <Leader>tm :Tm<CR>
+" 中文切换
+let g:smartim_default = 'com.apple.keylayout.ABC'
+
+let g:prosession_on_startup = 0
+
+" Nice window title
+if has('title') && (has('gui_running') || &title)
+    set titlestring=
+    set titlestring+=%f   " file name
+    set titlestring+=\ %m%r%w "  file flags read or write
+    set titlestring+=\ (%{substitute(getcwd(),\ $HOME,\ '~',\ '')})  " working directory
+endif
+
+
+let s:Widgets = ['Container','Expanded','InkWell']
+
+func WidgetSelected(id, result)
+    " use a:result
+    echom s:Widgets[a:result-1]
+    let l:saved_reg = @" " 备份寄存器
+    execute "normal! viwf(%d"
+
+    let l:text = "Conatiner(child:". @" .", )"
+    let @" = l:text
+    execute "normal \"\"P"
+    execute "DartFmt"
+
+    let @" = l:saved_reg
+endfunc
+
+let s:ycm_hover_popup = -1
+function! s:ShowDataPopup() abort
+call popup_hide( s:ycm_hover_popup )
+let s:ycm_hover_popup = popup_menu(s:Widgets, #{callback: 'WidgetSelected'} )
+endfunction
+
+command! Popup call s:ShowDataPopup()
+
+call textobj#user#plugin('line', {
+      \   '-': {
+      \     'select-a-function': 'CurrentWidget',
+      \     'select-a': 'al',
+      \     'select-i-function': 'CurrentWidget',
+      \     'select-i': 'il',
+      \   },
+      \ })
+
+function! CurrentWidget()
+  normal! b
+  let head_pos = getpos('.')
+  normal! w%
+  let tail_pos = getpos('.')
+  return ['v', head_pos, tail_pos]
+endfunction
+

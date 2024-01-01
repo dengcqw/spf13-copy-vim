@@ -1,0 +1,396 @@
+snippet statelessW "Create a Stateless widget"
+class ${1:name} extends StatelessWidget {
+  const $1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+endsnippet
+
+snippet statefulW "Create a Stateful widget"
+class ${1:name} extends StatefulWidget {
+  const $1({super.key});
+
+  @override
+  State<${2:WidgetName}> createState() => _$2State();
+}
+
+class _$2State extends State<$2> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+endsnippet
+
+snippet build "Describes the part of the user interface represented by this widget."
+@override
+Widget build(BuildContext context) {
+  return ${1:Container()};
+}
+endsnippet
+
+snippet customPainter "Used for creating custom paint"
+class ${1:Named}Painter extends CustomPainter {
+
+  @override
+  void paint(Canvas canvas, Size size) {
+  }
+
+  @override
+  bool shouldRepaint($1Painter oldDelegate) => false;
+
+  @override
+  bool shouldRebuildSemantics($1Painter oldDelegate) => false;
+}
+endsnippet
+
+snippet customClipper "Used for creating custom shapes"
+class ${1:name}Clipper extends CustomClipper<Path> {
+
+  @override
+  Path getClip(Size size) {
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+endsnippet
+
+snippet initS "Called when this object is inserted into the tree. The framework will call this method exactly once for each State object it creates."
+@override
+void initState() {
+  super.initState();
+  ${1:}
+}
+endsnippet
+
+snippet dis "Called when this object is removed from the tree permanently. The framework calls this method when this State object will never build again."
+@override
+void dispose() {
+  ${1:}
+  super.dispose();
+}
+endsnippet
+
+snippet reassemble "Called whenever the application is reassembled during debugging, for example during hot reload."
+@override
+void reassemble(){
+  super.reassemble();
+  ${1:}
+}
+endsnippet
+
+snippet didChangeD "Called when a dependency of this State object changes"
+@override
+void didChangeDependencies() {
+  super.didChangeDependencies();
+  ${1:}
+}
+endsnippet
+
+snippet didUpdateW "Called whenever the widget configuration changes."
+@override
+void didUpdateWidget (${1:Type} ${2:oldWidget}) {
+  super.didUpdateWidget($2);
+  $3
+}
+endsnippet
+
+snippet listViewB "Creates a scrollable, linear array of widgets that are created on demand.Providing a non-null `itemCount` improves the ability of the [ListView] to estimate the maximum scroll extent."
+ListView.builder(
+  itemCount: ${1:1},
+  itemBuilder: (BuildContext context, int index) {
+    return ${2:};
+  },
+),
+endsnippet
+
+snippet listViewS "Creates a fixed-length scrollable linear array of list 'items' separated by list item 'separators'."
+ListView.separated(
+  itemCount: ${1:1},
+  separatorBuilder: (BuildContext context, int index) {
+    return ${2:};
+  },
+  itemBuilder: (BuildContext context, int index) {
+    return ${3:};
+  },
+),
+endsnippet
+
+snippet gridViewB "Creates a scrollable, 2D array of widgets that are created on demand. Providing a non-null `itemCount` improves the ability of the [GridView] to estimate the maximum scroll extent."
+GridView.builder(
+  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: ${1:2},
+  ),
+  itemCount: ${2:2},
+  itemBuilder: (BuildContext context, int index) {
+    return ${3:};
+  },
+),
+endsnippet
+
+snippet gridViewC "Creates a scrollable, 2D array of widgets with a fixed number of tiles in the cross axis."
+GridView.count(
+  crossAxisSpacing: ${1:1},
+  mainAxisSpacing: ${2:2},
+  crossAxisCount: ${3:2},
+  children: <Widget> [
+    ${4:}
+  ],
+),
+endsnippet
+
+snippet gridViewE "Creates a scrollable, 2D array of widgets with tiles that each have a maximum cross-axis extent."
+GridView.extent(
+  maxCrossAxisExtent:  ${1:2},
+  children: <Widget> [
+    ${2:}
+  ],
+),
+endsnippet
+
+snippet customScrollV "Creates a `ScrollView` that creates custom scroll effects using slivers. If the `primary` argument is true, the `controller` must be null."
+CustomScrollView(
+  slivers: <Widget>[
+    ${1:}
+  ],
+),
+endsnippet
+
+snippet streamBldr "Creates a new `StreamBuilder` that builds itself based on the latest snapshot of interaction with the specified `stream`"
+StreamBuilder(
+  stream: ${1:stream},
+  initialData: ${2:initialData},
+  builder: (BuildContext context, AsyncSnapshot snapshot) {
+    return Container(
+      child: ${3:child},
+    );
+  },
+),
+endsnippet
+
+snippet animatedBldr "Creates an Animated Builder. The widget specified to `child` is passed to the `builder`"
+AnimatedBuilder(
+  animation: ${1:animation},
+  child: ${2:child},
+  builder: (BuildContext context, Widget? child) {
+    return ${3:};
+  },
+),
+endsnippet
+
+snippet statefulBldr "Creates a widget that both has state and delegates its build to a callback. Useful for rebuilding specific sections of the widget tree."
+StatefulBuilder(
+  builder: (BuildContext context, setState) {
+    return ${1:};
+  },
+),
+endsnippet
+
+snippet orientationBldr "Creates a builder which allows for the orientation of the device to be specified and referenced"
+OrientationBuilder(
+  builder: (BuildContext context, Orientation orientation) {
+    return Container(
+      child: ${3:child},
+    );
+  },
+),
+endsnippet
+
+snippet layoutBldr "Similar to the Builder widget except that the framework calls the builder function at layout time and provides the parent widget's constraints."
+LayoutBuilder(
+  builder: (BuildContext context, BoxConstraints constraints) {
+    return ${1:};
+  },
+),
+endsnippet
+
+snippet singleChildSV "Creates a scroll view with a single child"
+SingleChildScrollView(
+  controller: ${1:controller,}
+  child: Column(
+    ${1:}
+  ),
+),
+endsnippet
+
+snippet futureBldr "Creates a Future Builder. This builds itself based on the latest snapshot of interaction with a Future."
+FutureBuilder(
+  future: ${1:Future},
+  initialData: ${2:InitialData},
+  builder: (BuildContext context, AsyncSnapshot snapshot) {
+    return ${3:};
+  },
+),
+endsnippet
+
+snippet nosm "This method is invoked when a non-existent method or property is accessed."
+@override
+dynamic noSuchMethod(Invocation invocation) {
+  ${1:}
+}
+endsnippet
+
+snippet inheritedW "Class used to propagate information down the widget tree"
+class ${1:Name} extends InheritedWidget {
+  const $1({super.key, required this.child}) : super(child: child);
+
+  final Widget child;
+
+  static $1? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<$1>();
+  }
+
+  @override
+  bool updateShouldNotify($1 oldWidget) {
+    return ${2:true};
+  }
+}
+endsnippet
+
+snippet mounted "Whether this State object is currently in a tree."
+@override
+bool get mounted {
+  ${1:}
+}
+endsnippet
+
+snippet snk "A Sink is the input of a stream."
+Sink<${1:type}> get ${2:name} => _$2Controller.sink;
+final _$2Controller = StreamController<$1>();
+endsnippet
+
+snippet strm "A source of asynchronous data events. A stream can be of any data type <T>"
+Stream<${1:type}> get ${2:name} => _$2Controller.stream;
+final _$2Controller = StreamController<$1>();
+endsnippet
+
+snippet subj "A BehaviorSubject is also a broadcast StreamController which returns an Observable rather than a Stream."
+Stream<${1:type}> get ${2:name} => _$2Subject.stream;
+final _$2Subject = BehaviorSubject<$1>();
+endsnippet
+
+snippet toStr "Returns a string representation of this object."
+@override
+String toString() => ${1:toString}
+endsnippet
+
+snippet debugP "Prints a message to the console, which you can access using the flutter tool's `logs` command (flutter logs)."
+debugPrint(${1:statement});
+endsnippet
+
+snippet importM "Import flutter material package"
+import 'package:flutter/material.dart';
+endsnippet
+
+snippet importC "Import Flutter Cupertino package"
+import 'package:flutter/cupertino.dart';
+endsnippet
+
+snippet importFT "Import flutter_test package"
+import 'package:flutter_test/flutter_test.dart';
+endsnippet
+
+snippet importAL "Import app_localizations package"
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+endsnippet
+
+snippet mateapp "Create a MaterialApp"
+import 'package:flutter/material.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Material App',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Material App Bar'),
+        ),
+        body: const Center(
+          child: Text('Hello World'),
+        ),
+      ),
+    );
+  }
+}
+endsnippet
+
+snippet cupeapp "Create a CupertinoApp"
+import 'package:flutter/cupertino.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const CupertinoApp(
+      title: 'Cupertino App',
+      home: CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: Text('Cupertino App Bar'),
+        ),
+        child: Center(
+          child: Text('Hello World'),
+        ),
+      ),
+    );
+  }
+}
+endsnippet
+
+snippet tweenAnimationBuilder "Widget builder that animates a property of a Widget to a target value whenever the target value changes."
+TweenAnimationBuilder(
+  duration: ${1:const Duration(),}
+  tween: ${2:Tween(),}
+  builder: (BuildContext context, ${3:dynamic} value, Widget? child) {
+    return ${4:Container();}
+  },
+),
+endsnippet
+
+snippet valueListenableBuilder "Given a ValueListenable<T> and a builder which builds widgets from concrete values of T, this class will automatically register itself as a listener of the ValueListenable and call the builder with updated values when the value changes."
+ValueListenableBuilder(
+  valueListenable: ${1: null},
+  builder: (BuildContext context, ${2:dynamic} value, Widget? child) {
+    return ${3: Container();}
+  },
+),
+endsnippet
+
+snippet f-test "Create a test function"
+test(
+  "${1:test description}",
+  () {},
+);
+endsnippet
+
+snippet f-group "Create a group test function"
+group(
+  "${1:group description}",
+  () {},
+);
+endsnippet
+
+snippet f-testWidgets "Create a testWidgets function"
+testWidgets(
+  "${1:test description}",
+  (WidgetTester tester) async {},
+);
+endsnippet
+
+snippet st "setState"
+setstate(() {
+  $1
+});
+endsnippet
+
