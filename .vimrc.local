@@ -97,7 +97,11 @@
         let l:pattern = escape(@", '\\/.*$^~[]')
         let l:pattern = substitute(l:pattern, "\n$", "", "")
 
-        let line = "console.log('---->" . l:pattern . "', " . l:pattern . ")"
+        if (&filetype == 'dart')
+          let line = "print('---->" . l:pattern . ": ${" . l:pattern . ".toString()}');"
+        else
+          let line = "console.log('---->" . l:pattern . "', " . l:pattern . ")"
+        endif
         exe "normal! o" . line . "\<Esc>"
         w
 
@@ -698,8 +702,6 @@ noremap <Leader>bg :call ToggleBG()<CR>
 "}
 
 " ALE Setting {
-  "let g:ale_dart_dartanalyzer_executable = ""
-  "let g:ale_dart_language_server_executable = ""
   let g:ale_virtualtext_cursor = "current"
 
   "gcc/clang 和 cppcheck，前者主要检查有无语法错误，后者主要会给出一些编码建议
@@ -727,7 +729,7 @@ noremap <Leader>bg :call ToggleBG()<CR>
   \}
 
   " Only run linters named in ale_linters settings.
-  let g:ale_linters_explicit = 1
+  let g:ale_linters_explicit = 0
   let g:ale_completion_enabled = 0
 
   let g:ale_sign_column_always = 1
@@ -746,8 +748,7 @@ noremap <Leader>bg :call ToggleBG()<CR>
   let g:ale_set_quickfix = 1
   let g:ale_open_list = 0
 
-  let g:ale_dart_analysis_server_executable = '/Users/dengjinlong/flutter/bin/dart'
-  let g:ale_dart_format_executable = '/Users/dengjinlong/flutter/bin/dart'
+  " builtin support dart lint
 
   noremap <space>ll :call QFixToggle()<CR>
 
@@ -1003,17 +1004,17 @@ set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,.DS_Store
 let NERDTreeIgnore=['\.DS_Store$', '\.git$']
 
 "org {
+   autocmd FileType org setl textwidth=120
    let g:org_heading_shade_leading_stars = 0
    let g:org_agenda_files = ['~/Documents/dotoo-files/*.org']
-   let g:dotoo#agenda#files = ['~/Documents/dotoo-files/*.org', '~/Documents/dotoo-files/notes/*.org']
+   let g:dotoo#agenda#files = ['~/Documents/dotoo-files/*.org']
    let g:dotoo#capture#refile = expand('~/Documents/dotoo-files/refile.org')
    let g:dotoo#capture#clock = 0
    let g:org_indent = 1
 
    let g:org_todo_keywords = [['TODO(t)', 'WAITING(w)', '|', 'DONE(d)'],
-               \ ['严重(r)', 'BUG(b)', '|', 'FIXED(f)'],
                \ ['|', 'CANCELED(c)', 'DELEGATED(l)']]
-   let g:org_todo_keyword_faces = [['严重', 'cyan'], ['BUG', 'cyan'],['FIXED', 'cyan'], ['WAITING', 'cyan'], ['CANCELED',
+   let g:org_todo_keyword_faces = [['WAITING', 'cyan'], ['CANCELED',
                \ [':foreground red', ':background black', ':weight bold',
                \ ':slant italic', ':decoration underline']]]
 
@@ -1025,14 +1026,14 @@ let NERDTreeIgnore=['\.DS_Store$', '\.git$']
       \     'DEADLINE: [%(strftime(g:dotoo#time#datetime_format))]'
       \   ],
       \  'target': 'refile',
-      \  'clock': 0,
+      \  'clock': 1,
       \ },
       \ 'n': {
       \   'description': 'Note',
       \   'lines': ['* %? :NOTE:'],
       \ },
       \ 'j': {
-      \   'description': 'Journal Entry',
+      \   'description': 'Journal',
       \   'lines': [
       \     '* %(strftime(g:dotoo#time#time_format)) %?'
       \   ],
@@ -1049,14 +1050,11 @@ let NERDTreeIgnore=['\.DS_Store$', '\.git$']
 
    let g:dotoo#parser#todo_keywords = [
       \ 'TODO',
-      \ 'NEXT',
       \ 'WAITING',
-      \ 'HOLD',
-      \ 'PHONE',
-      \ 'MEETING',
+      \ 'DONE',
       \ '|',
       \ 'CANCELLED',
-      \ 'DONE'
+      \ 'DELEGATED'
       \ ]
 
    let g:dotoo_todo_keyword_faces = []
@@ -1101,7 +1099,9 @@ fun! GoYCM()
     let g:ycm_auto_hover = ''
     nnoremap <silent> \d <plug>(YCMHover)
     nnoremap <silent> \e :YcmShowDetailedDiagnostic<CR>
-    nnoremap <silent> \f :YcmCompleter Format<CR>
+    nnoremap <silent> \fm :YcmCompleter Format<CR>
+    nnoremap <silent> \m :YcmCompleter Format<CR>
+    nnoremap <silent> \ft :YcmCompleter FixIt<CR>
     nnoremap <buffer> <silent> <leader>gt :YcmCompleter GoTo<CR>
     nnoremap <buffer> <silent> <leader>gr :YcmCompleter GoToReferences<CR>
 
@@ -1433,7 +1433,7 @@ func WidgetSelected(id, result)
     " use a:result
     echom s:Widgets[a:result-1]
     let l:saved_reg = @" " 备份寄存器
-    execute "normal! viwf(%d"
+    execute "normal! F:wvf(%d"
 
     let l:text = "Conatiner(child:". @" .", )"
     let @" = l:text
@@ -1463,8 +1463,19 @@ call textobj#user#plugin('line', {
 function! CurrentWidget()
   normal! b
   let head_pos = getpos('.')
-  normal! w%
+  normal! f(%
   let tail_pos = getpos('.')
   return ['v', head_pos, tail_pos]
 endfunction
+
+" 使用items 运行flutter，右键开启BroadCasting Input
+" https://iterm2.com/python-api/examples/targeted_input.html#targeted-input-example
+autocmd FileType dart command! -nargs=0 FlutterReload :silent !curl -XPOST -d '123=r' 'http://localhost:9999/sendflutter'
+nnoremap \ff :w<CR>:FlutterReload<CR>
+nnoremap \r :w<CR>:FlutterReload<CR>
+autocmd FileType dart nnoremap : $a;<ESC>
+
+" invalid use YouComplete instead
+"let g:dartfmt_options = ['--fix']
+"nnoremap \fm :DartFmt<CR>:w<CR>
 

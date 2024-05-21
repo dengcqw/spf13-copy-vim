@@ -1,14 +1,4 @@
-snippet wgttext "widget Text"
-const Text(
-	'$1',
-	style: TextStyle(
-		color: ColorStyle.titleColor,
-		fontWeight: FontWeight.bold,
-		fontSize: 19),
-),
-endsnippet
-
-snippet wgtcon "widget Container"
+snippet wcon "widget Container"
 Container(
 	alignment: Alignment.center,
 	height: 50,
@@ -17,168 +7,276 @@ Container(
 	margin: const EdgeInsets.only(left: 5),
 	decoration: BoxDecoration(
 		borderRadius: BorderRadius.circular(10),
-		border: Border.all(color: Colors.red),
+		border: Border.all(color: Colors.red, width: 0.5),
 	),
-	child: Text(
-		'$1',
-		style: TextStyle(
-			height: 15,
-			color: tmpColor,
-			fontSize: 10,
-		),
-	),
-),
+	child: $1,
+)
 endsnippet
 
-snippet wgtbtn "widget InkWell"
+snippet wrow "widget Row"
+Row(
+  mainAxisAlignment: MainAxisAlignment.start,
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+	$1,
+  ],
+)
+endsnippet
+
+snippet wcol "widget Column"
+Column(
+  mainAxisAlignment: MainAxisAlignment.start,
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+  $1,
+  ],
+)
+endsnippet
+
+
+snippet wexp "widget Expand"
+Expanded(
+  child: $1,
+)
+endsnippet
+
+snippet wpad "widget Padding"
+Padding(
+  padding: const EdgeInsets.only(left: 19),
+  child: $1,
+)
+endsnippet
+
+snippet wcenter "widget Center"
+Center(
+  child: $1,
+)
+endsnippet
+
+snippet wsizebox "widget SizeBox"
+SizedBox(
+	width: 50,
+	height: 50,
+	child: $1,
+)
+endsnippet
+
+snippet wstack "widget Stack & Position"
+Stack(
+  children: [
+		Positioned(
+			top: 0,
+			right: 0,
+			bottom: 0,
+			left: 0,
+			child: $1,
+		),
+	],
+)
+endsnippet
+
+snippet walign "widget Align"
+Align(
+	alignment: Alignment.centerLeft,
+	child: $1,
+)
+endsnippet
+
+snippet wbtn-inkwell "widget InkWell"
 InkWell(
 	onTap: () {
 	},
 	child: $1,
-),
+)
 endsnippet
 
-snippet wgtrow "widget Row"
-const Row(
-  mainAxisAlignment: MainAxisAlignment.start,
-  crossAxisAlignment: CrossAxisAlignment.center,
-  children: [
-	$1
-  ],
+snippet wbtn-icon "widget icon button"
+ElevatedButton.icon(
+  icon: Icon(Icons.send),
+  label: Text("发送"),
+  onPressed: _onPressed,
 ),
+OutlinedButton.icon(
+  icon: Icon(Icons.add),
+  label: Text("添加"),
+  onPressed: _onPressed,
+),
+TextButton.icon(
+  icon: Icon(Icons.info),
+  label: Text("详情"),
+  onPressed: _onPressed,
+)
 endsnippet
 
-snippet wgtrow "widget Row"
-const Column(
-  mainAxisAlignment: MainAxisAlignment.start,
-  crossAxisAlignment: CrossAxisAlignment.center,
-  children: [
-  $1
-  ],
-),
+snippet wimg-net "widget NetworkImage"
+Image(
+  image: NetworkImage(""),
+  width: 100.0,
+)
 endsnippet
 
-
-snippet wgtexpand "widget Expand"
-const Expanded(
-  child: $1
-),
+snippet wimg "widget Image"
+Image(
+  image: AssetImage("images/avatar.png"),
+  width: 100.0,
+)
 endsnippet
 
-snippet wgtpadding "widget Padding"
-const Padding(
-  padding: EdgeInsets.only(left: 19),
-  child: $1
-),
-endsnippet
-
-snippet wgticon "widget Icon"
-const Icon(IconData(0xe702, fontFamily: 'iconfont'),
-  size: 10.0,
-  color: Colors.red,
-),
-endsnippet
-
-snippet wgtcenter "widget Center"
-const Center(
-  child: $1
-),
-endsnippet
-
-snippet wgtimage_asset "widget Image"
+snippet wimg-asset "widget Image"
 const Image.asset(
   'images/icon_user.png',
   width: 26,
   height: 26,
   fit: BoxFit.fill,
-),
-endsnippet
-
-snippet wgtsizebox "widget SizeBox"
-const SizedBox(width: 0, height: 0, child: $1)
-endsnippet
-
-snippet future_delay
-Future.delayed(const Duration(milliseconds: 500)).then((_) {
-});
-endsnippet
-
-snippet tabbar "tabbar demo"
-_tabController = TabController(
-  initialIndex: 0,
-  length: 3,
-  vsync: this,
-);
-_tabController!.addListener(() {
-  tabNum = _tabController!.index;
-}
-});
-
-Widget dian = ClipOval(
-  child: Container(
-	width: 6.0,
-	height: 6.0,
-	color: ColorStyle.appColor,
-	alignment: Alignment.center,
-  ),
-);
-Widget _tabBar() {
-  return TabBar(
-	controller: _tabController,
-	tabs: tabs.map<Widget>((e) {
-	  return Container(
-		width: MediaQuery.of(context).size.width / 3,
-		alignment: Alignment.center,
-		child: Row(
-		  mainAxisAlignment: MainAxisAlignment.center,
-		  children: [
-			Text(
-			  e['name'],
-			  style: const TextStyle(fontSize: 14),
-			),
-			e['sign']
-				? Align(
-					widthFactor: 2,
-					heightFactor: 2,
-					alignment: const Alignment(0.0, -2),
-					child: dian,
-				  )
-				: const SizedBox(),
-		  ],
-		),
-	  );
-	}).toList(),
-	isScrollable: true,
-	unselectedLabelColor: ColorStyle.swordsColor,
-	indicatorColor: ColorStyle.appColor,
-	indicator: const MyTabIndicator(20.0),
-	indicatorWeight: 2.0,
-	indicatorSize: TabBarIndicatorSize.label,
-	indicatorPadding: const EdgeInsets.only(left: 10, right: 15),
-	labelStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-	labelColor: ColorStyle.titleColor,
-	labelPadding: EdgeInsets.zero,
-  );
-}
-TabBarView(
-  controller: _tabController,
-  children: [
-	page1(),
-	page2(),
-	page3(),
-  ],
 )
 endsnippet
 
-snippet wgtstack "widget Stack & Position"
-Stack(
-  children: [
-  Positioned(
-	top: 0,
-	right: 0,
-	bottom: 0,
-	left: 0,
+snippet wicon "widget Icon"
+const Icon(IconData(0xe702, fontFamily: 'myIcon'),
+  size: 10.0,
+  color: Colors.red,
+)
+endsnippet
+
+snippet wtext "widget Text"
+Text(
+	'$1',
+	style: const TextStyle(
+		color: Colors.black,
+		fontWeight: FontWeight.bold,
+		fontSize: 19,
+		),
+)
+endsnippet
+
+snippet wcolor "widget ColorBox"
+ColoredBox(
+	color: Colors.red,
 	child: $1,
-  )
-),
+)
+endsnippet
+
+snippet wgesture "widget GestureDetector"
+GestureDetector(
+	onTap: () {},
+	onDoubleTap: () {},
+	onLongPress: () {},
+	child: $1,
+)
+endsnippet
+
+snippet wlistTile "widget ListTile"
+ListTile(
+	leading: Image.asset("assets/images/icon_head.webp"),
+	title: const Text("以梦为马"),
+	subtitle: const Text("海子"),
+	trailing: const Icon(Icons.more_vert),
+	contentPadding: const EdgeInsets.all(5),
+	selected: _selected,
+	onTap: () {},
+	onLongPress: () {},
+)
+endsnippet
+
+snippet wsafeArea  "widget SafeArea"
+SafeArea(
+	child: $1,
+)
+endsnippet
+
+snippet wspacer "widget Spacer"
+const Spacer();
+endsnippet
+
+snippet wdivider "widget Divider"
+const Divider(color: ColorStyles.borderColor1, thickness: 0.5),
+endsnippet
+
+snippet wdivider-vertical "widget VerticalDivider"
+const VerticalDivider(color: ColorStyles.borderColor1, thickness: 0.5),
+endsnippet
+
+snippet wbuilder "widget Builder 获取父组件上下文"
+Builder(
+	builder: (ctx) => FloatingActionButton(
+		onPressed: () {
+			ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(content: Text('hello builder')));
+		},
+		child: const Icon(Icons.add),
+	),
+)
+endsnippet
+
+snippet wfutureBuilder "widget FutureBuilder"
+FutureBuilder(
+	initialData: 'Load',
+	future: ${1:_future},
+	builder: (ctx, snap) {
+		if (snap.connectionState == ConnectionState.done) {
+			return Text('${snap.data}');
+		}
+		if (snap.connectionState == ConnectionState.waiting) {
+			return const CircularProgressIndicator();
+		}
+		if (snap.hasError) {
+			return const Text('Error');
+		}
+		return Container();
+})
+endsnippet
+
+snippet wvalueListenableBuilder "widget ValueListenableBuilder"
+final ValueNotifier<int> _counter = ValueNotifier<int>(0);
+ValueListenableBuilder<int>(
+	builder: _buildWithValue,
+	valueListenable: _counter,
+	child: const Text('I am Child!'),
+)
+endsnippet
+
+snippet wfittedBox "widget FittedBox"
+FittedBox(
+	fit: BoxFit.fill,
+	child: $1,
+)
+endsnippet
+
+snippet wlayoutBuilder "widget LayoutBuilder"
+LayoutBuilder(
+	builder: (_, zone) {
+	return Text(
+			'父容器宽:${zone.maxWidth}\n'
+			'父容器高:${zone.maxHeight}',
+			style: const TextStyle(color: Colors.white, fontSize: 16),
+			);
+	},
+)
+endsnippet
+
+snippet wclipRRect "widget ClipRRect 圆角裁剪"
+ClipRRect(
+	
+)
+endsnippet
+
+snippet woffstage "widget Offstage 组件隐藏"
+Offstage(
+	offstage: ${1: false},
+	child: $1,
+)
+endsnippet
+
+snippet wvisibility "widget Visibility 组件隐藏"
+Visibility(
+	visible: visible,
+	replacement: ${1: Refresher.noDate()},
+	child: $2,
+)
+endsnippet
+
+snippet wopacity "widget Opacity"
+Opacity(
+	opacity: ${1: 1.0},
+	child: $2,
+)
 endsnippet

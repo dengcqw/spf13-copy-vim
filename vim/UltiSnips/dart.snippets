@@ -1,0 +1,181 @@
+snippet fun "define fun"
+${1:void} ${2:main}($3){
+}
+endsnippet
+
+snippet func "define fun"
+${1:void} ${2:main}($3){
+}
+endsnippet
+
+snippet function "define fun"
+${1:void} ${2:main}($3){
+}
+endsnippet
+
+snippet fstr "final String"
+final String ${1:name};
+endsnippet
+
+snippet fnum "final num"
+final num ${1:name};
+endsnippet
+
+snippet imp-dart "import dart"
+import 'dart:${1:math}';
+endsnippet
+
+snippet imp-pkg "import pacakge"
+import 'package:${1:test/test.dart}';
+endsnippet
+
+snippet imp-file "import pathtofile"
+import '${1:path/to/my_other_file.dart}';
+endsnippet
+
+snippet ifelseif "dart"
+if(age < 18){
+	print("Teen");
+} else if( age > 18 && age <60){
+	print("Adult");
+} else {
+	print("Old");
+}
+endsnippet
+
+snippet enum "dart"
+enum Pet {dog, cat}
+endsnippet
+
+snippet switch "dart switch"
+enum Pet {dog, cat}
+Pet myPet = Pet.dog;
+switch(myPet){
+	case Pet.dog:
+		print('My Pet is Dog.');
+		break;
+	case Pet.cat:
+		print('My Pet is Cat.');
+		break;
+	default:
+		print('I don\'t have a Pet');
+}
+endsnippet
+
+snippet while "dart"
+while (!dreamsAchieved) {
+  workHard();
+}
+do {
+  workHard();
+} while (!dreamsAchieved);
+endsnippet
+
+snippet for "dart"
+for(int i=0; i< 10; i++){
+	print(i);
+}
+endsnippet
+
+snippet for-in "dart"
+var numbers = [1,2,3];
+for(var number in numbers){
+	print(number);
+}
+endsnippet
+
+snippet list "dart"
+List<String> cities = <String>["New York", "Mumbai", "Tokyo"];
+endsnippet
+
+snippet set "dart"
+Set<String> names = {'fluorine', 'chlorine', 'bromine', 'iodine', 'astatine'};
+endsnippet
+
+snippet map "dart"
+var person = Map<String, String>();
+person['firstName'] = 'Nicola';
+person['lastName'] = 'Tesla';
+
+var nobleGases = {
+  // Key: Value
+  2: 'helium',
+  10: 'neon',
+  18: 'argon',
+};
+endsnippet
+
+snippet class "dart"
+class Cat {
+	// variable
+	String name;
+	// Constructors
+	Cat(this.name);
+
+	// getter
+	String get catName {
+		return name;
+	}
+
+	// setter
+	void set catName(String name){
+		this.name = name;
+	}
+
+	// method
+	void voice(){
+		print("Meow");
+	}
+}
+endsnippet
+
+snippet implements-extends "dart"
+区别是什么
+// An implementation of the Person interface.
+class Impostor implements Person {
+  String get _name => '';
+
+  String greet(String who) => 'Hi $who. Do you know who I am?';
+}
+
+// Use extends to create a subclass
+class SmartPhone extends Phone {
+    void use(){
+        // use super to refer to the superclass
+        super.use();
+        _takePhotos();
+        _playGames();
+    }
+}
+endsnippet
+
+snippet try "dart"
+try {
+	int c = 3/0;
+	print(c);
+} on IntegerDivisionByZeroException {
+	// A specific exception
+	print('Can not divide integer by 0.')
+} on Exception catch (e) {
+	// Anything else that is an exception
+	print('Unknown exception: $e');
+} catch (e) {
+	// No specified type, handles all
+	print('Something really unknown: $e');
+} finally {
+	cleanKitchen(); // Then clean up.
+}
+endsnippet
+
+snippet future.delayed
+Future.delayed(Duration(seconds: ${1:1}), () => {$2});
+endsnippet
+
+snippet importDart "dart lib"
+import 'dart:${1:convert}';
+endsnippet
+
+snippet importFlutter "flutter lib"
+import 'package:flutter/${1:foundation}.dart';
+endsnippet
+

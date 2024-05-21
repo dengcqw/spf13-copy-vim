@@ -1,0 +1,643 @@
+
+snippet future_demo
+Future.delayed(Duration(seconds: 2),(){
+   //return "hi world!";
+   throw AssertionError("Error");
+}).then((data){
+   //执行成功会走到这里
+   print(data);
+}).catchError((e){
+   //执行失败会走到这里
+   print(e);
+}).whenComplete((){
+   //无论成功或失败都会走到这里
+});
+endsnippet
+
+snippet stream_demo
+Stream.fromFutures([
+  // 1秒后返回结果
+  Future.delayed(Duration(seconds: 1), () {
+    return "hello 1";
+  }),
+  // 抛出一个异常
+  Future.delayed(Duration(seconds: 2),(){
+    throw AssertionError("Error");
+  }),
+  // 3秒后返回结果
+  Future.delayed(Duration(seconds: 3), () {
+    return "hello 3";
+  })
+]).listen((data){
+   print(data);
+}, onError: (e){
+   print(e.message);
+},onDone: (){
+
+});
+endsnippet
+
+snippet tabbar "tabbar demo"
+_tabController = TabController(
+  initialIndex: 0,
+  length: 3,
+  vsync: this,
+);
+_tabController!.addListener(() {
+  tabNum = _tabController!.index;
+}
+});
+
+Widget dian = ClipOval(
+  child: Container(
+	width: 6.0,
+	height: 6.0,
+	color: Colors.red,
+	alignment: Alignment.center,
+  ),
+);
+Widget _tabBar() {
+  return TabBar(
+	controller: _tabController,
+	tabs: tabs.map<Widget>((e) {
+	  return Container(
+		width: MediaQuery.of(context).size.width / 3,
+		alignment: Alignment.center,
+		child: Row(
+		  mainAxisAlignment: MainAxisAlignment.center,
+		  children: [
+			Text(
+			  e['name'],
+			  style: const TextStyle(fontSize: 14),
+			),
+			e['sign']
+				? Align(
+					widthFactor: 2,
+					heightFactor: 2,
+					alignment: const Alignment(0.0, -2),
+					child: dian,
+				  )
+				: const SizedBox(),
+		  ],
+		),
+	  );
+	}).toList(),
+	isScrollable: true,
+	unselectedLabelColor: Colors.swordsColor,
+	indicatorColor: Colors.red,
+	indicator: const MyTabIndicator(20.0),
+	indicatorWeight: 2.0,
+	indicatorSize: TabBarIndicatorSize.label,
+	indicatorPadding: const EdgeInsets.only(left: 10, right: 15),
+	labelStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+	labelColor: Colors.black,
+	labelPadding: EdgeInsets.zero,
+  );
+}
+TabBarView(
+  controller: _tabController,
+  children: [
+	page1(),
+	page2(),
+	page3(),
+  ],
+)
+endsnippet
+
+snippet future_delay
+Future.delayed(const Duration(milliseconds: 500)).then((_) {
+});
+endsnippet
+
+snippet scon "Container 渐变圆角阴影变形"
+import 'package:flutter/material.dart';
+class ContainerDecoration extends StatelessWidget {
+  ContainerDecoration({Key? key}) : super(key: key);
+
+  final List<int> rainbow = [
+    0xffff0000,
+    0xffFF7F00,
+    0xffFFFF00,
+    0xff00FF00,
+    0xff00FFFF,
+    0xff0000FF,
+    0xff8B00FF
+  ];
+
+ final List<double> stops = [0.0, 1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6, 1.0];
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Container(
+      alignment: Alignment.center,
+      width: 200,
+      height: 200 * 0.618,
+      margin: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
+			transform: Matrix4.skew(-pi / 10, 0),
+      decoration: BoxDecoration(//添加渐变色
+          gradient: LinearGradient(
+              stops: stops,
+              colors: rainbow.map((e) => Color(e)).toList()),
+          borderRadius: const BorderRadius.only(
+              topLeft:  Radius.circular(50),
+              bottomRight:  Radius.circular(50)),
+          boxShadow: const [
+             BoxShadow(
+                color: Colors.grey,
+                offset:  Offset(1, 1),
+                blurRadius: 10,
+                spreadRadius: 1),
+          ]),
+      child: const Text(
+        "Container",
+        style: TextStyle(fontSize: 20),
+      ),
+    );
+  }
+}
+endsnippet
+
+snippet sconstraints "BoxConstraints sample"
+const BoxConstraints(
+	minWidth: 100,
+	maxWidth: 150,
+	minHeight: 20,
+	maxHeight: 100,
+),
+endsnippet
+
+snippet sgesture-pan "GestureDector sample"
+import 'package:flutter/material.dart';
+class PanGestureDetector extends StatefulWidget {
+  const PanGestureDetector({Key? key}) : super(key: key);
+
+  @override
+  _PanGestureDetectorState createState() => _PanGestureDetectorState();
+}
+
+class _PanGestureDetectorState extends State<PanGestureDetector> {
+  String _info = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onPanDown: (detail) => setState(() => _info =
+      'onPanDown:\n相对落点:${detail.localPosition}\n绝对落点:${detail.globalPosition}'),
+      onPanEnd: (detail) => setState(() => _info =
+      'onPanEnd:\n初速度:${detail.primaryVelocity}\n最终速度:${detail.velocity}'),
+      onPanUpdate: (detail) => setState(() => _info =
+      'onPanUpdate:\n相对落点:${detail.localPosition}\n绝对落点:${detail.globalPosition}'),
+      onPanStart: (detail) => setState(() => _info =
+      'onPanStart:\n相对落点:${detail.localPosition}\n绝对落点:${detail.globalPosition}'),
+      onPanCancel: () => setState(() => _info = 'onTapCancel'),
+      child: SingleChildScrollView(
+        child: Container(
+          alignment: Alignment.center,
+          width: 300,
+          height: 300 * 0.618,
+          color: Colors.grey.withAlpha(33),
+          child: Text(
+            _info,
+            style: const TextStyle(fontSize: 18, color: Colors.blue),
+          ),
+        ),
+      ),
+    );
+  }
+}
+endsnippet
+
+snippet sgesture-tap "GestureDector sample"
+import 'package:flutter/material.dart';
+class TapGestureDetector extends StatefulWidget {
+  const TapGestureDetector({Key? key}) : super(key: key);
+
+  @override
+  _TapGestureDetectorState createState() => _TapGestureDetectorState();
+}
+
+class _TapGestureDetectorState extends State<TapGestureDetector> {
+  String _info = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => setState(() => _info = 'onTap'),
+      onDoubleTap: () => setState(() => _info = 'onDoubleTap'),
+      onLongPress: () => setState(() => _info = 'onLongPress'),
+      onTapDown: (detail) => setState(() => _info =
+      'onTapDown:\n相对落点:${detail.localPosition}\n绝对落点:${detail.globalPosition}'),
+      onTapUp: (detail) => setState(() => _info =
+      'onTapUp:\n相对落点:${detail.localPosition}\n绝对落点:${detail.globalPosition}'),
+      onTapCancel: () => setState(() => _info = 'onTapCancel'),
+      child: Container(
+        alignment: Alignment.center,
+        width: 300,
+        height: 300 * 0.618,
+        color: Colors.grey.withAlpha(33),
+        child: Text(
+          _info,
+          style: const TextStyle(fontSize: 18, color: Colors.blue),
+        ),
+      ),
+    );
+  }
+}
+endsnippet
+
+snippet spageview "PageView sample"
+import 'package:flutter/material.dart';
+class CtrlPageView extends StatefulWidget {
+  const CtrlPageView({Key? key}) : super(key: key);
+
+  @override
+  _CtrlPageViewState createState() => _CtrlPageViewState();
+}
+
+class _CtrlPageViewState extends State<CtrlPageView> {
+  final List<Color> data = [
+    Colors.orange[50]!,
+    Colors.orange[100]!,
+    Colors.orange[200]!,
+    Colors.orange[300]!,
+    Colors.orange[400]!,
+    Colors.orange[500]!,
+    Colors.orange[600]!,
+    Colors.orange[700]!,
+    Colors.orange[800]!,
+    Colors.orange[900]!,
+  ];
+
+  late PageController _controller;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller=PageController(
+      viewportFraction: 0.8,
+      initialPage: (data.length/2).round()
+    );
+  }
+  TextStyle get textStyle =>
+      const TextStyle(color: Colors.white, fontSize: 24, shadows: [
+        Shadow(
+          color: Colors.black,
+          offset: Offset(.5, .5),
+          blurRadius: 2,
+        ),
+      ]);
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 150,
+      child: PageView(
+        controller: _controller,
+        onPageChanged: (position) {
+          print(position);
+        },
+        children: data
+            .map((color) =>
+            Container(
+              alignment: Alignment.center,
+              width: 90,
+              color: color,
+              child: Text(
+                colorString(color),
+                style: textStyle,
+              ),
+            ))
+            .toList(),
+      ),
+    );
+  }
+
+  String colorString(Color color) =>
+      "#${color.value.toRadixString(16).padLeft(8, '0').toUpperCase()}";
+}
+endsnippet
+
+snippet smaterialbutton "MaterialButton sample" b
+import 'package:flutter/material.dart';
+class ShapeMaterialButton extends StatelessWidget {
+  const ShapeMaterialButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 20,
+      children: <Widget>[
+        SizedBox(
+          width: 40,
+          height: 40,
+          child: MaterialButton(
+              padding: const EdgeInsets.all(0),
+              textColor: const Color(0xffFfffff),
+              elevation: 3,
+              color: Colors.blue,
+              highlightColor: const Color(0xffF88B0A),
+              splashColor: Colors.red,
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              shape: const CircleBorder(
+                side: BorderSide(width: 2.0, color: Color(0xFFDFDFDF)),
+              ),
+              onLongPress: () =>  Navigator.of(context).pushNamed('AboutMePage'),
+              onPressed: () =>  Navigator.of(context).pushNamed('AboutMePage')),
+        ),
+        SizedBox(
+          width: 100,
+          height: 40,
+          child: MaterialButton(
+              padding: const EdgeInsets.all(0),
+              textColor: const Color(0xffFfffff),
+              elevation: 3,
+              color: Colors.blue,
+              highlightColor: const Color(0xffF88B0A),
+              splashColor: Colors.red,
+              child: const Icon(
+                Icons.remove,
+                color: Colors.white,
+              ),
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              onLongPress: () =>  Navigator.of(context).pushNamed('AboutMePage'),
+              onPressed: () =>  Navigator.of(context).pushNamed('AboutMePage')),
+        ),
+      ],
+    );
+  }
+}
+endsnippet
+
+snippet sbuttons "ButtonBar 三种button" b
+import 'package:flutter/material.dart';
+import 'package:widgets/utils/dialog_about.dart';
+class CustomButtonBar extends StatelessWidget {
+  const CustomButtonBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ButtonBar(
+      alignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ElevatedButton(
+            child: const Text("ElevatedButton"),
+            onPressed: () => DialogAbout.show(context)),
+        OutlinedButton(
+            child: const Text("Outlined"),
+            onPressed: () => DialogAbout.show(context)),
+        TextButton(
+          onPressed: () => DialogAbout.show(context),
+          child: const Text("TextButton"),
+        )
+      ],
+    );
+  }
+}
+endsnippet
+
+snippet salertdialog "AlertDialog" b
+Widget _buildAlertDialog() {
+	return AlertDialog(
+		title: _buildTitle(),
+		titleTextStyle: const TextStyle(fontSize: 20, color: Colors.black),
+		titlePadding: const EdgeInsets.only(
+			top: 5,
+			left: 20,
+		),
+		contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+		backgroundColor: Colors.white,
+		content: _buildContent(),
+		actions: const [
+			Icon(Icons.android, color: Colors.blue,),
+			Icon(Icons.add, color: Colors.blue,),
+			Icon(Icons.g_translate, color: Colors.blue,),
+			Icon(Icons.games, color: Colors.blue,),
+		],
+		elevation: 4,
+		shape: const RoundedRectangleBorder(
+				borderRadius: BorderRadius.all(Radius.circular(10))),
+	);
+}
+endsnippet
+
+snippet sstreambuilder "StreamBuilder sample"
+import 'dart:async';
+import 'package:flutter/material.dart';
+class CustomStreamBuilder extends StatefulWidget {
+  const CustomStreamBuilder({Key? key}) : super(key: key);
+
+  @override
+  _CustomStreamBuilderState createState() => _CustomStreamBuilderState();
+}
+
+class _CustomStreamBuilderState extends State<CustomStreamBuilder> {
+  final CountGenerator _generator = CountGenerator()..increment();
+
+  @override
+  void dispose() {
+    _generator.dispose(); //关闭控制器
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(
+                side: BorderSide(width: 2.0, color: Color(0xFFDFDFDF)),
+              )),
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          onPressed: () async {
+            await _generator.increment();
+          },
+        ),
+        _buildStreamBuilder(),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(
+                side: BorderSide(width: 2.0, color: Color(0xFFDFDFDF)),
+              )),
+          child: const Icon(
+            Icons.remove,
+            color: Colors.white,
+          ),
+          onPressed: () async {
+            await _generator.minus();
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStreamBuilder() => StreamBuilder<int>(
+      stream: _generator.state,
+      builder: (BuildContext context, AsyncSnapshot snap) {
+        print(snap);
+        if (snap.connectionState == ConnectionState.done) {
+          return const Text('Done');
+        }
+        if (snap.connectionState == ConnectionState.active) {
+          return Text(
+            snap.data.toString(),
+            style: Theme.of(context).textTheme.bodyText2,
+          );
+        }
+        if (snap.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        if (snap.hasError) {
+          return const Text('Error');
+        }
+        return Container();
+      });
+}
+
+class CountGenerator {
+  int _count = 0; //计数器数据
+  final StreamController<int> _controller = StreamController(); //控制器
+
+  Stream<int> get state => _controller.stream; //获取状态流
+  int get count => _count; //获取计数器数据
+
+  void dispose() {//关闭控制器
+    _controller.close();
+  }
+
+  Future<void> increment() async {//增加记数方法
+    _controller.add(++_count);
+  }
+
+  Future<void> minus() async {//增加记数方法
+    _controller.add(--_count);
+  }
+}
+endsnippet
+
+snippet sscaffold "完整页面结构 sample"
+import 'package:flutter/material.dart';
+class CustomScaffold extends StatefulWidget {
+  const CustomScaffold({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _CustomScaffoldState();
+}
+
+// AppBar 默认的实例,有状态
+class _CustomScaffoldState extends State with SingleTickerProviderStateMixin {
+  final List<String> tabs = const ['风画庭', '雨韵舍', '雷鸣殿', '电疾堂', '霜寒阁', '雪月楼'];
+  int _position = 0;
+  final Map<String,IconData> iconsMap = {
+    "图鉴": Icons.home,
+    "动态": Icons.toys,
+    "喜欢": Icons.favorite,
+    "手册": Icons.class_,
+    "我的": Icons.account_circle,
+  };
+  final List<Color> _colors = [
+    Colors.blue,
+    Colors.red,
+    Colors.yellow,
+    Colors.green,
+    Colors.purple,
+  ];
+
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: tabs.length);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height - 300,
+      child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () {},
+        ),
+        drawer: _buildLeftDrawer(),
+        endDrawer: _buildLeftDrawer(),
+        appBar: AppBar(
+          title: const Text('风雅六社'),
+          backgroundColor: Colors.blue,
+          centerTitle: true,
+          actions: const [Icon(Icons.star)],
+          bottom: _buildTabBar(),
+        ),
+        body: _buildTabBarView(),
+        bottomNavigationBar: _buildBottomNavigationBar(),
+      ),
+    );
+  }
+
+  Drawer _buildLeftDrawer() => Drawer(
+        elevation: 1,
+        child: Image.asset(
+          'assets/images/sabar.webp',
+          fit: BoxFit.cover,
+        ),
+      );
+
+  PreferredSizeWidget _buildTabBar() => TabBar(
+        isScrollable: true,
+        controller: _tabController,
+        indicatorColor: Colors.orangeAccent,
+        tabs: tabs.map((e) => Tab(text: e)).toList(),
+      );
+
+  Widget _buildBottomNavigationBar() => BottomNavigationBar(
+        onTap: (position) => setState(() => _position = position),
+        currentIndex: _position,
+        elevation: 1,
+        backgroundColor: Colors.white,
+        iconSize: 25,
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        items: iconsMap.keys
+            .map((key) => BottomNavigationBarItem(
+                label: key,
+                icon: Icon(iconsMap[key]),
+                backgroundColor: _colors[_position]))
+            .toList(),
+      );
+
+  Widget _buildTabBarView() => TabBarView(
+      controller: _tabController,
+      children: tabs
+          .map((e) => Center(
+                  child: Text(
+                e,
+                style: const TextStyle(color: Colors.blue, fontSize: 20),
+              )))
+          .toList());
+}
+endsnippet

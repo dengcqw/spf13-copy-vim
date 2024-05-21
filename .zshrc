@@ -54,10 +54,10 @@ plugins=(zsh-autosuggestions flutter git brew dirhistory encode64 github history
 
 # User configuration
 
-export DART_BIN='/usr/local/dart-sdk/bin'
+#export DART_BIN='/usr/local/dart-sdk/bin'
 
 #source ~/.bash_profile
-export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin:$HOME/Library/Android/sdk/platform-tools:$DART_BIN:$HOME/.pub-cache/bin
+export PATH=/usr/sbin:/sbin/usr/bin:$HOME/bin:/usr/local/bin:$PATH:$HOME/spf13-copy-vim/bin:$HOME/Library/Android/sdk/platform-tools:$HOME/.pub-cache/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
 export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -404,11 +404,11 @@ alias iOSSDKPath='xcrun --sdk iphoneos --show-sdk-path'
 
     export PUB_CACHE="$HOME/.pub-cache" # 全局缓存，保证不会存在多份缓存
     export FLUTTER_ROOT="$HOME/flutter"
-    export PATH=$FLUTTER_ROOT/bin:$PATH
+    export PATH=/Users/dengjinlong/flutter/bin:$PATH
 
     #compile dart
-    export DEPOTTOOLS=~/Documents/dart-sdk/depot_tools
-    export PATH=$DEPOTTOOLS:$PATH
+    #export DEPOTTOOLS=~/Documents/dart-sdk/depot_tools
+    #export PATH=$DEPOTTOOLS:$PATH
 
     # 防止提交错地方
     alias useQyFlutterProxy="export PUB_HOSTED_URL=http://pub-server.domain && echo \"PUB_HOSTED_URL=${PUB_HOSTED_URL}\""
@@ -540,3 +540,25 @@ add-zsh-hook chpwd load-nvmrc
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export NODE_PATH=$(npm root -g)
+
+alias proxy="
+    export http_proxy=socks5://127.0.0.1:7890;
+    export https_proxy=socks5://127.0.0.1:7890;
+    export all_proxy=socks5://127.0.0.1:7890;
+    export no_proxy=socks5://127.0.0.1:7890;
+    export HTTP_PROXY=socks5://127.0.0.1:7890;
+    export HTTPS_PROXY=socks5://127.0.0.1:7890;
+    export ALL_PROXY=socks5://127.0.0.1:7890;
+    export NO_PROXY=socks5://127.0.0.1:7890;"
+alias unproxy="
+    unset http_proxy;
+    unset https_proxy;
+    unset all_proxy;
+    unset no_proxy;
+    unset HTTP_PROXY;
+    unset HTTPS_PROXY;
+    unset ALL_PROXY;
+    unset NO_PROXY"
+
+alias adbi='adb install -r -d '
+alias flutter3_22="~/flutter3.22/bin/flutter"

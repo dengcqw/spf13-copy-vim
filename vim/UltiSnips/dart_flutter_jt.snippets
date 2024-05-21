@@ -37,3 +37,74 @@ Future<dynamic> platformCallHandler(MethodCall call) async {
 	}
 }
 endsnippet
+
+snippet importWidget  ""
+import 'package:flutter_jtcenter/widget/${1:calendar_cell}.dart';
+import 'package:yl_flutter_components/components/badge/${2:yl_badge}.dart';
+import 'package:flutter/widgets.dart';
+endsnippet
+
+snippet importApi "api"
+import 'package:flutter_jtcenter/api/${1:ArrivalWarning}.dart';
+endsnippet
+
+snippet importModel "model dependance"
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:provider/provider.dart';
+endsnippet
+
+snippet importList "list widget"
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:scrollable_positioned_list_extended/scrollable_positioned_list_extended.dart';
+import 'package:scrollview_observer/scrollview_observer.dart';
+import 'package:yl_flutter_components/components/scollview_nested/yl_nested_tab_with_scroll_view.dart';
+import 'package:flutter_jtcenter/widget/list_index_widget.dart';
+import 'package:flutter_jtcenter/widget/list_sections_header.dart';
+import 'package:flutter_jtcenter/utils/refresh.dart';
+endsnippet
+
+snippet importPage "page widget"
+endsnippet
+
+snippet importCommon "commons"
+import 'package:date_format/date_format.dart';
+import 'package:yl_flutter_components/common/yl.dart';
+import 'package:yl_flutter_components/extension/yl_then.dart';
+import 'package:flutter_jtcenter/utils/common.dart';
+endsnippet
+
+snippet importEChart "echart"
+import 'package:jt_flutter_echarts/jt_flutter_echarts.dart';
+import 'package:jt_flutter_echarts/widgets.dart';
+import 'package:flutter_jtcenter/widget/jt_tabs.dart';
+endsnippet
+
+snippet importRouter "router"
+import 'package:flutter_jtcenter/router/application.dart';
+import 'package:flutter_jtcenter/router/menu_config.dart';
+import 'package:flutter_jtcenter/router/navigator_observers.dart';
+import 'package:flutter_jtcenter/router/route_global.dart';
+import 'package:flutter_jtcenter/router/router_utils.dart';
+endsnippet
+
+snippet importUtils ""
+import 'package:flutter_jtcenter/utils/common.dart';
+import 'package:flutter_jtcenter/utils/connectivity_provider.dart';
+import 'package:flutter_jtcenter/utils/debounce.dart';
+import 'package:flutter_jtcenter/utils/eventBus.dart';
+import 'package:flutter_jtcenter/utils/jt_user_info.dart';
+import 'package:flutter_jtcenter/utils/menu.dart';
+import 'package:flutter_jtcenter/utils/native_method.dart';
+import 'package:flutter_jtcenter/utils/refresh.dart';
+import 'package:flutter_jtcenter/utils/role.dart';
+import 'package:flutter_jtcenter/utils/stream_event_bus.dart';
+import 'package:flutter_jtcenter/utils/toast.dart';
+import 'package:flutter_jtcenter/utils/user_level.dart';
+import 'package:flutter_jtcenter/utils/user_logic.dart';
+import 'package:flutter_jtcenter/utils/userinfo.dart' as app_user_info;
+import 'package:flutter_jtcenter/utils/userinfo.dart';
+import 'package:flutter_jtcenter/utils/widgets.dart';
+endsnippet
+
