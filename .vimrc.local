@@ -200,6 +200,10 @@ endfunction
     " Add a bit extra margin to the left
     set foldcolumn=1
 
+    " easy read long line
+    set wrap
+    set linebreak
+
     " add filename after command
     noremap <Leader>vd :vertical diffsplit
     " Only needed for a short time so...
@@ -711,13 +715,15 @@ noremap <Leader>bg :call ToggleBG()<CR>
   \   'vue': ['prettier'],
   \   'html': ['prettier'],
   \   'css': ['prettier'],
-  \   'java': ['javac'],
   \   'md': ['proselint'],
   "\   'objc': ['clangd'],
   "\   'objcpp': ['clangd'],
   "\   'swift': ['swiftformat'],
   \   'c': ['cppcheck', 'clangd'],
   \   'cpp': ['cppcheck', 'clangd'],
+   "\ 'groovy': ['android'],
+   "\ 'java': ['android', 'checkstyle', 'eclipselsp'],
+   "\ 'kotlin': ['android', 'ktlint', 'languageserver']
   \}
 
   let g:ale_fixers = {
@@ -726,6 +732,9 @@ noremap <Leader>bg :call ToggleBG()<CR>
   \  'typescriptreact': ['prettier', 'eslint'],
   \  'vue': ['prettier'],
   \  'html': ['prettier'],
+   \ 'groovy': ['android'],
+   "\ 'java': ['android', 'checkstyle', 'eclipselsp'],
+   "\ 'kotlin': ['android', 'ktlint', 'languageserver']
   \}
 
   " Only run linters named in ale_linters settings.
@@ -747,8 +756,6 @@ noremap <Leader>bg :call ToggleBG()<CR>
   let g:ale_set_loclist = 0
   let g:ale_set_quickfix = 1
   let g:ale_open_list = 0
-
-  " builtin support dart lint
 
   noremap <space>ll :call QFixToggle()<CR>
 
@@ -1463,7 +1470,7 @@ call textobj#user#plugin('line', {
 function! CurrentWidget()
   normal! b
   let head_pos = getpos('.')
-  normal! f(%
+  normal! %
   let tail_pos = getpos('.')
   return ['v', head_pos, tail_pos]
 endfunction
@@ -1474,8 +1481,12 @@ autocmd FileType dart command! -nargs=0 FlutterReload :silent !curl -XPOST -d '1
 nnoremap \ff :w<CR>:FlutterReload<CR>
 nnoremap \r :w<CR>:FlutterReload<CR>
 autocmd FileType dart nnoremap : $a;<ESC>
+autocmd FileType cpp nnoremap : $a;<ESC>
+autocmd FileType cpp ALEDisable
+
 
 " invalid use YouComplete instead
 "let g:dartfmt_options = ['--fix']
 "nnoremap \fm :DartFmt<CR>:w<CR>
 
+let g:prettier#autoformat_config_present = 1

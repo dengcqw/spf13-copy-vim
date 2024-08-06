@@ -179,3 +179,14 @@ snippet importFlutter "flutter lib"
 import 'package:flutter/${1:foundation}.dart';
 endsnippet
 
+snippet extension "扩展方法，不支持静态方法"
+extension JTDate on DateTime {
+  bool sameDay(DateTime date){
+    return year == date.year && month == date.month && day == date.day;
+  }
+}
+endsnippet
+
+snippet deprecated "标注废弃"
+@Deprecated('Use [${1}]')
+endsnippet

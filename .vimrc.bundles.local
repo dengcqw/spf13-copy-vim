@@ -138,3 +138,9 @@
 
     " manager branch
     Bundle 'sodapopcan/vim-twiggy'
+
+    " android
+    "Bundle 'hsanson/vim-android'
+    "Bundle 'udalov/kotlin-vim'
+
+    Bundle 'madox2/vim-ai'

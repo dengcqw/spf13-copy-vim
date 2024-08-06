@@ -537,8 +537,10 @@ add-zsh-hook chpwd load-nvmrc
 [ -s "/Users/dengjinlong/.bun/_bun" ] && source "/Users/dengjinlong/.bun/_bun"
 
 # bun
-export BUN_INSTALL="$HOME/.bun"
+#export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+nvm use 18
 export NODE_PATH=$(npm root -g)
 
 alias proxy="
@@ -559,6 +561,30 @@ alias unproxy="
     unset HTTPS_PROXY;
     unset ALL_PROXY;
     unset NO_PROXY"
+
+
+export VPNURL="http://vpn.yl-scm.com:8443";
+alias proxyVPN="
+    export http_proxy=$VPNURL;
+    export https_proxy=$VPNURL;
+    export all_proxy=$VPNURL;
+    export no_proxy=$VPNURL;
+    export HTTP_PROXY=$VPNURL;
+    export HTTPS_PROXY=$VPNURL;
+    export ALL_PROXY=$VPNURL;
+    export NO_PROXY=$VPNURL;"
+
+
+alias unproxy="
+    unset http_proxy;
+    unset https_proxy;
+    unset all_proxy;
+    unset no_proxy;
+    unset HTTP_PROXY;
+    unset HTTPS_PROXY;
+    unset ALL_PROXY;
+    unset NO_PROXY"
+
 
 alias adbi='adb install -r -d '
 alias flutter3_22="~/flutter3.22/bin/flutter"

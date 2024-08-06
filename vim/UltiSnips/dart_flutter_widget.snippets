@@ -1,4 +1,4 @@
-snippet wcon "widget Container"
+snippet djlcon "widget Container"
 Container(
 	alignment: Alignment.center,
 	height: 50,
@@ -13,7 +13,7 @@ Container(
 )
 endsnippet
 
-snippet wrow "widget Row"
+snippet djlrow "widget Row"
 Row(
   mainAxisAlignment: MainAxisAlignment.start,
   crossAxisAlignment: CrossAxisAlignment.center,
@@ -23,7 +23,7 @@ Row(
 )
 endsnippet
 
-snippet wcol "widget Column"
+snippet djlcol "widget Column"
 Column(
   mainAxisAlignment: MainAxisAlignment.start,
   crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,26 +34,26 @@ Column(
 endsnippet
 
 
-snippet wexp "widget Expand"
+snippet djlexp "widget Expand"
 Expanded(
   child: $1,
 )
 endsnippet
 
-snippet wpad "widget Padding"
+snippet djlpad "widget Padding"
 Padding(
   padding: const EdgeInsets.only(left: 19),
   child: $1,
 )
 endsnippet
 
-snippet wcenter "widget Center"
+snippet djlcenter "widget Center"
 Center(
   child: $1,
 )
 endsnippet
 
-snippet wsizebox "widget SizeBox"
+snippet djlsizebox "widget SizeBox"
 SizedBox(
 	width: 50,
 	height: 50,
@@ -61,7 +61,7 @@ SizedBox(
 )
 endsnippet
 
-snippet wstack "widget Stack & Position"
+snippet djlstack "widget Stack & Position"
 Stack(
   children: [
 		Positioned(
@@ -75,14 +75,24 @@ Stack(
 )
 endsnippet
 
-snippet walign "widget Align"
+snippet djlpos "widget Position"
+Positioned(
+	top: 0,
+	right: 0,
+	bottom: 0,
+	left: 0,
+	child: $1,
+)
+endsnippet
+
+snippet djlalign "widget Align"
 Align(
 	alignment: Alignment.centerLeft,
 	child: $1,
 )
 endsnippet
 
-snippet wbtn-inkwell "widget InkWell"
+snippet djlbtn-inkwell "widget InkWell"
 InkWell(
 	onTap: () {
 	},
@@ -90,7 +100,7 @@ InkWell(
 )
 endsnippet
 
-snippet wbtn-icon "widget icon button"
+snippet djlbtn-icon "widget icon button"
 ElevatedButton.icon(
   icon: Icon(Icons.send),
   label: Text("发送"),
@@ -108,21 +118,21 @@ TextButton.icon(
 )
 endsnippet
 
-snippet wimg-net "widget NetworkImage"
+snippet djlimg-net "widget NetworkImage"
 Image(
   image: NetworkImage(""),
   width: 100.0,
 )
 endsnippet
 
-snippet wimg "widget Image"
+snippet djlimg "widget Image"
 Image(
   image: AssetImage("images/avatar.png"),
   width: 100.0,
 )
 endsnippet
 
-snippet wimg-asset "widget Image"
+snippet djlimg-asset "widget Image"
 const Image.asset(
   'images/icon_user.png',
   width: 26,
@@ -131,14 +141,14 @@ const Image.asset(
 )
 endsnippet
 
-snippet wicon "widget Icon"
+snippet djlicon "widget Icon"
 const Icon(IconData(0xe702, fontFamily: 'myIcon'),
   size: 10.0,
   color: Colors.red,
 )
 endsnippet
 
-snippet wtext "widget Text"
+snippet djltext "widget Text"
 Text(
 	'$1',
 	style: const TextStyle(
@@ -149,14 +159,14 @@ Text(
 )
 endsnippet
 
-snippet wcolor "widget ColorBox"
+snippet djlcolor "widget ColorBox"
 ColoredBox(
 	color: Colors.red,
 	child: $1,
 )
 endsnippet
 
-snippet wgesture "widget GestureDetector"
+snippet djlgesture "widget GestureDetector"
 GestureDetector(
 	onTap: () {},
 	onDoubleTap: () {},
@@ -165,7 +175,7 @@ GestureDetector(
 )
 endsnippet
 
-snippet wlistTile "widget ListTile"
+snippet djllistTile "widget ListTile"
 ListTile(
 	leading: Image.asset("assets/images/icon_head.webp"),
 	title: const Text("以梦为马"),
@@ -178,25 +188,25 @@ ListTile(
 )
 endsnippet
 
-snippet wsafeArea  "widget SafeArea"
+snippet djlsafeArea  "widget SafeArea"
 SafeArea(
 	child: $1,
 )
 endsnippet
 
-snippet wspacer "widget Spacer"
-const Spacer();
+snippet djlspacer "widget Spacer"
+const Spacer(),
 endsnippet
 
-snippet wdivider "widget Divider"
-const Divider(color: ColorStyles.borderColor1, thickness: 0.5),
+snippet djldivider "widget Divider"
+const Divider(color: ColorStyle.borderColor1, height: 0.5),
 endsnippet
 
-snippet wdivider-vertical "widget VerticalDivider"
-const VerticalDivider(color: ColorStyles.borderColor1, thickness: 0.5),
+snippet djldivider-vertical "widget VerticalDivider"
+const VerticalDivider(color: ColorStyle.borderColor1, width: 0.5),
 endsnippet
 
-snippet wbuilder "widget Builder 获取父组件上下文"
+snippet djlbuilder "widget Builder 获取父组件上下文"
 Builder(
 	builder: (ctx) => FloatingActionButton(
 		onPressed: () {
@@ -207,7 +217,7 @@ Builder(
 )
 endsnippet
 
-snippet wfutureBuilder "widget FutureBuilder"
+snippet djlfutureBuilder "widget FutureBuilder"
 FutureBuilder(
 	initialData: 'Load',
 	future: ${1:_future},
@@ -225,7 +235,7 @@ FutureBuilder(
 })
 endsnippet
 
-snippet wvalueListenableBuilder "widget ValueListenableBuilder"
+snippet djlvalueListenableBuilder "widget ValueListenableBuilder"
 final ValueNotifier<int> _counter = ValueNotifier<int>(0);
 ValueListenableBuilder<int>(
 	builder: _buildWithValue,
@@ -234,14 +244,14 @@ ValueListenableBuilder<int>(
 )
 endsnippet
 
-snippet wfittedBox "widget FittedBox"
+snippet djlfittedBox "widget FittedBox"
 FittedBox(
 	fit: BoxFit.fill,
 	child: $1,
 )
 endsnippet
 
-snippet wlayoutBuilder "widget LayoutBuilder"
+snippet djllayoutBuilder "widget LayoutBuilder"
 LayoutBuilder(
 	builder: (_, zone) {
 	return Text(
@@ -253,20 +263,21 @@ LayoutBuilder(
 )
 endsnippet
 
-snippet wclipRRect "widget ClipRRect 圆角裁剪"
+snippet djlclipRRect "widget ClipRRect 圆角裁剪"
 ClipRRect(
-	
-)
-endsnippet
-
-snippet woffstage "widget Offstage 组件隐藏"
-Offstage(
-	offstage: ${1: false},
+	borderRadius: BorderRadius.circular(5),
 	child: $1,
 )
 endsnippet
 
-snippet wvisibility "widget Visibility 组件隐藏"
+snippet djloffstage "widget Offstage 组件隐藏"
+Offstage(
+	offstage: ${1: false},
+	child: $2
+)
+endsnippet
+
+snippet djlvisibility "widget Visibility 组件隐藏"
 Visibility(
 	visible: visible,
 	replacement: ${1: Refresher.noDate()},
@@ -274,9 +285,19 @@ Visibility(
 )
 endsnippet
 
-snippet wopacity "widget Opacity"
+snippet djlopacity "widget Opacity"
 Opacity(
 	opacity: ${1: 1.0},
 	child: $2,
 )
 endsnippet
+
+snippet ct
+Widget CT(Widget child) {
+  return ColoredBox(
+    color: Colors.red,
+    child: child,
+  );
+}
+endsnippet
+

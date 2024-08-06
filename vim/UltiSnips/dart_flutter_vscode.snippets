@@ -384,3 +384,22 @@ setState(() {
   $1
 });
 endsnippet
+
+snippet providerof "safe Provider.of"
+@override
+void didChangeDependencies() {
+  final counter = Provider.of<MyCounter>(context, listen: false);
+  if (conter != this.counter) {
+    this.counter = counter;
+    counter.increment();
+  }
+}
+
+@override
+void initState() {
+	super.initState();
+	WidgetsBinding.instance.addPostFrameCallback((callback){
+		Provider.of<CounterModel>(context, listen: false).increment();
+	});
+}
+endsnippet

@@ -1,110 +1,125 @@
-snippet log "jt log"
+snippet implog "jt log"
 import 'package:common_utils/src/log_util.dart';
 LogUtil.d('openpage' + path);
 endsnippet
 
-snippet lifecycle "didChangeAppLifecycleState"
-@override
-void didChangeAppLifecycleState(AppLifecycleState state) {
-switch (state) {
-  case AppLifecycleState.inactive: // 处于这种状态的应用程序应该假设它们可能在任何时候暂停。
-	break;
-  case AppLifecycleState.resumed: // 应用程序可见，前台
-	break;
-  case AppLifecycleState.paused: // 应用程序不可见，后台
-	break;
-  case AppLifecycleState.detached:
-	break;
-}
-}
-endsnippet
-
-snippet nativecall
-@override
-void initState() {
-	NativeMethod.setMethodCallHandler(platformCallHandler);
-}
-
-Future<dynamic> platformCallHandler(MethodCall call) async {
-	switch (call.method) {
-	case "onLogin":
-		break;
-	case "logout":
-		SpUtil.remove('userInfo');
-		break;
-	case "openPage":
-		break;
-	}
-}
-endsnippet
-
-snippet importWidget  ""
-import 'package:flutter_jtcenter/widget/${1:calendar_cell}.dart';
-import 'package:yl_flutter_components/components/badge/${2:yl_badge}.dart';
-import 'package:flutter/widgets.dart';
-endsnippet
-
-snippet importApi "api"
+snippet impapi "import api"
 import 'package:flutter_jtcenter/api/${1:ArrivalWarning}.dart';
 endsnippet
 
-snippet importModel "model dependance"
+snippet impmodel "import model dependance"
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 endsnippet
 
-snippet importList "list widget"
+snippet implist "import list widget"
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:scrollable_positioned_list_extended/scrollable_positioned_list_extended.dart';
-import 'package:scrollview_observer/scrollview_observer.dart';
-import 'package:yl_flutter_components/components/scollview_nested/yl_nested_tab_with_scroll_view.dart';
 import 'package:flutter_jtcenter/widget/list_index_widget.dart';
 import 'package:flutter_jtcenter/widget/list_sections_header.dart';
 import 'package:flutter_jtcenter/utils/refresh.dart';
 endsnippet
 
-snippet importPage "page widget"
-endsnippet
-
-snippet importCommon "commons"
-import 'package:date_format/date_format.dart';
+snippet impcomponents "import yl_flutter_components"
 import 'package:yl_flutter_components/common/yl.dart';
 import 'package:yl_flutter_components/extension/yl_then.dart';
-import 'package:flutter_jtcenter/utils/common.dart';
 endsnippet
 
-snippet importEChart "echart"
+snippet impechart "import echart"
 import 'package:jt_flutter_echarts/jt_flutter_echarts.dart';
 import 'package:jt_flutter_echarts/widgets.dart';
 import 'package:flutter_jtcenter/widget/jt_tabs.dart';
 endsnippet
 
-snippet importRouter "router"
-import 'package:flutter_jtcenter/router/application.dart';
-import 'package:flutter_jtcenter/router/menu_config.dart';
-import 'package:flutter_jtcenter/router/navigator_observers.dart';
-import 'package:flutter_jtcenter/router/route_global.dart';
-import 'package:flutter_jtcenter/router/router_utils.dart';
+snippet improuter "import Router"
+import 'package:flutter_jtcenter/router/${1:router_utils}.dart';
+import 'package:flutter_jtcenter/config/route_const.dart';
 endsnippet
 
-snippet importUtils ""
-import 'package:flutter_jtcenter/utils/common.dart';
-import 'package:flutter_jtcenter/utils/connectivity_provider.dart';
-import 'package:flutter_jtcenter/utils/debounce.dart';
-import 'package:flutter_jtcenter/utils/eventBus.dart';
-import 'package:flutter_jtcenter/utils/jt_user_info.dart';
-import 'package:flutter_jtcenter/utils/menu.dart';
-import 'package:flutter_jtcenter/utils/native_method.dart';
-import 'package:flutter_jtcenter/utils/refresh.dart';
-import 'package:flutter_jtcenter/utils/role.dart';
-import 'package:flutter_jtcenter/utils/stream_event_bus.dart';
-import 'package:flutter_jtcenter/utils/toast.dart';
-import 'package:flutter_jtcenter/utils/user_level.dart';
-import 'package:flutter_jtcenter/utils/user_logic.dart';
-import 'package:flutter_jtcenter/utils/userinfo.dart' as app_user_info;
-import 'package:flutter_jtcenter/utils/userinfo.dart';
-import 'package:flutter_jtcenter/utils/widgets.dart';
+snippet imputils "import utils"
+import 'package:flutter_jtcenter/utils/${1:common}.dart';
 endsnippet
 
+snippet impwidget "import widget"
+import 'package:flutter_jtcenter/widget/${1:jt_tabs}.dart';
+endsnippet
+
+snippet imptoast "import fluttertoast"
+import 'package:fluttertoast/fluttertoast.dart';
+Fluttertoast.showToast('xxx');
+endsnippet
+
+snippet impprovider "import provider"
+import 'package:provider/provider.dart';
+endsnippet
+
+snippet imppull_to_refresh "import pull_to_refresh"
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+endsnippet
+
+snippet impdate_format "import date_format"
+import 'package:date_format/date_format.dart';
+endsnippet
+
+snippet impasync "import async"
+import 'package:async/async.dart';
+endsnippet
+
+snippet impflustars "工具类"
+import 'package:flustars/flustars.dart';
+endsnippet
+
+snippet impcolorstyle "color_style"
+import 'package:flutter_jtcenter/color_style.dart';
+endsnippet
+
+snippet imploading "app-loading"
+import 'package:flutter_jtcenter/components/app_loading.dart';
+endsnippet
+
+snippet FlexListSectionHeader
+FlexListSectionHeader(
+		children: [
+		const FlexListHeaderTitle(title: "排名", width: 28),
+		FlexListHeaderTitle.fixWidth(13),
+		const FlexListHeaderTitle(
+			title: "名称", flex: 1, alignment: TitleAligment.start),
+		FlexListHeaderTitle(
+			title: "金额",
+			flex: 1,
+			sortUp: false,
+			onSortTap: () {},
+			),
+		],
+),
+endsnippet
+
+snippet decoration "Container decoration"
+decoration: BoxDecoration(
+	color: Colors.white,
+	borderRadius: BorderRadius.all(Radius.circular(8)),
+	border: Border(bottom: BorderSide(width: 0.5, color: ColorStyle.borderColor1)),
+),
+endsnippet
+
+snippet padding "Container padding"
+padding: const EdgeInsets.only(${1:left}: 5),
+endsnippet
+
+snippet margin "Container margin"
+margin: const EdgeInsets.only(${1:left}: 5),
+endsnippet
+
+snippet alignment "Container alignment"
+alignment: Alignment.${1:centerLeft},
+endsnippet
+
+
+snippet copyright
+/*
+ * `!p snip.rv = snip.fn`
+ * `gitname=$(basename $(git remote get-url origin)); echo ${gitname%.*}`
+ *
+ * Created by Deng Jinlong on `date +%d/%m/%y`.
+ * Copyright (c) `date +%Y`. J&T Express. All rights reserved.
+ */
+endsnippet
