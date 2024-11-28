@@ -123,3 +123,57 @@ snippet copyright
  * Copyright (c) `date +%Y`. J&T Express. All rights reserved.
  */
 endsnippet
+
+
+snippet usecase "Widgetbook UseCase Template"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+import 'package:ui_kit/widget/$2.dart';
+
+@UseCase(
+  name: '${1: class}',
+  type: $1,
+)
+Widget build$1UseCase(BuildContext context) {
+  return $1(
+//    fontSize: context.knobs.double
+//        .slider(label: 'font size', initialValue: 14, min: 10, max: 25),
+  );
+}
+endsnippet
+
+snippet knobs-double
+$1: context.knobs.double.input(label: '$1', initialValue: $2),
+endsnippet
+
+snippet knobs-color
+$1: context.knobs.color(label: '$1', initialValue: $2),
+endsnippet
+
+snippet knobs-bool
+$1: context.knobs.boolean(label: '$1'),
+endsnippet
+
+snippet knobs-string
+$1: context.knobs.string(label: '$1', initialValue: '$2'),
+endsnippet
+
+snippet knobs-list
+$1: context.knobs.list(
+	label: '$1',
+	initialOption: $2.left,
+	options: [
+		$2.left,
+		$2.right,
+	],
+),
+endsnippet
+
+
+snippet context "rspec: context block"
+context "$1" do
+    ${0:${VISUAL:# assertions...}}
+end
+endsnippet
