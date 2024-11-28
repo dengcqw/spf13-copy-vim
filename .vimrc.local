@@ -1175,6 +1175,11 @@ fun! GoYCM()
       \     'name': 'dart',
       \     'cmdline': [ '/Users/dengjinlong/flutter/bin/dart', 'language-server'],
       \     'filetypes': [ 'dart' ],
+      \   },
+      \   {
+      \     'name': 'vue',
+      \     'cmdline': [ '/Users/dengjinlong/.nvm/versions/node/v16.15.1/bin/vue-language-server', '--stdio'],
+      \     'filetypes': [ 'vue' ],
       \   }
       "\  , {
       "\     'name': 'swift',
@@ -1490,3 +1495,23 @@ autocmd FileType cpp ALEDisable
 "nnoremap \fm :DartFmt<CR>:w<CR>
 
 let g:prettier#autoformat_config_present = 1
+
+"快速把当前行上移或下移一行
+nnoremap [e  :<c-u>execute 'move -1-'. v:count1<cr>
+nnoremap ]e  :<c-u>execute 'move +'. v:count1<cr>
+"快速添加空行
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+"选择当前行至结尾，排除换行符
+nnoremap vv 0vg_
+
+"当前行高亮
+autocmd InsertLeave,WinEnter * set cursorline
+"插入模式中关闭
+autocmd InsertEnter,WinLeave * set nocursorline
+
+" 语法高亮到200列
+set synmaxcol=200
+
+" 编辑大文件 禁用所有插件和设置
+" vim -n -u NONE -i NONE -N

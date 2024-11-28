@@ -24,7 +24,8 @@
     "Bundle "liuchengxu/vim-clap"
     " 文档管理的工具
     "Bundle 'vimwiki/vimwiki'
-    Bundle 'Yggdroot/indentLine'
+    "Bundle 'Yggdroot/indentLine'
+    Bundle 'nathanaelkane/vim-indent-guides'
 
     " 底部会显示快捷键补全，类似emacs
     "Bundle 'liuchengxu/vim-which-key'
@@ -103,7 +104,6 @@
     Bundle 'Valloric/ListToggle'
 
     " language server highlight
-    "Bundle "jackguo380/vim-lsp-cxx-highlight"
     Bundle "bfrg/vim-cpp-modern"
     Bundle "rhysd/vim-clang-format"
     " 自动切换到git项目目录
@@ -118,7 +118,6 @@
         "Bundle 'keith/swift.vim'
         "Bundle 'gfontenot/vim-xcode'
     " }
-    "Bundle 'skywind3000/asyncrun.vim'
     " org mode {
     Bundle 'jceb/vim-orgmode'
     Bundle 'dengcqw/vim-dotoo'
@@ -144,3 +143,18 @@
     "Bundle 'udalov/kotlin-vim'
 
     Bundle 'madox2/vim-ai'
+    Bundle 'mg979/vim-visual-multi'
+
+    "Bundle 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
+    Bundle 'dyng/ctrlsf.vim'
+    " http://vimcasts.org/episodes/ultisnips-python-interpolation/
+
+    Bundle 'posva/vim-vue'
+    Bundle 'mattn/emmet-vim'
+    " 一套LSP插件
+    "Bundle 'prabirshrestha/async.vim'
+    "Bundle 'prabirshrestha/vim-lsp'
+    "Bundle 'mattn/vim-lsp-settings'
+    "Bundle 'thomasfaingnaert/vim-lsp-snippets'
+    "Bundle 'thomasfaingnaert/vim-lsp-ultisnips'
+    "Bundle 'prabirshrestha/asyncomplete.vim'

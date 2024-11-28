@@ -1,3 +1,7 @@
+# performance monitor
+#zmodload zsh/zprof
+DISABLE_AUTO_UPDATE="true"
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -50,7 +54,8 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins
-plugins=(zsh-autosuggestions flutter git brew dirhistory encode64 github history jsontools npm macos urltools vi-mode extract gradle dirpersist cp copyfile colored-man-pages)
+export NVM_LAZY_LOAD=true
+plugins=(zsh-autosuggestions flutter git brew dirhistory encode64 github history jsontools npm macos urltools vi-mode extract gradle dirpersist cp copyfile colored-man-pages zsh-nvm zsh-history-substring-search)
 
 # User configuration
 
@@ -129,6 +134,7 @@ alias -s h=mvim
 alias -s plist=mvim
 alias -s swift=mvim
 alias -s md=mvim
+alias -s o=open
 
 # Custom alias {
     alias djgrep='grep --color=auto -r -n ./* -e '
@@ -472,9 +478,6 @@ export HOMEBREW_NO_AUTO_UPDATE=true
 
 alias startJenkins='java -jar jenkins.war --httpPort=8080'
 
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # close spotlight
 # sudo mdutil -a -i off
@@ -496,7 +499,8 @@ export PATH=$PATH:$ANDROID_SDK_ROOT/tools
 export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
 export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
 export PATH=$PATH:$HOME/depot_tools
-export PATH=/usr/local/Cellar/openjdk@17/17.0.5/bin:$PATH
+#export PATH=/usr/local/Cellar/openjdk@17/17.0.8.1/bin:$PATH
+
 
 alias changeHeaderImport="node ~/spf13-copy-vim/scripts/changeImport.js"
 
@@ -510,37 +514,43 @@ setopt HIST_IGNORE_SPACE
 # *.ipa & *.mobileprovision file path and CertificateName from keychain or xcode
 alias resignIpa="sh ~/spf13-copy-vim/scripts/resignipa.sh "
 
+#export NVM_DIR="$HOME/.nvm"
+#function load_nvm() {
+  #[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  #[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+#}
+
 # place this after nvm initialization!
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local nvmrc_path
-  nvmrc_path="$(nvm_find_nvmrc)"
+#autoload -U add-zsh-hook
+#load-nvmrc() {
+  #local nvmrc_path
+  #nvmrc_path="$(nvm_find_nvmrc)"
 
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version
-    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+  #if [ -n "$nvmrc_path" ]; then
+    #local nvmrc_node_version
+    #nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
 
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-      nvm use
-    fi
-  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
+    #if [ "$nvmrc_node_version" = "N/A" ]; then
+      #nvm install
+    #elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      #nvm use
+    #fi
+  #elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    #echo "Reverting to nvm default version"
+    #nvm use default
+  #fi
+#}
 
-add-zsh-hook chpwd load-nvmrc
+#add-zsh-hook chpwd load-nvmrc
+#nvm use 18
 
 # bun completions
-[ -s "/Users/dengjinlong/.bun/_bun" ] && source "/Users/dengjinlong/.bun/_bun"
+#[ -s "/Users/dengjinlong/.bun/_bun" ] && source "/Users/dengjinlong/.bun/_bun"
 
 # bun
 #export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+#export PATH="$BUN_INSTALL/bin:$PATH"
 
-nvm use 18
 export NODE_PATH=$(npm root -g)
 
 alias proxy="
@@ -588,3 +598,18 @@ alias unproxy="
 
 alias adbi='adb install -r -d '
 alias flutter3_22="~/flutter3.22/bin/flutter"
+alias flutter3_7="~/flutter2.7/bin/flutter"
+
+#end performance monitor
+#zprof
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /Users/dengjinlong/.dart-cli-completion/zsh-config.zsh ]] && . /Users/dengjinlong/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
+export GRADLE_USER_HOME=~/.gradle
